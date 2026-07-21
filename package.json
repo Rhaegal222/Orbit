@@ -1,0 +1,36 @@
+{
+  "name": "@galileo/orbit",
+  "version": "0.1.0",
+  "description": "Reusable UI foundations and design tokens for Galileo applications.",
+  "license": "UNLICENSED",
+  "private": false,
+  "sideEffects": [
+    "./src/styles/tokens.css"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "src/styles"
+  ],
+  "exports": {
+    "./styles": "./src/styles/tokens.css"
+  },
+  "scripts": {
+    "check": "npm pack --dry-run",
+    "release:check": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.galileo.test/galileo/orbit.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.galileo.test/galileo/orbit/-/issues"
+  },
+  "homepage": "https://gitlab.galileo.test/galileo/orbit#readme",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

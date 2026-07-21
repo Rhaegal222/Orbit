@@ -27,7 +27,7 @@
 
   /* Reference: typography, geometry and elevation */
   --orbit-ref-font-sans: 'Public Sans', Inter, ui-sans-serif, system-ui, sans-serif;
-  --orbit-ref-font-size-xs: 0.625rem;
+  --orbit-ref-font-size-xs: 0.65625rem;
   --orbit-ref-font-size-sm: 0.71875rem;
   --orbit-ref-font-size-base: 0.8125rem;
   --orbit-ref-font-size-lg: 0.875rem;
@@ -50,11 +50,13 @@
 
   /* Semantic: the supported application theming surface */
   --orbit-font-sans: var(--orbit-ref-font-sans);
-  --orbit-font-size-xs: var(--orbit-ref-font-size-xs);
-  --orbit-font-size-sm: var(--orbit-ref-font-size-sm);
-  --orbit-font-size-body: var(--orbit-ref-font-size-base);
-  --orbit-font-size-lg: var(--orbit-ref-font-size-lg);
-  --orbit-font-size-xl: var(--orbit-ref-font-size-xl);
+  /* Single scale source. Consumers set a unitless value (for example 1.15). */
+  --orbit-text-scale: 1;
+  --orbit-font-size-xs: calc(var(--orbit-ref-font-size-xs) * var(--orbit-text-scale));
+  --orbit-font-size-sm: calc(var(--orbit-ref-font-size-sm) * var(--orbit-text-scale));
+  --orbit-font-size-body: calc(var(--orbit-ref-font-size-base) * var(--orbit-text-scale));
+  --orbit-font-size-lg: calc(var(--orbit-ref-font-size-lg) * var(--orbit-text-scale));
+  --orbit-font-size-xl: calc(var(--orbit-ref-font-size-xl) * var(--orbit-text-scale));
   --orbit-line-height-body: var(--orbit-ref-line-height-base);
   --orbit-font-weight-body: var(--orbit-ref-font-weight-normal);
   --orbit-font-weight-emphasis: var(--orbit-ref-font-weight-semibold);
@@ -92,12 +94,12 @@
   --orbit-motion-fast: 120ms;
   --orbit-motion-base: 180ms;
   --orbit-easing-standard: cubic-bezier(0.2, 0, 0, 1);
-  --orbit-font-size-display: 1.5rem;
-  --orbit-font-size-title: var(--orbit-ref-font-size-xl);
-  --orbit-font-size-subtitle: var(--orbit-ref-font-size-lg);
-  --orbit-font-size-label: var(--orbit-ref-font-size-sm);
-  --orbit-font-size-caption: var(--orbit-ref-font-size-xs);
-  --orbit-font-size-code: var(--orbit-ref-font-size-sm);
+  --orbit-font-size-display: calc(1.5rem * var(--orbit-text-scale));
+  --orbit-font-size-title: var(--orbit-font-size-xl);
+  --orbit-font-size-subtitle: var(--orbit-font-size-lg);
+  --orbit-font-size-label: var(--orbit-font-size-sm);
+  --orbit-font-size-caption: var(--orbit-font-size-xs);
+  --orbit-font-size-code: var(--orbit-font-size-sm);
   --orbit-space-inline: var(--orbit-ref-space-3);
   --orbit-space-stack: var(--orbit-ref-space-4);
   /* Composition spacing: layout primitives consume semantic spacing, not raw scale values. */
@@ -120,13 +122,18 @@
   --orbit-space-5: var(--orbit-ref-space-5);
   --orbit-space-6: var(--orbit-ref-space-6);
   --orbit-radius-sm: var(--orbit-ref-radius-sm);
-  --orbit-modal-size-sm: 32rem;
+  --orbit-modal-size-sm: 30rem;
   --orbit-modal-size-md: 45rem;
-  --orbit-modal-size-lg: 64rem;
+  --orbit-modal-size-lg: 60rem;
+  --orbit-modal-size-xl: 73.75rem;
   --orbit-modal-size-full: min(96vw, 90rem);
-  --orbit-section-index-size: 1.25rem;
+  --orbit-section-index-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
   --orbit-section-divider: var(--orbit-border-subtle);
-  --orbit-control-height: 2.625rem;
+  --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.55rem + (2.2rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.275rem + (1.1rem * var(--orbit-text-scale)));
   --orbit-control-padding-inline: var(--orbit-ref-space-3);
   --orbit-overlay-backdrop: rgb(18 21 28 / 42%);
   --orbit-z-overlay: 1040;
@@ -178,7 +185,11 @@
 
 /* Comfortable is implicit. Compact is an opt-in density, not a second theme. */
 [data-orbit-density='compact'] {
-  --orbit-control-height: 2.375rem;
+  --orbit-control-height: calc(0.475rem + (1.9rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.4rem + (1.6rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.375rem + (1.5rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.5rem + (2rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
   --orbit-control-padding-inline: var(--orbit-ref-space-2);
   --orbit-space-inline: var(--orbit-ref-space-2);
   --orbit-space-stack: var(--orbit-ref-space-3);
@@ -188,6 +199,17 @@
   --orbit-modal-padding-block: 1rem;
   --orbit-modal-header-padding-block-start: 1.125rem;
   --orbit-modal-header-padding-block-end: 1rem;
+}
+
+/* Accent swatch — curated options only, no free color picker. Default (blue) lives on :root. */
+[data-orbit-accent='violet'] {
+  --orbit-action-primary-bg: #7c3aed;
+  --orbit-action-primary-bg-hover: #6423c8;
+}
+
+[data-orbit-accent='teal'] {
+  --orbit-action-primary-bg: #0f9b8e;
+  --orbit-action-primary-bg-hover: #0c7a70;
 }
 
 /* Dark theme — override semantic tokens only. */

@@ -1,0 +1,60 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { describe, expect, it } from 'vitest';
+import { OrbitIconComponent } from './icon.component';
+
+describe('OrbitIconComponent', () => {
+  let fixture: ComponentFixture<OrbitIconComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [OrbitIconComponent] }).compileComponents();
+    fixture = TestBed.createComponent(OrbitIconComponent);
+  });
+
+  it('renders one path per registry entry for the given icon', () => {
+    fixture.componentRef.setInput('name', 'close');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('renders a single path for a single-path icon', () => {
+    fixture.componentRef.setInput('name', 'check');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(1);
+  });
+
+  it('uses a 24x24 viewBox with the shared stroke contract', () => {
+    fixture.componentRef.setInput('name', 'chevron-down');
+    fixture.detectChanges();
+
+    const svg = fixture.nativeElement.querySelector('svg');
+    expect(svg.getAttribute('viewBox')).toBe('0 0 24 24');
+    expect(svg.getAttribute('stroke-width')).toBe('1.75');
+  });
+
+  it('renders normally when scaleSensitive is false, regardless of textScale', () => {
+    fixture.componentRef.setInput('name', 'calendar');
+    fixture.componentRef.setInput('textScale', 1.5);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('svg')).toBeTruthy();
+  });
+
+  it('hides a scale-sensitive icon once textScale exceeds 1.2', () => {
+    fixture.componentRef.setInput('name', 'calendar');
+    fixture.componentRef.setInput('scaleSensitive', true);
+    fixture.componentRef.setInput('textScale', 1.3);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('svg')).toBeNull();
+  });
+
+  it('keeps a non-scale-sensitive icon like check visible at any scale', () => {
+    fixture.componentRef.setInput('name', 'check');
+    fixture.componentRef.setInput('textScale', 1.5);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('svg')).toBeTruthy();
+  });
+});

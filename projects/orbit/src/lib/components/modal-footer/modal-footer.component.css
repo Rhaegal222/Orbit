@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--orbit-layout-gap-compact);
-  padding: var(--orbit-layout-gap-compact) var(--orbit-modal-padding-inline);
+  padding: var(--orbit-modal-footer-padding-block) var(--orbit-modal-padding-inline);
   border-top: 1px solid var(--orbit-border-subtle);
 }
 

@@ -83,8 +83,26 @@ Use `--orbit-layout-gap`, `--orbit-layout-gap-compact`, `--orbit-field-stack-gap
 Form grid, form sections and modal chrome consume these semantic tokens. Compact
 density overrides them together, without consumer-specific margins.
 
-`--orbit-modal-size-sm`, `--orbit-modal-size-md`, `--orbit-modal-size-lg` and
-`--orbit-modal-size-full` define the compositional widths of `orbit-modal`.
+`--orbit-modal-size-sm`, `--orbit-modal-size-md`, `--orbit-modal-size-lg`,
+`--orbit-modal-size-xl`, `--orbit-modal-size-xxl` and `--orbit-modal-size-full` define the compositional
+widths of `orbit-modal`:
+
+| Size | Default | Intended composition |
+| --- | ---: | --- |
+| `sm` | 480px | confirmation and short decisions |
+| `md` | 720px | linear operational form |
+| `lg` | 960px | dense two-column form |
+| `xl` | 1180px | workspace, detail or complex data |
+| `xxl` | 1320px | broad workspace or information-dense review |
+| `full` | 96vw, max 1440px | focused workspace |
+
+At 768px and below every size becomes full-width with a full-height mobile
+surface, so consumers do not need size-specific responsive CSS.
+
+`--orbit-modal-header-padding-block-start`,
+`--orbit-modal-header-padding-block-end` and
+`--orbit-modal-footer-padding-block` maintain equal header/footer heights: 70px
+in comfortable density and 60px in compact density at text scale `1`.
 `--orbit-section-index-size` and `--orbit-section-divider` define the numbered
 section header without requiring consumer CSS. The standard control is 42px in
 comfortable density and 38px in compact density.
@@ -107,6 +125,23 @@ The default values follow the operational visual contract: ink-based text,
 subtle borders, 10px control radius, 14px selectable tiles and 20px modal
 surfaces. Consumers can replace these semantic roles, including
 `--orbit-font-sans`, without forking component styles.
+
+## Text scale
+
+Set one unitless `--orbit-text-scale` value (supported range: `0.85`–`1.5`) on
+the application shell. Font roles derive from it and the control height, section
+index and button height follow at 80% of the text growth rate; spacing density
+does not change with text scale.
+
+```css
+.consumer-shell[data-density='large-text'] {
+  --orbit-text-scale: 1.25;
+}
+```
+
+At a scale above `1.2`, set `--orbit-optional-icon-display: none` on the same
+shell. `orbit-selectable-tile` uses it to hide its optional leading icon while
+keeping its trailing selection check visible.
 
 ## Localization
 

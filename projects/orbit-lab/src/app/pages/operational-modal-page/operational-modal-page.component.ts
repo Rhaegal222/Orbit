@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   OrbitAttachmentDropzoneComponent,
@@ -52,6 +52,7 @@ import {
   styleUrl: './operational-modal-page.component.css',
 })
 export class OperationalModalPageComponent {
+  protected readonly modalSize = signal<'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'full'>('md');
   protected readonly primaryAmount = new FormControl('842,00', { nonNullable: true });
   protected readonly secondaryAmount = new FormControl('690,16', { nonNullable: true });
 
@@ -70,4 +71,8 @@ export class OperationalModalPageComponent {
       readonly: true,
     },
   ];
+
+  protected setModalSize(size: 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'full'): void {
+    this.modalSize.set(size);
+  }
 }

@@ -37,13 +37,13 @@
 
 /* ── Tone: primary ── */
 .orbit-btn--primary {
-  --btn-bg: var(--orbit-button-primary-bg);
-  --btn-bg-hover: var(--orbit-button-primary-bg-hover);
-  --btn-text: var(--orbit-button-primary-fg);
-  --btn-border: var(--orbit-button-primary-bg);
-  --btn-soft-bg: color-mix(in srgb, var(--orbit-action-primary-bg) 14%, var(--orbit-surface-default));
-  --btn-soft-text: var(--orbit-action-primary-bg-hover);
-  --btn-soft-border: color-mix(in srgb, var(--orbit-action-primary-bg) 28%, var(--orbit-surface-default));
+  --btn-bg: var(--orbit-cta-bg);
+  --btn-bg-hover: var(--orbit-cta-bg-hover);
+  --btn-text: var(--orbit-action-primary-fg);
+  --btn-border: var(--orbit-cta-bg);
+  --btn-soft-bg: color-mix(in srgb, var(--orbit-cta-bg) 14%, var(--orbit-surface-default));
+  --btn-soft-text: var(--orbit-cta-bg-hover);
+  --btn-soft-border: color-mix(in srgb, var(--orbit-cta-bg) 28%, var(--orbit-surface-default));
 }
 
 /* ── Tone: success ── */
@@ -87,6 +87,9 @@
 }
 .orbit-btn--solid.orbit-btn--success {
   box-shadow: 0 4px 12px -2px color-mix(in srgb, var(--orbit-status-success) 40%, transparent);
+}
+.orbit-btn--solid.orbit-btn--primary {
+  box-shadow: 0 4px 12px -2px color-mix(in srgb, var(--orbit-cta-bg) 40%, transparent);
 }
 .orbit-btn--solid:hover:not(:disabled) {
   background: var(--btn-bg-hover);

@@ -1,0 +1,11 @@
+[data-example='selectable-tile'] {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--orbit-layout-gap-compact);
+}
+
+@media (max-width: 42rem) {
+  [data-example='selectable-tile'] {
+    grid-template-columns: 1fr;
+  }
+}

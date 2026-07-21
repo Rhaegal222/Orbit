@@ -12,7 +12,7 @@
 .orbit-select__input {
   width: 100%;
   height: var(--orbit-control-height);
-  padding: 0 2.5rem 0 var(--orbit-control-padding-inline);
+  padding: 0 calc(var(--orbit-control-action-size) + var(--orbit-space-2)) 0 var(--orbit-control-padding-inline);
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-raised);
@@ -67,7 +67,7 @@
   right: 0;
   display: grid;
   place-items: center;
-  width: 2.25rem;
+  width: var(--orbit-control-action-size);
   height: 100%;
   padding: 0;
   box-sizing: border-box;

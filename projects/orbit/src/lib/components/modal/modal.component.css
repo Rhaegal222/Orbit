@@ -14,12 +14,16 @@
 
 .orbit-modal--sm { width: min(100%, var(--orbit-modal-size-sm)); }
 .orbit-modal--lg { width: min(100%, var(--orbit-modal-size-lg)); }
+.orbit-modal--xl { width: min(100%, var(--orbit-modal-size-xl)); }
+.orbit-modal--xxl { width: min(100%, var(--orbit-modal-size-xxl)); }
 .orbit-modal--full { width: var(--orbit-modal-size-full); }
 
 @media (max-width: 48rem) {
   .orbit-modal,
   .orbit-modal--sm,
   .orbit-modal--lg,
+  .orbit-modal--xl,
+  .orbit-modal--xxl,
   .orbit-modal--full {
     width: 100%;
     max-height: 100dvh;

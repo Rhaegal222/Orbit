@@ -42,4 +42,10 @@ describe('SelectPageComponent', () => {
       '<orbit-select',
     );
   });
+
+  it('maps selectable tiles with interactive and disabled states', () => {
+    const tiles = fixture.nativeElement.querySelectorAll('[data-example="selectable-tile"] orbit-selectable-tile');
+    expect(tiles.length).toBe(3);
+    expect(tiles[2].querySelector('button').disabled).toBe(true);
+  });
 });

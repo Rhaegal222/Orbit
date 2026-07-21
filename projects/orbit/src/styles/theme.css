@@ -3,11 +3,11 @@
 /* Tailwind utilities resolve to the same semantic values used by Orbit. */
 @theme {
   --font-orbit: var(--orbit-font-sans);
-  --text-orbit-xs: var(--orbit-ref-font-size-xs);
-  --text-orbit-sm: var(--orbit-ref-font-size-sm);
+  --text-orbit-xs: var(--orbit-font-size-xs);
+  --text-orbit-sm: var(--orbit-font-size-sm);
   --text-orbit-base: var(--orbit-font-size-body);
-  --text-orbit-lg: var(--orbit-ref-font-size-lg);
-  --text-orbit-xl: var(--orbit-ref-font-size-xl);
+  --text-orbit-lg: var(--orbit-font-size-lg);
+  --text-orbit-xl: var(--orbit-font-size-xl);
   --color-orbit-canvas: var(--orbit-surface-canvas);
   --color-orbit-surface: var(--orbit-surface-default);
   --color-orbit-surface-subtle: var(--orbit-surface-subtle);

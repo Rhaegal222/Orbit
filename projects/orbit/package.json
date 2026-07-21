@@ -1,6 +1,6 @@
 {
   "name": "@galileo/orbit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reusable UI foundations and design tokens for Galileo applications.",
   "license": "UNLICENSED",
   "private": false,

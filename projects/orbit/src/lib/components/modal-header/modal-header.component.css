@@ -26,8 +26,8 @@
 .orbit-modal-header__lead {
   display: grid;
   place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: var(--orbit-header-icon-surface-size);
+  height: var(--orbit-header-icon-surface-size);
   flex: 0 0 auto;
   border-radius: var(--orbit-radius-icon-surface);
   background: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-default));
@@ -39,8 +39,8 @@
 }
 
 .orbit-modal-header__lead ::ng-deep svg {
-  width: 1.375rem;
-  height: 1.375rem;
+  width: var(--orbit-header-icon-size);
+  height: var(--orbit-header-icon-size);
 }
 
 .orbit-modal-header__spinner {
@@ -60,7 +60,7 @@
 .orbit-modal-header__title {
   margin: 0;
   font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-lg);
+  font-size: var(--orbit-font-size-title);
   font-weight: var(--orbit-font-weight-emphasis);
   line-height: var(--orbit-line-height-body);
   color: var(--orbit-text-primary);

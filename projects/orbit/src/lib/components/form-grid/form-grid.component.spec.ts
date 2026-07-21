@@ -8,7 +8,7 @@ import { OrbitFormGridItemDirective } from './form-grid-item.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [OrbitFormGridComponent, OrbitFormGridItemDirective],
   template: `
-    <orbit-form-grid density="compact">
+    <orbit-form-grid density="compact" layout="single">
       <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">Campo</div>
     </orbit-form-grid>
   `,
@@ -31,6 +31,7 @@ describe('OrbitFormGridComponent', () => {
     const grid = fixture.nativeElement.querySelector('orbit-form-grid') as HTMLElement;
 
     expect(grid.classList).toContain('orbit-form-grid--compact');
+    expect(grid.classList).toContain('orbit-form-grid--single');
   });
 
   it('maps responsive spans to host CSS custom properties', () => {

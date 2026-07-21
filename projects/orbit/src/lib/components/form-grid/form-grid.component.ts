@@ -7,9 +7,13 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   styleUrl: './form-grid.component.css',
   host: {
     '[class.orbit-form-grid--compact]': "density() === 'compact'",
+    '[class.orbit-form-grid--single]': "layout() === 'single'",
+    '[class.orbit-form-grid--7-5]': "layout() === '7-5'",
   },
 })
 export class OrbitFormGridComponent {
   /** Overrides density for this grid without changing the surrounding form. */
   density = input<'inherit' | 'comfortable' | 'compact'>('inherit');
+  /** Controls the projected `[primary]` / `[secondary]` composition. */
+  layout = input<'auto' | 'single' | '7-5'>('auto');
 }

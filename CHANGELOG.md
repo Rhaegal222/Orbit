@@ -19,3 +19,9 @@ All notable changes to Galileo Orbit are documented here.
 - `orbit-text-input` now supports native `readonly` and a semantic `success` tone; form action bars can expose a generic status label.
 - Rebased Core visual tokens on the operational refresh contract (ink palette, typography, 42px/38px controls, 10px/14px/20px radii and modal elevation).
 - `orbit-selectable-tile` accepts an optional projected SVG icon through `[orbitSelectableTileIcon]`.
+- Added the single `--orbit-text-scale` contract; type roles and fixed text containers scale from it coherently.
+- Applied the text-scale contract to Orbit Lab typography and Tailwind theme utilities; Lab chrome now inherits the selected scale too.
+- Formalized `orbit-modal` sizes: `sm` (480px), `md` (720px), `lg` (960px), `xl` (1180px), `xxl` (1320px) and `full`.
+- Added accent, CTA and font-family token swatches; primary button CTAs can now be themed independently from the accent color.
+- Added `orbit-icon`, with a four-icon starter registry and optional scale-sensitive rendering.
+- Added selected-tile pop-in and attachment-list-item hover feedback.

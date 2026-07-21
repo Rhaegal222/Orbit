@@ -28,6 +28,28 @@
   </section>
 
   <section>
+    <h2>Tile selezionabile</h2>
+    <p>Alternativa visiva per una scelta discreta, quando l’opzione beneficia di etichetta, icona o descrizione.</p>
+    <lab-example [code]="tileSnippet">
+      <div data-example="selectable-tile">
+        <orbit-selectable-tile
+          label="Opzione con icona"
+          description="La selezione è controllata dal consumer."
+          [selected]="tileSelected()"
+          (selectedChange)="tileSelected.set($event)"
+        >
+          <svg orbitSelectableTileIcon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 4.5 6v5.6c0 4.6 3 7.6 7.5 9.4 4.5-1.8 7.5-4.8 7.5-9.4V6L12 3Z" />
+            <path d="m8.8 12 2.1 2.1 4.4-4.4" />
+          </svg>
+        </orbit-selectable-tile>
+        <orbit-selectable-tile label="Selezionata" [selected]="true" />
+        <orbit-selectable-tile label="Disabilitata" [selected]="true" disabled />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
     <h2>Stati</h2>
     <lab-example [code]="invalidSnippet">
       <div data-example="invalid">

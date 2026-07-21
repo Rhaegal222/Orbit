@@ -2,7 +2,23 @@
   <h1>Operational modal</h1>
   <p>Composizione neutra che riproduce densità, gerarchia e layout del riferimento.</p>
 
-  <orbit-modal labelledBy="operational-modal-title" size="md">
+  <div class="operational-modal__toolbar">
+    <label for="operational-modal-size">Dimensione modale</label>
+    <select
+      id="operational-modal-size"
+      [value]="modalSize()"
+      (change)="setModalSize($any($event.target).value)"
+    >
+      <option value="sm">SM · 480px</option>
+      <option value="md">MD · 720px</option>
+      <option value="lg">LG · 960px</option>
+      <option value="xl">XL · 1180px</option>
+      <option value="xxl">XXL · 1320px</option>
+      <option value="full">Full · 96vw</option>
+    </select>
+  </div>
+
+  <orbit-modal labelledBy="operational-modal-title" [size]="modalSize()">
     <orbit-modal-header
       titleId="operational-modal-title"
       title="Crea configurazione"
@@ -15,7 +31,7 @@
     </orbit-modal-header>
 
     <orbit-modal-body>
-      <orbit-form-grid>
+      <orbit-form-grid [layout]="modalSize() === 'sm' ? 'single' : '7-5'">
         <div primary class="operational-modal__column">
           <orbit-form-section [index]="1" title="Informazioni principali" [contentSpacing]="true">
             <orbit-form-grid>

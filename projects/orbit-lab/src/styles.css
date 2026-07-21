@@ -12,13 +12,15 @@ body {
 
 body {
   font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-body);
+  line-height: var(--orbit-line-height-body);
   color: var(--orbit-text-primary);
   background: var(--orbit-surface-canvas);
 }
 
 .lab-shell__content article > h1 {
   margin: 0 0 var(--orbit-ref-space-2);
-  font-size: 1.5rem;
+  font-size: var(--orbit-font-size-display);
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-primary);
 }
@@ -35,14 +37,14 @@ body {
 
 .lab-shell__content article section h2 {
   margin: 0 0 var(--orbit-ref-space-3);
-  font-size: var(--orbit-ref-font-size-lg);
+  font-size: var(--orbit-font-size-subtitle);
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-primary);
 }
 
 .lab-shell__content article section h3 {
   margin: var(--orbit-ref-space-4) 0 var(--orbit-ref-space-2);
-  font-size: var(--orbit-ref-font-size-sm);
+  font-size: var(--orbit-font-size-label);
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-secondary);
   text-transform: uppercase;

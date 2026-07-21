@@ -25,6 +25,13 @@ describe('LabShellComponent', () => {
     expect(links.length).toBe(CATALOG_ENTRIES.length);
   });
 
+  it('renders the static technical-catalog context in the sidebar', () => {
+    const navigation = fixture.nativeElement.querySelector('nav[aria-label="Catalogo Orbit"]');
+
+    expect(navigation.textContent).toContain('Catalogo tecnico');
+    expect(navigation.textContent).toContain('Orbit Core');
+  });
+
   it('defaults to default theme and comfortable density', () => {
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
     expect(container.getAttribute('data-orbit-theme')).toBeNull();
@@ -43,5 +50,20 @@ describe('LabShellComponent', () => {
     fixture.detectChanges();
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
     expect(container.getAttribute('data-orbit-density')).toBe('compact');
+  });
+
+  it('applies one text-scale value to the Lab surface', () => {
+    fixture.componentInstance.setTextScale('1.25');
+    fixture.detectChanges();
+    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
+    expect(container.style.getPropertyValue('--orbit-text-scale')).toBe('1.25');
+    expect(container.style.getPropertyValue('--orbit-optional-icon-display')).toBe('none');
+  });
+
+  it('applies the selected font stack to the Lab surface', () => {
+    fixture.componentInstance.setFont('inter');
+    fixture.detectChanges();
+    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
+    expect(container.style.getPropertyValue('--orbit-font-sans')).toContain('Inter');
   });
 });

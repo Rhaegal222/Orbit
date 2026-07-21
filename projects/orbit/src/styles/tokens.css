@@ -77,6 +77,8 @@
   --orbit-action-primary-bg: var(--orbit-ref-brand-500);
   --orbit-action-primary-bg-hover: var(--orbit-ref-brand-600);
   --orbit-action-primary-fg: var(--orbit-ref-neutral-0);
+  --orbit-cta-bg: var(--orbit-status-success);
+  --orbit-cta-bg-hover: color-mix(in srgb, var(--orbit-status-success) 82%, black);
   --orbit-status-success: var(--orbit-ref-success-600);
   --orbit-status-success-subtle: var(--orbit-ref-success-100);
   --orbit-status-danger: var(--orbit-ref-danger-600);
@@ -109,8 +111,9 @@
   --orbit-section-gap: 1.625rem;
   --orbit-modal-padding-inline: 2rem;
   --orbit-modal-padding-block: 1.375rem;
-  --orbit-modal-header-padding-block-start: 1.625rem;
-  --orbit-modal-header-padding-block-end: 1.25rem;
+  --orbit-modal-header-padding-block-start: 0.875rem;
+  --orbit-modal-header-padding-block-end: 0.75rem;
+  --orbit-modal-footer-padding-block: 0.875rem;
   --orbit-radius-tile: 0.875rem;
   --orbit-radius-icon-surface: 0.75rem;
   --orbit-dropzone-padding-block: 1.375rem;
@@ -126,6 +129,7 @@
   --orbit-modal-size-md: 45rem;
   --orbit-modal-size-lg: 60rem;
   --orbit-modal-size-xl: 73.75rem;
+  --orbit-modal-size-xxl: 82.5rem;
   --orbit-modal-size-full: min(96vw, 90rem);
   --orbit-section-index-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
   --orbit-section-divider: var(--orbit-border-subtle);
@@ -134,6 +138,7 @@
   --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
   --orbit-header-icon-surface-size: calc(0.55rem + (2.2rem * var(--orbit-text-scale)));
   --orbit-header-icon-size: calc(0.275rem + (1.1rem * var(--orbit-text-scale)));
+  --orbit-optional-icon-display: grid;
   --orbit-control-padding-inline: var(--orbit-ref-space-3);
   --orbit-overlay-backdrop: rgb(18 21 28 / 42%);
   --orbit-z-overlay: 1040;
@@ -197,8 +202,9 @@
   --orbit-section-gap: 1.125rem;
   --orbit-modal-padding-inline: var(--orbit-ref-space-4);
   --orbit-modal-padding-block: 1rem;
-  --orbit-modal-header-padding-block-start: 1.125rem;
-  --orbit-modal-header-padding-block-end: 1rem;
+  --orbit-modal-header-padding-block-start: 0.625rem;
+  --orbit-modal-header-padding-block-end: 0.625rem;
+  --orbit-modal-footer-padding-block: 0.6875rem;
 }
 
 /* Accent swatch — curated options only, no free color picker. Default (blue) lives on :root. */
@@ -210,6 +216,24 @@
 [data-orbit-accent='teal'] {
   --orbit-action-primary-bg: #0f9b8e;
   --orbit-action-primary-bg-hover: #0c7a70;
+}
+
+[data-orbit-cta='blue'] {
+  --orbit-cta-bg: var(--orbit-action-primary-bg);
+  --orbit-cta-bg-hover: var(--orbit-action-primary-bg-hover);
+}
+
+[data-orbit-cta='ink'] {
+  --orbit-cta-bg: var(--orbit-ref-neutral-900);
+  --orbit-cta-bg-hover: color-mix(in srgb, var(--orbit-ref-neutral-900) 82%, black);
+}
+
+[data-orbit-font='inter'] {
+  --orbit-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+[data-orbit-font='system'] {
+  --orbit-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Dark theme — override semantic tokens only. */

@@ -88,10 +88,10 @@
   display: grid;
   place-items: center;
   align-self: stretch;
-  flex: 0 0 2.125rem;
+  flex: 0 0 var(--orbit-control-adornment-size);
   border-right: 1px solid var(--orbit-border-subtle);
   color: var(--orbit-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--orbit-font-size-lg);
 }
 
 .orbit-input__symbol {
@@ -104,17 +104,17 @@
   display: grid;
   place-items: center;
   align-self: stretch;
-  flex: 0 0 2.125rem;
+  flex: 0 0 var(--orbit-control-adornment-size);
   border-left: 1px solid var(--orbit-border-subtle);
   color: var(--orbit-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--orbit-font-size-lg);
 }
 
 /* ── Trailing action button ── */
 .orbit-input__action {
   display: grid;
   place-items: center;
-  flex: 0 0 2rem;
+  flex: 0 0 var(--orbit-control-action-size);
   align-self: stretch;
   border: 0;
   border-left: 1px solid var(--orbit-border-subtle);
@@ -125,8 +125,8 @@
 }
 
 .orbit-input__password-icon {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: var(--orbit-font-size-lg);
+  height: var(--orbit-font-size-lg);
 }
 
 .orbit-input__action:hover:not(:disabled) {

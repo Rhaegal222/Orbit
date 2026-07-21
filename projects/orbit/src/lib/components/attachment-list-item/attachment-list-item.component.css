@@ -11,6 +11,10 @@
   font-family: var(--orbit-font-sans);
 }
 
+:host(:hover) {
+  background: var(--orbit-surface-subtle);
+}
+
 .orbit-attachment-list-item__marker {
   display: grid;
   place-items: center;

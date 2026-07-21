@@ -2,6 +2,33 @@
   display: block;
 }
 
+.operational-modal__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--orbit-space-2);
+  margin-block-end: var(--orbit-layout-gap);
+  color: var(--orbit-text-label);
+  font-size: var(--orbit-font-size-sm);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.operational-modal__toolbar select {
+  min-height: var(--orbit-control-height);
+  padding-inline: var(--orbit-control-padding-inline);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+  font: inherit;
+}
+
+.operational-modal__toolbar select:focus-visible {
+  outline: 0;
+  border-color: var(--orbit-action-primary-bg);
+  box-shadow: var(--orbit-focus-ring);
+}
+
 .operational-modal__column {
   display: flex;
   min-width: 0;

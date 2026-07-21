@@ -25,6 +25,7 @@ export * from './lib/components/form-action-bar';
 export * from './lib/components/tooltip';
 export * from './lib/components/popover';
 export * from './lib/components/code-block';
+export * from './lib/icons';
 export * from './lib/services/dialog';
 export * from './lib/i18n';
 export * from './lib/services/clipboard';

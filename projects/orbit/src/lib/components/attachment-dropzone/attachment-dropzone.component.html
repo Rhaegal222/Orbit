@@ -1,0 +1,29 @@
+<div
+  class="orbit-drop__zone"
+  [class.orbit-drop__zone--drag]="isDragOver()"
+  [class.orbit-drop__zone--disabled]="disabled()"
+  (dragenter)="onDragEnter($event)"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  (click)="onZoneClick()"
+  role="button"
+  tabindex="0"
+  [attr.aria-disabled]="disabled()"
+>
+  <svg viewBox="0 0 48 48" fill="none" class="orbit-drop__icon">
+    <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2"/>
+    <path d="M24 18v12M18 24h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <span class="orbit-drop__label">Trascina i file qui oppure clicca per sfogliare</span>
+  <span class="orbit-drop__hint">{{ hint() }}</span>
+</div>
+
+<input
+  #fileInput
+  type="file"
+  class="orbit-drop__input"
+  [accept]="accept()"
+  [multiple]="multiple()"
+  (change)="onInputChange($event)"
+/>

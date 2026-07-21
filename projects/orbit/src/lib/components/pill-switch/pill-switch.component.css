@@ -1,0 +1,60 @@
+:host {
+  display: block;
+}
+
+.orbit-pill-switch {
+  display: inline-flex;
+  height: var(--orbit-control-height);
+  max-width: 100%;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--orbit-color-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-color-surface-muted);
+}
+
+.orbit-pill-switch--disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.orbit-pill-switch__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--orbit-control-height) - 8px);
+  min-width: 0;
+  border: 0;
+  border-radius: var(--orbit-radius-sm);
+  padding: 0 0.625rem;
+  background: transparent;
+  color: var(--orbit-color-text-muted);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-bold);
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.orbit-pill-switch__option:hover:not(:disabled) {
+  color: var(--orbit-color-text);
+}
+
+.orbit-pill-switch__option:focus-visible {
+  outline: 2px solid var(--orbit-color-border-focus);
+  outline-offset: 1px;
+}
+
+.orbit-pill-switch__option--selected {
+  background: var(--orbit-color-surface);
+  color: var(--orbit-color-primary);
+  box-shadow: var(--orbit-shadow-sm);
+}
+
+.orbit-pill-switch__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

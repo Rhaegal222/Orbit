@@ -1,0 +1,119 @@
+:host {
+  display: block;
+}
+
+.orbit-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--orbit-control-height);
+  border: 1px solid var(--orbit-color-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-color-surface);
+  font-family: var(--orbit-font-family);
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.orbit-input:focus-within {
+  border-color: var(--orbit-color-border-focus);
+  box-shadow: var(--orbit-shadow-focus);
+}
+
+/* ── Invalid ── */
+:host(.orbit-input--invalid) .orbit-input,
+.orbit-input--invalid {
+  border-color: var(--orbit-color-danger);
+}
+:host(.orbit-input--invalid) .orbit-input:focus-within,
+.orbit-input--invalid:focus-within {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* ── Disabled ── */
+:host(.orbit-input--disabled) .orbit-input,
+.orbit-input--disabled {
+  background: var(--orbit-color-surface-muted);
+  pointer-events: none;
+}
+
+/* ── Control ── */
+.orbit-input__control {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--orbit-control-padding-x);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--orbit-color-text);
+  font: inherit;
+  font-size: var(--orbit-font-size-base);
+  line-height: 1.25;
+  cursor: text;
+}
+
+.orbit-input__control::placeholder {
+  color: var(--orbit-color-text-muted);
+}
+
+.orbit-input__control:disabled {
+  cursor: not-allowed;
+  color: var(--orbit-color-text-muted);
+}
+
+/* ── Leading icon / symbol ── */
+.orbit-input__icon--leading,
+.orbit-input__symbol {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  flex: 0 0 2.125rem;
+  border-right: 1px solid var(--orbit-color-border);
+  color: var(--orbit-color-text-muted);
+  font-size: 0.875rem;
+}
+
+.orbit-input__symbol {
+  font-style: normal;
+  font-weight: var(--orbit-font-weight-semibold);
+}
+
+/* ── Trailing icon ── */
+.orbit-input__icon--trailing {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  flex: 0 0 2.125rem;
+  border-left: 1px solid var(--orbit-color-border);
+  color: var(--orbit-color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ── Trailing action button ── */
+.orbit-input__action {
+  display: grid;
+  place-items: center;
+  flex: 0 0 2rem;
+  align-self: stretch;
+  border: 0;
+  border-left: 1px solid var(--orbit-color-border);
+  background: transparent;
+  color: var(--orbit-color-text-muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.orbit-input__action:hover:not(:disabled) {
+  background: var(--orbit-color-surface-muted);
+  color: var(--orbit-color-primary);
+}
+
+.orbit-input__action:focus-visible {
+  outline: 2px solid var(--orbit-color-border-focus);
+  outline-offset: -2px;
+}
+
+.orbit-input__action:disabled {
+  cursor: not-allowed;
+}

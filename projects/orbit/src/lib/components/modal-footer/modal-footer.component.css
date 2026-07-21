@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.orbit-modal-footer__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--orbit-space-3);
+  padding: var(--orbit-space-4) var(--orbit-space-5);
+  border-top: 1px solid var(--orbit-color-border-subtle);
+}
+
+:host(.orbit-modal-footer--form) {
+  background: var(--orbit-color-surface-muted);
+}

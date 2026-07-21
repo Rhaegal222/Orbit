@@ -11,7 +11,7 @@ Use semantic versioning and release only from a protected `vX.Y.Z` tag.
 Before tagging, update `package.json` and `CHANGELOG.md`, then run:
 
 ```bash
-npm run release:check
+npm run check
 ```
 
 ## CI publication
@@ -38,4 +38,4 @@ Consumers configure the scoped group registry in `.npmrc`:
 
 ## Angular components
 
-When Angular components are introduced, build them with `ng-packagr` in partial-Ivy mode and list Angular packages in `peerDependencies`. Publish Angular adapters as explicit entry points rather than bundling optional dependencies into the token package.
+Angular components are built with `ng-packagr` in partial-Ivy mode and Angular packages remain peer dependencies. Keep the public API simple: JavaScript and Angular symbols come from `@galileo/orbit`; styles come from the optional `@galileo/orbit/styles` import.

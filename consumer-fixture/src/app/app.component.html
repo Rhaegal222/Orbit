@@ -1,0 +1,142 @@
+<h1>Orbit Consumer Fixture</h1>
+<p>Verifica che tutti i componenti vengano importati e renderizzati correttamente da <code>@galileo/orbit</code>.</p>
+
+<section>
+  <h2>Button</h2>
+  <orbit-button label="Primario" tone="primary" />
+  <orbit-button label="Successo" tone="success" />
+  <orbit-button label="Pericolo" tone="danger" />
+  <orbit-button label="Neutro" tone="neutral" variant="outline" />
+  <orbit-button label="Loading" tone="primary" [loading]="true" />
+  <orbit-button label="Disabilitato" tone="primary" [disabled]="true" />
+</section>
+
+<section>
+  <h2>Badge</h2>
+  <orbit-badge label="Primario" tone="primary" />
+  <orbit-badge label="Successo" tone="success" />
+  <orbit-badge label="Pericolo" tone="danger" />
+  <orbit-badge label="Warning" tone="warning" />
+  <orbit-badge label="Info" tone="info" />
+  <orbit-badge label="Neutro" tone="neutral" />
+</section>
+
+<section>
+  <h2>Checkbox</h2>
+  <orbit-checkbox label="Accetto i termini" inputId="termini" />
+</section>
+
+<section>
+  <h2>TextInput</h2>
+  <orbit-form-field label="Nome" inputId="nome" hint="Il tuo nome" required>
+    <orbit-text-input inputId="nome" placeholder="Inserisci nome" />
+  </orbit-form-field>
+  <orbit-form-field label="Email" inputId="email">
+    <orbit-text-input inputId="email" type="email" placeholder="email@example.com" />
+  </orbit-form-field>
+  <orbit-form-field label="Importo" inputId="importo">
+    <orbit-text-input inputId="importo" type="currency" />
+  </orbit-form-field>
+</section>
+
+<section>
+  <h2>Select</h2>
+  <orbit-form-field label="Paese" inputId="paese">
+    <orbit-select
+      inputId="paese"
+      placeholder="Scegli paese"
+      [options]="[
+        { label: 'Italia', value: 'IT' },
+        { label: 'Francia', value: 'FR' },
+        { label: 'Germania', value: 'DE' }
+      ]"
+    />
+  </orbit-form-field>
+</section>
+
+<section>
+  <h2>Autocomplete</h2>
+  <orbit-form-field label="Citta" inputId="citta">
+    <orbit-autocomplete
+      inputId="citta"
+      placeholder="Cerca citta..."
+      [options]="[
+        { label: 'Roma', value: 'RM' },
+        { label: 'Milano', value: 'MI' },
+        { label: 'Napoli', value: 'NA' },
+        { label: 'Torino', value: 'TO' }
+      ]"
+    />
+  </orbit-form-field>
+</section>
+
+<section>
+  <h2>DatePicker</h2>
+  <orbit-form-field label="Data inizio" inputId="dataInizio">
+    <orbit-date-picker />
+  </orbit-form-field>
+</section>
+
+<section>
+  <h2>TimePicker</h2>
+  <orbit-form-field label="Orario" inputId="orario">
+    <orbit-time-picker [stepMinutes]="15" />
+  </orbit-form-field>
+</section>
+
+<section>
+  <h2>AttachmentDropzone</h2>
+  <orbit-attachment-dropzone hint="Trascina i file qui (max 10MB)" />
+</section>
+
+<section>
+  <h2>PillSwitch</h2>
+  <orbit-pill-switch
+    [options]="[
+      { label: 'Mensile', value: 'monthly' },
+      { label: 'Annuale', value: 'yearly' }
+    ]"
+  />
+</section>
+
+<section>
+  <h2>FormSection + FormGrid</h2>
+  <orbit-form-section title="Dati polizza" [divided]="true">
+    <orbit-form-grid>
+      <orbit-form-field label="Compagnia" inputId="compagnia" required>
+        <orbit-text-input inputId="compagnia" placeholder="Nome compagnia" />
+      </orbit-form-field>
+      <orbit-form-field label="Periodicita" inputId="periodicita">
+        <orbit-select
+          inputId="periodicita"
+          [options]="[
+            { label: 'Mensile', value: 'M' },
+            { label: 'Annuale', value: 'A' }
+          ]"
+        />
+      </orbit-form-field>
+    </orbit-form-grid>
+  </orbit-form-section>
+</section>
+
+<section>
+  <h2>Modal Chrome (statico)</h2>
+  <div style="border: 1px solid #ccc; border-radius: 8px; max-width: 560px; overflow: hidden;">
+    <orbit-modal-header title="Titolo modale" subtitle="Sottotitolo opzionale" />
+    <orbit-modal-body>
+      <p>Contenuto della modale.</p>
+    </orbit-modal-body>
+    <orbit-modal-footer>
+      <orbit-form-action-bar
+        cancelLabel="ANNULLA"
+        draftLabel="SALVA BOZZA"
+        confirmLabel="CONFERMA"
+      />
+    </orbit-modal-footer>
+  </div>
+</section>
+
+<section>
+  <h2>FormActionBar</h2>
+  <orbit-form-action-bar />
+</section>

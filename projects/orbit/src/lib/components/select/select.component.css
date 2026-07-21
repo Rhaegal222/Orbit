@@ -1,0 +1,155 @@
+:host {
+  display: block;
+}
+
+.orbit-select__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Input ── */
+.orbit-select__input {
+  width: 100%;
+  height: var(--orbit-control-height);
+  padding: 0 2.5rem 0 var(--orbit-control-padding-x);
+  border: 1px solid var(--orbit-color-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-color-surface);
+  color: var(--orbit-color-text);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-base);
+  line-height: 1.25;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.orbit-select__input--searchable {
+  cursor: text;
+}
+
+.orbit-select__input::placeholder {
+  color: var(--orbit-color-text-muted);
+}
+
+.orbit-select__input:disabled {
+  cursor: not-allowed;
+  background: var(--orbit-color-surface-muted);
+  color: var(--orbit-color-text-muted);
+}
+
+.orbit-select__input:focus {
+  outline: 0;
+  border-color: var(--orbit-color-border-focus);
+  box-shadow: var(--orbit-shadow-focus);
+}
+
+/* ── Invalid ── */
+:host(.orbit-select--invalid) .orbit-select__input {
+  border-color: var(--orbit-color-danger);
+}
+:host(.orbit-select--invalid) .orbit-select__input:focus {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* ── Disabled ── */
+:host(.orbit-select--disabled) .orbit-select__wrapper {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ── Toggle ── */
+.orbit-select__toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--orbit-color-border);
+  border-radius: 0 var(--orbit-radius-control) var(--orbit-radius-control) 0;
+  background: transparent;
+  color: var(--orbit-color-text-muted);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.orbit-select__toggle:hover:not(:disabled) {
+  background: var(--orbit-color-surface-muted);
+  color: var(--orbit-color-primary);
+}
+
+.orbit-select__toggle:focus-visible {
+  outline: 2px solid var(--orbit-color-border-focus);
+  outline-offset: -2px;
+}
+
+.orbit-select__toggle:disabled {
+  cursor: not-allowed;
+  color: var(--orbit-color-text-muted);
+}
+
+.orbit-select__chevron {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.15s ease;
+}
+
+.orbit-select__chevron--open {
+  transform: rotate(180deg);
+}
+
+/* ── Menu ── */
+.orbit-select__menu {
+  position: absolute;
+  z-index: var(--orbit-z-modal, 1050);
+  top: calc(100% + 0.25rem);
+  left: 0;
+  right: 0;
+  max-height: 13.5rem;
+  padding: 0.25rem;
+  overflow-y: auto;
+  border: 1px solid var(--orbit-color-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-color-surface);
+  box-shadow: var(--orbit-shadow-lg);
+}
+
+.orbit-select__option {
+  display: block;
+  width: 100%;
+  min-height: 2rem;
+  padding: 0 var(--orbit-space-2);
+  border: 0;
+  border-radius: var(--orbit-radius-sm);
+  background: transparent;
+  color: var(--orbit-color-text);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-base);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.orbit-select__option:hover:not(:disabled),
+.orbit-select__option--active:not(:disabled),
+.orbit-select__option--selected:not(:disabled) {
+  background: var(--orbit-color-primary-subtle);
+  color: var(--orbit-color-primary);
+}
+
+.orbit-select__option:disabled {
+  cursor: not-allowed;
+  color: var(--orbit-color-text-muted);
+  opacity: 0.55;
+}
+
+.orbit-select__empty {
+  margin: 0;
+  padding: var(--orbit-space-1) var(--orbit-space-2);
+  color: var(--orbit-color-text-muted);
+  font-size: var(--orbit-font-size-base);
+}

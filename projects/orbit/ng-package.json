@@ -1,0 +1,25 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/orbit-new",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "cssUrl": "inline"
+  },
+  "assets": [
+    {
+      "glob": "**/*.css",
+      "input": "src/styles",
+      "output": "styles"
+    },
+    {
+      "glob": "README.md",
+      "input": ".",
+      "output": "."
+    },
+    {
+      "glob": "LICENSE",
+      "input": ".",
+      "output": "."
+    }
+  ]
+}

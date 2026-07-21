@@ -1,0 +1,54 @@
+:host {
+  display: block;
+  flex: 1;
+  min-height: 0;
+}
+
+.orbit-modal-body__scroll {
+  position: relative;
+  overflow-y: auto;
+  padding: var(--orbit-space-5);
+  min-height: 4rem;
+}
+
+.orbit-modal-body__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--orbit-space-3);
+  background: var(--orbit-color-surface);
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.orbit-modal-body__loader--small {
+  background: transparent;
+  opacity: 1;
+}
+
+.orbit-modal-body__spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--orbit-color-border);
+  border-top-color: var(--orbit-color-primary);
+  border-radius: 50%;
+  animation: orbit-spin 0.6s linear infinite;
+}
+
+.orbit-modal-body__loader--small .orbit-modal-body__spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+.orbit-modal-body__loader-text {
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-sm);
+  color: var(--orbit-color-text-muted);
+}

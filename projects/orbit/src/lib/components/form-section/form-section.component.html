@@ -1,0 +1,12 @@
+<section
+  class="orbit-form-section"
+  [class.orbit-form-section--divided]="divided()"
+  [class.orbit-form-section--content-spaced]="contentSpacing()"
+>
+  @if (title()) {
+    <h6 class="orbit-form-section__title">{{ title() }}</h6>
+  }
+  <div class="orbit-form-section__body">
+    <ng-content />
+  </div>
+</section>

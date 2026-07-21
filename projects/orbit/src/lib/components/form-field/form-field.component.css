@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.orbit-form-field__label {
+  display: block;
+  margin-bottom: var(--orbit-space-1);
+  color: var(--orbit-color-text);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-sm);
+  font-weight: var(--orbit-font-weight-semibold);
+  line-height: 1.35;
+}
+
+.orbit-form-field__required {
+  color: var(--orbit-color-danger);
+  margin-left: 0.125rem;
+}
+
+.orbit-form-field__control {
+  display: block;
+}
+
+.orbit-form-field__hint {
+  margin: var(--orbit-space-1) 0 0;
+  color: var(--orbit-color-text-muted);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-xs);
+  line-height: 1.35;
+}
+
+.orbit-form-field__error {
+  margin: var(--orbit-space-1) 0 0;
+  color: var(--orbit-color-danger);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-xs);
+  line-height: 1.35;
+}
+
+.orbit-form-field--disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}

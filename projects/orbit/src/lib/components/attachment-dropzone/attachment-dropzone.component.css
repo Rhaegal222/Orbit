@@ -1,0 +1,72 @@
+:host {
+  display: block;
+}
+
+.orbit-drop__zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-6);
+  border: 2px dashed var(--orbit-color-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-color-surface-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.orbit-drop__zone:hover:not(.orbit-drop__zone--disabled) {
+  border-color: var(--orbit-color-primary);
+  background: var(--orbit-color-primary-subtle);
+}
+
+.orbit-drop__zone--drag:not(.orbit-drop__zone--disabled) {
+  border-color: var(--orbit-color-primary);
+  background: var(--orbit-color-primary-subtle);
+  border-style: solid;
+}
+
+.orbit-drop__zone--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.orbit-drop__icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--orbit-color-text-muted);
+}
+
+.orbit-drop__zone:hover:not(.orbit-drop__zone--disabled) .orbit-drop__icon,
+.orbit-drop__zone--drag:not(.orbit-drop__zone--disabled) .orbit-drop__icon {
+  color: var(--orbit-color-primary);
+}
+
+.orbit-drop__label {
+  color: var(--orbit-color-text);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-align: center;
+}
+
+.orbit-drop__hint {
+  color: var(--orbit-color-text-muted);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-xs);
+  text-align: center;
+}
+
+.orbit-drop__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

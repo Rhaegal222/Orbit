@@ -1,0 +1,47 @@
+:host {
+  display: inline-flex;
+}
+
+.orbit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 1.375rem;
+  padding: 0 0.5rem;
+  border-radius: var(--orbit-radius-full);
+  font-family: var(--orbit-font-family);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-semibold);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.orbit-badge--primary {
+  background: var(--orbit-color-primary-subtle);
+  color: var(--orbit-color-primary-strong);
+}
+
+.orbit-badge--success {
+  background: var(--orbit-color-success-subtle);
+  color: #157347;
+}
+
+.orbit-badge--danger {
+  background: var(--orbit-color-danger-subtle);
+  color: #b02a37;
+}
+
+.orbit-badge--warning {
+  background: var(--orbit-color-warning-subtle);
+  color: #664d03;
+}
+
+.orbit-badge--info {
+  background: var(--orbit-color-info-subtle);
+  color: #055160;
+}
+
+.orbit-badge--neutral {
+  background: var(--orbit-color-neutral-subtle);
+  color: #41464b;
+}

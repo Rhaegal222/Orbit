@@ -1,0 +1,51 @@
+<div class="orbit-select__wrapper">
+  <input
+    type="text"
+    class="orbit-select__input"
+    [class.orbit-select__input--searchable]="searchable()"
+    [id]="inputId() || null"
+    [placeholder]="placeholder()"
+    [value]="inputText()"
+    [readonly]="!searchable()"
+    [disabled]="isDisabled()"
+    [required]="required()"
+    (input)="onInputChange($any($event.target).value)"
+    (focus)="onFocus()"
+    (click)="onInputClick()"
+    (blur)="onBlur()"
+    (keydown)="onKeydown($event)"
+  />
+  <button
+    type="button"
+    class="orbit-select__toggle"
+    [disabled]="isDisabled()"
+    aria-label="Apri elenco"
+    (mousedown)="$event.preventDefault()"
+    (click)="onToggleClick()"
+  >
+    <svg class="orbit-select__chevron" [class.orbit-select__chevron--open]="isOpen()" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  @if (isOpen() && !isDisabled()) {
+    <div class="orbit-select__menu" role="listbox" [attr.aria-labelledby]="inputId() || null">
+      @for (option of filteredOptions; track option.value; let i = $index) {
+        <button
+          type="button"
+          class="orbit-select__option"
+          [class.orbit-select__option--selected]="option.value === selectedValue()"
+          [class.orbit-select__option--active]="i === activeIndex()"
+          [disabled]="option.disabled"
+          (mousedown)="$event.preventDefault()"
+          (click)="onOptionSelect(option)"
+        >
+          {{ option.label }}
+        </button>
+      }
+      @if (filteredOptions.length === 0) {
+        <p class="orbit-select__empty">Nessun risultato</p>
+      }
+    </div>
+  }
+</div>

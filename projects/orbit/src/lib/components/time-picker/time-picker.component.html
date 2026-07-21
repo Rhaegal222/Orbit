@@ -1,0 +1,74 @@
+<div class="orbit-tp">
+  <button
+    type="button"
+    class="orbit-tp__trigger"
+    [disabled]="isDisabled()"
+    [class.orbit-tp__trigger--open]="isOpen()"
+    (mousedown)="$event.preventDefault()"
+    (click)="toggle()"
+    (blur)="onInputBlur()"
+  >
+    <svg viewBox="0 0 16 16" fill="none" class="orbit-tp__icon">
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M8 4.5V8l2.5 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span class="orbit-tp__text">{{ displayText() || 'Seleziona orario' }}</span>
+  </button>
+
+  @if (isOpen()) {
+    <div class="orbit-tp__dropdown">
+      <div class="orbit-tp__tabs">
+        <button
+          type="button"
+          class="orbit-tp__tab"
+          [class.orbit-tp__tab--active]="activeTab() === 'hours'"
+          (mousedown)="$event.preventDefault()"
+          (click)="activeTab.set('hours')"
+        >
+          Ore
+        </button>
+        <button
+          type="button"
+          class="orbit-tp__tab"
+          [class.orbit-tp__tab--active]="activeTab() === 'minutes'"
+          (mousedown)="$event.preventDefault()"
+          (click)="activeTab.set('minutes')"
+        >
+          Minuti
+        </button>
+      </div>
+
+      <div class="orbit-tp__scroll">
+        @if (activeTab() === 'hours') {
+          <div class="orbit-tp__grid">
+            @for (h of hours; track h) {
+              <button
+                type="button"
+                class="orbit-tp__cell"
+                [class.orbit-tp__cell--selected]="h === selectedHours()"
+                (mousedown)="$event.preventDefault()"
+                (click)="selectHour(h)"
+              >
+                {{ formatHour(h) }}
+              </button>
+            }
+          </div>
+        } @else {
+          <div class="orbit-tp__grid">
+            @for (m of minutes(); track m) {
+              <button
+                type="button"
+                class="orbit-tp__cell"
+                [class.orbit-tp__cell--selected]="m === selectedMinutes()"
+                (mousedown)="$event.preventDefault()"
+                (click)="selectMinute(m)"
+              >
+                {{ formatMinute(m) }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

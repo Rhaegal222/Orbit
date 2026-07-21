@@ -1,0 +1,22 @@
+:host {
+  display: inline-block;
+  position: relative;
+}
+
+.orbit-popover__trigger {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.orbit-popover-panel {
+  max-width: 20rem;
+  padding: var(--orbit-space-3);
+  border: 1px solid var(--orbit-color-border);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-color-surface);
+  box-shadow: var(--orbit-shadow-overlay);
+}
+
+.orbit-popover-backdrop {
+  background: transparent;
+}

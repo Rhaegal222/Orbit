@@ -1,0 +1,43 @@
+<div class="orbit-ac__wrapper">
+  <input
+    type="text"
+    class="orbit-ac__input"
+    [id]="inputId() || null"
+    [placeholder]="placeholder()"
+    [value]="inputText()"
+    [disabled]="isDisabled()"
+    [required]="required()"
+    role="combobox"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-autocomplete]="'list'"
+    autocomplete="off"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (keydown)="onKeydown($event)"
+  />
+
+  @if (isOpen() && !isDisabled() && filteredOptions().length > 0) {
+    <div class="orbit-ac__menu" role="listbox">
+      @for (option of filteredOptions(); track option.value; let i = $index) {
+        <div
+          class="orbit-ac__option"
+          role="option"
+          [class.orbit-ac__option--active]="i === activeIndex()"
+          [class.orbit-ac__option--disabled]="option.disabled"
+          [attr.aria-selected]="i === activeIndex()"
+          (mousedown)="$event.preventDefault()"
+          (click)="selectOption(option)"
+        >
+          {{ option.label }}
+        </div>
+      }
+    </div>
+  }
+
+  @if (isOpen() && !isDisabled() && filteredOptions().length === 0 && query()) {
+    <div class="orbit-ac__menu">
+      <div class="orbit-ac__empty">Nessun risultato</div>
+    </div>
+  }
+</div>

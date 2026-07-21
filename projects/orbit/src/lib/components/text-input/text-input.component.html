@@ -1,0 +1,50 @@
+<div
+  class="orbit-input"
+  [class.orbit-input--with-leading]="leadingIcon() || type() === 'currency'"
+  [class.orbit-input--with-trailing]="trailingIcon() || type() === 'password'"
+>
+  @if (leadingIcon() && type() !== 'currency') {
+    <span class="orbit-input__icon orbit-input__icon--leading" [class]="leadingIcon()" aria-hidden="true"></span>
+  }
+  @if (type() === 'currency') {
+    <span class="orbit-input__symbol" aria-hidden="true">{{ currencySymbol() }}</span>
+  }
+
+  <input
+    class="orbit-input__control"
+    [id]="inputId() || null"
+    [type]="nativeType"
+    [attr.inputmode]="inputMode"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [autocomplete]="autocomplete()"
+    [required]="required()"
+    [disabled]="isDisabled()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+
+  @if (type() === 'password') {
+    <button
+      type="button"
+      class="orbit-input__action"
+      [disabled]="isDisabled()"
+      [attr.aria-label]="showPassword() ? 'Nascondi password' : 'Mostra password'"
+      (click)="togglePasswordVisibility()"
+    >
+      <span [class]="showPassword() ? 'bi bi-eye-slash' : 'bi bi-eye'" aria-hidden="true"></span>
+    </button>
+  } @else if (trailingIcon() && trailingIconLabel()) {
+    <button
+      type="button"
+      class="orbit-input__action"
+      [disabled]="isDisabled()"
+      [attr.aria-label]="trailingIconLabel()"
+      (click)="trailingIconClick.emit()"
+    >
+      <span [class]="trailingIcon()" aria-hidden="true"></span>
+    </button>
+  } @else if (trailingIcon()) {
+    <span class="orbit-input__icon orbit-input__icon--trailing" [class]="trailingIcon()" aria-hidden="true"></span>
+  }
+</div>

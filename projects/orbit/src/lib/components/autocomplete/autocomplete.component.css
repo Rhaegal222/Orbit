@@ -11,10 +11,10 @@
   width: 100%;
   height: var(--orbit-control-height);
   padding: 0 var(--orbit-control-padding-inline);
-  border: 1px solid var(--orbit-color-border);
+  border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);
-  background: var(--orbit-color-surface);
-  color: var(--orbit-color-text);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   line-height: 1.25;
@@ -22,27 +22,27 @@
 }
 
 .orbit-ac__input::placeholder {
-  color: var(--orbit-color-text-muted);
+  color: var(--orbit-text-placeholder);
 }
 
 .orbit-ac__input:focus {
   outline: 0;
-  border-color: var(--orbit-color-border-focus);
+  border-color: var(--orbit-action-primary-bg);
   box-shadow: var(--orbit-focus-ring);
 }
 
 :host(.orbit-ac--disabled) .orbit-ac__input {
-  background: var(--orbit-color-surface-muted);
-  color: var(--orbit-color-text-muted);
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-secondary);
   cursor: not-allowed;
   pointer-events: none;
 }
 
 :host(.orbit-ac--invalid) .orbit-ac__input {
-  border-color: var(--orbit-color-danger);
+  border-color: var(--orbit-status-danger);
 }
 :host(.orbit-ac--invalid) .orbit-ac__input:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--orbit-color-danger) 25%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--orbit-status-danger) 12%, transparent);
 }
 
 /* ── Menu ── */
@@ -55,9 +55,9 @@
   max-height: 15rem;
   padding: 0.25rem;
   overflow-y: auto;
-  border: 1px solid var(--orbit-color-border);
+  border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);
-  background: var(--orbit-color-surface);
+  background: var(--orbit-surface-floating);
   box-shadow: var(--orbit-shadow-overlay);
 }
 
@@ -67,7 +67,7 @@
   min-height: 2rem;
   padding: 0 var(--orbit-space-2);
   border-radius: 0.25rem;
-  color: var(--orbit-color-text);
+  color: var(--orbit-text-primary);
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   cursor: pointer;
@@ -75,8 +75,8 @@
 }
 
 .orbit-ac__option--active {
-  background: var(--orbit-color-primary-subtle);
-  color: var(--orbit-color-primary);
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-default));
+  color: var(--orbit-action-primary-bg);
 }
 
 .orbit-ac__option--disabled {
@@ -86,7 +86,7 @@
 
 .orbit-ac__empty {
   padding: var(--orbit-space-2);
-  color: var(--orbit-color-text-muted);
+  color: var(--orbit-text-secondary);
   font-size: var(--orbit-font-size-body);
   text-align: center;
 }

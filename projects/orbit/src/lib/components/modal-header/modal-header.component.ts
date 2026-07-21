@@ -1,8 +1,11 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+import { ORBIT_I18N } from '../../i18n/orbit-i18n';
+import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
 
 @Component({
   selector: 'orbit-modal-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [OrbitIconButtonComponent],
   templateUrl: './modal-header.component.html',
   styleUrl: './modal-header.component.css',
   host: {
@@ -10,7 +13,9 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } f
   },
 })
 export class OrbitModalHeaderComponent {
+  readonly i18n = inject(ORBIT_I18N);
   title = input('');
+  titleId = input('');
   subtitle = input('');
   variant = input<'default' | 'form'>('default');
   closable = input(true, { transform: booleanAttribute });

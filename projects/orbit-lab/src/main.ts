@@ -1,5 +1,5 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
-import { LabRootComponent } from './app/app.component';
+import { LabShellComponent } from './app/shell/lab-shell.component';
 
-bootstrapApplication(LabRootComponent, appConfig);
+bootstrapApplication(LabShellComponent, appConfig);

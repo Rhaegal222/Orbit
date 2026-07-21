@@ -2,19 +2,21 @@
   <input
     type="text"
     class="orbit-dp__input"
+    [id]="inputId() || null"
     [placeholder]="placeholder()"
     [value]="inputText()"
     [disabled]="isDisabled()"
     [required]="required()"
     (input)="onInputChange($any($event.target).value)"
-    (focus)="onInputFocus()"
     (blur)="onInputBlur()"
   />
   <button
     type="button"
     class="orbit-dp__toggle"
     [disabled]="isDisabled()"
-    aria-label="Apri calendario"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="dialog"
+    [attr.aria-label]="i18n.labels.openCalendar"
     (mousedown)="$event.preventDefault()"
     (click)="toggle()"
   >
@@ -27,17 +29,17 @@
   @if (isOpen()) {
     <div class="orbit-dp__dropdown">
       <div class="orbit-dp__nav">
-        <button type="button" class="orbit-dp__nav-btn" (mousedown)="$event.preventDefault()" (click)="prevMonth()" aria-label="Mese precedente">
+        <button type="button" class="orbit-dp__nav-btn" (mousedown)="$event.preventDefault()" (click)="prevMonth()" [attr.aria-label]="i18n.labels.previousMonth">
           <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <span class="orbit-dp__nav-title">{{ MONTHS_IT[viewMonth()] }} {{ viewYear() }}</span>
-        <button type="button" class="orbit-dp__nav-btn" (mousedown)="$event.preventDefault()" (click)="nextMonth()" aria-label="Mese successivo">
+        <span class="orbit-dp__nav-title">{{ monthLabel() }}</span>
+        <button type="button" class="orbit-dp__nav-btn" (mousedown)="$event.preventDefault()" (click)="nextMonth()" [attr.aria-label]="i18n.labels.nextMonth">
           <svg viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
 
       <div class="orbit-dp__grid">
-        @for (wd of WEEKDAYS_IT; track wd) {
+        @for (wd of weekdayLabels; track wd) {
           <div class="orbit-dp__weekday">{{ wd }}</div>
         }
         @for (day of calendarDays; track day.date.toISOString()) {

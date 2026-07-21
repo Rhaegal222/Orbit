@@ -38,10 +38,12 @@ describe('OrbitTimePickerComponent', () => {
     expect(component.minutes()).toEqual([0, 15, 30, 45]);
   });
 
-  it('selects hour then switches to minutes tab', () => {
+  it('selects an hour without closing until a minute is selected', () => {
+    component.isOpen.set(true);
     component.selectHour(14);
+
     expect(component.selectedHours()).toBe(14);
-    expect(component.activeTab()).toBe('minutes');
+    expect(component.isOpen()).toBe(true);
   });
 
   it('selects minute and emits value', () => {
@@ -51,6 +53,18 @@ describe('OrbitTimePickerComponent', () => {
     component.selectMinute(30);
     expect(emitted).toEqual({ hours: 8, minutes: 30 });
     expect(component.isOpen()).toBe(false);
+  });
+
+  it('clears the value when the selected minute chip is pressed again', () => {
+    let emitted: { hours: number; minutes: number } | null | undefined;
+    component.valueChange.subscribe((value) => (emitted = value));
+    component.writeValue({ hours: 8, minutes: 30 });
+
+    component.selectMinute(30);
+
+    expect(component.selectedHours()).toBeNull();
+    expect(component.selectedMinutes()).toBeNull();
+    expect(emitted).toBeNull();
   });
 
   it('implements writeValue', () => {
@@ -64,10 +78,23 @@ describe('OrbitTimePickerComponent', () => {
     expect(component.isDisabled()).toBe(true);
   });
 
-  it('formats display text', () => {
-    component.selectedHours.set(9);
-    component.selectedMinutes.set(5);
-    expect(component.displayText()).toBe('09:05');
+  it('accepts a typed valid time and closes the picker', () => {
+    let emitted: { hours: number; minutes: number } | undefined;
+    component.valueChange.subscribe((value) => (emitted = value));
+    component.isOpen.set(true);
+
+    component.onInputChange('09:05');
+
+    expect(component.inputText()).toBe('09:05');
+    expect(component.isOpen()).toBe(false);
+    expect(emitted).toEqual({ hours: 9, minutes: 5 });
+  });
+
+  it('closes when interaction moves outside the picker', () => {
+    component.isOpen.set(true);
+    component.onDocumentPointerDown(new PointerEvent('pointerdown'));
+
+    expect(component.isOpen()).toBe(false);
   });
 
   it('formats hour and minute', () => {

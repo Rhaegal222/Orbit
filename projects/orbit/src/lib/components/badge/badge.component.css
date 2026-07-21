@@ -9,39 +9,39 @@
   height: 1.375rem;
   padding: 0 0.5rem;
   border-radius: var(--orbit-radius-full);
-  font-family: var(--orbit-font-family);
+  font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-xs);
-  font-weight: var(--orbit-font-weight-semibold);
+  font-weight: var(--orbit-font-weight-emphasis);
   line-height: 1;
   white-space: nowrap;
 }
 
 .orbit-badge--primary {
-  background: var(--orbit-color-primary-subtle);
-  color: var(--orbit-color-primary-strong);
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
+  color: var(--orbit-badge-primary-fg);
 }
 
 .orbit-badge--success {
-  background: var(--orbit-color-success-subtle);
-  color: #157347;
+  background: var(--orbit-status-success-subtle);
+  color: var(--orbit-badge-success-fg);
 }
 
 .orbit-badge--danger {
-  background: var(--orbit-color-danger-subtle);
-  color: #b02a37;
+  background: var(--orbit-status-danger-subtle);
+  color: var(--orbit-badge-danger-fg);
 }
 
 .orbit-badge--warning {
-  background: var(--orbit-color-warning-subtle);
-  color: #664d03;
+  background: var(--orbit-status-warning-subtle);
+  color: var(--orbit-badge-warning-fg);
 }
 
 .orbit-badge--info {
-  background: var(--orbit-color-info-subtle);
-  color: #055160;
+  background: var(--orbit-status-info-subtle);
+  color: var(--orbit-badge-info-fg);
 }
 
 .orbit-badge--neutral {
-  background: var(--orbit-color-neutral-subtle);
-  color: #41464b;
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-badge-neutral-fg);
 }

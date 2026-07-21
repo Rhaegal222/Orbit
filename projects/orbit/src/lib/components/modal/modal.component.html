@@ -1,0 +1,9 @@
+<section
+  class="orbit-modal"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="labelledBy() || null"
+  [attr.aria-label]="labelledBy() ? null : ariaLabel()"
+>
+  <ng-content />
+</section>

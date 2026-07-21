@@ -2,11 +2,13 @@
   class="orbit-drop__zone"
   [class.orbit-drop__zone--drag]="isDragOver()"
   [class.orbit-drop__zone--disabled]="disabled()"
+  [class.orbit-drop__zone--error]="visibleError()"
   (dragenter)="onDragEnter($event)"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"
   (click)="onZoneClick()"
+  (keydown)="onZoneKeydown($event)"
   role="button"
   tabindex="0"
   [attr.aria-disabled]="disabled()"
@@ -15,8 +17,11 @@
     <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2"/>
     <path d="M24 18v12M18 24h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
   </svg>
-  <span class="orbit-drop__label">Trascina i file qui oppure clicca per sfogliare</span>
-  <span class="orbit-drop__hint">{{ hint() }}</span>
+  <span class="orbit-drop__label">{{ label() || i18n.labels.uploadLabel }}</span>
+  <span class="orbit-drop__hint">{{ hint() || i18n.labels.uploadHint }}</span>
+  @if (visibleError()) {
+    <span class="orbit-drop__error" role="alert">{{ visibleError() }}</span>
+  }
 </div>
 
 <input
@@ -25,5 +30,7 @@
   class="orbit-drop__input"
   [accept]="accept()"
   [multiple]="multiple()"
+  [disabled]="disabled()"
+  [attr.aria-invalid]="visibleError() ? 'true' : null"
   (change)="onInputChange($event)"
 />

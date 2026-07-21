@@ -29,21 +29,21 @@ describe('OrbitFormActionBarComponent', () => {
   it('emits cancel', () => {
     let emitted = false;
     component.cancel.subscribe(() => (emitted = true));
-    fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--cancel').click();
+    fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--cancel button').click();
     expect(emitted).toBe(true);
   });
 
   it('emits saveDraft', () => {
     let emitted = false;
     component.saveDraft.subscribe(() => (emitted = true));
-    fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--draft').click();
+    fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--draft button').click();
     expect(emitted).toBe(true);
   });
 
   it('emits confirm', () => {
     let emitted = false;
     component.confirm.subscribe(() => (emitted = true));
-    fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--confirm').click();
+    fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--confirm button').click();
     expect(emitted).toBe(true);
   });
 
@@ -62,7 +62,7 @@ describe('OrbitFormActionBarComponent', () => {
   it('disables confirm when confirmDisabled', () => {
     fixture.componentRef.setInput('confirmDisabled', true);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--confirm').disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--confirm button').disabled).toBe(true);
   });
 
   it('disables all buttons when loading', () => {
@@ -70,5 +70,23 @@ describe('OrbitFormActionBarComponent', () => {
     fixture.detectChanges();
     const buttons = fixture.nativeElement.querySelectorAll('button');
     buttons.forEach((btn: HTMLButtonElement) => expect(btn.disabled).toBe(true));
+  });
+
+  it('uses the shared button hierarchy', () => {
+    const buttons = fixture.nativeElement.querySelectorAll('orbit-button');
+    expect(buttons.length).toBe(3);
+    expect(buttons[0].querySelector('button').classList.contains('orbit-btn--outline')).toBe(true);
+    expect(buttons[1].querySelector('button').classList.contains('orbit-btn--soft')).toBe(true);
+    expect(buttons[2].querySelector('button').classList.contains('orbit-btn--solid')).toBe(true);
+  });
+
+  it('supports a success confirm action', () => {
+    fixture.componentRef.setInput('confirmTone', 'success');
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement
+        .querySelector('.orbit-form-action-bar__btn--confirm button')
+        .classList.contains('orbit-btn--success'),
+    ).toBe(true);
   });
 });

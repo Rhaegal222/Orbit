@@ -3,11 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   forwardRef,
+  inject,
   input,
   output,
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export type OrbitSelectValue = string | number;
 
@@ -35,8 +37,9 @@ export interface OrbitSelectOption {
   },
 })
 export class OrbitSelectComponent implements ControlValueAccessor {
+  readonly i18n = inject(ORBIT_I18N);
   options = input<OrbitSelectOption[]>([]);
-  placeholder = input('Seleziona...');
+  placeholder = input('');
   inputId = input('');
   required = input(false, { transform: booleanAttribute });
   invalid = input(false, { transform: booleanAttribute });
@@ -73,9 +76,9 @@ export class OrbitSelectComponent implements ControlValueAccessor {
   }
 
   get filteredOptions(): OrbitSelectOption[] {
-    const q = this.queryText().toLocaleLowerCase('it-IT');
+    const q = this.queryText().toLocaleLowerCase(this.i18n.locale);
     return this.options().filter((o) =>
-      o.label.toLocaleLowerCase('it-IT').includes(q),
+      o.label.toLocaleLowerCase(this.i18n.locale).includes(q),
     );
   }
 
@@ -87,7 +90,7 @@ export class OrbitSelectComponent implements ControlValueAccessor {
     const match = this.options().find(
       (o) =>
         !o.disabled &&
-        o.label.toLocaleLowerCase('it-IT') === text.toLocaleLowerCase('it-IT'),
+        o.label.toLocaleLowerCase(this.i18n.locale) === text.toLocaleLowerCase(this.i18n.locale),
     );
     this.setValue(match ? match.value : null);
   }
@@ -109,6 +112,10 @@ export class OrbitSelectComponent implements ControlValueAccessor {
   }
 
   onToggleClick(): void {
+    if (this.isOpen()) {
+      this.isOpen.set(false);
+      return;
+    }
     this.openAll();
   }
 

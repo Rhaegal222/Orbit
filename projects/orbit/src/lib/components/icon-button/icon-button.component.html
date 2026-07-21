@@ -1,0 +1,15 @@
+<button
+  class="orbit-icon-button"
+  [class.orbit-icon-button--primary]="tone() === 'primary'"
+  [class.orbit-icon-button--danger]="tone() === 'danger'"
+  [type]="type()"
+  [disabled]="disabled()"
+  [attr.aria-label]="ariaLabel()"
+  (click)="onClick()"
+>
+  @if (icon()) {
+    <span [class]="icon()" aria-hidden="true"></span>
+  } @else {
+    <ng-content />
+  }
+</button>

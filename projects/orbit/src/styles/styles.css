@@ -1,2 +1,9 @@
 @import './tokens.css';
 @import './theme.css';
+
+/* CDK overlay classes are global by design: the overlay is outside component encapsulation. */
+.orbit-dialog-backdrop { background: var(--orbit-overlay-backdrop); }
+.orbit-dialog-panel {
+  max-width: calc(100vw - 2 * var(--orbit-space-3));
+  outline: 0;
+}

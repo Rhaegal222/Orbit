@@ -1,0 +1,59 @@
+<header class="lab-shell__header">
+  <span class="lab-shell__brand">Orbit Lab</span>
+
+  <div class="lab-shell__controls">
+    <label class="lab-shell__control">
+      Tema
+      <select
+        class="lab-shell__select"
+        [value]="theme()"
+        (change)="setTheme($any($event.target).value)"
+      >
+        <option value="default">Default</option>
+        <option value="dark">Regressione (dark)</option>
+      </select>
+    </label>
+
+    <label class="lab-shell__control">
+      Densità
+      <select
+        class="lab-shell__select"
+        [value]="density()"
+        (change)="setDensity($any($event.target).value)"
+      >
+        <option value="comfortable">Comfortable</option>
+        <option value="compact">Compact</option>
+      </select>
+    </label>
+  </div>
+</header>
+
+<div
+  class="lab-shell__body"
+  data-lab-theme-container
+  [attr.data-orbit-theme]="theme() === 'dark' ? 'dark' : null"
+  [attr.data-orbit-density]="density() === 'compact' ? 'compact' : null"
+>
+  <nav class="lab-shell__nav">
+    @for (entry of entries; track entry.slug) {
+      <a
+        data-lab-nav-link
+        class="lab-shell__nav-link"
+        [class.lab-shell__nav-link--blocked]="entry.status !== 'verified'"
+        [routerLink]="['/', entry.slug]"
+        routerLinkActive="lab-shell__nav-link--active"
+      >
+        {{ entry.label }}
+        @if (entry.status === 'token-blocked') {
+          <span class="lab-shell__nav-badge" aria-label="Bloccato su token Core">⛔</span>
+        } @else if (entry.status === 'stabilizing') {
+          <span class="lab-shell__nav-badge" aria-label="In stabilizzazione Core">⏳</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <main class="lab-shell__content">
+    <router-outlet />
+  </main>
+</div>

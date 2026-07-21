@@ -81,6 +81,20 @@ describe('OrbitDatePickerComponent', () => {
     expect(component.selectedDate()?.getMonth()).toBe(5);
   });
 
+  it('closes the calendar when the user starts typing', () => {
+    component.isOpen.set(true);
+    component.onInputChange('1');
+
+    expect(component.isOpen()).toBe(false);
+  });
+
+  it('closes when interaction moves outside the picker', () => {
+    component.isOpen.set(true);
+    component.onDocumentPointerDown(new PointerEvent('pointerdown'));
+
+    expect(component.isOpen()).toBe(false);
+  });
+
   it('invalidates bad date', () => {
     component.onInputChange('99/99/9999');
     expect(component.selectedDate()).toBeNull();

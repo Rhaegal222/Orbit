@@ -4,7 +4,7 @@
     class="orbit-select__input"
     [class.orbit-select__input--searchable]="searchable()"
     [id]="inputId() || null"
-    [placeholder]="placeholder()"
+    [placeholder]="placeholder() || i18n.labels.select"
     [value]="inputText()"
     [readonly]="!searchable()"
     [disabled]="isDisabled()"
@@ -19,7 +19,9 @@
     type="button"
     class="orbit-select__toggle"
     [disabled]="isDisabled()"
-    aria-label="Apri elenco"
+    [attr.aria-label]="i18n.labels.openList"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="listbox"
     (mousedown)="$event.preventDefault()"
     (click)="onToggleClick()"
   >
@@ -44,7 +46,7 @@
         </button>
       }
       @if (filteredOptions.length === 0) {
-        <p class="orbit-select__empty">Nessun risultato</p>
+        <p class="orbit-select__empty">{{ i18n.labels.noResults }}</p>
       }
     </div>
   }

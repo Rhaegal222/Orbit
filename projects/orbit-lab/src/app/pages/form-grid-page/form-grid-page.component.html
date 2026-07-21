@@ -1,0 +1,22 @@
+<article>
+  <h1>Form grid</h1>
+  <p>Layout a due colonne (7fr/5fr) per form con contenuto primario e secondario.</p>
+
+  <section>
+    <h2>Esempio base</h2>
+    <lab-example [code]="usageSnippet">
+      <orbit-form-grid>
+        <div primary>Contenuto primario (7fr)</div>
+        <div secondary>Contenuto secondario (5fr)</div>
+      </orbit-form-grid>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Sotto 991.98px la griglia collassa a singola colonna: il proprio CSS lo gestisce già con
+      una media query interna, verificabile ridimensionando la finestra.
+    </p>
+  </section>
+</article>

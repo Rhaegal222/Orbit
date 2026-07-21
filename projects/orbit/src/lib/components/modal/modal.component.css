@@ -1,0 +1,28 @@
+:host { display: block; }
+.orbit-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, var(--orbit-modal-size-md));
+  margin-inline: auto;
+  max-height: 90vh;
+  overflow: hidden;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-modal);
+  box-shadow: var(--orbit-shadow-floating);
+}
+
+.orbit-modal--sm { width: min(100%, var(--orbit-modal-size-sm)); }
+.orbit-modal--lg { width: min(100%, var(--orbit-modal-size-lg)); }
+.orbit-modal--full { width: var(--orbit-modal-size-full); }
+
+@media (max-width: 48rem) {
+  .orbit-modal,
+  .orbit-modal--sm,
+  .orbit-modal--lg,
+  .orbit-modal--full {
+    width: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}

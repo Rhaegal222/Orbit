@@ -1,0 +1,21 @@
+<article>
+  <h1>Badge</h1>
+  <p>Etichetta di stato compatta, sei toni semantici.</p>
+
+  <section>
+    <h2>Toni</h2>
+    @for (tone of tones; track tone) {
+      <lab-example [code]="toneSnippet(tone)">
+        <orbit-badge [tone]="tone" [label]="tone" />
+      </lab-example>
+    }
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <p>
+      Il colore non è l'unico indicatore: ogni badge riporta anche il testo del tono/etichetta,
+      mai solo un pallino colorato.
+    </p>
+  </section>
+</article>

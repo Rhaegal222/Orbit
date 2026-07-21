@@ -47,7 +47,7 @@
             "browser": "projects/orbit-lab/src/main.ts",
             "index": "projects/orbit-lab/src/index.html",
             "tsConfig": "projects/orbit-lab/tsconfig.app.json",
-            "styles": ["projects/orbit/src/styles/tokens.css"]
+            "styles": ["projects/orbit/src/styles/tokens.css", "projects/orbit-lab/src/styles.css"]
           },
           "configurations": {
             "production": {

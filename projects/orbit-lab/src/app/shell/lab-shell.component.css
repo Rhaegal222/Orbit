@@ -1,0 +1,99 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  font-family: var(--orbit-font-sans);
+  color: var(--orbit-text-primary);
+  background: linear-gradient(135deg, var(--orbit-surface-canvas), var(--orbit-surface-subtle));
+}
+
+.lab-shell__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3rem;
+  padding: 0 var(--orbit-ref-space-4);
+  border-bottom: 1px solid var(--orbit-border-subtle);
+  background: var(--orbit-surface-default);
+}
+
+.lab-shell__brand {
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.lab-shell__controls {
+  display: flex;
+  gap: var(--orbit-ref-space-4);
+}
+
+.lab-shell__control {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-ref-space-2);
+  font-size: var(--orbit-ref-font-size-sm);
+  color: var(--orbit-text-secondary);
+}
+
+.lab-shell__select {
+  height: 1.75rem;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+}
+
+.lab-shell__body {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  min-height: calc(100dvh - 3rem);
+}
+
+.lab-shell__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--orbit-ref-space-4);
+  border-right: 1px solid var(--orbit-border-subtle);
+  background: var(--orbit-surface-default);
+}
+
+.lab-shell__nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--orbit-ref-space-2) var(--orbit-ref-space-3);
+  border-radius: var(--orbit-radius-control);
+  color: var(--orbit-text-primary);
+  text-decoration: none;
+  font-size: var(--orbit-ref-font-size-sm);
+}
+
+.lab-shell__nav-link:hover {
+  background: var(--orbit-surface-subtle);
+}
+
+.lab-shell__nav-link--active {
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, transparent);
+  color: var(--orbit-action-primary-bg);
+}
+
+.lab-shell__nav-link--blocked {
+  color: var(--orbit-text-secondary);
+}
+
+.lab-shell__content {
+  padding: var(--orbit-ref-space-6);
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  .lab-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-shell__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: 0;
+    border-bottom: 1px solid var(--orbit-border-subtle);
+  }
+}

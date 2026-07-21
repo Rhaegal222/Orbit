@@ -1,0 +1,16 @@
+<article>
+  <h1>Attachments</h1>
+  <p>Lista, stati e dropzone generici per contenuti forniti dal consumer.</p>
+
+  <section><h2>Modificabile</h2><orbit-attachment-list [entries]="editable" /></section>
+  <section><h2>Sola lettura</h2><orbit-attachment-list [entries]="readOnly" /></section>
+  <section><h2>Completato</h2><orbit-attachment-list [entries]="completed" /></section>
+  <section><h2>Errore con azione</h2><orbit-attachment-list [entries]="failed" /></section>
+  <section><h2>Lista vuota</h2><orbit-attachment-list emptyLabel="Nessun elemento disponibile" /></section>
+
+  <orbit-divider variant="dashed" />
+
+  <section><h2>Dropzone pronta</h2><orbit-attachment-dropzone hint="PDF, PNG · max 10 MB" /></section>
+  <section><h2>Dropzone con errore</h2><orbit-attachment-dropzone error="Il file selezionato non è accettato" /></section>
+  <section><h2>Dropzone disabilitata</h2><orbit-attachment-dropzone [disabled]="true" /></section>
+</article>

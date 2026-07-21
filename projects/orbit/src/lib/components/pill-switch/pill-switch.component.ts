@@ -2,12 +2,14 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  inject,
   forwardRef,
   input,
   output,
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export type OrbitPillSwitchValue = string | number;
 
@@ -31,7 +33,8 @@ export interface OrbitPillSwitchOption {
   ],
 })
 export class OrbitPillSwitchComponent implements ControlValueAccessor {
-  ariaLabel = input('Selettore');
+  readonly i18n = inject(ORBIT_I18N);
+  ariaLabel = input('');
   options = input<OrbitPillSwitchOption[]>([]);
   disabled = input(false, { transform: booleanAttribute });
 
@@ -60,7 +63,7 @@ export class OrbitPillSwitchComponent implements ControlValueAccessor {
   }
 
   select(option: OrbitPillSwitchOption): void {
-    if (this.isDisabled() || option.disabled || option.value === this.selectedValue()) return;
+    if (this.isControlDisabled || option.disabled || option.value === this.selectedValue()) return;
     this.selectedValue.set(option.value);
     this.onChange(option.value);
     this.onTouched();
@@ -69,5 +72,31 @@ export class OrbitPillSwitchComponent implements ControlValueAccessor {
 
   trackByValue(_: number, option: OrbitPillSwitchOption): OrbitPillSwitchValue {
     return option.value;
+  }
+
+  get isControlDisabled(): boolean {
+    return this.disabled() || this.isDisabled();
+  }
+
+  onKeydown(event: KeyboardEvent, currentIndex: number): void {
+    if (this.isControlDisabled) return;
+    const enabled = this.options()
+      .map((option, index) => ({ option, index }))
+      .filter(({ option }) => !option.disabled);
+    if (!enabled.length) return;
+
+    let nextIndex: number | null = null;
+    if (event.key === 'Home') nextIndex = enabled[0].index;
+    if (event.key === 'End') nextIndex = enabled.at(-1)!.index;
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = enabled[(enabled.findIndex(({ index }) => index === currentIndex) - 1 + enabled.length) % enabled.length].index;
+    }
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = enabled[(enabled.findIndex(({ index }) => index === currentIndex) + 1) % enabled.length].index;
+    }
+    if (nextIndex === null) return;
+
+    event.preventDefault();
+    this.select(this.options()[nextIndex]);
   }
 }

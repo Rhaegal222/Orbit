@@ -5,9 +5,10 @@ import { OrbitPillSwitchComponent, OrbitPillSwitchOption } from './pill-switch.c
 @Component({
   standalone: true,
   imports: [OrbitPillSwitchComponent],
-  template: `<orbit-pill-switch [options]="options" />`,
+  template: `<orbit-pill-switch [options]="options" [disabled]="disabled" />`,
 })
 class TestHostComponent {
+  disabled = false;
   options: OrbitPillSwitchOption[] = [
     { label: 'Mensile', value: 'monthly' },
     { label: 'Annuale', value: 'yearly' },
@@ -66,6 +67,20 @@ describe('OrbitPillSwitchComponent', () => {
     expect(pillComponent.isDisabled()).toBe(true);
     pillComponent.select(pillComponent.options()[0]);
     expect(pillComponent.selectedValue()).toBeNull();
+  });
+
+  it('honours the public disabled input', () => {
+    fixture.componentInstance.disabled = true;
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('button').disabled).toBe(true);
+  });
+
+  it('selects the next enabled option with ArrowRight', () => {
+    pillComponent.select(pillComponent.options()[0]);
+    pillComponent.onKeydown(new KeyboardEvent('keydown', { key: 'ArrowRight' }), 0);
+
+    expect(pillComponent.selectedValue()).toBe('yearly');
   });
 
   it('does not re-select same value', () => {

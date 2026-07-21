@@ -1,0 +1,10 @@
+:host {
+  display: block;
+}
+
+.operational-modal__column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--orbit-section-gap);
+}

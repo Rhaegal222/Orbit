@@ -1,0 +1,34 @@
+:host {
+  display: inline-flex;
+}
+.orbit-icon-button {
+  display: grid;
+  place-items: center;
+  width: var(--orbit-control-height);
+  height: var(--orbit-control-height);
+  padding: 0;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-secondary);
+  cursor: pointer;
+}
+.orbit-icon-button:hover:not(:disabled) {
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-primary);
+}
+.orbit-icon-button:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+  box-shadow: var(--orbit-focus-ring);
+}
+.orbit-icon-button--primary {
+  color: var(--orbit-action-primary-bg);
+}
+.orbit-icon-button--danger {
+  color: var(--orbit-status-danger);
+}
+.orbit-icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

@@ -37,6 +37,14 @@ describe('OrbitSelectComponent', () => {
     expect(component.isOpen()).toBe(true);
   });
 
+  it('closes dropdown when the toggle is pressed a second time', () => {
+    component.onToggleClick();
+    expect(component.isOpen()).toBe(true);
+
+    component.onToggleClick();
+    expect(component.isOpen()).toBe(false);
+  });
+
   it('renders options when open', () => {
     component.isOpen.set(true);
     fixture.detectChanges();
@@ -88,5 +96,15 @@ describe('OrbitSelectComponent', () => {
   it('does not select disabled option', () => {
     component.onOptionSelect({ label: 'X', value: 'x', disabled: true });
     expect(component.selectedValue()).toBeNull();
+  });
+
+  it('makes typing opt-in through searchable', () => {
+    component.onInputChange('Fra');
+    expect(component.queryText()).toBe('');
+
+    fixture.componentRef.setInput('searchable', true);
+    fixture.detectChanges();
+    component.onInputChange('Fra');
+    expect(component.queryText()).toBe('Fra');
   });
 });

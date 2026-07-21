@@ -8,22 +8,22 @@
   align-items: center;
   justify-content: center;
   gap: var(--orbit-space-2);
-  padding: var(--orbit-space-6);
-  border: 2px dashed var(--orbit-color-border);
-  border-radius: var(--orbit-radius-control);
-  background: var(--orbit-color-surface-muted);
+  padding: var(--orbit-dropzone-padding-block) var(--orbit-dropzone-padding-inline);
+  border: 2px dashed var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-icon-surface);
+  background: var(--orbit-surface-default);
   cursor: pointer;
   transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 
 .orbit-drop__zone:hover:not(.orbit-drop__zone--disabled) {
-  border-color: var(--orbit-color-primary);
-  background: var(--orbit-color-primary-subtle);
+  border-color: var(--orbit-action-primary-bg);
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
 }
 
 .orbit-drop__zone--drag:not(.orbit-drop__zone--disabled) {
-  border-color: var(--orbit-color-primary);
-  background: var(--orbit-color-primary-subtle);
+  border-color: var(--orbit-action-primary-bg);
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
   border-style: solid;
 }
 
@@ -33,19 +33,24 @@
   pointer-events: none;
 }
 
+.orbit-drop__zone--error {
+  border-color: var(--orbit-status-danger);
+  background: var(--orbit-status-danger-subtle);
+}
+
 .orbit-drop__icon {
-  width: 3rem;
-  height: 3rem;
-  color: var(--orbit-color-text-muted);
+  width: 1.375rem;
+  height: 1.375rem;
+  color: var(--orbit-action-primary-bg);
 }
 
 .orbit-drop__zone:hover:not(.orbit-drop__zone--disabled) .orbit-drop__icon,
 .orbit-drop__zone--drag:not(.orbit-drop__zone--disabled) .orbit-drop__icon {
-  color: var(--orbit-color-primary);
+  color: var(--orbit-action-primary-bg);
 }
 
 .orbit-drop__label {
-  color: var(--orbit-color-text);
+  color: var(--orbit-text-primary);
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   font-weight: var(--orbit-font-weight-emphasis);
@@ -53,9 +58,16 @@
 }
 
 .orbit-drop__hint {
-  color: var(--orbit-color-text-muted);
+  color: var(--orbit-text-secondary);
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-xs);
+  text-align: center;
+}
+
+.orbit-drop__error {
+  color: var(--orbit-status-danger);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-sm);
   text-align: center;
 }
 

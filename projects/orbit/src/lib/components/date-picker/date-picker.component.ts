@@ -2,12 +2,16 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   forwardRef,
+  HostListener,
+  inject,
   input,
   output,
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 interface CalendarDay {
   date: Date;
@@ -36,6 +40,9 @@ interface CalendarDay {
   },
 })
 export class OrbitDatePickerComponent implements ControlValueAccessor {
+  readonly i18n = inject(ORBIT_I18N);
+  private readonly hostElement = inject(ElementRef<HTMLElement>);
+  inputId = input('');
   placeholder = input('GG/MM/AAAA');
   required = input(false, { transform: booleanAttribute });
   invalid = input(false, { transform: booleanAttribute });
@@ -55,11 +62,15 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   private onChange: (value: Date | null) => void = () => undefined;
   private onTouched: () => void = () => undefined;
 
-  readonly WEEKDAYS_IT = ['Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa', 'Do'];
-  readonly MONTHS_IT = [
-    'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-    'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre',
-  ];
+  readonly weekdayLabels = Array.from({ length: 7 }, (_, index) =>
+    new Intl.DateTimeFormat(this.i18n.locale, { weekday: 'short' }).format(new Date(2024, 0, index + 1)),
+  );
+
+  monthLabel(): string {
+    return new Intl.DateTimeFormat(this.i18n.locale, { month: 'long', year: 'numeric' }).format(
+      new Date(this.viewYear(), this.viewMonth(), 1),
+    );
+  }
 
   get calendarDays(): CalendarDay[] {
     const year = this.viewYear();
@@ -150,6 +161,7 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   }
 
   onInputChange(text: string): void {
+    this.isOpen.set(false);
     this.inputText.set(text);
     const parsed = this.parseDate(text);
     if (parsed) {
@@ -166,8 +178,16 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
     this.isOpen.set(false);
   }
 
-  onInputFocus(): void {
-    this.isOpen.set(true);
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent): void {
+    if (this.isOpen() && !this.hostElement.nativeElement.contains(event.target as Node)) {
+      this.isOpen.set(false);
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.isOpen.set(false);
   }
 
   private formatDate(d: Date): string {

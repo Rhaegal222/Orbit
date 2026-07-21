@@ -1,43 +1,39 @@
 <div class="orbit-form-action-bar">
+  @if (statusLabel()) {
+    <span class="orbit-form-action-bar__status" role="status">{{ statusLabel() }}</span>
+  }
+
+  <div class="orbit-form-action-bar__actions">
   @if (showCancel()) {
-    <button
-      type="button"
+    <orbit-button
       class="orbit-form-action-bar__btn orbit-form-action-bar__btn--cancel"
+      [label]="cancelLabel() || i18n.labels.cancel"
+      variant="outline"
+      tone="neutral"
       [disabled]="loading()"
-      (click)="cancel.emit()"
-    >
-      {{ cancelLabel() }}
-    </button>
+      (clicked)="cancel.emit()"
+    />
   }
 
   @if (showDraft()) {
-    <button
-      type="button"
+    <orbit-button
       class="orbit-form-action-bar__btn orbit-form-action-bar__btn--draft"
+      [label]="draftLabel() || i18n.labels.saveDraft"
+      variant="soft"
+      tone="neutral"
       [disabled]="loading()"
-      (click)="saveDraft.emit()"
-    >
-      <svg viewBox="0 0 16 16" fill="none" class="orbit-form-action-bar__icon">
-        <path d="M3 8a5 5 0 1 1 1.5 3.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M3 12V8h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      {{ draftLabel() }}
-    </button>
+      (clicked)="saveDraft.emit()"
+    />
   }
 
-  <button
-    type="button"
+  <orbit-button
     class="orbit-form-action-bar__btn orbit-form-action-bar__btn--confirm"
+    [label]="confirmLabel() || i18n.labels.saveAndContinue"
+    variant="solid"
+    [tone]="confirmTone()"
+    [loading]="loading()"
     [disabled]="loading() || confirmDisabled()"
-    (click)="confirm.emit()"
-  >
-    @if (loading()) {
-      <span class="orbit-form-action-bar__spinner"></span>
-    } @else {
-      <svg viewBox="0 0 16 16" fill="none" class="orbit-form-action-bar__icon">
-        <path d="M4 8.5l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    }
-    {{ confirmLabel() }}
-  </button>
+    (clicked)="confirm.emit()"
+  />
+  </div>
 </div>

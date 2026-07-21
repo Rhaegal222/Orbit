@@ -1,0 +1,8 @@
+<div class="lab-example">
+  <div class="lab-example__preview">
+    <ng-content />
+  </div>
+  @if (code()) {
+    <orbit-code-block class="lab-example__code" [code]="code()" />
+  }
+</div>

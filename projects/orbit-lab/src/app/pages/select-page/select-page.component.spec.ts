@@ -1,0 +1,45 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { describe, expect, it } from 'vitest';
+import { SelectPageComponent } from './select-page.component';
+
+describe('SelectPageComponent', () => {
+  let fixture: ComponentFixture<SelectPageComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SelectPageComponent],
+    }).compileComponents();
+    fixture = TestBed.createComponent(SelectPageComponent);
+    fixture.detectChanges();
+  });
+
+  it('creates', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('renders the base example as readonly (not searchable)', () => {
+    const input = fixture.nativeElement.querySelector('[data-example="base"] input');
+    expect(input.readOnly).toBe(true);
+  });
+
+  it('renders the searchable example as editable', () => {
+    const input = fixture.nativeElement.querySelector('[data-example="searchable"] input');
+    expect(input.readOnly).toBe(false);
+  });
+
+  it('marks the invalid example as invalid via the host class', () => {
+    const el = fixture.nativeElement.querySelector('[data-example="invalid"] orbit-select');
+    expect(el.classList.contains('orbit-select--invalid')).toBe(true);
+  });
+
+  it('disables the native input in the disabled example via a disabled FormControl', () => {
+    const input = fixture.nativeElement.querySelector('[data-example="disabled"] input');
+    expect(input.disabled).toBe(true);
+  });
+
+  it('renders a copyable usage snippet', () => {
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-select',
+    );
+  });
+});

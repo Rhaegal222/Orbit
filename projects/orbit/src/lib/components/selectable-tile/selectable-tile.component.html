@@ -1,0 +1,21 @@
+<button
+  type="button"
+  class="orbit-selectable-tile"
+  [class.orbit-selectable-tile--selected]="selected()"
+  [disabled]="disabled()"
+  [attr.aria-pressed]="selected()"
+  (click)="toggle()"
+>
+  <span class="orbit-selectable-tile__icon" aria-hidden="true">
+    <ng-content select="[orbitSelectableTileIcon]" />
+  </span>
+  <span class="orbit-selectable-tile__indicator" aria-hidden="true">{{
+    selected() ? '✓' : ''
+  }}</span>
+  <span class="orbit-selectable-tile__content"
+    ><span class="orbit-selectable-tile__label">{{ label() }}</span>
+    @if (description()) {
+      <span class="orbit-selectable-tile__description">{{ description() }}</span>
+    }
+  </span>
+</button>

@@ -2,12 +2,15 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
+  inject,
   input,
   output,
   signal,
   ViewChild,
 } from '@angular/core';
+import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export interface OrbitFileDropEvent {
   files: File[];
@@ -24,19 +27,24 @@ export interface OrbitFileDropEvent {
   },
 })
 export class OrbitAttachmentDropzoneComponent {
+  readonly i18n = inject(ORBIT_I18N);
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   accept = input('');
   multiple = input(true, { transform: booleanAttribute });
   maxSizeBytes = input(10 * 1024 * 1024);
   disabled = input(false, { transform: booleanAttribute });
-  hint = input('Trascina i file qui oppure clicca per sfogliare');
+  hint = input('');
+  label = input('');
+  error = input('');
 
   filesDropped = output<OrbitFileDropEvent>();
   fileError = output<string>();
 
   isDragOver = signal(false);
   isDisabled = signal(false);
+  private readonly internalError = signal('');
+  readonly visibleError = computed(() => this.error() || this.internalError());
 
   private dragCounter = 0;
 
@@ -71,6 +79,13 @@ export class OrbitAttachmentDropzoneComponent {
     this.fileInput.nativeElement.click();
   }
 
+  onZoneKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.onZoneClick();
+    }
+  }
+
   onInputChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const files = Array.from(input.files ?? []);
@@ -82,9 +97,12 @@ export class OrbitAttachmentDropzoneComponent {
     const maxSize = this.maxSizeBytes();
     const oversized = files.find((f) => f.size > maxSize);
     if (oversized) {
-      this.fileError.emit(`Il file "${oversized.name}" supera la dimensione massima di ${this.formatSize(maxSize)}`);
+      const error = `Il file "${oversized.name}" supera la dimensione massima di ${this.formatSize(maxSize)}`;
+      this.internalError.set(error);
+      this.fileError.emit(error);
       return;
     }
+    this.internalError.set('');
     this.filesDropped.emit({ files, source });
   }
 

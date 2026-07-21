@@ -1,29 +1,59 @@
 :host {
+  --orbit-form-grid-span: 12;
+  --orbit-form-grid-span-sm: var(--orbit-form-grid-span);
+  --orbit-form-grid-span-md: var(--orbit-form-grid-span-sm);
+  --orbit-form-grid-span-lg: var(--orbit-form-grid-span-md);
+  --orbit-form-grid-span-xl: var(--orbit-form-grid-span-lg);
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(20rem, 5fr);
-  gap: var(--orbit-space-5);
-  padding: var(--orbit-space-4) var(--orbit-space-5) var(--orbit-space-2);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--orbit-layout-gap);
+  width: 100%;
 }
 
-.orbit-form-grid__col {
-  display: flex;
-  flex-direction: column;
+:host(.orbit-form-grid--compact) {
+  gap: var(--orbit-layout-gap-compact);
+}
+
+:host ::ng-deep .orbit-form-grid__item {
+  grid-column: span var(--orbit-form-grid-span, 12);
   min-width: 0;
-  min-height: 0;
 }
 
-:host ::ng-deep .orbit-form-grid__col > .orbit-form-section--fill {
-  flex: 1 1 auto;
-  min-height: 0;
+/* Compatibility for the original primary/secondary projection API. */
+:host ::ng-deep [primary],
+:host ::ng-deep [secondary] {
+  grid-column: span 12;
+  min-width: 0;
 }
 
-@media (max-width: 991.98px) {
-  :host {
-    display: block;
-    padding: var(--orbit-space-3);
+@media (min-width: 36rem) {
+  :host ::ng-deep .orbit-form-grid__item {
+    grid-column: span var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12));
+  }
+}
+
+@media (min-width: 48rem) {
+  :host ::ng-deep .orbit-form-grid__item {
+    grid-column: span var(--orbit-form-grid-span-md, var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12)));
+  }
+}
+
+@media (min-width: 64rem) {
+  :host ::ng-deep [primary] {
+    grid-column: span 7;
   }
 
-  .orbit-form-grid__col--secondary {
-    margin-top: var(--orbit-space-4);
+  :host ::ng-deep [secondary] {
+    grid-column: span 5;
+  }
+
+  :host ::ng-deep .orbit-form-grid__item {
+    grid-column: span var(--orbit-form-grid-span-lg, var(--orbit-form-grid-span-md, var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12))));
+  }
+}
+
+@media (min-width: 80rem) {
+  :host ::ng-deep .orbit-form-grid__item {
+    grid-column: span var(--orbit-form-grid-span-xl, var(--orbit-form-grid-span-lg, var(--orbit-form-grid-span-md, var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12)))));
   }
 }

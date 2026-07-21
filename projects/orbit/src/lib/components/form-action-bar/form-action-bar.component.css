@@ -4,94 +4,42 @@
 
 .orbit-form-action-bar {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--orbit-space-2);
+}
+
+.orbit-form-action-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--orbit-space-3);
+  gap: var(--orbit-space-2);
 }
 
-/* ── Base button ── */
-.orbit-form-action-bar__btn {
+.orbit-form-action-bar__status {
   display: inline-flex;
   align-items: center;
-  gap: var(--orbit-space-2);
-  height: var(--orbit-control-height);
-  padding: 0 var(--orbit-space-4);
-  border-radius: var(--orbit-radius-control);
-  font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-body);
-  font-weight: var(--orbit-font-weight-emphasis);
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  gap: var(--orbit-space-1);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-caption);
 }
 
-.orbit-form-action-bar__btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.orbit-form-action-bar__btn:focus-visible {
-  outline: 2px solid var(--orbit-color-border-focus);
-  outline-offset: 2px;
-}
-
-/* ── Cancel ── */
-.orbit-form-action-bar__btn--cancel {
-  border: 1px solid var(--orbit-color-border);
-  background: var(--orbit-color-surface);
-  color: var(--orbit-color-text);
-}
-
-.orbit-form-action-bar__btn--cancel:hover:not(:disabled) {
-  background: var(--orbit-color-surface-muted);
-  border-color: var(--orbit-color-border-strong);
-}
-
-/* ── Draft ── */
-.orbit-form-action-bar__btn--draft {
-  border: 1px solid var(--orbit-color-border);
-  background: var(--orbit-color-surface);
-  color: var(--orbit-color-text-secondary);
-}
-
-.orbit-form-action-bar__btn--draft:hover:not(:disabled) {
-  background: var(--orbit-color-surface-muted);
-  color: var(--orbit-color-text);
-}
-
-/* ── Confirm ── */
-.orbit-form-action-bar__btn--confirm {
-  border: 1px solid var(--orbit-color-primary);
-  background: var(--orbit-color-primary);
-  color: var(--orbit-color-text-inverse);
-}
-
-.orbit-form-action-bar__btn--confirm:hover:not(:disabled) {
-  background: var(--orbit-color-primary-strong);
-  border-color: var(--orbit-color-primary-strong);
-}
-
-/* ── Icon ── */
-.orbit-form-action-bar__icon {
-  width: 1rem;
-  height: 1rem;
-}
-
-/* ── Spinner ── */
-.orbit-form-action-bar__spinner {
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid var(--orbit-color-text-inverse);
-  border-top-color: transparent;
+.orbit-form-action-bar__status::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid currentColor;
   border-radius: 50%;
-  animation: orbit-spin 0.6s linear infinite;
+  content: '';
 }
 
-@keyframes orbit-spin {
-  to { transform: rotate(360deg); }
-}
+@media (max-width: 32rem) {
+  .orbit-form-action-bar {
+    align-items: stretch;
+  }
 
-/* ── Loading state ── */
-.orbit-form-action-bar--loading .orbit-form-action-bar__btn--confirm {
-  pointer-events: none;
+  .orbit-form-action-bar__btn--confirm {
+    flex-basis: 100%;
+  }
 }

@@ -22,6 +22,7 @@ import {
 } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { take } from 'rxjs';
+import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export type OrbitAutocompleteValue = string | number;
 
@@ -49,12 +50,13 @@ export interface OrbitAutocompleteOption {
   },
 })
 export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestroy {
+  readonly i18n = inject(ORBIT_I18N);
   private overlay = inject(Overlay);
   private vcr = inject(ViewContainerRef);
   private hostRef = inject(ElementRef);
 
   options = input<OrbitAutocompleteOption[]>([]);
-  placeholder = input('Cerca...');
+  placeholder = input('');
   inputId = input('');
   required = input(false, { transform: booleanAttribute });
   invalid = input(false, { transform: booleanAttribute });

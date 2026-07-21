@@ -1,0 +1,60 @@
+<article>
+  <h1>Button</h1>
+  <p>Azione singola, primaria o secondaria, con quattro varianti visive e quattro toni semantici.</p>
+
+  <section>
+    <h2>Esempio base</h2>
+    <lab-example [code]="usageSnippet">
+      <orbit-button label="Salva" variant="solid" tone="primary" />
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Varianti e toni</h2>
+    @for (variant of variants; track variant) {
+      <h3>{{ variant }}</h3>
+      <lab-example [code]="variantSnippet(variant)">
+        @for (tone of tones; track tone) {
+          <orbit-button [label]="tone" [variant]="variant" [tone]="tone" />
+        }
+      </lab-example>
+    }
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="defaultSnippet">
+      <div data-example="default">
+        <orbit-button label="Default" variant="solid" tone="primary" />
+      </div>
+    </lab-example>
+    <lab-example [code]="disabledSnippet">
+      <div data-example="disabled">
+        <orbit-button label="Disabilitato" variant="solid" tone="primary" [disabled]="true" />
+      </div>
+    </lab-example>
+    <lab-example [code]="loadingSnippet">
+      <div data-example="loading">
+        <orbit-button label="Caricamento" variant="solid" tone="primary" [loading]="true" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Larghezza intrinseca al contenuto in ogni breakpoint; non esiste una variante full-width
+      dedicata. In layout stretti va inserito in un contenitore flex/grid che ne gestisca
+      l'allineamento.
+    </p>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>Elemento nativo <code>&lt;button&gt;</code> con attributo <code>type</code> esplicito.</li>
+      <li>Stato disabled e loading impediscono l'emissione di <code>clicked</code>.</li>
+      <li>Focus-visible nativo del browser, nessun outline soppresso.</li>
+    </ul>
+  </section>
+</article>

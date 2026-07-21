@@ -1,4 +1,4 @@
-import { Injectable, inject, InjectionToken, Type } from '@angular/core';
+import { Injectable, inject, InjectionToken, Injector } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { ESCAPE } from '@angular/cdk/keycodes';
@@ -24,9 +24,10 @@ const SIZE_MAP: Record<string, string> = {
 @Injectable({ providedIn: 'root' })
 export class OrbitDialogService {
   private overlay = inject(Overlay);
+  private injector = inject(Injector);
   private openDialogs: OverlayRef[] = [];
 
-  open<T>(component: ComponentType<T>, config: OrbitDialogConfig = {}): OrbitDialogRef {
+  open<T>(component: ComponentType<T>, config: OrbitDialogConfig = {}): OrbitDialogRef<T> {
     const size = config.size ?? 'md';
     const panelClasses = ['orbit-dialog-panel', `orbit-dialog--${size}`];
     if (config.panelClass) panelClasses.push(config.panelClass);
@@ -43,12 +44,15 @@ export class OrbitDialogService {
 
     const overlayRef = this.overlay.create(overlayConfig);
 
-    const portal = new ComponentPortal(component);
+    const portal = new ComponentPortal(
+      component,
+      null,
+      Injector.create({
+        parent: this.injector,
+        providers: [{ provide: ORBIT_DIALOG_DATA, useValue: config.data }],
+      }),
+    );
     const componentRef = overlayRef.attach(portal);
-
-    if (config.data) {
-      (componentRef.instance as any).data = config.data;
-    }
 
     this.openDialogs.push(overlayRef);
 
@@ -62,6 +66,7 @@ export class OrbitDialogService {
     return {
       close: () => this.close(overlayRef),
       overlayRef,
+      componentInstance: componentRef.instance,
     };
   }
 
@@ -77,7 +82,8 @@ export class OrbitDialogService {
   }
 }
 
-export interface OrbitDialogRef {
+export interface OrbitDialogRef<T = unknown> {
   close: () => void;
   overlayRef: OverlayRef;
+  componentInstance: T;
 }

@@ -1,0 +1,19 @@
+@if (entries().length) {
+  <ul class="orbit-attachment-list" [attr.aria-label]="ariaLabel()">
+    @for (entry of entries(); track entry.id) {
+      <li>
+        <orbit-attachment-list-item
+          [name]="entry.name"
+          [metadata]="entry.metadata ?? ''"
+          [status]="entry.status ?? 'default'"
+          [statusLabel]="entry.statusLabel ?? ''"
+          [readonly]="entry.readonly ?? false"
+          [actions]="entry.actions ?? []"
+          (actionTriggered)="onAction(entry, $event)"
+        />
+      </li>
+    }
+  </ul>
+} @else if (emptyLabel()) {
+  <p class="orbit-attachment-list__empty" role="status">{{ emptyLabel() }}</p>
+}

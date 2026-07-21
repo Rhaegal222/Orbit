@@ -22,6 +22,8 @@ The import includes the default Orbit tokens and Tailwind v4 theme aliases. Tail
 
 Components must consume semantic or component tokens. They must not use a reference token or a literal visual value directly.
 
+Core also exposes narrowly scoped component tokens where a semantic token alone cannot express a readable state. Current examples are `--orbit-radius-full` and the `--orbit-badge-*-fg` foreground tokens. They have default values and remain overrideable, but themes should prefer semantic tokens unless a component-specific exception is intentional.
+
 ## Create an application theme
 
 Override semantic tokens after the Orbit import. This example has a different typeface, colour palette and geometry while using exactly the same components:
@@ -72,6 +74,62 @@ If a platform hosts more than one branded area, scope the overrides to its shell
 ```
 
 Density only changes control height and spacing tokens. It must never change keyboard navigation, hit-area accessibility, hierarchy or component behavior.
+
+## Composition spacing
+
+Use `--orbit-layout-gap`, `--orbit-layout-gap-compact`, `--orbit-field-stack-gap`,
+`--orbit-section-gap`, `--orbit-modal-padding-inline` and
+`--orbit-modal-padding-block` to tune dense operational forms consistently.
+Form grid, form sections and modal chrome consume these semantic tokens. Compact
+density overrides them together, without consumer-specific margins.
+
+`--orbit-modal-size-sm`, `--orbit-modal-size-md`, `--orbit-modal-size-lg` and
+`--orbit-modal-size-full` define the compositional widths of `orbit-modal`.
+`--orbit-section-index-size` and `--orbit-section-divider` define the numbered
+section header without requiring consumer CSS. The standard control is 42px in
+comfortable density and 38px in compact density.
+
+The operational refresh additionally exposes `--orbit-text-label`,
+`--orbit-text-tertiary`, `--orbit-text-placeholder`, `--orbit-radius-tile`,
+`--orbit-radius-icon-surface`, `--orbit-dropzone-padding-block` and
+`--orbit-dropzone-padding-inline`. They keep field labels, metadata, selectable
+tiles and upload areas visually coherent when a consumer changes brand tokens.
+
+## Visual roles
+
+The default theme exposes raised, floating and modal surfaces, floating elevation,
+typography roles and motion tokens. Override `--orbit-surface-raised`,
+`--orbit-surface-floating`, `--orbit-surface-modal`, `--orbit-shadow-floating`,
+`--orbit-motion-fast`, `--orbit-motion-base` and `--orbit-easing-standard` rather
+than individual component CSS values.
+
+The default values follow the operational visual contract: ink-based text,
+subtle borders, 10px control radius, 14px selectable tiles and 20px modal
+surfaces. Consumers can replace these semantic roles, including
+`--orbit-font-sans`, without forking component styles.
+
+## Localization
+
+Orbit provides Italian labels by default and has no dependency on a specific
+translation library. Provide `ORBIT_I18N` at application or feature scope with
+`provideOrbitI18n`; omitted labels retain their default values.
+
+```ts
+import { provideOrbitI18n } from '@galileo/orbit';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideOrbitI18n({
+      locale: 'en-GB',
+      labels: { close: 'Close', select: 'Select…', noResults: 'No results' },
+    }),
+  ],
+});
+```
+
+The date picker uses the configured locale through `Intl.DateTimeFormat` for
+month and weekday names. Explicit component inputs still take precedence over
+translated default labels.
 
 ## Tailwind v4
 

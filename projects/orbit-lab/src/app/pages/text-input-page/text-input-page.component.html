@@ -1,0 +1,68 @@
+<article>
+  <h1>Text input</h1>
+  <p>Campo di testo con <code>ControlValueAccessor</code>, otto tipi supportati e formattazione valuta integrata.</p>
+
+  <section>
+    <h2>Esempio base</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="base">
+        <orbit-form-field label="Organizzazione" inputId="ti-base">
+          <orbit-text-input inputId="ti-base" [formControl]="baseControl" />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Tipi</h2>
+    @for (example of typeExamples; track example.type) {
+      <lab-example [code]="typeSnippet(example.type)">
+        <div [attr.data-type-example]="example.type">
+          <orbit-text-input [inputId]="'ti-type-' + example.type" [type]="example.type" [formControl]="example.control" [placeholder]="example.type" />
+        </div>
+      </lab-example>
+    }
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="invalidSnippet">
+      <div data-example="invalid">
+        <orbit-text-input inputId="ti-invalid" type="email" [invalid]="true" />
+      </div>
+    </lab-example>
+    <lab-example [code]="disabledSnippet">
+      <div data-example="disabled">
+        <orbit-text-input inputId="ti-disabled" [formControl]="disabledControl" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Larghezza al 100% del contenitore (<code>width: 100%</code> sul wrapper interno): in layout
+      stretti va inserito dentro <code>orbit-form-field</code> o un contenitore di larghezza
+      controllata, non ha un breakpoint proprio.
+    </p>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>
+        <code>disabled</code> non è un <code>@Input</code> diretto: si applica solo tramite
+        <code>ControlValueAccessor.setDisabledState()</code>, quindi richiede un
+        <code>[formControl]</code>/<code>[ngModel]</code> disabilitato — a differenza di
+        <code>orbit-checkbox</code> e <code>orbit-pill-switch</code>, che espongono
+        <code>disabled</code> come input diretto.
+      </li>
+      <li><code>invalid</code> è invece un input diretto, utilizzabile senza un form control.</li>
+      <li>
+        Il tipo <code>password</code> aggiunge un bottone toggle con
+        <code>aria-label</code> dinamico ("Mostra password"/"Nascondi password").
+      </li>
+      <li><code>inputmode</code> è impostato in automatico in base al <code>type</code>.</li>
+    </ul>
+  </section>
+</article>

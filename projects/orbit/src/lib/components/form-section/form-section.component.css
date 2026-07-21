@@ -7,9 +7,9 @@
 }
 
 .orbit-form-section--divided {
-  padding-top: var(--orbit-space-3);
-  margin-top: var(--orbit-space-3);
-  border-top: 2px solid var(--orbit-color-border);
+  padding-top: var(--orbit-section-gap);
+  margin-top: var(--orbit-section-gap);
+  border-top: 2px solid var(--orbit-border-subtle);
 }
 
 .orbit-form-section--fill {
@@ -20,19 +20,83 @@
 }
 
 .orbit-form-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-field-stack-gap);
   margin: 0 0 var(--orbit-space-2);
   font-size: var(--orbit-font-size-xs);
-  font-weight: var(--orbit-font-weight-bold);
+  font-weight: var(--orbit-font-weight-emphasis);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--orbit-color-text-muted);
-  font-family: var(--orbit-font-family);
+  color: var(--orbit-text-label);
+  font-family: var(--orbit-font-sans);
+}
+
+.orbit-form-section__index {
+  display: inline-grid;
+  place-items: center;
+  width: var(--orbit-section-index-size);
+  height: var(--orbit-section-index-size);
+  flex: 0 0 auto;
+  border-radius: var(--orbit-radius-sm);
+  background: var(--orbit-text-primary);
+  color: var(--orbit-text-inverse);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-emphasis);
+  font-variant-numeric: tabular-nums;
+}
+
+.orbit-form-section__rule {
+  height: 1px;
+  min-width: var(--orbit-space-3);
+  flex: 1 1 auto;
+  background: var(--orbit-section-divider);
+}
+
+.orbit-form-section__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-2);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.orbit-form-section__toggle:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+  border-radius: var(--orbit-radius-control);
+}
+
+.orbit-form-section__toggle-chevron {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.orbit-form-section__toggle-chevron--collapsed {
+  transform: rotate(-90deg);
 }
 
 .orbit-form-section__body {
   display: flex;
   flex-direction: column;
   gap: var(--orbit-space-2);
+}
+
+.orbit-form-section--compact .orbit-form-section__title {
+  margin-bottom: var(--orbit-space-1);
+}
+
+.orbit-form-section--compact .orbit-form-section__body {
+  gap: var(--orbit-space-1);
 }
 
 .orbit-form-section--content-spaced .orbit-form-section__body {

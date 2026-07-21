@@ -34,6 +34,17 @@ Import the default Orbit theme once:
 
 Angular components will be imported from the same package entry point as they become available.
 
+`OrbitSelectComponent` is non-editable by default. Set `searchable` only when
+the consumer needs client-side typing and filtering.
+
+## Modal composition
+
+Compose a modal surface with `OrbitModalComponent`, `OrbitModalHeaderComponent`,
+`OrbitModalBodyComponent` and `OrbitModalFooterComponent`. When it is opened by
+`OrbitDialogService`, use the CDK overlay and close the returned reference from
+the consumer's explicit action handler. `OrbitConfirmDialogComponent` is the
+generic confirmation content; its data is supplied through `ORBIT_DIALOG_DATA`.
+
 ## Theming
 
 Orbit is intentionally separated from its visual identity. Components use semantic CSS custom properties, so the same component library can look native in different Galileo platforms without forks or Tailwind configuration.

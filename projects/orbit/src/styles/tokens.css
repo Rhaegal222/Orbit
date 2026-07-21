@@ -8,29 +8,29 @@
 :root {
   /* Reference: palette */
   --orbit-ref-neutral-0: #ffffff;
-  --orbit-ref-neutral-50: #f8f9fa;
-  --orbit-ref-neutral-200: #ced4da;
-  --orbit-ref-neutral-400: #6c757d;
-  --orbit-ref-neutral-600: #495057;
-  --orbit-ref-neutral-900: #212529;
-  --orbit-ref-brand-100: #cfe2ff;
-  --orbit-ref-brand-500: #0d6efd;
-  --orbit-ref-brand-600: #0b5ed7;
-  --orbit-ref-success-100: #d1e7dd;
-  --orbit-ref-success-600: #198754;
-  --orbit-ref-danger-100: #f8d7da;
-  --orbit-ref-danger-600: #dc3545;
+  --orbit-ref-neutral-50: #fafbfc;
+  --orbit-ref-neutral-200: #e4e8ee;
+  --orbit-ref-neutral-400: #94a0b1;
+  --orbit-ref-neutral-600: #414958;
+  --orbit-ref-neutral-900: #12151c;
+  --orbit-ref-brand-100: #eaf0ff;
+  --orbit-ref-brand-500: #3457d5;
+  --orbit-ref-brand-600: #24409e;
+  --orbit-ref-success-100: #f3fbf6;
+  --orbit-ref-success-600: #1f8a4c;
+  --orbit-ref-danger-100: #fdf4f5;
+  --orbit-ref-danger-600: #d64545;
   --orbit-ref-warning-100: #fff3cd;
   --orbit-ref-warning-500: #ffc107;
   --orbit-ref-info-100: #cff4fc;
   --orbit-ref-info-500: #0dcaf0;
 
   /* Reference: typography, geometry and elevation */
-  --orbit-ref-font-sans: 'Nunito', sans-serif;
-  --orbit-ref-font-size-xs: 0.75rem;
-  --orbit-ref-font-size-sm: 0.8125rem;
-  --orbit-ref-font-size-base: 0.875rem;
-  --orbit-ref-font-size-lg: 1rem;
+  --orbit-ref-font-sans: 'Public Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --orbit-ref-font-size-xs: 0.625rem;
+  --orbit-ref-font-size-sm: 0.71875rem;
+  --orbit-ref-font-size-base: 0.8125rem;
+  --orbit-ref-font-size-lg: 0.875rem;
   --orbit-ref-font-size-xl: 1.125rem;
   --orbit-ref-line-height-base: 1.35;
   --orbit-ref-font-weight-normal: 400;
@@ -43,25 +43,35 @@
   --orbit-ref-space-5: 1.5rem;
   --orbit-ref-space-6: 2rem;
   --orbit-ref-radius-sm: 0.25rem;
-  --orbit-ref-radius-md: 0.375rem;
-  --orbit-ref-radius-lg: 0.5rem;
-  --orbit-ref-shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
-  --orbit-ref-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+  --orbit-ref-radius-md: 0.625rem;
+  --orbit-ref-radius-lg: 1.25rem;
+  --orbit-ref-shadow-sm: 0 1px 2px rgb(15 23 42 / 4%), 0 1px 3px rgb(15 23 42 / 6%);
+  --orbit-ref-shadow-md: 0 30px 60px -20px rgb(18 21 28 / 35%), 0 10px 28px -10px rgb(18 21 28 / 16%);
 
   /* Semantic: the supported application theming surface */
   --orbit-font-sans: var(--orbit-ref-font-sans);
+  --orbit-font-size-xs: var(--orbit-ref-font-size-xs);
+  --orbit-font-size-sm: var(--orbit-ref-font-size-sm);
   --orbit-font-size-body: var(--orbit-ref-font-size-base);
+  --orbit-font-size-lg: var(--orbit-ref-font-size-lg);
+  --orbit-font-size-xl: var(--orbit-ref-font-size-xl);
   --orbit-line-height-body: var(--orbit-ref-line-height-base);
   --orbit-font-weight-body: var(--orbit-ref-font-weight-normal);
   --orbit-font-weight-emphasis: var(--orbit-ref-font-weight-semibold);
   --orbit-surface-canvas: var(--orbit-ref-neutral-50);
   --orbit-surface-default: var(--orbit-ref-neutral-0);
   --orbit-surface-subtle: var(--orbit-ref-neutral-50);
+  --orbit-surface-raised: var(--orbit-ref-neutral-0);
+  --orbit-surface-floating: var(--orbit-ref-neutral-0);
+  --orbit-surface-modal: var(--orbit-ref-neutral-0);
   --orbit-text-primary: var(--orbit-ref-neutral-900);
-  --orbit-text-secondary: var(--orbit-ref-neutral-400);
+  --orbit-text-secondary: #74808f;
+  --orbit-text-label: var(--orbit-ref-neutral-600);
+  --orbit-text-tertiary: var(--orbit-ref-neutral-400);
+  --orbit-text-placeholder: #a6afbc;
   --orbit-text-inverse: var(--orbit-ref-neutral-0);
-  --orbit-border-subtle: var(--orbit-ref-neutral-200);
-  --orbit-border-strong: var(--orbit-ref-neutral-400);
+  --orbit-border-subtle: #eceff4;
+  --orbit-border-strong: #c7cdd6;
   --orbit-action-primary-bg: var(--orbit-ref-brand-500);
   --orbit-action-primary-bg-hover: var(--orbit-ref-brand-600);
   --orbit-action-primary-fg: var(--orbit-ref-neutral-0);
@@ -73,16 +83,52 @@
   --orbit-status-warning-subtle: var(--orbit-ref-warning-100);
   --orbit-status-info: var(--orbit-ref-info-500);
   --orbit-status-info-subtle: var(--orbit-ref-info-100);
-  --orbit-focus-ring: 0 0 0 3px color-mix(in srgb, var(--orbit-action-primary-bg) 25%, transparent);
+  --orbit-focus-ring: 0 0 0 4px color-mix(in srgb, var(--orbit-action-primary-bg) 12%, transparent);
   --orbit-radius-control: var(--orbit-ref-radius-md);
   --orbit-radius-surface: var(--orbit-ref-radius-lg);
   --orbit-shadow-raised: var(--orbit-ref-shadow-sm);
   --orbit-shadow-overlay: var(--orbit-ref-shadow-md);
+  --orbit-shadow-floating: var(--orbit-ref-shadow-md);
+  --orbit-motion-fast: 120ms;
+  --orbit-motion-base: 180ms;
+  --orbit-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --orbit-font-size-display: 1.5rem;
+  --orbit-font-size-title: var(--orbit-ref-font-size-xl);
+  --orbit-font-size-subtitle: var(--orbit-ref-font-size-lg);
+  --orbit-font-size-label: var(--orbit-ref-font-size-sm);
+  --orbit-font-size-caption: var(--orbit-ref-font-size-xs);
+  --orbit-font-size-code: var(--orbit-ref-font-size-sm);
   --orbit-space-inline: var(--orbit-ref-space-3);
   --orbit-space-stack: var(--orbit-ref-space-4);
-  --orbit-control-height: 2.375rem;
+  /* Composition spacing: layout primitives consume semantic spacing, not raw scale values. */
+  --orbit-layout-gap: 0.875rem;
+  --orbit-layout-gap-compact: 0.625rem;
+  --orbit-field-stack-gap: 0.375rem;
+  --orbit-section-gap: 1.625rem;
+  --orbit-modal-padding-inline: 2rem;
+  --orbit-modal-padding-block: 1.375rem;
+  --orbit-modal-header-padding-block-start: 1.625rem;
+  --orbit-modal-header-padding-block-end: 1.25rem;
+  --orbit-radius-tile: 0.875rem;
+  --orbit-radius-icon-surface: 0.75rem;
+  --orbit-dropzone-padding-block: 1.375rem;
+  --orbit-dropzone-padding-inline: 0.875rem;
+  --orbit-space-1: var(--orbit-ref-space-1);
+  --orbit-space-2: var(--orbit-ref-space-2);
+  --orbit-space-3: var(--orbit-ref-space-3);
+  --orbit-space-4: var(--orbit-ref-space-4);
+  --orbit-space-5: var(--orbit-ref-space-5);
+  --orbit-space-6: var(--orbit-ref-space-6);
+  --orbit-radius-sm: var(--orbit-ref-radius-sm);
+  --orbit-modal-size-sm: 32rem;
+  --orbit-modal-size-md: 45rem;
+  --orbit-modal-size-lg: 64rem;
+  --orbit-modal-size-full: min(96vw, 90rem);
+  --orbit-section-index-size: 1.25rem;
+  --orbit-section-divider: var(--orbit-border-subtle);
+  --orbit-control-height: 2.625rem;
   --orbit-control-padding-inline: var(--orbit-ref-space-3);
-  --orbit-overlay-backdrop: rgb(0 0 0 / 50%);
+  --orbit-overlay-backdrop: rgb(18 21 28 / 42%);
   --orbit-z-overlay: 1040;
   --orbit-z-modal: 1050;
   --orbit-z-popover: 1060;
@@ -117,14 +163,31 @@
   --orbit-color-info-subtle: var(--orbit-status-info-subtle);
   --orbit-color-neutral: var(--orbit-text-secondary);
   --orbit-color-neutral-subtle: var(--orbit-surface-subtle);
+
+  /* Geometry extras */
+  --orbit-radius-full: 9999px;
+
+  /* Badge foreground tones (dark-on-subtle, derived from status tokens) */
+  --orbit-badge-primary-fg: var(--orbit-action-primary-bg-hover);
+  --orbit-badge-success-fg: color-mix(in srgb, var(--orbit-status-success) 80%, #000);
+  --orbit-badge-danger-fg: color-mix(in srgb, var(--orbit-status-danger) 80%, #000);
+  --orbit-badge-warning-fg: color-mix(in srgb, var(--orbit-status-warning) 80%, #000);
+  --orbit-badge-info-fg: color-mix(in srgb, var(--orbit-status-info) 80%, #000);
+  --orbit-badge-neutral-fg: var(--orbit-text-secondary);
 }
 
 /* Comfortable is implicit. Compact is an opt-in density, not a second theme. */
 [data-orbit-density='compact'] {
-  --orbit-control-height: 2rem;
+  --orbit-control-height: 2.375rem;
   --orbit-control-padding-inline: var(--orbit-ref-space-2);
   --orbit-space-inline: var(--orbit-ref-space-2);
   --orbit-space-stack: var(--orbit-ref-space-3);
+  --orbit-layout-gap: var(--orbit-layout-gap-compact);
+  --orbit-section-gap: 1.125rem;
+  --orbit-modal-padding-inline: var(--orbit-ref-space-4);
+  --orbit-modal-padding-block: 1rem;
+  --orbit-modal-header-padding-block-start: 1.125rem;
+  --orbit-modal-header-padding-block-end: 1rem;
 }
 
 /* Dark theme — override semantic tokens only. */
@@ -132,6 +195,9 @@
   --orbit-surface-canvas: #111318;
   --orbit-surface-default: #1c1f26;
   --orbit-surface-subtle: #262a33;
+  --orbit-surface-raised: #20242c;
+  --orbit-surface-floating: #292e38;
+  --orbit-surface-modal: #20242c;
   --orbit-text-primary: #e8eaed;
   --orbit-text-secondary: #9aa0a9;
   --orbit-text-inverse: #111318;

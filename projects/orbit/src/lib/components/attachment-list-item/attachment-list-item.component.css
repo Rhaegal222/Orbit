@@ -1,0 +1,108 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-3);
+  min-height: var(--orbit-control-height);
+  padding: var(--orbit-space-2) var(--orbit-space-3);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+  font-family: var(--orbit-font-sans);
+}
+
+.orbit-attachment-list-item__marker {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: calc(var(--orbit-radius-control) - var(--orbit-space-1));
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 8%, var(--orbit-surface-default));
+  color: var(--orbit-action-primary-bg);
+}
+
+.orbit-attachment-list-item__marker svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.orbit-attachment-list-item__content {
+  display: grid;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: var(--orbit-space-1);
+}
+
+.orbit-attachment-list-item__name,
+.orbit-attachment-list-item__metadata {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orbit-attachment-list-item__name {
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.orbit-attachment-list-item__metadata {
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-sm);
+}
+
+.orbit-attachment-list-item__status {
+  flex: 0 0 auto;
+  padding: var(--orbit-space-1) var(--orbit-space-2);
+  border-radius: var(--orbit-radius-sm);
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-emphasis);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.orbit-attachment-list-item__status--readonly,
+:host(.orbit-attachment-list-item--readonly) .orbit-attachment-list-item__status {
+  border: 1px solid var(--orbit-border-subtle);
+}
+
+:host(.orbit-attachment-list-item--success) .orbit-attachment-list-item__status {
+  background: var(--orbit-status-success-subtle);
+  color: var(--orbit-status-success);
+}
+
+:host(.orbit-attachment-list-item--danger) .orbit-attachment-list-item__status {
+  background: var(--orbit-status-danger-subtle);
+  color: var(--orbit-status-danger);
+}
+
+.orbit-attachment-list-item__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--orbit-space-1);
+  flex: 0 0 auto;
+}
+
+.orbit-attachment-list-item__actions svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (max-width: 32rem) {
+  :host {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .orbit-attachment-list-item__content {
+    min-width: calc(100% - 3rem);
+  }
+
+  .orbit-attachment-list-item__status,
+  .orbit-attachment-list-item__actions {
+    margin-left: 2.75rem;
+  }
+}

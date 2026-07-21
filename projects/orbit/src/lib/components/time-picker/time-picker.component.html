@@ -1,74 +1,62 @@
 <div class="orbit-tp">
+  <input
+    type="text"
+    class="orbit-tp__input"
+    [id]="inputId() || null"
+    [disabled]="isDisabled()"
+    [required]="required()"
+    inputmode="numeric"
+    placeholder="HH:MM"
+    [value]="inputText()"
+    (input)="onInputChange($any($event.target).value)"
+    (blur)="onInputBlur()"
+  />
   <button
     type="button"
     class="orbit-tp__trigger"
     [disabled]="isDisabled()"
     [class.orbit-tp__trigger--open]="isOpen()"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="dialog"
+    [attr.aria-label]="i18n.labels.openTimePicker"
     (mousedown)="$event.preventDefault()"
     (click)="toggle()"
-    (blur)="onInputBlur()"
   >
     <svg viewBox="0 0 16 16" fill="none" class="orbit-tp__icon">
       <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/>
       <path d="M8 4.5V8l2.5 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
     </svg>
-    <span class="orbit-tp__text">{{ displayText() || 'Seleziona orario' }}</span>
   </button>
 
   @if (isOpen()) {
-    <div class="orbit-tp__dropdown">
-      <div class="orbit-tp__tabs">
-        <button
-          type="button"
-          class="orbit-tp__tab"
-          [class.orbit-tp__tab--active]="activeTab() === 'hours'"
-          (mousedown)="$event.preventDefault()"
-          (click)="activeTab.set('hours')"
-        >
-          Ore
-        </button>
-        <button
-          type="button"
-          class="orbit-tp__tab"
-          [class.orbit-tp__tab--active]="activeTab() === 'minutes'"
-          (mousedown)="$event.preventDefault()"
-          (click)="activeTab.set('minutes')"
-        >
-          Minuti
-        </button>
+    <div class="orbit-tp__dropdown" role="dialog" [attr.aria-label]="i18n.labels.timePicker">
+      <div class="orbit-tp__segments">
+        <div class="orbit-tp__segment">
+          <span>{{ i18n.labels.hours }}</span>
+          <button type="button" [attr.aria-label]="i18n.labels.nextHour" (mousedown)="$event.preventDefault()" (click)="adjustHours(1)">▲</button>
+          <strong>{{ formatHour(selectedHours() ?? 0) }}</strong>
+          <button type="button" [attr.aria-label]="i18n.labels.previousHour" (mousedown)="$event.preventDefault()" (click)="adjustHours(-1)">▼</button>
+        </div>
+        <span class="orbit-tp__separator" aria-hidden="true">:</span>
+        <div class="orbit-tp__segment">
+          <span>{{ i18n.labels.minutes }}</span>
+          <button type="button" [attr.aria-label]="i18n.labels.nextMinutes" (mousedown)="$event.preventDefault()" (click)="adjustMinutes(1)">▲</button>
+          <strong>{{ formatMinute(selectedMinutes() ?? 0) }}</strong>
+          <button type="button" [attr.aria-label]="i18n.labels.previousMinutes" (mousedown)="$event.preventDefault()" (click)="adjustMinutes(-1)">▼</button>
+        </div>
       </div>
-
-      <div class="orbit-tp__scroll">
-        @if (activeTab() === 'hours') {
-          <div class="orbit-tp__grid">
-            @for (h of hours; track h) {
-              <button
-                type="button"
-                class="orbit-tp__cell"
-                [class.orbit-tp__cell--selected]="h === selectedHours()"
-                (mousedown)="$event.preventDefault()"
-                (click)="selectHour(h)"
-              >
-                {{ formatHour(h) }}
-              </button>
-            }
-          </div>
-        } @else {
-          <div class="orbit-tp__grid">
-            @for (m of minutes(); track m) {
-              <button
-                type="button"
-                class="orbit-tp__cell"
-                [class.orbit-tp__cell--selected]="m === selectedMinutes()"
-                (mousedown)="$event.preventDefault()"
-                (click)="selectMinute(m)"
-              >
-                {{ formatMinute(m) }}
-              </button>
-            }
-          </div>
+      <div class="orbit-tp__quick-minutes">
+        @for (minute of minutes(); track minute) {
+          <button type="button" [class.orbit-tp__quick--selected]="minute === selectedMinutes()" [attr.aria-pressed]="minute === selectedMinutes()" (mousedown)="$event.preventDefault()" (click)="selectMinute(minute)">:{{ formatMinute(minute) }}</button>
         }
       </div>
+      @if (quickOptions().length) {
+        <div class="orbit-tp__quick-options">
+          @for (option of quickOptions(); track option.label) {
+            <button type="button" [class.orbit-tp__quick--selected]="selectedHours() === option.value.hours && selectedMinutes() === option.value.minutes" [attr.aria-pressed]="selectedHours() === option.value.hours && selectedMinutes() === option.value.minutes" (mousedown)="$event.preventDefault()" (click)="toggleQuickOption(option)">{{ option.label }}</button>
+          }
+        </div>
+      }
     </div>
   }
 </div>

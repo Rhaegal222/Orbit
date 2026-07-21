@@ -19,6 +19,8 @@ export type OrbitTextInputType =
   | 'url'
   | 'currency';
 
+export type OrbitTextInputTone = 'default' | 'success';
+
 @Component({
   selector: 'orbit-text-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +36,8 @@ export type OrbitTextInputType =
   host: {
     '[class.orbit-input--disabled]': 'isDisabled()',
     '[class.orbit-input--invalid]': 'invalid()',
+    '[class.orbit-input--readonly]': 'readonly()',
+    '[class.orbit-input--success]': 'tone() === "success"',
   },
 })
 export class OrbitTextInputComponent implements ControlValueAccessor {
@@ -43,6 +47,8 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
   autocomplete = input('off');
   required = input(false, { transform: booleanAttribute });
   invalid = input(false, { transform: booleanAttribute });
+  readonly = input(false, { transform: booleanAttribute });
+  tone = input<OrbitTextInputTone>('default');
   leadingIcon = input('');
   trailingIcon = input('');
   trailingIconLabel = input('');

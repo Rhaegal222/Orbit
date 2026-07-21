@@ -23,9 +23,23 @@ Consegnare un MVP di Orbit Studio che copra fin da subito tutte le famiglie di t
 - Temi multi-tenant a runtime.
 - Densità come variabile dentro il file tema generato (resta una scelta a runtime del consumer).
 
+## Fase 0 — Stabilizzare Orbit Core (precondizione)
+
+Verificato sul codice reale: `orbit-button` è già allineato al contratto semantico corrente (`--orbit-font-sans`, `--orbit-action-primary-bg`, `--orbit-focus-ring`, ecc.), ma `orbit-form-section` non espone alcuna API collassabile, e `orbit-text-input`, `orbit-select`, `orbit-checkbox`, `orbit-pill-switch` e `orbit-badge` referenziano ancora token rimossi/rinominati (`--orbit-color-border`, `--orbit-color-surface`, `--orbit-color-text`, `--orbit-color-text-muted`, `--orbit-color-primary`, `--orbit-color-danger`, `--orbit-font-family`, ...) che non esistono in `tokens.css`. Studio non può dichiarare di usare "componenti Orbit reali e tematizzabili" finché questa deriva non è risolta: oggi quei componenti non reagirebbero affatto alle sovrascritture generate da Studio.
+
+Questa fase precede l'implementazione di Studio ed è un prerequisito bloccante:
+
+- **`orbit-form-section` collassabile**: aggiungere un input `collapsible` e uno stato `collapsed` (signal interno + eventuale two-way binding), con l'header reso come `<button>` nativo, `aria-expanded` sull'header e `aria-hidden`/`id` collegati sul body — mai un `<div>` cliccabile.
+- **Riallineamento token**: sostituire in `text-input`, `select`, `checkbox`, `pill-switch`, `badge` e `form-section` ogni riferimento a token rimossi con l'equivalente semantico attuale (bordi → `--orbit-border-subtle`/`--orbit-border-strong`, superfici → `--orbit-surface-default`/`--orbit-surface-subtle`, testo → `--orbit-text-primary`/`--orbit-text-secondary`, font → `--orbit-font-sans`, stati → `--orbit-status-*`, azione primaria → `--orbit-action-primary-*`). La mappatura puntuale per ogni file è compito del piano di implementazione, non di questa spec.
+- **Test delle API usate da Studio**: test di rendering/interazione per lo stato collassato/espanso di `orbit-form-section` e uno snapshot/assert dei token CSS effettivamente applicati dai componenti coinvolti, cosicché una regressione futura di Core rompa i test di Core, non silenziosamente Studio.
+
+**Criterio di uscita Fase 0:** i componenti che Studio userà in preview leggono esclusivamente token del contratto semantico corrente in `tokens.css`, e `orbit-form-section` espone un'API collassabile accessibile e testata.
+
 ## Architettura
 
 Orbit Studio resta un progetto Angular standalone nello stesso workspace di `projects/orbit`, seguendo lo stesso pattern già usato da `projects/orbit-lab`: importa `@galileo/orbit` tramite il path mapping già presente in `tsconfig.json` (`@galileo/orbit` → `projects/orbit/src/public-api.ts`), senza build intermedia né dipendenza da tarball npm. Nessuna nuova dipendenza esterna oltre ad Angular, CDK (se necessario) e Orbit Core.
+
+`AGENTS.md` §"Product boundaries" elenca cosa "Orbit... non deve contenere", inclusi "feature modules" e "application state" — un vincolo pensato per il pacchetto pubblicato `projects/orbit`, non per le applicazioni interne `orbit-lab`/`orbit-studio`, che per natura hanno feature e stato applicativo propri. Il file va aggiornato per rendere esplicito questo scope prima di iniziare l'implementazione (vedi task dedicato nel piano).
 
 Struttura di cartelle in `projects/orbit-studio/src/app/`:
 
@@ -51,13 +65,36 @@ interface ThemeTokenDef {
   label: string; // es. 'Azione primaria — sfondo'
   group: 'color' | 'typography' | 'radius' | 'shadow';
   control: 'color' | 'font-family' | 'font-size' | 'length' | 'shadow';
-  defaultValue: string; // preso da tokens.css, unica fonte di verità
+  defaultValue: string | ShadowLayer[]; // dichiarato staticamente, non letto da tokens.css a runtime
+}
+
+interface ShadowLayer {
+  offsetX: string;
+  offsetY: string;
+  blur: string;
+  spread?: string;
+  color: string;
 }
 
 const THEME_TOKENS: ThemeTokenDef[] = [
   /* solo token semantic pubblici, mai reference o component-level */
 ];
 ```
+
+**Perché il default è dichiarato staticamente e non letto da `tokens.css`.** Leggere il file a runtime non sarebbe SSR-safe né affidabile; ma c'è una ragione più profonda: i token semantic in `tokens.css` sono per lo più indirezioni `var(--orbit-ref-*)` (es. `--orbit-action-primary-bg: var(--orbit-ref-brand-500);`), non valori letterali. Non esiste quindi "il valore" da leggere senza risolvere la cascata CSS. Il catalogo dichiara perciò il valore **risolto** ed editabile per ogni token (es. `#0d6efd`, non `var(--orbit-ref-brand-500)`), e un test dedicato (`theme-token.catalog.spec.ts`) verifica per ogni token che il valore dichiarato coincida con quello effettivamente risolto in `tokens.css`, leggendo il file da disco in Node/Vitest (operazione da build/test tooling, non da runtime browser — nessun impatto SSR). Questo test è la difesa contro la deriva tra catalogo e Core.
+
+## Comportamento dell'editor colore
+
+`<input type="color">` accetta e restituisce solo valori HEX; i token semantic possono invece contenere qualunque sintassi CSS valida (`oklch()`, `rgb()`, nomi). Per ogni token `control: 'color'` l'editor espone due controlli sincronizzati ma con ruoli distinti:
+
+- **color input nativo**: sempre e solo HEX, per la selezione visuale rapida;
+- **`orbit-text-input`**: valore CSS libero (validato solo come "non vuoto e sintatticamente plausibile", mai risolto/convertito);
+- quando il valore corrente nel text input è un HEX valido, il color input lo riflette;
+- quando non lo è (es. l'utente scrive `oklch(...)`), il color input **non tenta conversioni**: mostra l'ultimo HEX valido noto per quel token con un'indicazione esplicita di "non sincronizzato" (es. badge/icona accanto allo swatch), così l'editor non promette una fedeltà cromatica che non può garantire.
+
+## Ombre multi-layer
+
+I default di Core possono comporre più shadow layer nello stesso token (es. `--orbit-shadow-overlay` è due `box-shadow` separati da virgola). Un solo set offset/blur/opacity non li rappresenterebbe fedelmente: l'editor tratta ogni token shadow come un **array strutturato di `ShadowLayer`**, con controlli per aggiungere/rimuovere layer. Il valore serializzato in `ThemeConfigStore` (sempre `Record<string, string>`) è la stringa `box-shadow` risultante dalla concatenazione dei layer con virgola; la struttura a layer vive solo nello stato locale del componente editor, ricostruita dal default dichiarato nel catalogo.
 
 Gruppi e token rappresentativi:
 
@@ -92,7 +129,7 @@ Mobile (stack verticale): editor → preview → output.
 
 Dettagli:
 
-- Ogni sezione dell'editor è un `<orbit-form-section>` collassabile, con i controlli reali di Orbit (`<orbit-text-input>` per i valori testuali/numerici) affiancati a un `<input type="color">` nativo per i token di tipo `color` — nessun color-picker custom via CDK.
+- Ogni sezione dell'editor è un `<orbit-form-section>` collassabile (Fase 0), con i controlli reali di Orbit (`<orbit-text-input>` per i valori testuali/numerici) affiancati a un `<input type="color">` nativo per i token di tipo `color`, secondo la sincronizzazione descritta in "Comportamento dell'editor colore" — nessun color-picker custom via CDK.
 - Il pannello preview applica le sovrascritture tramite un binding `[style]` sul proprio contenitore radice, **mai su `:root` globale**: il resto della UI di Studio non viene mai tinto dal tema in costruzione.
 - Il pannello preview è un mini-form rappresentativo (non un catalogo esaustivo come Lab): quanto basta per vedere l'effetto su bottoni, campi, badge, switch.
 - Sezione "Output" sempre visibile, sotto la preview: blocco codice leggibile con commento di intestazione (`/* Generato da Orbit Studio — <data> */`), bottone **Copia** (clipboard) e bottone **Scarica** (`orbit-theme.css`).
@@ -130,9 +167,10 @@ export interface OrbitStudioBrowserIo {
 }
 ```
 
-- L'implementazione reale (`BrowserIoService`) usa `navigator.clipboard`, `Blob`, `URL.createObjectURL` e un anchor temporaneo; effettua il check che l'ambiente sia un browser **dentro i propri metodi**.
+- L'implementazione reale (`BrowserIoService`) usa `navigator.clipboard`, `Blob`, `URL.createObjectURL` e un anchor temporaneo; effettua il check che l'ambiente sia un browser **dentro i propri metodi**, mai fuori.
+- Se l'ambiente non è un browser, o `navigator.clipboard` non è disponibile, o `writeText` rigetta: il servizio non lancia eccezioni non gestite. Il chiamante (`OutputComponent`) riceve un esito che traduce in un feedback utente non bloccante (es. messaggio inline "copia non riuscita, usa il download"), mai un errore che interrompe l'interazione.
 - Nessun altro file del progetto deve referenziare `navigator`, `Blob`, `URL` o `document` direttamente.
-- I test forniscono una fake che implementa l'interfaccia e registra le chiamate, senza toccare API reali del browser.
+- I test del componente Output forniscono una fake che implementa l'interfaccia e registra le chiamate, senza toccare API reali del browser; i test del servizio reale coprono invece i casi limite elencati sopra.
 
 ## Testing
 
@@ -144,7 +182,9 @@ Framework: Vitest (già in `devDependencies` del workspace).
   - chiave estranea (non in `THEME_TOKENS`) nella mappa di input → sempre filtrata, mai nell'output;
   - stessa `generatedAt` in input → stesso output byte-per-byte (determinismo).
 - `theme-config.store.spec.ts`: set/reset di un singolo token, reset totale, invarianza dei token non toccati.
-- `browser-io.service.spec.ts` (via fake iniettata su `ORBIT_STUDIO_BROWSER_IO`): il componente Output invoca `copyToClipboard` / `downloadTextFile` con contenuto e filename attesi.
+- `theme-token.catalog.spec.ts`: ogni `defaultValue` dichiarato in `THEME_TOKENS` coincide con il valore risolto in `tokens.css` (letto da disco in Node, non a runtime browser).
+- `output.component.spec.ts` (non `browser-io.service.spec.ts` — la fake testa il consumatore, non il servizio reale): con una fake iniettata su `ORBIT_STUDIO_BROWSER_IO`, verifica che `OutputComponent` invochi `copyToClipboard` / `downloadTextFile` con contenuto e filename attesi.
+- `browser-io.service.spec.ts`: test del servizio reale, inclusi i casi non coperti dalla fake — ambiente non browser (no-op sicuro, nessun throw), clipboard non disponibile o `navigator.clipboard.writeText` che rigetta (l'errore produce un feedback utente non bloccante, es. un messaggio inline nel componente Output, mai un'eccezione non gestita).
 - Component test editor → preview: un cambio su un color-input aggiorna lo store e si riflette nello scoping `[style]` del pannello preview, mai su `:root` globale (test anti-regressione).
 - Component test densità: il toggle cambia `data-orbit-density` solo dentro il contenitore preview, mai fuori.
 

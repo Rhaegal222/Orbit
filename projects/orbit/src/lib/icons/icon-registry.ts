@@ -14,7 +14,8 @@ export type OrbitIconName =
   | 'view'
   | 'download'
   | 'remove'
-  | 'retry';
+  | 'retry'
+  | 'search';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],
@@ -53,4 +54,5 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   download: ['M12 3v11m0 0 4-4m-4 4-4-4M4 17v3h16v-3'],
   remove: ['M4 7h16m-10 4v5m4-5v5M9 7l1-3h4l1 3m-9 0 1 13h10l1-13'],
   retry: ['M20 11a8 8 0 1 0 1.1 4M20 5v6h-6'],
+  search: ['M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z', 'm20.5 20.5-4.8-4.8'],
 };

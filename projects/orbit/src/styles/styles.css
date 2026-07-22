@@ -1,5 +1,6 @@
 @import './tokens.css';
 @import './theme.css';
+@import '@angular/cdk/overlay-prebuilt.css';
 
 /* CDK overlay classes are global by design: the overlay is outside component encapsulation. */
 .orbit-dialog-backdrop {

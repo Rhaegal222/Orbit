@@ -5,8 +5,8 @@
   <section>
     <h2>Offcanvas</h2>
     <lab-example [code]="offcanvasSnippet">
-      <orbit-button label="Apri da destra" (clicked)="openOffcanvas('right')" />
       <orbit-button label="Apri da sinistra" tone="neutral" variant="outline" (clicked)="openOffcanvas('left')" />
+      <orbit-button label="Apri da destra" (clicked)="openOffcanvas('right')" />
     </lab-example>
     @if (lastOpenedSide()) {
       <p>Ultimo lato aperto: <strong>{{ lastOpenedSide() }}</strong></p>

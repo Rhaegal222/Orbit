@@ -235,7 +235,7 @@
   --orbit-sidebar-icon-size: var(--orbit-font-size-lg);
   --orbit-sidebar-icon-size-collapsed: var(--orbit-font-size-xl);
   --orbit-sidebar-active-indicator-width: 0.1875rem;
-  --orbit-sidebar-bg: var(--orbit-surface-raised);
+  --orbit-sidebar-bg: var(--orbit-surface-default);
   --orbit-sidebar-fg: var(--orbit-text-primary);
   --orbit-sidebar-fg-muted: var(--orbit-text-secondary);
   --orbit-sidebar-border: var(--orbit-border-subtle);

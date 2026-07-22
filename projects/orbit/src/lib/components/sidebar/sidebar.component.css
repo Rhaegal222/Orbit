@@ -3,6 +3,7 @@
   position: relative;
   flex: 0 0 auto;
   width: var(--orbit-sidebar-width);
+  height: 100%;
   transition: width var(--orbit-motion-base) var(--orbit-easing-shared);
 }
 
@@ -134,11 +135,6 @@
 
 .orbit-sidebar__toggle-icon--expanded {
   transform: rotate(90deg);
-}
-
-/* The asymmetric chevron needs a small optical correction within its circular target. */
-.orbit-sidebar__toggle orbit-icon {
-  margin-inline-start: 0.0625rem;
 }
 
 .orbit-sidebar__nav {

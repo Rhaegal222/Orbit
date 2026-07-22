@@ -23,3 +23,17 @@
   color: var(--orbit-text-secondary);
   opacity: 0.65;
 }
+.orbit-table--bordered {
+  border: 1px solid var(--orbit-border-subtle);
+}
+.orbit-table--bordered ::ng-deep th,
+.orbit-table--bordered ::ng-deep td {
+  border-right: 1px solid var(--orbit-border-subtle);
+}
+.orbit-table--bordered ::ng-deep th:last-child,
+.orbit-table--bordered ::ng-deep td:last-child {
+  border-right: none;
+}
+.orbit-table--striped ::ng-deep tbody tr:nth-child(even) {
+  background: var(--orbit-surface-subtle);
+}

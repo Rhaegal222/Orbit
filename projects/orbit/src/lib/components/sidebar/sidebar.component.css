@@ -36,6 +36,7 @@
 
 .orbit-sidebar__header {
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   gap: var(--orbit-space-2);
   min-height: var(--orbit-sidebar-header-height);
@@ -246,6 +247,7 @@
 
 .orbit-sidebar__footer {
   display: grid;
+  flex: 0 0 auto;
   gap: var(--orbit-space-2);
   padding: var(--orbit-space-3);
   border-top: 1px solid var(--orbit-sidebar-border);
@@ -263,10 +265,6 @@
 
 :host(.orbit-sidebar-host--collapsed) .orbit-sidebar__item {
   gap: 0;
-}
-
-:host(.orbit-sidebar-host--collapsed) .orbit-sidebar__nav {
-  overflow-y: visible;
 }
 
 :host(.orbit-sidebar-host--collapsed) .orbit-sidebar__item-icon {

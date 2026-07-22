@@ -8,6 +8,12 @@ export interface OrbitPanelConfig<T = unknown> {
   data?: T;
   side?: 'left' | 'right';
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'wide';
+  /** Overrides `size`: the panel spans the full viewport width. */
+  fullWidth?: boolean;
+  /** Lower bound the panel may shrink to (e.g. on narrow viewports), as a CSS length. */
+  minWidth?: string;
+  /** Upper bound the panel may grow to, as a CSS length. Ignored when `fullWidth` is true. */
+  maxWidth?: string;
   disableClose?: boolean;
   panelClass?: string;
 }
@@ -42,8 +48,10 @@ export class OrbitPanelService {
       hasBackdrop: true,
       backdropClass: 'orbit-panel-backdrop',
       panelClass: panelClasses,
-      width: SIZE_MAP[size],
+      width: config.fullWidth ? '100vw' : SIZE_MAP[size],
       height: '100vh',
+      minWidth: config.minWidth,
+      maxWidth: config.fullWidth ? undefined : config.maxWidth,
       positionStrategy,
       scrollStrategy: this.overlay.scrollStrategies.block(),
     };

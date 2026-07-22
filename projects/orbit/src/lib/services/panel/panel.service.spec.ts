@@ -81,4 +81,19 @@ describe('OrbitPanelService', () => {
     ref.close();
     expect(overlayContainer.getContainerElement().textContent).not.toContain('A');
   });
+
+  it('applies the sm/md/lg/xl/wide width by default and honors minWidth/maxWidth', () => {
+    service.open(TestPanelContentComponent, { data: 'A', size: 'lg', minWidth: '280px', maxWidth: '800px' });
+    const pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
+    expect(pane.style.width).toBe('600px');
+    expect(pane.style.minWidth).toBe('280px');
+    expect(pane.style.maxWidth).toBe('800px');
+  });
+
+  it('spans the full viewport width when fullWidth is true, ignoring maxWidth', () => {
+    service.open(TestPanelContentComponent, { data: 'A', fullWidth: true, maxWidth: '800px' });
+    const pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
+    expect(pane.style.width).toBe('100vw');
+    expect(pane.style.maxWidth).toBe('');
+  });
 });

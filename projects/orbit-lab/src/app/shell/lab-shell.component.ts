@@ -296,7 +296,7 @@ export class LabShellComponent {
     const query = this.searchQuery().trim().toLowerCase();
     const items: OrbitSidebarItem[] = CATALOG_ENTRIES.filter((entry) =>
       entry.label.toLowerCase().includes(query),
-    ).map((entry) => ({ id: entry.slug, label: entry.label }));
+    ).map((entry) => ({ id: entry.slug, label: entry.label, icon: entry.icon }));
     return [{ id: 'catalog', items }];
   });
 

@@ -1,0 +1,9 @@
+:host { display: block; height: 100%; }
+.orbit-panel-surface {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--orbit-surface-modal);
+  box-shadow: var(--orbit-shadow-floating);
+}

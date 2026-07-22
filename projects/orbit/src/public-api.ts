@@ -26,6 +26,8 @@ export * from './lib/components/form-action-bar';
 export * from './lib/components/tooltip';
 export * from './lib/components/popover';
 export * from './lib/components/code-block';
+export * from './lib/components/panel-surface';
+export * from './lib/components/panel';
 export * from './lib/types';
 // Keep the barrel target explicit: the library compiler resolves public exports
 // with ESM semantics and does not consistently infer a directory `index.ts`.

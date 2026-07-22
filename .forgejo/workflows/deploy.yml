@@ -34,7 +34,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$DEPLOY_DIR"
-          rsync -a --delete --exclude .git --exclude node_modules ./ "$DEPLOY_DIR/"
+          find "$DEPLOY_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          tar --exclude=.git --exclude=node_modules -cf - . | tar -xf - -C "$DEPLOY_DIR"
 
       - name: Build and start service
         run: |

@@ -1,0 +1,73 @@
+name: Deploy Orbit website
+
+on:
+  push:
+    branches: [staging, main]
+
+concurrency:
+  group: orbit-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select target
+        run: |
+          set -euo pipefail
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "DEPLOY_DIR=/home/rhaegal222/Server/main/rhaegal222/wyrmrest/wyrmrest-orbit" >> "$GITHUB_ENV"
+            echo "PROJECT_NAME=wyrmrest-orbit-production" >> "$GITHUB_ENV"
+            echo "TRAEFIK_ENABLE=true" >> "$GITHUB_ENV"
+            echo "CONTAINER_NAME=wyrmrest-orbit-production-orbit-1" >> "$GITHUB_ENV"
+          else
+            echo "DEPLOY_DIR=/home/rhaegal222/Server/staging/rhaegal222/wyrmrest/wyrmrest-orbit" >> "$GITHUB_ENV"
+            echo "PROJECT_NAME=wyrmrest-orbit-staging" >> "$GITHUB_ENV"
+            echo "TRAEFIK_ENABLE=false" >> "$GITHUB_ENV"
+            echo "CONTAINER_NAME=wyrmrest-orbit-staging-orbit-1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Materialize deployment worktree
+        run: |
+          set -euo pipefail
+          mkdir -p "$DEPLOY_DIR"
+          rsync -a --delete --exclude .git --exclude node_modules ./ "$DEPLOY_DIR/"
+
+      - name: Build and start service
+        run: |
+          set -euo pipefail
+          TRAEFIK_ENABLE="$TRAEFIK_ENABLE" docker compose -p "$PROJECT_NAME" -f "$DEPLOY_DIR/docker-compose.yml" up -d --build --force-recreate
+
+      - name: Verify container health
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 12); do
+            status=$(docker inspect --format='{{.State.Health.Status}}' "$CONTAINER_NAME" 2>/dev/null || echo starting)
+            echo "attempt $attempt/12: $status"
+            if [ "$status" = healthy ]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          docker logs "$CONTAINER_NAME" --tail 60 || true
+          exit 1
+
+      - name: Publish production DNS
+        if: github.ref_name == 'main'
+        run: |
+          set -euo pipefail
+          dns_script=/home/rhaegal222/Server/main/rhaegal222/wyrmrest/wyrmrest-cloudflare/scripts/cf_dns.py
+          dns_env=/home/rhaegal222/Server/main/rhaegal222/env/cloudflare-sync.env
+          python3 "$dns_script" --env-file "$dns_env" upsert orbit.wyrmrest.it CNAME wyrmrest.it --proxied --comment "Orbit UI foundations"
+          python3 "$dns_script" --env-file "$dns_env" upsert orbit.wyrmrest.com CNAME wyrmrest.com --proxied --comment "Orbit UI foundations"
+
+      - name: Verify public website
+        if: github.ref_name == 'main'
+        run: |
+          set -euo pipefail
+          for host in orbit.wyrmrest.it orbit.wyrmrest.com; do
+            curl --fail --silent --show-error --retry 12 --retry-delay 5 "https://$host/healthz" | grep -qx ok
+          done

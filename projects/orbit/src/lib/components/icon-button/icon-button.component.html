@@ -7,8 +7,8 @@
   [attr.aria-label]="ariaLabel()"
   (click)="onClick()"
 >
-  @if (icon()) {
-    <span [class]="icon()" aria-hidden="true"></span>
+  @if (icon(); as iconName) {
+    <orbit-icon [name]="iconName" />
   } @else {
     <ng-content />
   }

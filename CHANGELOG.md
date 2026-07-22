@@ -6,7 +6,13 @@ All notable changes to Galileo Orbit are documented here.
 
 ### Added
 
+- Added the complete semantic surface/elevation and layering token contract, including overlay surfaces and base, sticky, popover, overlay and toast layers. Orbit Lab now includes a light/dark theme matrix for surfaces, actions and status badges.
 - Initial package metadata, publication pipeline and portable design tokens.
+- Added Orbit Lab's pattern and governance guide, plus documented component maturity,
+  proposal, review and deprecation requirements.
+- Added `orbit-navbar`, a typed, accessible horizontal navigation primitive with active,
+  disabled and link states.
+- `orbit-icon` now exposes typed 16/20/24 sizing and decorative or labelled informative semantics; attachment and modal action icons use the shared registry.
 - `orbit-button` now supports the `translucent` variant for colored, semi-transparent actions, derived from shared theme tokens.
 - Added `orbit-slider`, an accessible numeric range control with reactive-form support, value output and semantic token styling.
 - Added `orbit-switch`, an accessible boolean control with reactive-form support and `checkedChange` output.
@@ -17,6 +23,9 @@ All notable changes to Galileo Orbit are documented here.
 
 ### Changed
 
+- Angular CDK is now a required peer dependency because the shipped overlay, focus and interaction primitives use it directly.
+- Status badges now use contrast-safe solid foreground/background pairings in light and dark themes, with a larger readable label and more representative Orbit Lab examples.
+- Select menus now preserve the scoped theme in their CDK overlay and visibly distinguish the selected option with an accessible checkmark.
 - Button tones now use documented semantic action foreground tokens. The dark theme provides contrast-safe solid and subtle foregrounds for primary, success, danger and neutral variants.
 - Typography roles now distinguish operational body text from labels and captions: catalog navigation, sidebar items and table data use Body; validation and persistent action status use Label.
 - Radius tokens now scale with text size and adapt to spacious, comfortable, compact and dense layouts; component internals consistently consume the semantic radius contract, including explicit square edges and circular indicators.

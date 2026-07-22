@@ -238,8 +238,8 @@ class LabCatalogOptionsPanelComponent {
     nonNullable: true,
   });
   readonly themeOptions = [
-    { value: 'default', label: 'Default' },
-    { value: 'dark', label: 'Regressione (dark)' },
+    { value: 'default', label: 'Chiaro' },
+    { value: 'dark', label: 'Scuro' },
   ];
   readonly densityOptions = [
     { value: 'spacious', label: 'Spaziosa' },

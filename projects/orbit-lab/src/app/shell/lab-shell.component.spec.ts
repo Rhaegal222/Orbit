@@ -66,7 +66,7 @@ describe('LabShellComponent', () => {
     fixture.detectChanges();
     const darkOption = [
       ...overlayContainer.getContainerElement().querySelectorAll('.orbit-select__option'),
-    ].find((option) => option.textContent?.includes('Regressione')) as HTMLButtonElement;
+    ].find((option) => option.textContent?.includes('Scuro')) as HTMLButtonElement;
     darkOption.click();
     fixture.detectChanges();
 

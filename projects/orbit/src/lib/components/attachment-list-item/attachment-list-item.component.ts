@@ -1,5 +1,9 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { OrbitIconButtonComponent, type OrbitIconButtonTone } from '../icon-button/icon-button.component';
+import {
+  OrbitIconButtonComponent,
+  type OrbitIconButtonTone,
+} from '../icon-button/icon-button.component';
+import { OrbitIconComponent } from '../../icons/icon.component';
 
 export type OrbitAttachmentListItemStatus = 'default' | 'readonly' | 'success' | 'danger';
 
@@ -15,11 +19,11 @@ export interface OrbitAttachmentListItemAction {
 @Component({
   selector: 'orbit-attachment-list-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitIconButtonComponent],
+  imports: [OrbitIconButtonComponent, OrbitIconComponent],
   templateUrl: './attachment-list-item.component.html',
   styleUrl: './attachment-list-item.component.css',
   host: {
-    "[class.orbit-attachment-list-item--readonly]": "readonly() || status() === 'readonly'",
+    '[class.orbit-attachment-list-item--readonly]': "readonly() || status() === 'readonly'",
     '[class.orbit-attachment-list-item--success]': "status() === 'success'",
     '[class.orbit-attachment-list-item--danger]': "status() === 'danger'",
   },

@@ -4,7 +4,7 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  background: var(--orbit-surface-modal);
+  background: var(--orbit-surface-overlay);
 }
 
 .orbit-modal-body__scroll {
@@ -24,9 +24,8 @@
   align-items: center;
   justify-content: center;
   gap: var(--orbit-space-2);
-  background: color-mix(in srgb, var(--orbit-surface-modal) 92%, transparent);
+  background: color-mix(in srgb, var(--orbit-surface-overlay) 92%, transparent);
   opacity: 0.95;
-  z-index: 1;
 }
 
 .orbit-modal-body__loader--small {

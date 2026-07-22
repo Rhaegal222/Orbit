@@ -26,7 +26,6 @@
 
 .orbit-code-block__copy {
   position: absolute;
-  z-index: 1;
   top: var(--orbit-space-2);
   right: var(--orbit-space-2);
 }

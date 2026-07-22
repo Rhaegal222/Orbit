@@ -1,6 +1,6 @@
 {
   "name": "@galileo/orbit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Reusable UI foundations and design tokens for Galileo applications.",
   "license": "UNLICENSED",
   "private": false,
@@ -18,11 +18,6 @@
     "@angular/core": "^22.0.0",
     "@angular/common": "^22.0.0",
     "@angular/cdk": "^22.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@angular/cdk": {
-      "optional": true
-    }
   },
   "repository": {
     "type": "git",

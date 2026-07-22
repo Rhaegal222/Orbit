@@ -35,7 +35,7 @@ Action tokens separate the foreground used on a solid surface from the brighter 
 
 For a dark theme, set solid foregrounds to a light value where the action surface is saturated, and set subtle foregrounds to a lighter, contrast-tested tone. Do not rely on a dark brand colour for text on a dark surface.
 
-Core also exposes narrowly scoped component tokens where a semantic token alone cannot express a readable state. Current examples are `--orbit-radius-full` and the `--orbit-badge-*-fg` foreground tokens. They have default values and remain overrideable, but themes should prefer semantic tokens unless a component-specific exception is intentional.
+Core also exposes narrowly scoped component tokens where a semantic token alone cannot express a readable state. Current examples are `--orbit-radius-full`, paired `--orbit-badge-*-{bg,fg}` tokens and the select option state tokens. They have default values and remain overrideable, but themes should prefer semantic tokens unless a component-specific exception is intentional.
 
 ### Typography roles
 
@@ -190,9 +190,41 @@ surfaces, text and primary-action tokens; consumers can override those tokens
 to align it with their brand without application-specific navigation CSS. This includes the floating
 edge toggle, icon sizes for expanded/compact modes and the active indicator.
 
+## Colour, surfaces and elevation
+
+The semantic colour contract is complete in both the default and dark themes:
+
+| Domain | Tokens |
+| --- | --- |
+| Text | `--orbit-text-primary`, `--orbit-text-secondary`, `--orbit-text-tertiary`, `--orbit-text-inverse`, `--orbit-text-placeholder` |
+| Surfaces | `--orbit-surface-default`, `--orbit-surface-subtle`, `--orbit-surface-raised`, `--orbit-surface-floating`, `--orbit-surface-overlay` |
+| Borders | `--orbit-border-subtle`, `--orbit-border-strong` |
+| Actions | `--orbit-action-{primary,success,danger,neutral}-{bg,bg-hover,fg,fg-subtle}` |
+| Status and focus | `--orbit-status-{success,warning,danger,info}` (with `-fg` and `-subtle` pairings), `--orbit-focus-ring` |
+
+Use the explicit foreground paired with each action background. In particular,
+`*-fg-subtle` is the foreground for soft, translucent, outline and flat actions;
+do not derive it in component CSS. `--orbit-surface-modal` remains a compatibility
+alias for `--orbit-surface-overlay` and new component styles use the latter.
+
+Surface elevation is semantic: default (0), subtle (1), raised (2), floating (3)
+and overlay (4). Pair raised, floating and overlay surfaces with their matching
+`--orbit-shadow-raised`, `--orbit-shadow-floating` and `--orbit-shadow-overlay`
+tokens. The dark theme separates surfaces tonally and uses lower-opacity shadows;
+it does not depend on indiscriminately brighter borders.
+
+### Layering
+
+Orbit centralizes stacking values in `--orbit-z-base`, `--orbit-z-sticky`,
+`--orbit-z-popover`, `--orbit-z-overlay` and `--orbit-z-toast`. Core components
+do not declare numeric `z-index` values. Angular CDK Overlay remains the authority
+for overlay placement and stacking; application sticky chrome and toast hosts should
+consume the corresponding token. `--orbit-z-modal` and `--orbit-z-tooltip` are
+compatibility aliases for existing consumer overrides.
+
 ## Visual roles
 
-The default theme exposes raised, floating and modal surfaces, floating elevation,
+The default theme exposes raised, floating and overlay surfaces, floating elevation,
 typography roles and motion tokens. Override `--orbit-surface-raised`,
 `--orbit-surface-floating`, `--orbit-surface-modal`, `--orbit-shadow-floating`,
 `--orbit-motion-fast`, `--orbit-motion-base` and `--orbit-easing-standard` rather

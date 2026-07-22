@@ -33,6 +33,38 @@ describe('OrbitIconComponent', () => {
     expect(svg.getAttribute('stroke-width')).toBe('1.75');
   });
 
+  it('uses the typed size contract without SVG pixel attributes', () => {
+    fixture.componentRef.setInput('name', 'check');
+    fixture.componentRef.setInput('size', 24);
+    fixture.detectChanges();
+
+    const svg = fixture.nativeElement.querySelector('svg');
+    expect(svg.style.getPropertyValue('--orbit-icon-size')).toBe('1.5rem');
+    expect(svg.hasAttribute('width')).toBe(false);
+    expect(svg.hasAttribute('height')).toBe(false);
+  });
+
+  it('hides decorative icons from assistive technology by default', () => {
+    fixture.componentRef.setInput('name', 'check');
+    fixture.detectChanges();
+
+    const svg = fixture.nativeElement.querySelector('svg');
+    expect(svg.getAttribute('aria-hidden')).toBe('true');
+    expect(svg.hasAttribute('role')).toBe(false);
+  });
+
+  it('exposes an informative icon with its accessible label', () => {
+    fixture.componentRef.setInput('name', 'mail');
+    fixture.componentRef.setInput('decorative', false);
+    fixture.componentRef.setInput('label', 'Messaggi');
+    fixture.detectChanges();
+
+    const svg = fixture.nativeElement.querySelector('svg');
+    expect(svg.getAttribute('role')).toBe('img');
+    expect(svg.getAttribute('aria-label')).toBe('Messaggi');
+    expect(svg.hasAttribute('aria-hidden')).toBe(false);
+  });
+
   it('renders normally when scaleSensitive is false, regardless of textScale', () => {
     fixture.componentRef.setInput('name', 'calendar');
     fixture.componentRef.setInput('textScale', 1.5);

@@ -14,6 +14,10 @@ Before tagging, update `package.json` and `CHANGELOG.md`, then run:
 npm run check
 ```
 
+`npm run release:check` builds the package, checks its packed contents and installs
+the freshly generated tarball into `consumer-fixture` before building that consumer.
+This catches missing exports and stylesheet assets that a workspace build cannot detect.
+
 ## CI publication
 
 Pushing a tag that matches `vX.Y.Z` starts the `publish-package` job. It publishes to the project-level GitLab npm registry using `CI_JOB_TOKEN`; no registry secret is stored in this repository.
@@ -38,4 +42,4 @@ Consumers configure the scoped group registry in `.npmrc`:
 
 ## Angular components
 
-Angular components are built with `ng-packagr` in partial-Ivy mode and Angular packages remain peer dependencies. Keep the public API simple: JavaScript and Angular symbols come from `@galileo/orbit`; styles come from the optional `@galileo/orbit/styles` import.
+Angular components are built with `ng-packagr` in partial-Ivy mode and Angular packages remain peer dependencies. Consumers provide Angular 22-compatible `@angular/core`, `@angular/common` and `@angular/cdk`. Keep the public API simple: JavaScript and Angular symbols come from `@galileo/orbit`; styles come from the optional `@galileo/orbit/styles` import.

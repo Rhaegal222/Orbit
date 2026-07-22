@@ -1,0 +1,32 @@
+.patterns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--orbit-space-3);
+}
+
+.patterns-grid > div {
+  display: grid;
+  gap: var(--orbit-space-1);
+  padding: var(--orbit-space-3);
+  border: 0.0625rem solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-secondary);
+}
+
+.patterns-grid strong {
+  color: var(--orbit-text-primary);
+}
+
+.patterns-checklist {
+  display: grid;
+  gap: var(--orbit-space-2);
+  margin: 0;
+  padding-left: var(--orbit-space-5);
+  color: var(--orbit-text-secondary);
+  line-height: 1.5;
+}
+
+.patterns-checklist strong {
+  color: var(--orbit-text-primary);
+}

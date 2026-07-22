@@ -8,7 +8,6 @@
 
 :host(.orbit-sidebar-host--collapsed) {
   width: var(--orbit-sidebar-width-collapsed);
-  z-index: 1;
 }
 
 :host:has(.orbit-sidebar--embedded) {
@@ -74,7 +73,6 @@
   display: grid;
   place-items: center;
   position: absolute;
-  z-index: 1;
   top: 50%;
   right: var(--orbit-sidebar-toggle-offset);
   width: var(--orbit-sidebar-toggle-size);
@@ -175,7 +173,6 @@
 }
 
 .orbit-sidebar__item--active {
-  z-index: 1;
   border-color: var(--orbit-sidebar-item-active-border);
   border-left-color: var(--orbit-sidebar-item-active-indicator);
   border-left-width: var(--orbit-sidebar-active-indicator-width);
@@ -275,7 +272,6 @@
 
 :host(.orbit-sidebar-host--collapsed) .orbit-sidebar__badge {
   position: absolute;
-  z-index: 2;
   top: calc(0px - var(--orbit-space-1));
   right: calc(0px - var(--orbit-space-3));
   transform: scale(0.9);

@@ -26,29 +26,31 @@
             <strong>{{ variantLabel() }}</strong>
           </div>
 
-          <div class="sidebar-page__tile-group" aria-label="Varianti sidebar">
+          <div class="sidebar-page__tile-group" aria-label="Visualizzazione rail">
             <orbit-selectable-tile
               label="Espansa"
               description="Rail completa"
-              [selected]="selectedVariant() === 'expanded'"
-              (selectedChange)="selectVariant('expanded')"
+              [selected]="railVariant() === 'expanded'"
+              (selectedChange)="selectRailVariant('expanded')"
             >
               <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
             </orbit-selectable-tile>
             <orbit-selectable-tile
               label="Compatta"
               description="Solo icone"
-              [selected]="selectedVariant() === 'compact'"
-              (selectedChange)="selectVariant('compact')"
+              [selected]="railVariant() === 'compact'"
+              (selectedChange)="selectRailVariant('compact')"
             >
               <orbit-icon orbitSelectableTileIcon name="home" aria-hidden="true" />
             </orbit-selectable-tile>
+          </div>
+
+          <div class="sidebar-page__tile-group" aria-label="Stati item">
             <orbit-selectable-tile
-              class="sidebar-page__tile--separated"
               label="Stati item"
               description="Attivo, badge e disabilitato"
-              [selected]="selectedVariant() === 'states'"
-              (selectedChange)="selectVariant('states')"
+              [selected]="showItemStates()"
+              (selectedChange)="setShowItemStates($event)"
             >
               <orbit-icon orbitSelectableTileIcon name="check" aria-hidden="true" />
             </orbit-selectable-tile>

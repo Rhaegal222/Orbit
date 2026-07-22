@@ -18,9 +18,17 @@ export class BadgePageComponent {
     'info',
     'neutral',
   ];
+  protected readonly labels: Record<OrbitBadgeTone, string> = {
+    primary: 'In corso',
+    success: 'Attivo',
+    danger: 'Errore',
+    warning: 'Da verificare',
+    info: 'Informazione',
+    neutral: 'Bozza',
+  };
   protected readonly usageSnippet = '<orbit-badge label="Attivo" tone="success" />';
 
   protected toneSnippet(tone: OrbitBadgeTone): string {
-    return `<orbit-badge label="${tone}" tone="${tone}" />`;
+    return `<orbit-badge label="${this.labels[tone]}" tone="${tone}" />`;
   }
 }

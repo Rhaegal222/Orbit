@@ -10,7 +10,7 @@
   overflow: hidden;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-surface);
-  background: var(--orbit-surface-modal);
+  background: var(--orbit-surface-overlay);
   box-shadow: var(--orbit-shadow-floating);
   transform-origin: center;
 }

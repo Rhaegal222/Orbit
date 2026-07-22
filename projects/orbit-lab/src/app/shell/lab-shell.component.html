@@ -1,8 +1,14 @@
 <header class="lab-shell__header">
-  <span class="lab-shell__brand">Orbit Lab</span>
-
-  <div class="lab-shell__actions">
+  <div class="lab-shell__header-actions lab-shell__header-actions--start">
     <orbit-button label="Navigazione" variant="outline" tone="neutral" (clicked)="openNavigation()" />
+  </div>
+
+  <div class="lab-shell__brand" aria-label="Orbit Lab">
+    <span class="lab-shell__brand-mark" aria-hidden="true">O</span>
+    <span>Orbit Lab</span>
+  </div>
+
+  <div class="lab-shell__header-actions lab-shell__header-actions--end">
     <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
   </div>
 </header>

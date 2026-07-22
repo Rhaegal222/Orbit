@@ -10,7 +10,7 @@
   padding: var(--orbit-modal-header-padding-block-start) var(--orbit-modal-padding-inline)
     var(--orbit-modal-header-padding-block-end);
   border-bottom: 1px solid var(--orbit-border-subtle);
-  background: var(--orbit-surface-modal);
+  background: var(--orbit-surface-overlay);
 }
 
 :host(.orbit-modal-header--form) {
@@ -78,11 +78,6 @@
 
 .orbit-modal-header__close {
   flex-shrink: 0;
-}
-
-.orbit-modal-header__close-icon {
-  width: var(--orbit-font-size-lg);
-  height: var(--orbit-font-size-lg);
 }
 
 @keyframes orbit-modal-header-spin {

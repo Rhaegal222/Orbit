@@ -3,6 +3,7 @@ import { CatalogEntry } from './catalog-entry.model';
 export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'attachments', label: 'Allegati', status: 'verified' },
   { slug: 'motion', label: 'Animazioni', status: 'verified' },
+  { slug: 'navbar', label: 'Barra di navigazione', status: 'verified' },
   { slug: 'badge', label: 'Badge', status: 'verified' },
   { slug: 'form-field', label: 'Campi modulo', status: 'verified' },
   { slug: 'checkbox', label: 'Caselle di controllo', status: 'verified' },
@@ -12,6 +13,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'layout', label: 'Layout', status: 'verified' },
   { slug: 'text-input', label: 'Input di testo', status: 'verified' },
   { slug: 'panel', label: 'Panel', status: 'verified' },
+  { slug: 'patterns', label: 'Pattern e governance', status: 'verified' },
   { slug: 'popover', label: 'Popover', status: 'verified' },
   { slug: 'button', label: 'Pulsanti', status: 'verified' },
   { slug: 'pill-switch', label: 'Selettore a pillola', status: 'verified' },
@@ -22,5 +24,6 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'tooltip', label: 'Suggerimenti', status: 'verified' },
   { slug: 'tab', label: 'Tab', status: 'verified' },
   { slug: 'table', label: 'Table', status: 'verified' },
+  { slug: 'themes', label: 'Temi e superfici', status: 'verified' },
   { slug: 'typography', label: 'Tipografia', status: 'verified' },
 ];

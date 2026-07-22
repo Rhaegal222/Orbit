@@ -32,6 +32,7 @@ export * from './lib/components/code-block';
 export * from './lib/components/panel-surface';
 export * from './lib/components/panel';
 export * from './lib/components/sidebar';
+export * from './lib/components/navbar';
 export * from './lib/components/tab';
 export * from './lib/components/tab-panel';
 export * from './lib/components/tablist';

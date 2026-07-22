@@ -5,7 +5,9 @@ describe('OrbitIconButtonComponent', () => {
   let fixture: ComponentFixture<OrbitIconButtonComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [OrbitIconButtonComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [OrbitIconButtonComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(OrbitIconButtonComponent);
     fixture.componentRef.setInput('ariaLabel', 'Apri menu');
     fixture.detectChanges();
@@ -25,5 +27,14 @@ describe('OrbitIconButtonComponent', () => {
     fixture.detectChanges();
     fixture.nativeElement.querySelector('button').click();
     expect(calls).toBe(1);
+  });
+
+  it('uses the shared decorative icon registry when an icon name is supplied', () => {
+    fixture.componentRef.setInput('icon', 'close');
+    fixture.detectChanges();
+
+    const icon = fixture.nativeElement.querySelector('orbit-icon svg');
+    expect(icon).toBeTruthy();
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
   });
 });

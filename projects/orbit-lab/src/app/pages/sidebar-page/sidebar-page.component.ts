@@ -51,23 +51,17 @@ const SIDEBAR_STATE_SECTIONS: readonly OrbitSidebarSection[] = [
 export class SidebarPageComponent {
   protected readonly sections = SIDEBAR_SECTIONS;
   protected readonly stateSections = SIDEBAR_STATE_SECTIONS;
-  protected readonly variant = signal<'expanded' | 'compact' | 'states'>('expanded');
-  protected readonly selectedVariant = signal<'expanded' | 'compact' | 'states'>('expanded');
+  protected readonly railVariant = signal<'expanded' | 'compact'>('expanded');
+  protected readonly showItemStates = signal(false);
   protected readonly showBrandIcon = signal(false);
   protected readonly activeId = signal('overview');
   protected readonly collapsed = signal(false);
   protected readonly currentSections = computed(() =>
-    this.variant() === 'states' ? this.stateSections : this.sections,
+    this.showItemStates() ? this.stateSections : this.sections,
   );
   protected readonly variantLabel = computed(() => {
     const railLabel = this.collapsed() ? 'Rail compatta' : 'Rail espansa';
-
-    switch (this.variant()) {
-      case 'states':
-        return `Stati item · ${railLabel.toLowerCase()}`;
-      default:
-        return railLabel;
-    }
+    return this.showItemStates() ? `Stati item · ${railLabel.toLowerCase()}` : railLabel;
   });
 
   protected readonly snippet = `<orbit-sidebar
@@ -85,11 +79,17 @@ export class SidebarPageComponent {
     this.activeId.set(item.id);
   }
 
-  selectVariant(variant: 'expanded' | 'compact' | 'states'): void {
-    this.selectedVariant.set(variant);
-    this.variant.set(variant);
+  selectRailVariant(variant: 'expanded' | 'compact'): void {
+    this.railVariant.set(variant);
     this.collapsed.set(variant === 'compact');
-    this.activeId.set(variant === 'states' ? 'active' : variant === 'compact' ? 'collections' : 'overview');
+    if (!this.showItemStates()) {
+      this.activeId.set(variant === 'compact' ? 'collections' : 'overview');
+    }
+  }
+
+  setShowItemStates(show: boolean): void {
+    this.showItemStates.set(show);
+    this.activeId.set(show ? 'active' : this.collapsed() ? 'collections' : 'overview');
   }
 
   selectBrandIcon(showIcon: boolean): void {
@@ -98,9 +98,9 @@ export class SidebarPageComponent {
 
   setCollapsed(collapsed: boolean): void {
     this.collapsed.set(collapsed);
-    if (this.variant() !== 'states') {
-      this.variant.set(collapsed ? 'compact' : 'expanded');
-      this.selectedVariant.set(this.variant());
+    this.railVariant.set(collapsed ? 'compact' : 'expanded');
+    if (!this.showItemStates()) {
+      this.activeId.set(collapsed ? 'collections' : 'overview');
     }
   }
 }

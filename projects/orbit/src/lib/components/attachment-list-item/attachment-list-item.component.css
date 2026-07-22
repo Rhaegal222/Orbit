@@ -27,11 +27,6 @@
   color: var(--orbit-action-primary-bg);
 }
 
-.orbit-attachment-list-item__marker svg {
-  width: 1.125rem;
-  height: 1.125rem;
-}
-
 .orbit-attachment-list-item__content {
   display: grid;
   min-width: 0;
@@ -88,11 +83,6 @@
   align-items: center;
   gap: var(--orbit-space-1);
   flex: 0 0 auto;
-}
-
-.orbit-attachment-list-item__actions svg {
-  width: 1rem;
-  height: 1rem;
 }
 
 @media (max-width: 32rem) {

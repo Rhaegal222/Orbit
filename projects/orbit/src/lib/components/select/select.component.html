@@ -57,10 +57,14 @@
         [class.orbit-select__option--selected]="option.value === selectedValue()"
         [class.orbit-select__option--active]="i === activeIndex()"
         [disabled]="option.disabled"
+        [attr.aria-selected]="option.value === selectedValue()"
         (mousedown)="$event.preventDefault()"
         (click)="onOptionSelect(option)"
       >
-        {{ option.label }}
+        <span class="orbit-select__option-label">{{ option.label }}</span>
+        @if (option.value === selectedValue()) {
+          <span class="orbit-select__option-check" aria-hidden="true">✓</span>
+        }
       </button>
     }
     @if (filteredOptions.length === 0) {

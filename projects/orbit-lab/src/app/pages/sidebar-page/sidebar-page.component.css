@@ -50,10 +50,6 @@
   min-width: 0;
 }
 
-.sidebar-page__tile--separated {
-  margin-block-start: var(--orbit-space-3);
-}
-
 @media (max-width: 42rem) {
   .sidebar-page__preview {
     min-height: 38rem;

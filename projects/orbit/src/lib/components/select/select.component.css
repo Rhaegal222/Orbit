@@ -79,7 +79,6 @@
    This keeps the danger outline visually continuous over the toggle border. */
 :host(.orbit-select--invalid) .orbit-select__wrapper::after {
   position: absolute;
-  z-index: 2;
   inset: 0;
   border: 1px solid var(--orbit-status-danger);
   border-radius: var(--orbit-radius-control);
@@ -164,7 +163,10 @@
 }
 
 .orbit-select__option {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--orbit-space-2);
   width: 100%;
   min-height: 2rem;
   padding: 0 var(--orbit-space-2);
@@ -182,10 +184,21 @@
 }
 
 .orbit-select__option:hover:not(:disabled),
-.orbit-select__option--active:not(:disabled),
+.orbit-select__option--active:not(:disabled) {
+  background: var(--orbit-select-option-hover-bg);
+  color: var(--orbit-text-primary);
+}
+
 .orbit-select__option--selected:not(:disabled) {
-  background: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
-  color: var(--orbit-action-primary-bg);
+  background: var(--orbit-select-option-selected-bg);
+  color: var(--orbit-select-option-selected-fg);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.orbit-select__option--selected:hover:not(:disabled),
+.orbit-select__option--selected.orbit-select__option--active:not(:disabled) {
+  background: var(--orbit-select-option-selected-bg);
+  color: var(--orbit-select-option-selected-fg);
 }
 
 .orbit-select__option:disabled {
@@ -199,4 +212,18 @@
   padding: var(--orbit-space-1) var(--orbit-space-2);
   color: var(--orbit-text-secondary);
   font-size: var(--orbit-font-size-body);
+}
+
+.orbit-select__option-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orbit-select__option-check {
+  flex: 0 0 auto;
+  color: currentColor;
+  font-size: var(--orbit-font-size-label);
+  font-weight: var(--orbit-font-weight-emphasis);
 }

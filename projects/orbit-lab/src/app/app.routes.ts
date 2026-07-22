@@ -111,6 +111,11 @@ export const routes: Routes = [
       import('./pages/panel-page/panel-page.component').then((m) => m.PanelPageComponent),
   },
   {
+    path: 'navbar',
+    loadComponent: () =>
+      import('./pages/navbar-page/navbar-page.component').then((m) => m.NavbarPageComponent),
+  },
+  {
     path: 'sidebar',
     loadComponent: () =>
       import('./pages/sidebar-page/sidebar-page.component').then((m) => m.SidebarPageComponent),
@@ -131,5 +136,15 @@ export const routes: Routes = [
       import('./pages/typography-page/typography-page.component').then(
         (m) => m.TypographyPageComponent,
       ),
+  },
+  {
+    path: 'themes',
+    loadComponent: () =>
+      import('./pages/themes-page/themes-page.component').then((m) => m.ThemesPageComponent),
+  },
+  {
+    path: 'patterns',
+    loadComponent: () =>
+      import('./pages/patterns-page/patterns-page.component').then((m) => m.PatternsPageComponent),
   },
 ];

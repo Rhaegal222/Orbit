@@ -67,6 +67,17 @@ describe('OrbitSelectComponent', () => {
     expect(items.length).toBe(3);
   });
 
+  it('copies the nearest Orbit theme scope to its CDK overlay', () => {
+    fixture.nativeElement.setAttribute('data-orbit-theme', 'dark');
+    component.isOpen.set(true);
+    fixture.detectChanges();
+
+    const menu = overlayContainer
+      .getContainerElement()
+      .querySelector('.orbit-select__menu') as HTMLElement;
+    expect(menu.parentElement?.getAttribute('data-orbit-theme')).toBe('dark');
+  });
+
   it('does not close when a pointerdown bubbles up from inside the overlay menu', () => {
     component.isOpen.set(true);
     fixture.detectChanges();
@@ -81,6 +92,18 @@ describe('OrbitSelectComponent', () => {
     expect(component.selectedValue()).toBe('FR');
     expect(component.isOpen()).toBe(false);
     expect(component.inputText()).toBe('Francia');
+  });
+
+  it('marks the selected option in the overlay', () => {
+    component.writeValue('FR');
+    component.isOpen.set(true);
+    fixture.detectChanges();
+
+    const selectedOption = overlayContainer
+      .getContainerElement()
+      .querySelector('.orbit-select__option--selected') as HTMLElement;
+    expect(selectedOption.textContent).toContain('Francia');
+    expect(selectedOption.querySelector('.orbit-select__option-check')?.textContent).toBe('✓');
   });
 
   it('emits valueChange on select', () => {

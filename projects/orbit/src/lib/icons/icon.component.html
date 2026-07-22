@@ -6,7 +6,10 @@
     stroke-width="1.75"
     stroke-linecap="round"
     stroke-linejoin="round"
-    aria-hidden="true"
+    [style.--orbit-icon-size]="sizeInRem()"
+    [attr.aria-hidden]="decorative() ? 'true' : null"
+    [attr.role]="decorative() ? null : 'img'"
+    [attr.aria-label]="decorative() ? null : label()"
   >
     @for (path of paths(); track path) {
       <path [attr.d]="path" />

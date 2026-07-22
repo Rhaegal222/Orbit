@@ -1,0 +1,37 @@
+<article>
+  <h1>Temi e superfici</h1>
+  <p>
+    Matrice di riferimento per verificare pairing foreground/sfondo, stati e livelli di elevazione
+    nei temi light e dark.
+  </p>
+
+  <section class="theme-matrix" aria-label="Matrice dei temi Orbit">
+    @for (theme of ['light', 'dark']; track theme) {
+      <section class="theme-matrix__theme" [attr.data-orbit-theme]="theme === 'dark' ? 'dark' : null">
+        <h2>{{ theme === 'dark' ? 'Dark' : 'Light' }}</h2>
+
+        <div class="theme-matrix__surfaces" aria-label="Livelli delle superfici">
+          <div class="theme-matrix__surface theme-matrix__surface--default">Default</div>
+          <div class="theme-matrix__surface theme-matrix__surface--subtle">Subtle</div>
+          <div class="theme-matrix__surface theme-matrix__surface--raised">Raised</div>
+          <div class="theme-matrix__surface theme-matrix__surface--floating">Floating</div>
+          <div class="theme-matrix__surface theme-matrix__surface--overlay">Overlay</div>
+        </div>
+
+        <div class="theme-matrix__buttons" aria-label="Azioni">
+          <orbit-button label="Primaria" tone="primary" />
+          <orbit-button label="Successo" tone="success" variant="soft" />
+          <orbit-button label="Pericolo" tone="danger" variant="outline" />
+          <orbit-button label="Neutra" tone="neutral" variant="flat" />
+        </div>
+
+        <div class="theme-matrix__status" aria-label="Stati semantici">
+          <orbit-badge label="Successo" tone="success" />
+          <orbit-badge label="Avviso" tone="warning" />
+          <orbit-badge label="Errore" tone="danger" />
+          <orbit-badge label="Informazione" tone="info" />
+        </div>
+      </section>
+    }
+  </section>
+</article>

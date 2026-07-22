@@ -245,9 +245,20 @@ export class OrbitSelectComponent implements ControlValueAccessor, OnDestroy {
       panelClass: 'orbit-select-panel',
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
+    this.copyThemeToOverlay();
 
     const portal = new TemplatePortal(this.menuTemplate, this.vcr);
     this.overlayRef.attach(portal);
+  }
+
+  /**
+   * CDK mounts the menu outside the trigger's DOM subtree. Mirror the nearest
+   * Orbit theme scope so the menu receives the same semantic colour tokens.
+   */
+  private copyThemeToOverlay(): void {
+    const themeScope = this.hostElement.nativeElement.closest('[data-orbit-theme]');
+    const theme = themeScope?.getAttribute('data-orbit-theme');
+    if (theme) this.overlayRef?.overlayElement.setAttribute('data-orbit-theme', theme);
   }
 
   private detachOverlay(): void {

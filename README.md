@@ -23,8 +23,11 @@ Configure the Galileo GitLab Package Registry once:
 Then install the package:
 
 ```bash
-npm install @galileo/orbit
+npm install @galileo/orbit @angular/cdk
 ```
+
+`@angular/core`, `@angular/common` and `@angular/cdk` are peer dependencies;
+the consuming application must provide compatible Angular 22 versions.
 
 Import the default Orbit theme once:
 
@@ -89,6 +92,8 @@ npm run check
 ```
 
 `check` verifies the package contents with `npm pack --dry-run`. See [the contribution guide](CONTRIBUTING.md) and [the release guide](docs/PUBLISHING.md).
+The [pattern and governance guide](docs/PATTERNS-AND-GOVERNANCE.md) defines the
+interaction, content and component-lifecycle decisions used by Orbit Lab.
 
 ## Compatibility policy
 

@@ -16,6 +16,8 @@ import {
   OrbitModalComponent,
   OrbitModalFooterComponent,
   OrbitModalHeaderComponent,
+  OrbitNavbarComponent,
+  type OrbitNavbarItem,
   OrbitPanelComponent,
   OrbitSelectableTileComponent,
   OrbitSelectComponent,
@@ -29,7 +31,7 @@ import {
 } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
 
-type ExampleId = 'portfolio' | 'dossier' | 'quick-action';
+type ExampleId = 'portfolio' | 'dossier' | 'quick-action' | 'landing';
 type ProductSectionId = 'overview' | 'pricing' | 'variants' | 'media' | 'channels';
 
 interface ProductRow {
@@ -43,8 +45,15 @@ interface ProductRow {
   tone: 'success' | 'warning' | 'neutral' | 'danger';
 }
 
+const LANDING_NAV_ITEMS: readonly OrbitNavbarItem[] = [
+  { id: 'solutions', label: 'Soluzioni' },
+  { id: 'catalog', label: 'Catalogo' },
+  { id: 'services', label: 'Servizi' },
+  { id: 'contacts', label: 'Contatti' },
+];
+
 @Component({
-  selector: 'lab-operational-modal-page',
+  selector: 'lab-examples-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
@@ -63,6 +72,7 @@ interface ProductRow {
     OrbitModalComponent,
     OrbitModalFooterComponent,
     OrbitModalHeaderComponent,
+    OrbitNavbarComponent,
     OrbitPanelComponent,
     OrbitSelectableTileComponent,
     OrbitSelectComponent,
@@ -76,10 +86,10 @@ interface ProductRow {
     ReactiveFormsModule,
     LabExampleComponent,
   ],
-  templateUrl: './operational-modal-page.component.html',
-  styleUrl: './operational-modal-page.component.css',
+  templateUrl: './examples-page.component.html',
+  styleUrl: './examples-page.component.css',
 })
-export class OperationalModalPageComponent {
+export class ExamplesPageComponent {
   protected readonly selectedExample = signal<ExampleId>('portfolio');
   protected readonly selectedProductSection = signal<ProductSectionId>('overview');
   protected readonly skuSort = signal<'asc' | 'desc' | null>(null);
@@ -89,6 +99,8 @@ export class OperationalModalPageComponent {
   protected readonly modifiedRange = new FormControl({ start: null, end: null });
   protected readonly listPrice = new FormControl('240,00', { nonNullable: true });
   protected readonly updateType = signal('percent');
+  protected readonly selectedLandingNav = signal('solutions');
+  protected readonly landingNavItems = LANDING_NAV_ITEMS;
 
   protected readonly categoryOptions = [
     { value: 'lighting', label: 'Illuminazione' },
@@ -204,10 +216,19 @@ export class OperationalModalPageComponent {
     },
   ];
 
-  protected selectExample(example: string): void {
-    if (example === 'portfolio' || example === 'dossier' || example === 'quick-action') {
+  selectExample(example: string): void {
+    if (
+      example === 'portfolio' ||
+      example === 'dossier' ||
+      example === 'quick-action' ||
+      example === 'landing'
+    ) {
       this.selectedExample.set(example);
     }
+  }
+
+  protected selectLandingNav(item: OrbitNavbarItem): void {
+    this.selectedLandingNav.set(item.id);
   }
 
   protected setSkuSort(direction: 'asc' | 'desc'): void {

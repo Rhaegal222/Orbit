@@ -25,7 +25,7 @@ export class TextInputPageComponent {
 
   protected readonly typeExamples = this.types.map((type) => ({
     type,
-    control: new FormControl(''),
+    control: new FormControl(type === 'search' ? 'Modulo LED' : ''),
   }));
 
   protected readonly baseControl = new FormControl('');
@@ -36,7 +36,14 @@ export class TextInputPageComponent {
   protected readonly usageSnippet =
     '<orbit-text-input inputId="organizzazione" [formControl]="organizzazione" />';
 
-  protected readonly invalidSnippet = '<orbit-text-input inputId="email" type="email" [invalid]="true" />';
+  protected readonly typeExamplesSnippet = this.types
+    .map((type) => {
+      const leadingIcon = ['email', 'password', 'search', 'tel', 'url'].includes(type)
+        ? ' showLeadingIcon'
+        : '';
+      return `<orbit-text-input inputId="${type}" type="${type}"${leadingIcon} [formControl]="${type}Control" /> <!-- Tipo ${type} -->`;
+    })
+    .join('\n');
 
   protected readonly leadingIconSnippet = `<orbit-text-input
   type="email"
@@ -49,11 +56,8 @@ export class TextInputPageComponent {
   [formControl]="password"
 />`;
 
-  protected readonly disabledSnippet =
-    '<orbit-text-input inputId="bloccato" [formControl]="bloccato" />\n// bloccato = new FormControl({ value: \'...\', disabled: true })';
+  protected readonly statesSnippet = `<orbit-text-input inputId="email" type="email" [invalid]="true" /> <!-- Stato non valido -->
 
-  protected typeSnippet(type: OrbitTextInputType): string {
-    const leadingIcon = type === 'email' || type === 'password' ? ' showLeadingIcon' : '';
-    return `<orbit-text-input inputId="campo" type="${type}"${leadingIcon} [formControl]="campo" />`;
-  }
+<orbit-text-input inputId="bloccato" [formControl]="bloccato" /> <!-- Stato disabilitato: gestito dal FormControl -->
+// bloccato = new FormControl({ value: 'Valore bloccato', disabled: true });`;
 }

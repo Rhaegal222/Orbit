@@ -5,7 +5,8 @@
  * available for building a complete brand theme; component tokens are escape
  * hatches for deliberate local exceptions.
  */
-:root {
+:root,
+[data-orbit-theme='light'] {
   /* Reference: palette */
   --orbit-ref-neutral-0: #ffffff;
   --orbit-ref-neutral-50: #fafbfc;
@@ -308,6 +309,11 @@
     var(--orbit-surface-floating)
   );
   --orbit-select-option-selected-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-table-stripe-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 7%,
+    var(--orbit-surface-default)
+  );
 
   /* Aliases: component CSS uses --orbit-color-* which resolve to semantic tokens */
   --orbit-color-text: var(--orbit-text-primary);
@@ -351,7 +357,8 @@
 
 /* Comfortable is the root default. Density changes the whole operational rhythm —
    controls, action targets, spacing, sections and modal chrome together. */
-[data-orbit-shadow-intensity='0'] {
+[data-orbit-shadow-intensity='0'],
+[data-orbit-shadow-intensity='0'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 0%;
   --orbit-shadow-raised-alpha-far: 0%;
   --orbit-shadow-overlay-alpha-near: 0%;
@@ -360,7 +367,8 @@
   --orbit-shadow-chrome-alpha: 0%;
 }
 
-[data-orbit-shadow-intensity='0.25'] {
+[data-orbit-shadow-intensity='0.25'],
+[data-orbit-shadow-intensity='0.25'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 1%;
   --orbit-shadow-raised-alpha-far: 1.5%;
   --orbit-shadow-overlay-alpha-near: 8.75%;
@@ -369,7 +377,8 @@
   --orbit-shadow-chrome-alpha: 1%;
 }
 
-[data-orbit-shadow-intensity='0.5'] {
+[data-orbit-shadow-intensity='0.5'],
+[data-orbit-shadow-intensity='0.5'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 2%;
   --orbit-shadow-raised-alpha-far: 3%;
   --orbit-shadow-overlay-alpha-near: 17.5%;
@@ -378,7 +387,8 @@
   --orbit-shadow-chrome-alpha: 2%;
 }
 
-[data-orbit-shadow-intensity='0.75'] {
+[data-orbit-shadow-intensity='0.75'],
+[data-orbit-shadow-intensity='0.75'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 3%;
   --orbit-shadow-raised-alpha-far: 4.5%;
   --orbit-shadow-overlay-alpha-near: 26.25%;
@@ -387,7 +397,8 @@
   --orbit-shadow-chrome-alpha: 3%;
 }
 
-[data-orbit-shadow-intensity='1.25'] {
+[data-orbit-shadow-intensity='1.25'],
+[data-orbit-shadow-intensity='1.25'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 5%;
   --orbit-shadow-raised-alpha-far: 7.5%;
   --orbit-shadow-overlay-alpha-near: 43.75%;
@@ -396,7 +407,8 @@
   --orbit-shadow-chrome-alpha: 5%;
 }
 
-[data-orbit-shadow-intensity='1.5'] {
+[data-orbit-shadow-intensity='1.5'],
+[data-orbit-shadow-intensity='1.5'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 6%;
   --orbit-shadow-raised-alpha-far: 9%;
   --orbit-shadow-overlay-alpha-near: 52.5%;
@@ -603,44 +615,55 @@
   --orbit-shadow-overlay-alpha-near: 58%;
   --orbit-shadow-overlay-alpha-far: 36%;
   --orbit-overlay-backdrop: rgb(0 0 0 / 65%);
+  --orbit-table-stripe-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 14%,
+    var(--orbit-surface-default)
+  );
 }
 
-[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.5'] {
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.5'],
+[data-orbit-shadow-intensity='0.5'] [data-orbit-theme='dark'] {
   --orbit-shadow-raised-alpha-near: 12%;
   --orbit-shadow-raised-alpha-far: 8%;
   --orbit-shadow-overlay-alpha-near: 29%;
   --orbit-shadow-overlay-alpha-far: 18%;
 }
 
-[data-orbit-theme='dark'][data-orbit-shadow-intensity='0'] {
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0'],
+[data-orbit-shadow-intensity='0'] [data-orbit-theme='dark'] {
   --orbit-shadow-raised-alpha-near: 0%;
   --orbit-shadow-raised-alpha-far: 0%;
   --orbit-shadow-overlay-alpha-near: 0%;
   --orbit-shadow-overlay-alpha-far: 0%;
 }
 
-[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.25'] {
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.25'],
+[data-orbit-shadow-intensity='0.25'] [data-orbit-theme='dark'] {
   --orbit-shadow-raised-alpha-near: 6%;
   --orbit-shadow-raised-alpha-far: 4%;
   --orbit-shadow-overlay-alpha-near: 14.5%;
   --orbit-shadow-overlay-alpha-far: 9%;
 }
 
-[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.75'] {
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.75'],
+[data-orbit-shadow-intensity='0.75'] [data-orbit-theme='dark'] {
   --orbit-shadow-raised-alpha-near: 18%;
   --orbit-shadow-raised-alpha-far: 12%;
   --orbit-shadow-overlay-alpha-near: 43.5%;
   --orbit-shadow-overlay-alpha-far: 27%;
 }
 
-[data-orbit-theme='dark'][data-orbit-shadow-intensity='1.25'] {
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='1.25'],
+[data-orbit-shadow-intensity='1.25'] [data-orbit-theme='dark'] {
   --orbit-shadow-raised-alpha-near: 30%;
   --orbit-shadow-raised-alpha-far: 20%;
   --orbit-shadow-overlay-alpha-near: 72.5%;
   --orbit-shadow-overlay-alpha-far: 45%;
 }
 
-[data-orbit-theme='dark'][data-orbit-shadow-intensity='1.5'] {
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='1.5'],
+[data-orbit-shadow-intensity='1.5'] [data-orbit-theme='dark'] {
   --orbit-shadow-raised-alpha-near: 36%;
   --orbit-shadow-raised-alpha-far: 24%;
   --orbit-shadow-overlay-alpha-near: 87%;

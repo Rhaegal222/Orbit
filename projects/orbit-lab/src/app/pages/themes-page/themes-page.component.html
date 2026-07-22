@@ -7,7 +7,7 @@
 
   <section class="theme-matrix" aria-label="Matrice dei temi Orbit">
     @for (theme of ['light', 'dark']; track theme) {
-      <section class="theme-matrix__theme" [attr.data-orbit-theme]="theme === 'dark' ? 'dark' : null">
+      <section class="theme-matrix__theme" [attr.data-orbit-theme]="theme">
         <h2>{{ theme === 'dark' ? 'Dark' : 'Light' }}</h2>
 
         <div class="theme-matrix__surfaces" aria-label="Livelli delle superfici">

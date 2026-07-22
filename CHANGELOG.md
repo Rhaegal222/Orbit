@@ -50,6 +50,9 @@ All notable changes to Galileo Orbit are documented here.
 - Formalized `orbit-modal` sizes: `sm` (480px), `md` (720px), `lg` (960px), `xl` (1180px), `xxl` (1320px) and `full`.
 - Added accent, CTA and font-family token swatches; primary button CTAs can now be themed independently from the accent color.
 - Added `orbit-icon`, with a four-icon starter registry and optional scale-sensitive rendering.
+- `orbit-text-input` now provides opt-in semantic leading icons for search, telephone and URL fields; currency symbols use the same leading-adornment surface as icons.
+- Populated search inputs now expose a keyboard-accessible trailing clear action; `ORBIT_I18N` adds the `clearSearch` label.
+- Striped tables now use the dedicated `--orbit-table-stripe-bg` token, improving alternate-row recognition in the light theme while preserving dark-theme contrast.
 - Added selected-tile pop-in and attachment-list-item hover feedback.
 - `orbit-code-block` can hide its built-in actions when a composite owns the source controls.
 - Expanded the density contract to `spacious`, `comfortable`, `compact` and `dense`; Core now scales control targets, rhythm, modal chrome and upload areas together. Added public `OrbitDensity` and `OrbitDensityOverride` types.

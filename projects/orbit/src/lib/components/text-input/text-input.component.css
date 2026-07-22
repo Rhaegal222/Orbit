@@ -100,13 +100,12 @@
   align-self: stretch;
   flex: 0 0 var(--orbit-control-adornment-size);
   border-right: 1px solid var(--orbit-border-subtle);
-  color: var(--orbit-text-secondary);
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-tertiary);
   font-size: var(--orbit-font-size-lg);
 }
 
 .orbit-input__icon--leading {
-  background: var(--orbit-surface-subtle);
-  color: var(--orbit-text-tertiary);
   cursor: text;
 }
 

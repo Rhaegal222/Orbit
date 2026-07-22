@@ -15,24 +15,37 @@
 
   <section>
     <h2>Tipi</h2>
-    @for (example of typeExamples; track example.type) {
-      <lab-example [code]="typeSnippet(example.type)">
-        <div [attr.data-type-example]="example.type">
-          <orbit-text-input
-            [inputId]="'ti-type-' + example.type"
-            [type]="example.type"
-            [showLeadingIcon]="example.type === 'email' || example.type === 'password'"
-            [formControl]="example.control"
-            [placeholder]="example.type"
-          />
-        </div>
-      </lab-example>
-    }
+    <lab-example [code]="typeExamplesSnippet" fullWidth>
+      <div class="text-input-page__type-grid">
+        @for (example of typeExamples; track example.type) {
+          <div [attr.data-type-example]="example.type">
+            <p class="text-input-page__type-label">{{ example.type }}</p>
+            <orbit-text-input
+              [inputId]="'ti-type-' + example.type"
+              [type]="example.type"
+              [showLeadingIcon]="
+                example.type === 'email' ||
+                example.type === 'password' ||
+                example.type === 'search' ||
+                example.type === 'tel' ||
+                example.type === 'url'
+              "
+              [formControl]="example.control"
+              [placeholder]="example.type"
+            />
+          </div>
+        }
+      </div>
+    </lab-example>
   </section>
 
   <section>
     <h2>Leading icon</h2>
-    <p>Le icone semantiche per email e password sono opt-in tramite <code>showLeadingIcon</code>.</p>
+    <p>
+      Le icone semantiche per email, password, ricerca, telefono e URL sono opt-in tramite
+      <code>showLeadingIcon</code>. Currency mantiene invece il simbolo locale, con la stessa
+      superficie della leading icon.
+    </p>
     <lab-example [code]="leadingIconSnippet" fullWidth>
       <div class="text-input-page__icon-variants">
         <orbit-form-field label="Email" inputId="ti-leading-email">
@@ -57,14 +70,16 @@
 
   <section>
     <h2>Stati</h2>
-    <lab-example [code]="invalidSnippet">
-      <div data-example="invalid">
-        <orbit-text-input inputId="ti-invalid" type="email" [invalid]="true" />
-      </div>
-    </lab-example>
-    <lab-example [code]="disabledSnippet">
-      <div data-example="disabled">
-        <orbit-text-input inputId="ti-disabled" [formControl]="disabledControl" />
+    <lab-example [code]="statesSnippet" fullWidth>
+      <div class="text-input-page__state-preview">
+        <div data-example="invalid">
+          <p class="text-input-page__type-label">Non valido</p>
+          <orbit-text-input inputId="ti-invalid" type="email" [invalid]="true" />
+        </div>
+        <div data-example="disabled">
+          <p class="text-input-page__type-label">Disabilitato</p>
+          <orbit-text-input inputId="ti-disabled" [formControl]="disabledControl" />
+        </div>
       </div>
     </lab-example>
   </section>

@@ -70,6 +70,29 @@ describe('OrbitTextInputComponent', () => {
     expect(fixture.nativeElement.querySelector('input').getAttribute('type')).toBe('text');
   });
 
+  it('shows an accessible clear action for a populated search field', () => {
+    fixture.componentRef.setInput('type', 'search');
+    component.writeValue('Modulo LED');
+    fixture.detectChanges();
+    let emitted = 'not-cleared';
+    component.registerOnChange((value) => (emitted = value));
+
+    const clearAction = fixture.nativeElement.querySelector('.orbit-input__action') as HTMLButtonElement;
+    expect(clearAction.getAttribute('aria-label')).toBe('Cancella ricerca');
+    clearAction.click();
+
+    expect(component.value()).toBe('');
+    expect(emitted).toBe('');
+    expect(document.activeElement).toBe(fixture.nativeElement.querySelector('input'));
+  });
+
+  it('does not render the search clear action when the field is empty', () => {
+    fixture.componentRef.setInput('type', 'search');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.orbit-input__action')).toBeNull();
+  });
+
   it('renders the semantic lock icon when enabled for password', () => {
     fixture.componentRef.setInput('type', 'password');
     fixture.componentRef.setInput('showLeadingIcon', true);
@@ -77,6 +100,21 @@ describe('OrbitTextInputComponent', () => {
 
     expect(component.typeLeadingIcon()).toBe('lock');
   });
+
+  for (const [type, icon] of [
+    ['search', 'search'],
+    ['tel', 'phone'],
+    ['url', 'link'],
+  ] as const) {
+    it(`renders the semantic ${icon} icon when enabled for ${type}`, () => {
+      fixture.componentRef.setInput('type', type);
+      fixture.componentRef.setInput('showLeadingIcon', true);
+      fixture.detectChanges();
+
+      expect(component.typeLeadingIcon()).toBe(icon);
+      expect(fixture.nativeElement.querySelector('orbit-icon')).toBeTruthy();
+    });
+  }
 
   it('keeps a semantic leading icon decorative without an action label', () => {
     fixture.componentRef.setInput('leadingIconName', 'mail');
@@ -146,6 +184,13 @@ describe('OrbitTextInputComponent', () => {
     fixture.detectChanges();
     component.writeValue('1234,56');
     expect(component.value()).toContain('1.234');
+  });
+
+  it('renders currency as a leading adornment', () => {
+    fixture.componentRef.setInput('type', 'currency');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.orbit-input__symbol')).toBeTruthy();
   });
 
   it('applies invalid class', () => {

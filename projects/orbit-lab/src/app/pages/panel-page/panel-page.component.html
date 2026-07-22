@@ -1,6 +1,6 @@
 <article>
   <h1>Panel</h1>
-  <p>Due varianti: overlay offcanvas transitorio (via <code>OrbitPanelService</code>) e sidebar persistente di layout (<code>orbit-panel</code>).</p>
+  <p>Due varianti: overlay offcanvas transitorio (via <code>OrbitPanelService</code>) e rail di navigazione persistente (<code>orbit-sidebar</code>).</p>
 
   <section>
     <h2>Offcanvas</h2>
@@ -16,8 +16,74 @@
 
   <section>
     <h2>Sidebar</h2>
-    <lab-example [code]="sidebarSnippet">
-      <orbit-panel><p>Contenuto fisso di layout</p></orbit-panel>
+    <lab-example [code]="sidebarSnippet" fullWidth>
+      <div class="panel-page__sidebar-preview">
+        <orbit-sidebar
+          brand="Orbit"
+          [brandIcon]="showBrandIcon() ? 'layers' : null"
+          ariaLabel="Anteprima sidebar"
+          [sections]="currentSections()"
+          [activeId]="activeId()"
+          [collapsed]="collapsed()"
+          (itemSelected)="select($event)"
+          (collapsedChange)="setCollapsed($event)"
+        >
+          <span orbitSidebarFooter>Footer proiettato</span>
+        </orbit-sidebar>
+        <aside class="panel-page__sidebar-variant-panel" aria-label="Selettore variante sidebar">
+          <div class="panel-page__sidebar-variant-copy" aria-live="polite">
+            <span>Variante in anteprima</span>
+            <strong>{{ variantLabel() }}</strong>
+          </div>
+
+          <div class="panel-page__sidebar-tile-group" aria-label="Visualizzazione rail">
+            <orbit-selectable-tile
+              label="Espansa"
+              description="Rail completa"
+              [selected]="railVariant() === 'expanded'"
+              (selectedChange)="selectRailVariant('expanded')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              label="Compatta"
+              description="Solo icone"
+              [selected]="railVariant() === 'compact'"
+              (selectedChange)="selectRailVariant('compact')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="home" aria-hidden="true" />
+            </orbit-selectable-tile>
+          </div>
+
+          <div class="panel-page__sidebar-tile-group" aria-label="Stati item">
+            <orbit-selectable-tile
+              label="Stati item"
+              description="Attivo, badge e disabilitato"
+              [selected]="showItemStates()"
+              (selectedChange)="setShowItemStates($event)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="check" aria-hidden="true" />
+            </orbit-selectable-tile>
+          </div>
+
+          <div class="panel-page__sidebar-tile-group" aria-label="Aspetto brand">
+            <orbit-selectable-tile
+              label="Con logo"
+              description="Icona del brand"
+              [selected]="showBrandIcon()"
+              (selectedChange)="selectBrandIcon(true)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              label="Senza logo"
+              description="Iniziale del brand"
+              [selected]="!showBrandIcon()"
+              (selectedChange)="selectBrandIcon(false)"
+            />
+          </div>
+        </aside>
+      </div>
     </lab-example>
   </section>
 </article>

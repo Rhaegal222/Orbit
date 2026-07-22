@@ -65,11 +65,15 @@ export const routes: Routes = [
       ),
   },
   {
+    // Legacy technical route retained for existing bookmarks.
     path: 'operational-modal',
+    redirectTo: 'examples',
+    pathMatch: 'full',
+  },
+  {
+    path: 'examples',
     loadComponent: () =>
-      import('./pages/operational-modal-page/operational-modal-page.component').then(
-        (m) => m.OperationalModalPageComponent,
-      ),
+      import('./pages/examples-page/examples-page.component').then((m) => m.ExamplesPageComponent),
   },
   {
     path: 'attachments',
@@ -115,8 +119,8 @@ export const routes: Routes = [
   },
   {
     path: 'sidebar',
-    loadComponent: () =>
-      import('./pages/sidebar-page/sidebar-page.component').then((m) => m.SidebarPageComponent),
+    redirectTo: 'panel',
+    pathMatch: 'full',
   },
   {
     path: 'tab',

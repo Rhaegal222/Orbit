@@ -22,8 +22,11 @@ describe('PanelPageComponent', () => {
     expect(fixture.nativeElement.querySelector('[data-blocked-banner]')).toBeNull();
   });
 
-  it('renders a persistent sidebar panel inline', () => {
-    expect(fixture.nativeElement.querySelector('orbit-panel')).toBeTruthy();
+  it('renders the interactive navigation sidebar preview inline', () => {
+    const preview = fixture.nativeElement.querySelector('.panel-page__sidebar-preview');
+
+    expect(preview.querySelector('orbit-sidebar')).toBeTruthy();
+    expect(preview.querySelectorAll('orbit-selectable-tile').length).toBe(5);
   });
 
   it('opens the offcanvas panel on the overlay when "Apri da destra" is clicked', () => {

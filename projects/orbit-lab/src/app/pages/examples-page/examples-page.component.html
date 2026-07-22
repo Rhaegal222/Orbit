@@ -28,6 +28,9 @@
       >
         <orbit-badge orbitTabBadge tone="warning" label="Modale" />
       </orbit-tab>
+      <orbit-tab value="landing" label="Landing partner" [selected]="selectedExample() === 'landing'">
+        <orbit-badge orbitTabBadge tone="success" label="Landing" />
+      </orbit-tab>
     </orbit-tablist>
 
     @switch (selectedExample()) {
@@ -407,6 +410,97 @@
                   statusLabel="Nessuna variazione applicata"
               /></orbit-modal-footer>
             </orbit-modal>
+          </section>
+        </orbit-tab-panel>
+      }
+
+      @case ('landing') {
+        <orbit-tab-panel value="landing">
+          <section class="examples__landing" aria-labelledby="landing-title">
+            <orbit-navbar
+              brand="Lumenova"
+              ariaLabel="Navigazione Lumenova"
+              [items]="landingNavItems"
+              [activeId]="selectedLandingNav()"
+              (itemSelected)="selectLandingNav($event)"
+            >
+              <orbit-button orbitNavbarActions label="Area riservata" variant="outline" tone="neutral" />
+              <orbit-button orbitNavbarActions label="Parla con noi" />
+            </orbit-navbar>
+
+            <div class="examples__landing-hero">
+              <div class="examples__landing-copy">
+                <orbit-badge tone="info" label="Illuminazione professionale" />
+                <p class="examples__landing-eyebrow">Progetti che restano accesi</p>
+                <h2 id="landing-title">Luce affidabile per ogni spazio che conta.</h2>
+                <p>
+                  Soluzioni LED, controllo intelligente e supporto progettuale per industria,
+                  retail e spazi pubblici.
+                </p>
+                <div class="examples__landing-actions">
+                  <orbit-button label="Esplora le soluzioni" />
+                  <orbit-button label="Scarica il catalogo" variant="outline" tone="neutral" />
+                </div>
+                <div class="examples__landing-trust" aria-label="Indicatori di affidabilità">
+                  <span><strong>25 anni</strong> di progetti realizzati</span>
+                  <span><strong>48 h</strong> per una prima consulenza</span>
+                </div>
+              </div>
+
+              <aside class="examples__landing-highlight" aria-label="Progetto in evidenza">
+                <span>Case study</span>
+                <strong>Hub logistico di Bologna</strong>
+                <p>−42% consumi energetici · −60% manutenzione programmata</p>
+                <div class="examples__landing-highlight-visual" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </aside>
+            </div>
+
+            <div class="examples__landing-metrics" aria-label="Risultati Lumenova">
+              <div><strong>3.600+</strong><span>impianti attivi</span></div>
+              <div><strong>98%</strong><span>consegne puntuali</span></div>
+              <div><strong>24/7</strong><span>monitoraggio remoto</span></div>
+              <div><strong>EU</strong><span>rete di assistenza</span></div>
+            </div>
+
+            <section class="examples__landing-section" aria-labelledby="landing-services-title">
+              <div>
+                <p class="examples__landing-eyebrow">Dalla consulenza al risultato</p>
+                <h3 id="landing-services-title">Una piattaforma luminosa, non solo prodotti.</h3>
+              </div>
+              <div class="examples__landing-features">
+                <orbit-panel>
+                  <orbit-badge tone="primary" label="01" />
+                  <h4>Progettazione</h4>
+                  <p>Analisi illuminotecnica e simulazioni per decidere con dati concreti.</p>
+                </orbit-panel>
+                <orbit-panel>
+                  <orbit-badge tone="success" label="02" />
+                  <h4>Controllo intelligente</h4>
+                  <p>Scene, sensori e telemetria per rendere ogni kWh misurabile.</p>
+                </orbit-panel>
+                <orbit-panel>
+                  <orbit-badge tone="warning" label="03" />
+                  <h4>Continuità operativa</h4>
+                  <p>Supporto tecnico e ricambi per proteggere l’investimento nel tempo.</p>
+                </orbit-panel>
+              </div>
+            </section>
+
+            <section class="examples__landing-cta" aria-labelledby="landing-cta-title">
+              <div>
+                <p class="examples__landing-eyebrow">Il prossimo progetto può iniziare oggi</p>
+                <h3 id="landing-cta-title">Raccontaci lo spazio che vuoi trasformare.</h3>
+              </div>
+              <orbit-button label="Richiedi una consulenza" />
+            </section>
+
+            <footer class="examples__landing-footer">
+              <span>© 2026 Lumenova</span>
+              <span>Milano · Bologna · Roma</span>
+              <span>Privacy · Cookie · Contatti</span>
+            </footer>
           </section>
         </orbit-tab-panel>
       }

@@ -57,7 +57,7 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
   invalid = input(false, { transform: booleanAttribute });
   readonly = input(false, { transform: booleanAttribute });
   tone = input<OrbitTextInputTone>('default');
-  /** Renders the semantic mail/lock icon for email and password fields. */
+  /** Renders the semantic icon for supported email, password, search, phone and URL fields. */
   showLeadingIcon = input(false, { transform: booleanAttribute });
   /** Semantic Orbit icon for a decorative leading adornment or leading action. */
   leadingIconName = input<OrbitIconName | null>(null);
@@ -85,11 +85,23 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
   isDisabled = signal(false);
   readonly i18n = inject(ORBIT_I18N);
   private readonly inputElement = viewChild<ElementRef<HTMLInputElement>>('control');
+  readonly clearSearchLabel = computed(() => this.i18n.labels.clearSearch || this.i18n.labels.close);
   readonly typeLeadingIcon = computed<OrbitIconName | null>(() => {
     if (!this.showLeadingIcon() || this.leadingIcon() || this.leadingIconName()) return null;
-    if (this.type() === 'email') return 'mail';
-    if (this.type() === 'password') return 'lock';
-    return null;
+    switch (this.type()) {
+      case 'email':
+        return 'mail';
+      case 'password':
+        return 'lock';
+      case 'search':
+        return 'search';
+      case 'tel':
+        return 'phone';
+      case 'url':
+        return 'link';
+      default:
+        return null;
+    }
   });
   readonly resolvedLeadingActionLabel = computed(() => this.leadingIconActionLabel());
   readonly resolvedTrailingActionLabel = computed(
@@ -161,6 +173,14 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
 
   togglePasswordVisibility(): void {
     this.showPassword.update((v) => !v);
+  }
+
+  clearSearch(): void {
+    if (this.isDisabled() || this.readonly()) return;
+
+    this.value.set('');
+    this.onChange('');
+    this.focusInput();
   }
 
   adjustNumber(direction: 1 | -1): void {

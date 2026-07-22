@@ -39,6 +39,12 @@ describe('TextInputPageComponent', () => {
     expect(toggle.getAttribute('aria-label')).toBe('Mostra password');
   });
 
+  it.each(['search', 'tel', 'url'])('shows the semantic leading icon for %s', (type) => {
+    expect(
+      fixture.nativeElement.querySelector(`[data-type-example="${type}"] .orbit-input__icon--leading`),
+    ).toBeTruthy();
+  });
+
   it('renders a copyable usage snippet', () => {
     expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
       '<orbit-text-input',

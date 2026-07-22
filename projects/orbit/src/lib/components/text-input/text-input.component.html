@@ -1,7 +1,7 @@
 <div
   class="orbit-input"
   [class.orbit-input--with-leading]="leadingIcon() || leadingIconName() || typeLeadingIcon() || type() === 'currency'"
-  [class.orbit-input--with-trailing]="trailingIcon() || trailingIconName() || type() === 'password' || type() === 'number'"
+  [class.orbit-input--with-trailing]="trailingIcon() || trailingIconName() || type() === 'password' || type() === 'number' || (type() === 'search' && value())"
 >
   @if (typeLeadingIcon()) {
     <span class="orbit-input__icon orbit-input__icon--leading" aria-hidden="true" (click)="focusInput()">
@@ -94,6 +94,16 @@
           <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7" />
         }
       </svg>
+    </button>
+  } @else if (type() === 'search' && value()) {
+    <button
+      type="button"
+      class="orbit-input__action"
+      [disabled]="isDisabled() || readonly()"
+      [attr.aria-label]="clearSearchLabel()"
+      (click)="clearSearch()"
+    >
+      <orbit-icon name="close" />
     </button>
   } @else if ((trailingIcon() || trailingIconName()) && resolvedTrailingActionLabel()) {
     <button

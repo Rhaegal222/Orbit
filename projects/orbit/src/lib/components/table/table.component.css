@@ -35,5 +35,5 @@
   border-right: none;
 }
 .orbit-table--striped ::ng-deep tbody tr:nth-child(even) {
-  background: var(--orbit-surface-subtle);
+  background: var(--orbit-table-stripe-bg);
 }

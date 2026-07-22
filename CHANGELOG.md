@@ -8,6 +8,7 @@ All notable changes to Galileo Orbit are documented here.
 
 - Initial package metadata, publication pipeline and portable design tokens.
 - Added `orbit-panel-surface`/`orbit-panel` (offcanvas + sidebar) via a new `OrbitPanelService`, `orbit-tab`/`orbit-tab-panel`/`orbit-tablist`, and `orbit-table`/`orbit-table-column`/`orbitTableRow`.
+- `orbit-table` gained `bordered` and `striped` boolean inputs.
 
 ### Changed
 

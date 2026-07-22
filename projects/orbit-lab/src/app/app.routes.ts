@@ -53,6 +53,11 @@ export const routes: Routes = [
       import('./pages/select-page/select-page.component').then((m) => m.SelectPageComponent),
   },
   {
+    path: 'slider',
+    loadComponent: () =>
+      import('./pages/slider-page/slider-page.component').then((m) => m.SliderPageComponent),
+  },
+  {
     path: 'checkbox',
     loadComponent: () =>
       import('./pages/checkbox-page/checkbox-page.component').then((m) => m.CheckboxPageComponent),

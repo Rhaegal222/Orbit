@@ -78,6 +78,30 @@
   --orbit-text-inverse: var(--orbit-ref-neutral-0);
   --orbit-border-subtle: #eceff4;
   --orbit-border-strong: #c7cdd6;
+  /* Code blocks use a distinct, opaque surface so source remains scannable in both themes. */
+  --orbit-code-block-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 4%,
+    var(--orbit-surface-default)
+  );
+  --orbit-code-block-fg: var(--orbit-text-primary);
+  --orbit-code-block-border: var(--orbit-border-subtle);
+  --orbit-code-block-gutter-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 2%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-alt-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 3%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-number-fg: var(--orbit-text-tertiary);
+  --orbit-code-block-gutter-border: var(--orbit-border-subtle);
+  --orbit-code-block-action-bg: var(--orbit-surface-raised);
+  --orbit-code-block-action-fg: var(--orbit-text-secondary);
+  --orbit-code-block-action-bg-hover: var(--orbit-surface-default);
+  --orbit-code-block-action-fg-hover: var(--orbit-text-primary);
   --orbit-action-primary-bg: var(--orbit-ref-brand-500);
   --orbit-action-primary-bg-hover: var(--orbit-ref-brand-600);
   --orbit-action-primary-fg: var(--orbit-ref-neutral-0);
@@ -357,6 +381,27 @@
 
 /* Comfortable is the root default. Density changes the whole operational rhythm —
    controls, action targets, spacing, sections and modal chrome together. */
+[data-orbit-shadow-intensity],
+[data-orbit-shadow-intensity] [data-orbit-theme] {
+  /* Re-evaluate recipes in the intensity scope. Custom-property values from
+     :root are otherwise inherited already resolved with the default alpha. */
+  --orbit-shadow-raised:
+    0 1px 2px rgb(15 23 42 / var(--orbit-shadow-raised-alpha-near)),
+    0 1px 3px rgb(15 23 42 / var(--orbit-shadow-raised-alpha-far));
+  --orbit-shadow-overlay:
+    0 30px 60px -20px rgb(18 21 28 / var(--orbit-shadow-overlay-alpha-near)),
+    0 10px 28px -10px rgb(18 21 28 / var(--orbit-shadow-overlay-alpha-far));
+  --orbit-shadow-floating: var(--orbit-shadow-overlay);
+  --orbit-button-primary-shadow: 0 4px 12px -2px
+    color-mix(in srgb, var(--orbit-cta-bg) var(--orbit-shadow-action-alpha), transparent);
+  --orbit-button-success-shadow: 0 4px 12px -2px
+    color-mix(in srgb, var(--orbit-status-success) var(--orbit-shadow-action-alpha), transparent);
+  --orbit-modal-footer-form-shadow:
+    0 -1px 0 var(--orbit-border-subtle),
+    0 -8px 20px
+      color-mix(in srgb, var(--orbit-text-primary) var(--orbit-shadow-chrome-alpha), transparent);
+}
+
 [data-orbit-shadow-intensity='0'],
 [data-orbit-shadow-intensity='0'] [data-orbit-theme='light'] {
   --orbit-shadow-raised-alpha-near: 0%;
@@ -615,11 +660,36 @@
   --orbit-shadow-overlay-alpha-near: 58%;
   --orbit-shadow-overlay-alpha-far: 36%;
   --orbit-overlay-backdrop: rgb(0 0 0 / 65%);
+  --orbit-cta-bg: var(--orbit-action-primary-bg);
+  --orbit-cta-bg-hover: var(--orbit-action-primary-bg-hover);
   --orbit-table-stripe-bg: color-mix(
     in srgb,
     var(--orbit-action-primary-bg) 14%,
     var(--orbit-surface-default)
   );
+  --orbit-code-block-bg: color-mix(
+    in srgb,
+    var(--orbit-surface-canvas) 76%,
+    var(--orbit-surface-default)
+  );
+  --orbit-code-block-fg: var(--orbit-text-primary);
+  --orbit-code-block-border: var(--orbit-border-subtle);
+  --orbit-code-block-gutter-bg: color-mix(
+    in srgb,
+    var(--orbit-surface-subtle) 32%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-alt-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 4%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-number-fg: var(--orbit-text-tertiary);
+  --orbit-code-block-gutter-border: var(--orbit-border-subtle);
+  --orbit-code-block-action-bg: var(--orbit-surface-floating);
+  --orbit-code-block-action-fg: var(--orbit-text-secondary);
+  --orbit-code-block-action-bg-hover: var(--orbit-surface-subtle);
+  --orbit-code-block-action-fg-hover: var(--orbit-text-primary);
   /* Component tokens are resolved in this scope so they do not retain the
      inherited light-theme value when a component sits below a dark ancestor. */
   --orbit-sidebar-bg: var(--orbit-surface-raised);
@@ -654,6 +724,71 @@
     var(--orbit-surface-floating)
   );
   --orbit-select-option-selected-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-navbar-bg: var(--orbit-surface-raised);
+  --orbit-navbar-fg: var(--orbit-text-primary);
+  --orbit-navbar-fg-muted: var(--orbit-text-secondary);
+  --orbit-navbar-border: var(--orbit-border-subtle);
+  --orbit-navbar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-raised)
+  );
+  --orbit-navbar-item-active-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-button-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-button-primary-bg-hover: var(--orbit-action-primary-bg-hover);
+  --orbit-button-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-button-translucent-bg: color-mix(in srgb, var(--orbit-cta-bg) 14%, transparent);
+  --orbit-button-translucent-bg-hover: color-mix(in srgb, var(--orbit-cta-bg) 22%, transparent);
+  --orbit-button-translucent-border: color-mix(in srgb, var(--orbit-cta-bg) 28%, transparent);
+  --orbit-button-translucent-border-hover: color-mix(in srgb, var(--orbit-cta-bg) 36%, transparent);
+  --orbit-field-bg: var(--orbit-surface-default);
+  --orbit-field-fg: var(--orbit-text-primary);
+  --orbit-field-border: var(--orbit-border-subtle);
+  --orbit-section-divider: var(--orbit-border-subtle);
+  --orbit-section-index-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-section-index-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-section-index-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 36%,
+    var(--orbit-border-subtle)
+  );
+  --orbit-color-text: var(--orbit-text-primary);
+  --orbit-color-text-muted: var(--orbit-text-secondary);
+  --orbit-color-surface: var(--orbit-surface-default);
+  --orbit-color-surface-muted: var(--orbit-surface-subtle);
+  --orbit-color-border: var(--orbit-border-subtle);
+  --orbit-color-border-strong: var(--orbit-border-strong);
+  --orbit-color-border-focus: var(--orbit-action-primary-bg);
+  --orbit-color-primary: var(--orbit-action-primary-bg);
+  --orbit-color-primary-strong: var(--orbit-action-primary-bg-hover);
+  --orbit-color-primary-subtle: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
+  --orbit-color-danger: var(--orbit-status-danger);
+  --orbit-color-danger-subtle: var(--orbit-status-danger-subtle);
+  --orbit-color-success: var(--orbit-status-success);
+  --orbit-color-success-subtle: var(--orbit-status-success-subtle);
+  --orbit-color-warning: var(--orbit-status-warning);
+  --orbit-color-warning-subtle: var(--orbit-status-warning-subtle);
+  --orbit-color-info: var(--orbit-status-info);
+  --orbit-color-info-subtle: var(--orbit-status-info-subtle);
+  --orbit-color-neutral: var(--orbit-text-secondary);
+  --orbit-color-neutral-subtle: var(--orbit-surface-subtle);
+  --orbit-badge-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-badge-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-badge-success-bg: var(--orbit-status-success);
+  --orbit-badge-success-fg: var(--orbit-status-success-fg);
+  --orbit-badge-danger-bg: var(--orbit-status-danger);
+  --orbit-badge-danger-fg: var(--orbit-status-danger-fg);
+  --orbit-badge-warning-bg: var(--orbit-status-warning);
+  --orbit-badge-warning-fg: var(--orbit-status-warning-fg);
+  --orbit-badge-info-bg: var(--orbit-status-info);
+  --orbit-badge-info-fg: var(--orbit-status-info-fg);
+  --orbit-badge-neutral-bg: var(--orbit-action-neutral-bg);
+  --orbit-badge-neutral-fg: var(--orbit-action-neutral-fg);
 }
 
 [data-orbit-theme='dark'][data-orbit-shadow-intensity='0.5'],

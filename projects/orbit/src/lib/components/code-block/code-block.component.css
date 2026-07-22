@@ -19,9 +19,9 @@
 .orbit-code-block__surface {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--orbit-border-subtle);
+  border: 1px solid var(--orbit-code-block-border);
   border-radius: var(--orbit-radius-control);
-  background: var(--orbit-surface-subtle);
+  background: var(--orbit-code-block-bg);
 }
 
 .orbit-code-block__copy {
@@ -30,13 +30,24 @@
   right: var(--orbit-space-2);
 }
 
+.orbit-code-block__copy ::ng-deep .orbit-icon-button {
+  border-color: var(--orbit-code-block-border);
+  background: var(--orbit-code-block-action-bg);
+  color: var(--orbit-code-block-action-fg);
+}
+
+.orbit-code-block__copy ::ng-deep .orbit-icon-button:hover:not(:disabled) {
+  background: var(--orbit-code-block-action-bg-hover);
+  color: var(--orbit-code-block-action-fg-hover);
+}
+
 .orbit-code-block__action {
   height: 1.75rem;
   padding: 0 var(--orbit-space-3);
-  border: 1px solid var(--orbit-border-subtle);
+  border: 1px solid var(--orbit-code-block-border);
   border-radius: var(--orbit-radius-control);
-  background: var(--orbit-surface-subtle);
-  color: var(--orbit-text-secondary);
+  background: var(--orbit-code-block-action-bg);
+  color: var(--orbit-code-block-action-fg);
   font-size: var(--orbit-font-size-sm);
   font-family: var(--orbit-font-sans);
   cursor: pointer;
@@ -46,8 +57,8 @@
 }
 
 .orbit-code-block__action:hover {
-  background: var(--orbit-surface-canvas);
-  color: var(--orbit-text-primary);
+  background: var(--orbit-code-block-action-bg-hover);
+  color: var(--orbit-code-block-action-fg-hover);
 }
 
 .orbit-code-block__action:focus-visible {
@@ -63,7 +74,7 @@
     var(--orbit-space-3) 0;
   border: 0;
   background: transparent;
-  color: var(--orbit-text-primary);
+  color: var(--orbit-code-block-fg);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: var(--orbit-font-size-sm);
   white-space: normal;
@@ -83,13 +94,14 @@
 }
 
 .orbit-code-block__line:nth-child(even) {
-  background: color-mix(in srgb, var(--orbit-surface-canvas) 68%, transparent);
+  background: var(--orbit-code-block-line-alt-bg);
 }
 
 .orbit-code-block__line-number {
   padding: 0 var(--orbit-space-2);
-  border-right: 1px solid var(--orbit-border-subtle);
-  color: var(--orbit-text-tertiary);
+  border-right: 1px solid var(--orbit-code-block-gutter-border);
+  background: var(--orbit-code-block-gutter-bg);
+  color: var(--orbit-code-block-line-number-fg);
   font-variant-numeric: tabular-nums;
   text-align: right;
   user-select: none;

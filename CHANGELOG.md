@@ -54,6 +54,7 @@ All notable changes to Galileo Orbit are documented here.
 - Populated search inputs now expose a keyboard-accessible trailing clear action; `ORBIT_I18N` adds the `clearSearch` label.
 - `orbit-sidebar` now exposes `showHeader` and `showFooter` to omit its optional chrome while retaining navigation; its mouse-tracking edge toggle accepts a configurable `toggleMargin`.
 - `orbit-form-field` accepts `reserveMessageSpace` to reserve the hint/error row and keep aligned fields stable when validation feedback appears.
+- `orbit-code-block` now consumes dedicated semantic code-surface tokens, with contrast-safe light and dark backgrounds, gutters and alternate lines.
 - Striped tables now use the dedicated `--orbit-table-stripe-bg` token, improving alternate-row recognition in the light theme while preserving dark-theme contrast.
 - Added selected-tile pop-in and attachment-list-item hover feedback.
 - `orbit-code-block` can hide its built-in actions when a composite owns the source controls.

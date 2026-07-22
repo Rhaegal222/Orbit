@@ -87,6 +87,13 @@ describe('OrbitIconComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('path').length).toBe(1);
   });
 
+  it('renders the square icon with a single rounded-rect path', () => {
+    fixture.componentRef.setInput('name', 'square');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(1);
+  });
+
   it('uses a 24x24 viewBox with the shared stroke contract', () => {
     fixture.componentRef.setInput('name', 'chevron-down');
     fixture.detectChanges();

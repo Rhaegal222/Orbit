@@ -6,6 +6,8 @@ export type OrbitIconName =
   | 'copy'
   | 'mail'
   | 'lock'
+  | 'phone'
+  | 'link'
   | 'home'
   | 'layers'
   | 'settings'
@@ -23,7 +25,8 @@ export type OrbitIconName =
   | 'toggle'
   | 'message-circle'
   | 'sidebar'
-  | 'paperclip';
+  | 'paperclip'
+  | 'square';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],
@@ -44,6 +47,14 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
     'm5 7 7 5 7-5',
   ],
   lock: ['M6 10h12v10H6V10Z', 'M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10'],
+  phone: [
+    'M7.2 3.8 10 3l1.5 4.5-2.2 1.6a15.3 15.3 0 0 0 5.2 5.2l1.6-2.2 4.5 1.5-.8 2.8a2.2 2.2 0 0 1-2.5 1.5C9.7 16.6 7.4 14.3 6.1 6.7a2.2 2.2 0 0 1 1.1-2.9Z',
+  ],
+  link: [
+    'm10.2 13.8 3.6-3.6',
+    'm8.2 17.8-1.4 1.4a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0',
+    'm15.8 6.2 1.4-1.4a3.5 3.5 0 0 1 5 5l-4 4a3.5 3.5 0 0 1-5 0',
+  ],
   home: ['m4 10 8-6 8 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9Z', 'M9 20v-6h6v6'],
   layers: ['m12 3 8 4.5-8 4.5L4 7.5 12 3Z', 'm4 12 8 4.5 8-4.5', 'm4 16.5 8 4.5 8-4.5'],
   settings: [
@@ -89,5 +100,8 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   ],
   paperclip: [
     'M17.5 8.5 10 16a2.5 2.5 0 0 1-3.5-3.5l8-8a4 4 0 0 1 5.66 5.66l-8.13 8.13a1 1 0 0 1-1.41-1.41l7.42-7.42',
+  ],
+  square: [
+    'M4 7.5A3.5 3.5 0 0 1 7.5 4h9A3.5 3.5 0 0 1 20 7.5v9a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 16.5v-9Z',
   ],
 };

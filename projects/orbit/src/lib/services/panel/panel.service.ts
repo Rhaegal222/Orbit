@@ -3,7 +3,6 @@ import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { filter, take } from 'rxjs';
-import { OverlayContainer } from '@angular/cdk/overlay';
 
 export interface OrbitPanelConfig<T = unknown> {
   data?: T;
@@ -26,7 +25,6 @@ const SIZE_MAP: Record<string, string> = {
 @Injectable({ providedIn: 'root' })
 export class OrbitPanelService {
   private overlay = inject(Overlay);
-  private overlayContainer = inject(OverlayContainer);
   private injector = inject(Injector);
   private openPanels: OverlayRef[] = [];
 
@@ -62,16 +60,6 @@ export class OrbitPanelService {
     );
     const componentRef = overlayRef.attach(portal);
     componentRef.changeDetectorRef.detectChanges();
-
-    // Apply justifyContent to the wrapper for proper alignment
-    // Query for all wrappers and apply to the last one (most recently created)
-    const wrappers = this.overlayContainer
-      .getContainerElement()
-      .querySelectorAll('.cdk-global-overlay-wrapper');
-    if (wrappers.length > 0) {
-      const wrapper = wrappers[wrappers.length - 1] as HTMLElement;
-      wrapper.style.justifyContent = side === 'left' ? 'flex-start' : 'flex-end';
-    }
 
     this.openPanels.push(overlayRef);
 

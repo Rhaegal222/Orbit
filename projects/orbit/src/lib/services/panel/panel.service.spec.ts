@@ -34,8 +34,9 @@ describe('OrbitPanelService', () => {
     expect(ref.componentInstance).toBeInstanceOf(TestPanelContentComponent);
   });
 
-  it('anchors to the right by default and to the left when side is "left"', () => {
+  it('anchors to the right by default and to the left when side is "left"', async () => {
     service.open(TestPanelContentComponent, { data: 'A' });
+    await new Promise((resolve) => setTimeout(resolve, 0));
     let pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
     expect(pane.classList).toContain('orbit-panel--right');
     let wrapper = overlayContainer
@@ -45,6 +46,7 @@ describe('OrbitPanelService', () => {
     service.closeAll();
 
     service.open(TestPanelContentComponent, { data: 'B', side: 'left' });
+    await new Promise((resolve) => setTimeout(resolve, 0));
     pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
     expect(pane.classList).toContain('orbit-panel--left');
     wrapper = overlayContainer

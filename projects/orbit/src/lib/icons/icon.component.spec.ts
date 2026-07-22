@@ -31,6 +31,62 @@ describe('OrbitIconComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
   });
 
+  it('renders the menu icon with three lines', () => {
+    fixture.componentRef.setInput('name', 'menu');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(3);
+  });
+
+  it('renders the tag icon with a tag shape and a hole', () => {
+    fixture.componentRef.setInput('name', 'tag');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('renders the window icon with a frame and a title bar', () => {
+    fixture.componentRef.setInput('name', 'window');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('renders the grid icon with four cells', () => {
+    fixture.componentRef.setInput('name', 'grid');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(4);
+  });
+
+  it('renders the toggle icon with a track and a knob', () => {
+    fixture.componentRef.setInput('name', 'toggle');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('renders the message-circle icon with a single bubble path', () => {
+    fixture.componentRef.setInput('name', 'message-circle');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(1);
+  });
+
+  it('renders the sidebar icon with a frame and a divider', () => {
+    fixture.componentRef.setInput('name', 'sidebar');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
+  });
+
+  it('renders the paperclip icon with a single clip path', () => {
+    fixture.componentRef.setInput('name', 'paperclip');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(1);
+  });
+
   it('uses a 24x24 viewBox with the shared stroke contract', () => {
     fixture.componentRef.setInput('name', 'chevron-down');
     fixture.detectChanges();

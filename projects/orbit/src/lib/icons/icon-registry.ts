@@ -15,7 +15,15 @@ export type OrbitIconName =
   | 'download'
   | 'remove'
   | 'retry'
-  | 'search';
+  | 'search'
+  | 'menu'
+  | 'tag'
+  | 'window'
+  | 'grid'
+  | 'toggle'
+  | 'message-circle'
+  | 'sidebar'
+  | 'paperclip';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],
@@ -55,4 +63,31 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   remove: ['M4 7h16m-10 4v5m4-5v5M9 7l1-3h4l1 3m-9 0 1 13h10l1-13'],
   retry: ['M20 11a8 8 0 1 0 1.1 4M20 5v6h-6'],
   search: ['M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z', 'm20.5 20.5-4.8-4.8'],
+  menu: ['M4 6h16', 'M4 12h16', 'M4 18h16'],
+  tag: [
+    'M11 4h6.5A2.5 2.5 0 0 1 20 6.5V13a2 2 0 0 1-.59 1.41l-7 7a2 2 0 0 1-2.82 0l-6-6a2 2 0 0 1 0-2.82l7-7A2 2 0 0 1 11 4Z',
+    'M15.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z',
+  ],
+  window: [
+    'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Z',
+    'M4 8.5h16',
+  ],
+  grid: [
+    'M4 4h7v7H4V4Z',
+    'M13 4h7v7h-7V4Z',
+    'M4 13h7v7H4v-7Z',
+    'M13 13h7v7h-7v-7Z',
+  ],
+  toggle: [
+    'M4 12a3 3 0 0 1 3-3h10a3 3 0 0 1 0 6H7a3 3 0 0 1-3-3Z',
+    'M17 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z',
+  ],
+  'message-circle': ['M4 12a8 8 0 1 1 3.5 6.6L4 20l1.4-3.5A7.96 7.96 0 0 1 4 12Z'],
+  sidebar: [
+    'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Z',
+    'M9.5 4v16',
+  ],
+  paperclip: [
+    'M17.5 8.5 10 16a2.5 2.5 0 0 1-3.5-3.5l8-8a4 4 0 0 1 5.66 5.66l-8.13 8.13a1 1 0 0 1-1.41-1.41l7.42-7.42',
+  ],
 };

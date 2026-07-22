@@ -18,10 +18,41 @@
     @for (example of typeExamples; track example.type) {
       <lab-example [code]="typeSnippet(example.type)">
         <div [attr.data-type-example]="example.type">
-          <orbit-text-input [inputId]="'ti-type-' + example.type" [type]="example.type" [formControl]="example.control" [placeholder]="example.type" />
+          <orbit-text-input
+            [inputId]="'ti-type-' + example.type"
+            [type]="example.type"
+            [showLeadingIcon]="example.type === 'email' || example.type === 'password'"
+            [formControl]="example.control"
+            [placeholder]="example.type"
+          />
         </div>
       </lab-example>
     }
+  </section>
+
+  <section>
+    <h2>Leading icon</h2>
+    <p>Le icone semantiche per email e password sono opt-in tramite <code>showLeadingIcon</code>.</p>
+    <lab-example [code]="leadingIconSnippet" fullWidth>
+      <div class="text-input-page__icon-variants">
+        <orbit-form-field label="Email" inputId="ti-leading-email">
+          <orbit-text-input
+            inputId="ti-leading-email"
+            type="email"
+            showLeadingIcon
+            [formControl]="emailWithIconControl"
+          />
+        </orbit-form-field>
+        <orbit-form-field label="Password" inputId="ti-leading-password">
+          <orbit-text-input
+            inputId="ti-leading-password"
+            type="password"
+            showLeadingIcon
+            [formControl]="passwordWithIconControl"
+          />
+        </orbit-form-field>
+      </div>
+    </lab-example>
   </section>
 
   <section>

@@ -23,6 +23,10 @@
   font-size: var(--orbit-font-size-subtitle);
 }
 
+.motion-page__token:hover {
+  animation: orbit-lab-token-preview var(--motion-token-duration) var(--motion-token-easing);
+}
+
 .motion-page__token span,
 .motion-page__pattern span {
   color: var(--orbit-text-secondary);
@@ -30,7 +34,7 @@
 }
 
 .motion-page__pattern {
-  grid-template-columns: minmax(8rem, 1fr) minmax(9rem, 1.3fr) minmax(9rem, 1.3fr) auto;
+  grid-template-columns: minmax(8rem, 1fr) minmax(9rem, 1.3fr) minmax(9rem, 1.3fr) auto auto;
   align-items: center;
 }
 
@@ -40,6 +44,93 @@
   color: var(--orbit-text-label);
   font-size: var(--orbit-font-size-xs);
   text-transform: uppercase;
+}
+
+.motion-page__pattern-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: end;
+  gap: var(--orbit-space-2);
+}
+
+.motion-page__pattern-preview {
+  display: inline-grid;
+  place-items: center;
+  width: var(--orbit-control-height);
+  height: var(--orbit-control-height);
+}
+
+.motion-page__pattern-demo {
+  display: block;
+  width: var(--orbit-space-4);
+  height: var(--orbit-space-4);
+  border-radius: var(--orbit-radius-sm);
+  background: var(--orbit-action-primary-bg);
+  animation-duration: var(--orbit-motion-base);
+  animation-timing-function: var(--orbit-easing-standard);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.motion-page__pattern-demo--overlay {
+  animation-name: orbit-lab-overlay-enter;
+  animation-duration: var(--orbit-motion-slow);
+}
+
+.motion-page__pattern-demo--menu {
+  transform-origin: top center;
+  animation-name: orbit-lab-menu-enter;
+}
+
+.motion-page__pattern-demo--tooltip {
+  animation-name: orbit-lab-tooltip-enter;
+  animation-duration: var(--orbit-motion-fast);
+}
+
+.motion-page__pattern-demo--section {
+  animation-name: orbit-lab-section-enter;
+}
+
+.motion-page__pattern-demo--feedback {
+  animation-name: orbit-lab-feedback-enter;
+  animation-duration: var(--orbit-motion-fast);
+}
+
+@keyframes orbit-lab-overlay-enter {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes orbit-lab-token-preview {
+  from {
+    opacity: 0.72;
+    transform: translateY(var(--orbit-space-1)) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes orbit-lab-menu-enter {
+  from { opacity: 0; transform: scaleY(0.8); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes orbit-lab-tooltip-enter {
+  from { opacity: 0; transform: translateY(var(--orbit-space-1)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes orbit-lab-section-enter {
+  from { opacity: 0; transform: scaleY(0.3); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes orbit-lab-feedback-enter {
+  0% { opacity: 0; transform: scale(0.8); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .motion-page__floating-preview {

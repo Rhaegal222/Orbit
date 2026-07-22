@@ -82,6 +82,16 @@
   color: var(--orbit-text-secondary);
 }
 
+.orbit-input__control[type='number'] {
+  appearance: textfield;
+}
+
+.orbit-input__control[type='number']::-webkit-inner-spin-button,
+.orbit-input__control[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
 /* ── Leading icon / symbol ── */
 .orbit-input__icon--leading,
 .orbit-input__symbol {
@@ -92,6 +102,12 @@
   border-right: 1px solid var(--orbit-border-subtle);
   color: var(--orbit-text-secondary);
   font-size: var(--orbit-font-size-lg);
+}
+
+.orbit-input__icon--leading {
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-tertiary);
+  cursor: text;
 }
 
 .orbit-input__symbol {
@@ -121,7 +137,12 @@
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-input__action--leading {
+  border-right: 1px solid var(--orbit-border-subtle);
+  border-left: 0;
 }
 
 .orbit-input__password-icon {
@@ -129,8 +150,20 @@
   height: var(--orbit-font-size-lg);
 }
 
-.orbit-input__action:hover:not(:disabled) {
+.orbit-input__action:not(.orbit-input__action--leading):hover:not(:disabled) {
   background: var(--orbit-surface-subtle);
+  border-left-color: var(--orbit-text-secondary);
+  color: var(--orbit-text-secondary);
+}
+
+.orbit-input:not(:focus-within):has(.orbit-input__action:not(.orbit-input__action--leading):hover:not(:disabled)),
+.orbit-input:not(:focus-within):has(.orbit-input__number-step:hover:not(:disabled)) {
+  border-color: var(--orbit-text-secondary);
+}
+
+.orbit-input__action:not(.orbit-input__action--leading):active:not(:disabled) {
+  background: var(--orbit-surface-default);
+  border-left-color: var(--orbit-action-primary-bg);
   color: var(--orbit-action-primary-bg);
 }
 
@@ -141,4 +174,65 @@
 
 .orbit-input__action:disabled {
   cursor: not-allowed;
+}
+
+/* ── Number stepper ── */
+.orbit-input__number-stepper {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-self: stretch;
+  flex: 0 0 var(--orbit-control-action-size);
+}
+
+.orbit-input__number-step {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-left: 1px solid var(--orbit-border-subtle);
+  background: transparent;
+  color: var(--orbit-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-input__number-step--up {
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+
+.orbit-input__number-step--up orbit-icon {
+  transform: rotate(180deg);
+}
+
+.orbit-input__number-step:hover:not(:disabled) {
+  background: var(--orbit-surface-subtle);
+  border-left-color: var(--orbit-text-secondary);
+  color: var(--orbit-text-secondary);
+}
+
+.orbit-input__number-step--up:hover:not(:disabled),
+.orbit-input__number-stepper:has(.orbit-input__number-step:not(.orbit-input__number-step--up):hover:not(:disabled)) .orbit-input__number-step--up {
+  border-bottom-color: var(--orbit-text-secondary);
+}
+
+.orbit-input__number-step:active:not(:disabled) {
+  background: var(--orbit-surface-default);
+  border-left-color: var(--orbit-action-primary-bg);
+  color: var(--orbit-action-primary-bg);
+}
+
+.orbit-input__number-step--up:active:not(:disabled),
+.orbit-input__number-stepper:has(.orbit-input__number-step:not(.orbit-input__number-step--up):active:not(:disabled)) .orbit-input__number-step--up {
+  border-bottom-color: var(--orbit-action-primary-bg);
+}
+
+.orbit-input__number-step:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.orbit-input__number-step:disabled {
+  cursor: not-allowed;
+  color: var(--orbit-text-tertiary);
 }

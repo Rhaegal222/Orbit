@@ -46,7 +46,8 @@
   --orbit-ref-radius-md: 0.625rem;
   --orbit-ref-radius-lg: 1.25rem;
   --orbit-ref-shadow-sm: 0 1px 2px rgb(15 23 42 / 4%), 0 1px 3px rgb(15 23 42 / 6%);
-  --orbit-ref-shadow-md: 0 30px 60px -20px rgb(18 21 28 / 35%), 0 10px 28px -10px rgb(18 21 28 / 16%);
+  --orbit-ref-shadow-md:
+    0 30px 60px -20px rgb(18 21 28 / 35%), 0 10px 28px -10px rgb(18 21 28 / 16%);
 
   /* Semantic: the supported application theming surface */
   --orbit-font-sans: var(--orbit-ref-font-sans);
@@ -88,8 +89,13 @@
   --orbit-status-info: var(--orbit-ref-info-500);
   --orbit-status-info-subtle: var(--orbit-ref-info-100);
   --orbit-focus-ring: 0 0 0 4px color-mix(in srgb, var(--orbit-action-primary-bg) 12%, transparent);
-  --orbit-radius-control: var(--orbit-ref-radius-md);
-  --orbit-radius-surface: var(--orbit-ref-radius-lg);
+  /* Geometry scales with text and becomes progressively tighter with density. */
+  --orbit-radius-none: 0;
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.5rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.25rem + (0.5rem * var(--orbit-text-scale)));
   --orbit-shadow-raised: var(--orbit-ref-shadow-sm);
   --orbit-shadow-overlay: var(--orbit-ref-shadow-md);
   --orbit-shadow-floating: var(--orbit-ref-shadow-md);
@@ -106,29 +112,26 @@
   --orbit-font-size-label: var(--orbit-font-size-sm);
   --orbit-font-size-caption: var(--orbit-font-size-xs);
   --orbit-font-size-code: var(--orbit-font-size-sm);
-  --orbit-space-inline: var(--orbit-ref-space-3);
-  --orbit-space-stack: var(--orbit-ref-space-4);
+  --orbit-space-1: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.75rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-space-inline: var(--orbit-space-3);
+  --orbit-space-stack: var(--orbit-space-4);
   /* Composition spacing: layout primitives consume semantic spacing, not raw scale values. */
-  --orbit-layout-gap: 0.875rem;
-  --orbit-layout-gap-compact: 0.625rem;
-  --orbit-field-stack-gap: 0.375rem;
-  --orbit-section-gap: 1.625rem;
-  --orbit-modal-padding-inline: 2rem;
-  --orbit-modal-padding-block: 1.375rem;
-  --orbit-modal-header-padding-block-start: 0.875rem;
-  --orbit-modal-header-padding-block-end: 0.75rem;
-  --orbit-modal-footer-padding-block: 0.875rem;
-  --orbit-radius-tile: 0.875rem;
-  --orbit-radius-icon-surface: 0.75rem;
-  --orbit-dropzone-padding-block: 1.375rem;
-  --orbit-dropzone-padding-inline: 0.875rem;
-  --orbit-space-1: var(--orbit-ref-space-1);
-  --orbit-space-2: var(--orbit-ref-space-2);
-  --orbit-space-3: var(--orbit-ref-space-3);
-  --orbit-space-4: var(--orbit-ref-space-4);
-  --orbit-space-5: var(--orbit-ref-space-5);
-  --orbit-space-6: var(--orbit-ref-space-6);
-  --orbit-radius-sm: var(--orbit-ref-radius-sm);
+  --orbit-layout-gap: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-layout-gap-compact: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.8125rem + (0.8125rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
   --orbit-modal-size-sm: 30rem;
   --orbit-modal-size-md: 45rem;
   --orbit-modal-size-lg: 60rem;
@@ -137,6 +140,17 @@
   --orbit-modal-size-full: min(96vw, 90rem);
   --orbit-section-index-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
   --orbit-section-divider: var(--orbit-border-subtle);
+  --orbit-section-index-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-section-index-fg: var(--orbit-action-primary-bg);
+  --orbit-section-index-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-border-subtle)
+  );
   --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
@@ -195,39 +209,49 @@
 /* Comfortable is the root default. Density changes the whole operational rhythm —
    controls, action targets, spacing, sections and modal chrome together. */
 [data-orbit-density='comfortable'] {
-  --orbit-space-1: var(--orbit-ref-space-1);
-  --orbit-space-2: var(--orbit-ref-space-2);
-  --orbit-space-3: var(--orbit-ref-space-3);
-  --orbit-space-4: var(--orbit-ref-space-4);
-  --orbit-space-5: var(--orbit-ref-space-5);
-  --orbit-space-6: var(--orbit-ref-space-6);
+  --orbit-space-1: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.75rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.5rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.25rem + (0.5rem * var(--orbit-text-scale)));
   --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
   --orbit-header-icon-surface-size: calc(0.55rem + (2.2rem * var(--orbit-text-scale)));
   --orbit-header-icon-size: calc(0.275rem + (1.1rem * var(--orbit-text-scale)));
-  --orbit-control-padding-inline: var(--orbit-ref-space-3);
-  --orbit-space-inline: var(--orbit-ref-space-3);
-  --orbit-space-stack: var(--orbit-ref-space-4);
-  --orbit-layout-gap: 0.875rem;
-  --orbit-field-stack-gap: 0.375rem;
-  --orbit-section-gap: 1.625rem;
-  --orbit-modal-padding-inline: 2rem;
-  --orbit-modal-padding-block: 1.375rem;
-  --orbit-modal-header-padding-block-start: 0.875rem;
-  --orbit-modal-header-padding-block-end: 0.75rem;
-  --orbit-modal-footer-padding-block: 0.875rem;
-  --orbit-dropzone-padding-block: 1.375rem;
-  --orbit-dropzone-padding-inline: 0.875rem;
+  --orbit-control-padding-inline: var(--orbit-space-3);
+  --orbit-space-inline: var(--orbit-space-3);
+  --orbit-space-stack: var(--orbit-space-4);
+  --orbit-layout-gap: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.8125rem + (0.8125rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
 }
 
 [data-orbit-density='spacious'] {
-  --orbit-space-1: 0.3125rem;
-  --orbit-space-2: 0.625rem;
-  --orbit-space-3: 0.875rem;
-  --orbit-space-4: 1.25rem;
-  --orbit-space-5: 1.75rem;
-  --orbit-space-6: 2.5rem;
+  --orbit-space-1: calc(0.15625rem + (0.15625rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.625rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(1.25rem + (1.25rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.15625rem + (0.15625rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.3125rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.625rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.5rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.3125rem + (0.5625rem * var(--orbit-text-scale)));
   --orbit-control-height: calc(0.625rem + (2.375rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.5rem + (2rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.475rem + (1.85rem * var(--orbit-text-scale)));
@@ -236,25 +260,30 @@
   --orbit-control-padding-inline: var(--orbit-space-3);
   --orbit-space-inline: var(--orbit-space-3);
   --orbit-space-stack: var(--orbit-space-4);
-  --orbit-layout-gap: 1.125rem;
-  --orbit-field-stack-gap: 0.5rem;
-  --orbit-section-gap: 2rem;
-  --orbit-modal-padding-inline: 2.5rem;
-  --orbit-modal-padding-block: 1.75rem;
-  --orbit-modal-header-padding-block-start: 1rem;
-  --orbit-modal-header-padding-block-end: 1rem;
-  --orbit-modal-footer-padding-block: 1rem;
-  --orbit-dropzone-padding-block: 1.75rem;
-  --orbit-dropzone-padding-inline: 1.125rem;
+  --orbit-layout-gap: calc(0.5625rem + (0.5625rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(1.25rem + (1.25rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.5625rem + (0.5625rem * var(--orbit-text-scale)));
 }
 
 [data-orbit-density='compact'] {
-  --orbit-space-1: 0.1875rem;
-  --orbit-space-2: 0.375rem;
-  --orbit-space-3: 0.625rem;
-  --orbit-space-4: 0.875rem;
-  --orbit-space-5: 1.25rem;
-  --orbit-space-6: 1.75rem;
+  --orbit-space-1: calc(0.09375rem + (0.09375rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.625rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.1125rem + (0.1125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.225rem + (0.3375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.4375rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.34375rem + (0.46875rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.21875rem + (0.40625rem * var(--orbit-text-scale)));
   --orbit-control-height: calc(0.475rem + (1.9rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.4rem + (1.6rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.375rem + (1.5rem * var(--orbit-text-scale)));
@@ -263,25 +292,30 @@
   --orbit-control-padding-inline: var(--orbit-space-2);
   --orbit-space-inline: var(--orbit-space-2);
   --orbit-space-stack: var(--orbit-space-3);
-  --orbit-layout-gap: 0.625rem;
-  --orbit-field-stack-gap: 0.3125rem;
-  --orbit-section-gap: 1.125rem;
-  --orbit-modal-padding-inline: var(--orbit-ref-space-4);
-  --orbit-modal-padding-block: 1rem;
-  --orbit-modal-header-padding-block-start: 0.625rem;
-  --orbit-modal-header-padding-block-end: 0.625rem;
-  --orbit-modal-footer-padding-block: 0.6875rem;
-  --orbit-dropzone-padding-block: 1rem;
-  --orbit-dropzone-padding-inline: 0.75rem;
+  --orbit-layout-gap: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.15625rem + (0.15625rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.5625rem + (0.5625rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.34375rem + (0.34375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
 }
 
 [data-orbit-density='dense'] {
-  --orbit-space-1: 0.125rem;
-  --orbit-space-2: 0.25rem;
-  --orbit-space-3: 0.5rem;
-  --orbit-space-4: 0.75rem;
-  --orbit-space-5: 1rem;
-  --orbit-space-6: 1.5rem;
+  --orbit-space-1: calc(0.0625rem + (0.0625rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(0.75rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.1rem + (0.1rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.2rem + (0.3rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.3125rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.1875rem + (0.3125rem * var(--orbit-text-scale)));
   --orbit-control-height: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.35rem + (1.4rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.325rem + (1.3rem * var(--orbit-text-scale)));
@@ -290,16 +324,16 @@
   --orbit-control-padding-inline: var(--orbit-space-2);
   --orbit-space-inline: var(--orbit-space-2);
   --orbit-space-stack: var(--orbit-space-3);
-  --orbit-layout-gap: 0.5rem;
-  --orbit-field-stack-gap: 0.25rem;
-  --orbit-section-gap: 0.875rem;
-  --orbit-modal-padding-inline: 0.875rem;
-  --orbit-modal-padding-block: 0.75rem;
-  --orbit-modal-header-padding-block-start: 0.5rem;
-  --orbit-modal-header-padding-block-end: 0.5rem;
-  --orbit-modal-footer-padding-block: 0.5625rem;
-  --orbit-dropzone-padding-block: 0.75rem;
-  --orbit-dropzone-padding-inline: 0.625rem;
+  --orbit-layout-gap: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.28125rem + (0.28125rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
 }
 
 /* Accent swatch — curated options only, no free color picker. Default (blue) lives on :root. */

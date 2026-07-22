@@ -35,6 +35,9 @@ describe('PanelPageComponent', () => {
 
     const overlayEl = overlayContainer.getContainerElement();
     expect(overlayEl.querySelector('orbit-panel-surface')).toBeTruthy();
+    expect(overlayEl.querySelector('orbit-modal-header')).toBeTruthy();
+    expect(overlayEl.querySelector('orbit-modal-body')).toBeTruthy();
+    expect(overlayEl.querySelector('orbit-modal-footer')).toBeTruthy();
     expect(overlayEl.textContent).toContain('Dettaglio');
   });
 });

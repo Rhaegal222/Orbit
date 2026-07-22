@@ -30,6 +30,37 @@ describe('OrbitTextInputComponent', () => {
     expect(fixture.nativeElement.querySelector('input').getAttribute('type')).toBe('email');
   });
 
+  it('renders a single segmented stepper for number inputs', () => {
+    fixture.componentRef.setInput('type', 'number');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('.orbit-input__number-step').length).toBe(2);
+    expect(fixture.nativeElement.querySelector('.orbit-input__number-stepper')).toBeTruthy();
+  });
+
+  it('steps number input values through the accessible actions', () => {
+    fixture.componentRef.setInput('type', 'number');
+    fixture.detectChanges();
+    component.writeValue(2);
+    fixture.detectChanges();
+    let emitted = '';
+    component.registerOnChange((value) => (emitted = value));
+
+    component.adjustNumber(1);
+
+    expect(component.value()).toBe('3');
+    expect(emitted).toBe('3');
+  });
+
+  it('renders the semantic mail icon when enabled for email', () => {
+    fixture.componentRef.setInput('type', 'email');
+    fixture.componentRef.setInput('showLeadingIcon', true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('orbit-icon')).toBeTruthy();
+    expect(component.typeLeadingIcon()).toBe('mail');
+  });
+
   it('renders password with toggle', () => {
     fixture.componentRef.setInput('type', 'password');
     fixture.detectChanges();
@@ -37,6 +68,43 @@ describe('OrbitTextInputComponent', () => {
     component.togglePasswordVisibility();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('input').getAttribute('type')).toBe('text');
+  });
+
+  it('renders the semantic lock icon when enabled for password', () => {
+    fixture.componentRef.setInput('type', 'password');
+    fixture.componentRef.setInput('showLeadingIcon', true);
+    fixture.detectChanges();
+
+    expect(component.typeLeadingIcon()).toBe('lock');
+  });
+
+  it('keeps a semantic leading icon decorative without an action label', () => {
+    fixture.componentRef.setInput('leadingIconName', 'mail');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.orbit-input__action--leading')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.orbit-input__icon--leading orbit-icon')).toBeTruthy();
+  });
+
+  it('focuses the input when a decorative leading icon is clicked', () => {
+    fixture.componentRef.setInput('leadingIconName', 'mail');
+    fixture.detectChanges();
+
+    (fixture.nativeElement.querySelector('.orbit-input__icon--leading') as HTMLElement).click();
+    expect(document.activeElement).toBe(fixture.nativeElement.querySelector('input'));
+  });
+
+  it('turns a semantic trailing icon into an action only with an action label', () => {
+    let clicked = false;
+    component.trailingIconClick.subscribe(() => (clicked = true));
+    fixture.componentRef.setInput('trailingIconName', 'copy');
+    fixture.componentRef.setInput('trailingIconActionLabel', 'Copia valore');
+    fixture.detectChanges();
+
+    const action = fixture.nativeElement.querySelector('.orbit-input__action') as HTMLButtonElement;
+    expect(action.getAttribute('aria-label')).toBe('Copia valore');
+    action.click();
+    expect(clicked).toBe(true);
   });
 
   it('renders placeholder', () => {

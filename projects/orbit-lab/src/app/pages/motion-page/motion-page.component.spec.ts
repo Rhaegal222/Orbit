@@ -28,6 +28,24 @@ describe('MotionPageComponent', () => {
     expect(fixture.nativeElement.querySelector('orbit-button')).toBeTruthy();
   });
 
+  it('alternates between playing and stopping a requested motion pattern', () => {
+    expect(fixture.nativeElement.querySelector('.motion-page__pattern-demo')).toBeNull();
+
+    const patternButton = [...fixture.nativeElement.querySelectorAll('orbit-button')]
+      .find((button: HTMLElement) => button.textContent?.includes('Riproduci')) as HTMLElement;
+    patternButton.querySelector('button')?.click();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.motion-page__pattern-demo')).toBeTruthy();
+    expect(patternButton.textContent).toContain('Stop');
+
+    patternButton.querySelector('button')?.click();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.motion-page__pattern-demo')).toBeNull();
+    expect(patternButton.textContent).toContain('Riproduci');
+  });
+
   it('renders a live selectable-tile example and toggles selection on click', () => {
     const tile = fixture.nativeElement.querySelector('orbit-selectable-tile');
     expect(tile).toBeTruthy();

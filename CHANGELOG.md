@@ -8,6 +8,11 @@ All notable changes to Galileo Orbit are documented here.
 
 - Initial package metadata, publication pipeline and portable design tokens.
 - Added `orbit-panel-surface`/`orbit-panel` (offcanvas + sidebar) via a new `OrbitPanelService`, `orbit-tab`/`orbit-tab-panel`/`orbit-tablist`, and `orbit-table`/`orbit-table-column`/`orbitTableRow`.
+
+### Changed
+
+- Radius tokens now scale with text size and adapt to spacious, comfortable, compact and dense layouts; component internals consistently consume the semantic radius contract, including explicit square edges and circular indicators.
+- Spacing and composition tokens now scale with text size across every density; Lab editorial spacing uses semantic tokens without leaking into nested Orbit components.
 - Public theming contract with semantic CSS tokens and comfortable/compact density.
 - `orbit-form-section` can now collapse through an accessible native button.
 - Component token alignment for form controls, pill switch and badge; added `--orbit-radius-full` and badge foreground tokens.
@@ -31,3 +36,6 @@ All notable changes to Galileo Orbit are documented here.
 - Date picker now supports `date`, `month` and `year` precision through `mode`; added the typed CVA `orbit-date-range-picker` composed from two accessible Orbit calendars.
 - `orbit-modal-footer` now exposes left, center and right projection regions for operational status and action placement.
 - Formalized motion tokens for slow overlays, shimmer and accelerate/shared easing; applied reduced-motion guardrails and tokenized enter/state feedback to modal, floating controls, pickers, selectable tiles, checkbox and collapsible sections.
+- `orbit-text-input` now supports opt-in semantic leading icons for email and password through `showLeadingIcon`.
+- Text-input leading and trailing adornments now distinguish decorative icons from actions through typed icon names and explicit action labels.
+- Numbered form-section indices now use documented soft brand surface, foreground and border tokens instead of an ink-filled badge.

@@ -4,38 +4,38 @@
 
   <section>
     <h2>Modificabile</h2>
-    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="editable" /></lab-example>
+    <lab-example [code]="listSnippet" fullWidth><orbit-attachment-list [entries]="editable" /></lab-example>
   </section>
   <section>
     <h2>Sola lettura</h2>
-    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="readOnly" /></lab-example>
+    <lab-example [code]="listSnippet" fullWidth><orbit-attachment-list [entries]="readOnly" /></lab-example>
   </section>
   <section>
     <h2>Completato</h2>
-    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="completed" /></lab-example>
+    <lab-example [code]="listSnippet" fullWidth><orbit-attachment-list [entries]="completed" /></lab-example>
   </section>
   <section>
     <h2>Errore con azione</h2>
-    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="failed" /></lab-example>
+    <lab-example [code]="listSnippet" fullWidth><orbit-attachment-list [entries]="failed" /></lab-example>
   </section>
   <section>
     <h2>Lista vuota</h2>
-    <lab-example [code]="emptySnippet"><orbit-attachment-list emptyLabel="Nessun elemento disponibile" /></lab-example>
+    <lab-example [code]="emptySnippet" fullWidth><orbit-attachment-list emptyLabel="Nessun elemento disponibile" /></lab-example>
   </section>
   <section>
     <h2>Divider tratteggiato</h2>
-    <lab-example [code]="dividerSnippet"><orbit-divider variant="dashed" /></lab-example>
+    <lab-example [code]="dividerSnippet" fullWidth><orbit-divider variant="dashed" /></lab-example>
   </section>
   <section>
     <h2>Dropzone pronta</h2>
-    <lab-example [code]="dropzoneSnippet"><orbit-attachment-dropzone hint="PDF, PNG · max 10 MB" /></lab-example>
+    <lab-example [code]="dropzoneSnippet" fullWidth><orbit-attachment-dropzone hint="PDF, PNG · max 10 MB" /></lab-example>
   </section>
   <section>
     <h2>Dropzone con errore</h2>
-    <lab-example [code]="dropzoneErrorSnippet"><orbit-attachment-dropzone error="Il file selezionato non è accettato" /></lab-example>
+    <lab-example [code]="dropzoneErrorSnippet" fullWidth><orbit-attachment-dropzone error="Il file selezionato non è accettato" /></lab-example>
   </section>
   <section>
     <h2>Dropzone disabilitata</h2>
-    <lab-example [code]="disabledSnippet"><orbit-attachment-dropzone [disabled]="true" /></lab-example>
+    <lab-example [code]="disabledSnippet" fullWidth><orbit-attachment-dropzone [disabled]="true" /></lab-example>
   </section>
 </article>

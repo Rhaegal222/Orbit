@@ -97,6 +97,17 @@ describe('OrbitDatePickerComponent', () => {
     expect(component.inputText()).toBe('05/2026');
   });
 
+  it('capitalizes month labels in month precision', () => {
+    fixture.componentRef.setInput('mode', 'month');
+    component.isOpen.set(true);
+    fixture.detectChanges();
+
+    expect(component.monthLabels[0]).toBe('Gen');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-dp__period-option')?.textContent.trim(),
+    ).toBe('Gen');
+  });
+
   it('emits the first day of January for year precision', () => {
     fixture.componentRef.setInput('mode', 'year');
     component.selectYear(2028);

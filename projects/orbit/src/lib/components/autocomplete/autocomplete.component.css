@@ -18,7 +18,9 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   line-height: 1.25;
-  transition: border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-ac__input::placeholder {
@@ -68,7 +70,7 @@
   align-items: center;
   min-height: 2rem;
   padding: 0 var(--orbit-space-2);
-  border-radius: 0.25rem;
+  border-radius: var(--orbit-radius-sm);
   color: var(--orbit-text-primary);
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);

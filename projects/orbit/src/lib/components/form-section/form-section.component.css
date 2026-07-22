@@ -37,10 +37,12 @@
   place-items: center;
   width: var(--orbit-section-index-size);
   height: var(--orbit-section-index-size);
+  box-sizing: border-box;
   flex: 0 0 auto;
   border-radius: var(--orbit-radius-sm);
-  background: var(--orbit-text-primary);
-  color: var(--orbit-text-inverse);
+  border: 1px solid var(--orbit-section-index-border);
+  background: var(--orbit-section-index-bg);
+  color: var(--orbit-section-index-fg);
   font-size: var(--orbit-font-size-xs);
   font-weight: var(--orbit-font-weight-emphasis);
   font-variant-numeric: tabular-nums;

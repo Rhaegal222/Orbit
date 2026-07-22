@@ -1,252 +1,414 @@
 <article>
   <h1>Examples</h1>
-  <p>
-    Composizioni di pagina costruite con Orbit, per mostrare usi reali delle componenti oltre il
-    singolo controllo.
-  </p>
+  <p>Composizioni realistiche del dominio Catalogo Prodotti &amp; Listini, costruite con Orbit.</p>
 
-  <lab-example>
-    <div class="examples__picker" role="group" aria-label="Seleziona un mock design">
-      @for (example of examples; track example.id) {
-        <button
-          type="button"
-          class="examples__card"
-          [class.examples__card--selected]="selectedExample() === example.id"
-          [attr.aria-pressed]="selectedExample() === example.id"
-          (click)="selectExample(example.id)"
-        >
-          <span>{{ example.label }}</span>
-          <small>{{ example.description }}</small>
-        </button>
-      }
-    </div>
+  <lab-example [fullWidth]="true">
+    <orbit-tablist
+      ariaLabel="Esempi del catalogo prodotti"
+      (selectedChange)="selectExample($event)"
+    >
+      <orbit-tab
+        value="portfolio"
+        label="Portafoglio catalogo"
+        [selected]="selectedExample() === 'portfolio'"
+      >
+        <orbit-badge orbitTabBadge tone="primary" label="Tabella" />
+      </orbit-tab>
+      <orbit-tab
+        value="dossier"
+        label="Dossier prodotto"
+        [selected]="selectedExample() === 'dossier'"
+      >
+        <orbit-badge orbitTabBadge tone="info" label="Workspace" />
+      </orbit-tab>
+      <orbit-tab
+        value="quick-action"
+        label="Azione rapida"
+        [selected]="selectedExample() === 'quick-action'"
+      >
+        <orbit-badge orbitTabBadge tone="warning" label="Modale" />
+      </orbit-tab>
+    </orbit-tablist>
 
     @switch (selectedExample()) {
-      @case ('inline-form') {
-        <div class="examples__modal-controls">
-          <label for="examples-modal-size">Dimensione modale</label>
-          <select
-            id="examples-modal-size"
-            [value]="modalSize()"
-            (change)="setModalSize($any($event.target).value)"
-          >
-            <option value="sm">SM · 480px</option>
-            <option value="md">MD · 720px</option>
-            <option value="lg">LG · 960px</option>
-            <option value="xl">XL · 1180px</option>
-            <option value="xxl">XXL · 1320px</option>
-            <option value="full">Full · 96vw</option>
-          </select>
-        </div>
-
-        <orbit-modal labelledBy="examples-modal-title" [size]="modalSize()">
-          <orbit-modal-header
-            titleId="examples-modal-title"
-            title="Crea configurazione"
-            subtitle="Contesto · Identificativo 1837698"
-          >
-            <svg
-              orbitModalHeaderIcon
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M4 7h16M6 4h12l2 3v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7l2-3Z" />
-              <path d="M8 12h8M8 16h5" />
-            </svg>
-          </orbit-modal-header>
-
-          <orbit-modal-body>
-            <orbit-form-grid [layout]="modalSize() === 'sm' ? 'single' : '7-5'">
-              <div primary class="examples__modal-column">
-                <orbit-form-section
-                  [index]="1"
-                  title="Informazioni principali"
-                  [contentSpacing]="true"
-                >
-                  <orbit-form-grid>
-                    <div orbitFormGridItem [span]="12">
-                      <orbit-form-field label="Categoria" inputId="modal-category">
-                        <orbit-select inputId="modal-category" [options]="categoryOptions" />
-                      </orbit-form-field>
-                    </div>
-                    <div orbitFormGridItem [span]="12">
-                      <orbit-form-field label="Titolo" inputId="modal-title">
-                        <orbit-text-input inputId="modal-title" placeholder="Elemento di esempio" />
-                      </orbit-form-field>
-                    </div>
-                    <div orbitFormGridItem [span]="4">
-                      <orbit-form-field label="Data iniziale" inputId="modal-start">
-                        <orbit-date-picker inputId="modal-start" placeholder="08 / 01 / 2026" />
-                      </orbit-form-field>
-                    </div>
-                    <div orbitFormGridItem [span]="4">
-                      <orbit-form-field label="Data finale" inputId="modal-end">
-                        <orbit-date-picker inputId="modal-end" placeholder="08 / 01 / 2027" />
-                      </orbit-form-field>
-                    </div>
-                    <div orbitFormGridItem [span]="4">
-                      <orbit-form-field label="Orario" inputId="modal-time">
-                        <orbit-time-picker inputId="modal-time" />
-                      </orbit-form-field>
-                    </div>
-                  </orbit-form-grid>
-                </orbit-form-section>
-
-                <orbit-form-section [index]="2" title="Valori" [contentSpacing]="true">
-                  <orbit-form-grid>
-                    <div orbitFormGridItem [span]="6">
-                      <orbit-form-field label="Valore principale" inputId="modal-value-a">
-                        <orbit-text-input
-                          inputId="modal-value-a"
-                          type="currency"
-                          [formControl]="primaryAmount"
-                          readonly
-                        />
-                      </orbit-form-field>
-                    </div>
-                    <div orbitFormGridItem [span]="6">
-                      <orbit-form-field label="Valore secondario" inputId="modal-value-b">
-                        <orbit-text-input
-                          inputId="modal-value-b"
-                          type="currency"
-                          [formControl]="secondaryAmount"
-                          readonly
-                          tone="success"
-                        />
-                      </orbit-form-field>
-                    </div>
-                  </orbit-form-grid>
-                </orbit-form-section>
+      @case ('portfolio') {
+        <orbit-tab-panel value="portfolio">
+          <section class="examples__workspace" aria-labelledby="portfolio-title">
+            <orbit-panel>
+              <div class="examples__header">
+                <div>
+                  <p class="examples__eyebrow">Catalogo Prodotti &amp; Listini / Portafoglio</p>
+                  <h2 id="portfolio-title">Elenco prodotti</h2>
+                  <p>Gestisci qualità della scheda, listini e pubblicazione sui canali B2B.</p>
+                </div>
+                <div class="examples__header-actions">
+                  <orbit-button label="Esporta Schede (PDF)" variant="outline" tone="neutral" />
+                  <orbit-button label="Nuovo Prodotto" />
+                </div>
               </div>
-
-              <div secondary class="examples__modal-column">
-                <orbit-form-section [index]="3" title="Opzioni" [contentSpacing]="true">
-                  <orbit-badge orbitFormSectionMeta tone="primary" label="2 attive" />
-                  <orbit-form-grid>
-                    <div orbitFormGridItem [span]="4">
-                      <orbit-selectable-tile label="Opzione A" [selected]="true" />
-                    </div>
-                    <div orbitFormGridItem [span]="4">
-                      <orbit-selectable-tile label="Opzione B" />
-                    </div>
-                    <div orbitFormGridItem [span]="4">
-                      <orbit-selectable-tile label="Opzione C" />
-                    </div>
-                  </orbit-form-grid>
-                </orbit-form-section>
-
-                <orbit-form-section [index]="4" title="Allegati" [contentSpacing]="true">
-                  <orbit-attachment-list [entries]="attachments" />
-                  <orbit-divider variant="dashed" />
-                  <orbit-attachment-dropzone hint="PDF, JPG, PNG · max 10 MB" />
-                </orbit-form-section>
+              <div class="examples__stats" aria-label="Metriche catalogo">
+                <div><span>Totale SKU</span><strong>1.284</strong></div>
+                <div><span>In attesa di foto</span><strong>42</strong></div>
+                <div><span>Completezza media</span><strong>86%</strong></div>
               </div>
-            </orbit-form-grid>
-          </orbit-modal-body>
+            </orbit-panel>
 
-          <orbit-modal-footer variant="form">
-            <orbit-form-action-bar
-              confirmTone="success"
-              statusLabel="Salvataggio automatico attivo"
-            />
-          </orbit-modal-footer>
-        </orbit-modal>
+            <orbit-panel>
+              <div class="examples__filter-grid">
+                <orbit-form-field label="Cerca" inputId="catalog-search">
+                  <orbit-text-input
+                    inputId="catalog-search"
+                    placeholder="Cerca per SKU, nome o codice EAN..."
+                    type="search"
+                    [formControl]="search"
+                  />
+                </orbit-form-field>
+                <orbit-form-field label="Famiglia prodotto" inputId="catalog-category">
+                  <orbit-select
+                    inputId="catalog-category"
+                    placeholder="Filtra per famiglia prodotto"
+                    [options]="categoryOptions"
+                    [formControl]="categoryFilter"
+                  />
+                </orbit-form-field>
+                <orbit-form-field label="Canale di vendita" inputId="catalog-channel">
+                  <orbit-select
+                    inputId="catalog-channel"
+                    placeholder="Seleziona canale di vendita"
+                    [options]="channelOptions"
+                    [formControl]="channelFilter"
+                  />
+                </orbit-form-field>
+                <orbit-form-field label="Ultima modifica" inputId="catalog-modified-start">
+                  <orbit-date-range-picker
+                    startInputId="catalog-modified-start"
+                    endInputId="catalog-modified-end"
+                    startLabel="Dal"
+                    endLabel="Al"
+                    [formControl]="modifiedRange"
+                  />
+                </orbit-form-field>
+              </div>
+            </orbit-panel>
+
+            <orbit-table>
+              <thead>
+                <tr>
+                  <th>
+                    <orbit-table-column
+                      sortable
+                      [sortDirection]="skuSort()"
+                      (sortChange)="setSkuSort($event)"
+                      >SKU</orbit-table-column
+                    >
+                  </th>
+                  <th>Prodotto</th>
+                  <th>Categoria</th>
+                  <th>Owner</th>
+                  <th>Prezzo base</th>
+                  <th>Completezza</th>
+                  <th>Stato</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (product of products(); track product.sku) {
+                  <tr orbitTableRow [disabled]="product.status === 'Bozza Scheda'">
+                    <td>{{ product.sku }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.owner }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.completeness }}</td>
+                    <td><orbit-badge [tone]="product.tone" [label]="product.status" /></td>
+                    <td><orbit-button label="Apri" variant="flat" tone="primary" /></td>
+                  </tr>
+                }
+              </tbody>
+            </orbit-table>
+          </section>
+        </orbit-tab-panel>
       }
 
-      @case ('service-selection') {
-        <section
-          class="examples__surface examples__service"
-          aria-labelledby="service-selection-title"
-        >
-          <header class="examples__surface-header">
-            <div>
-              <p class="examples__eyebrow">Scelta guidata</p>
-              <h2 id="service-selection-title">Seleziona il servizio</h2>
+      @case ('dossier') {
+        <orbit-tab-panel value="dossier">
+          <section class="examples__workspace" aria-labelledby="dossier-title">
+            <orbit-panel>
+              <div class="examples__header">
+                <div>
+                  <p class="examples__eyebrow">
+                    Catalogo Prodotti &amp; Listini / Illuminazione / Moduli LED Smart
+                  </p>
+                  <h2 id="dossier-title">Modulo Proiettore LED Industrial 150W</h2>
+                  <p>SKU PRD-8012-X · GTIN 08012345678901 · Ultima revisione 18/07/2026</p>
+                </div>
+                <div class="examples__header-actions">
+                  <orbit-badge tone="success" label="Attivo a Catalogo" /><orbit-button
+                    label="Pubblica su Canali B2B"
+                  />
+                </div>
+              </div>
+              <div class="examples__stats" aria-label="Metriche prodotto">
+                <div><span>Prezzo base</span><strong>€ 240,00</strong></div>
+                <div><span>Margine target</span><strong>32%</strong></div>
+                <div><span>Completezza</span><strong>98%</strong></div>
+                <div><span>Modello pricing</span><strong>Tier / Volume</strong></div>
+              </div>
+            </orbit-panel>
+
+            <orbit-tablist
+              ariaLabel="Sezioni del dossier prodotto"
+              (selectedChange)="setProductSection($event)"
+            >
+              <orbit-tab
+                value="overview"
+                label="Panoramica & Attributi"
+                [selected]="selectedProductSection() === 'overview'"
+              />
+              <orbit-tab
+                value="pricing"
+                label="Listini & Pricing"
+                [selected]="selectedProductSection() === 'pricing'"
+              />
+              <orbit-tab
+                value="variants"
+                label="Varianti"
+                [selected]="selectedProductSection() === 'variants'"
+              />
+              <orbit-tab
+                value="media"
+                label="Media & Allegati"
+                [selected]="selectedProductSection() === 'media'"
+              />
+              <orbit-tab
+                value="channels"
+                label="Canali di Vendita"
+                [selected]="selectedProductSection() === 'channels'"
+              />
+            </orbit-tablist>
+
+            @switch (selectedProductSection()) {
+              @case ('overview') {
+                <orbit-tab-panel value="overview">
+                  <div class="examples__dossier-grid">
+                    <orbit-panel>
+                      <orbit-form-section title="Panoramica & Attributi" [contentSpacing]="true">
+                        <orbit-form-grid>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Famiglia prodotto" inputId="product-family"
+                              ><orbit-select inputId="product-family" [options]="categoryOptions"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Product Manager" inputId="product-owner"
+                              ><orbit-text-input inputId="product-owner" placeholder="Marco Rossi"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Data lancio" inputId="product-launch"
+                              ><orbit-text-input inputId="product-launch" placeholder="15/09/2026"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Codice EAN" inputId="product-ean"
+                              ><orbit-text-input inputId="product-ean" placeholder="08012345678901"
+                            /></orbit-form-field>
+                          </div>
+                        </orbit-form-grid>
+                      </orbit-form-section>
+                      <orbit-form-section title="Listini & Pricing" [contentSpacing]="true"
+                        ><orbit-form-grid
+                          ><div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Prezzo base" inputId="product-price"
+                              ><orbit-text-input
+                                inputId="product-price"
+                                type="currency"
+                                [formControl]="listPrice"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Canale principale" inputId="product-channel"
+                              ><orbit-select inputId="product-channel" [options]="channelOptions"
+                            /></orbit-form-field></div></orbit-form-grid
+                      ></orbit-form-section>
+                    </orbit-panel>
+                    <div class="examples__dossier-side">
+                      <orbit-panel
+                        ><orbit-form-section title="Media & Allegati" [contentSpacing]="true"
+                          ><orbit-attachment-list [entries]="attachments" /><orbit-divider
+                            variant="dashed" /><orbit-attachment-dropzone
+                            accept=".pdf,.png,.jpg"
+                            hint="Trascina qui le schede tecniche e le immagini (.pdf, .png, .jpg) per arricchire il prodotto." /></orbit-form-section
+                      ></orbit-panel>
+                      <orbit-panel
+                        ><orbit-badge tone="warning" label="Completamento richiesto" />
+                        <p class="examples__alert">
+                          La scheda prodotto non raggiunge il 100% di completamento: manca il
+                          manuale d’uso in lingua italiana.
+                        </p>
+                        <orbit-button
+                          label="Associa Documentazione"
+                          variant="outline"
+                          tone="neutral"
+                      /></orbit-panel>
+                    </div>
+                  </div>
+                </orbit-tab-panel>
+              }
+              @case ('pricing') {
+                <orbit-tab-panel value="pricing"
+                  ><orbit-panel
+                    ><orbit-form-section title="Listini & Pricing" [contentSpacing]="true"
+                      ><orbit-form-grid
+                        ><div orbitFormGridItem [span]="6">
+                          <orbit-form-field label="Prezzo base" inputId="pricing-base"
+                            ><orbit-text-input
+                              inputId="pricing-base"
+                              type="currency"
+                              [formControl]="listPrice"
+                          /></orbit-form-field>
+                        </div>
+                        <div orbitFormGridItem [span]="6">
+                          <orbit-form-field label="Canale di vendita" inputId="pricing-channel"
+                            ><orbit-select inputId="pricing-channel" [options]="channelOptions"
+                          /></orbit-form-field></div></orbit-form-grid></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+              @case ('variants') {
+                <orbit-tab-panel value="variants"
+                  ><orbit-panel
+                    ><orbit-form-section title="Varianti disponibili" [contentSpacing]="true"
+                      ><orbit-form-grid
+                        ><div orbitFormGridItem [span]="4">
+                          <orbit-selectable-tile
+                            label="Corpo nero"
+                            description="SKU PRD-8012-X-BK"
+                            [selected]="true"
+                          />
+                        </div>
+                        <div orbitFormGridItem [span]="4">
+                          <orbit-selectable-tile
+                            label="Corpo bianco"
+                            description="SKU PRD-8012-X-WH"
+                          />
+                        </div>
+                        <div orbitFormGridItem [span]="4">
+                          <orbit-selectable-tile
+                            label="Ottica 60°"
+                            description="SKU PRD-8012-X-60"
+                          /></div></orbit-form-grid></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+              @case ('media') {
+                <orbit-tab-panel value="media"
+                  ><orbit-panel
+                    ><orbit-form-section title="Media & Allegati" [contentSpacing]="true"
+                      ><orbit-attachment-list [entries]="attachments" /><orbit-divider
+                        variant="dashed" /><orbit-attachment-dropzone
+                        accept=".pdf,.png,.jpg"
+                        hint="Trascina qui le schede tecniche e le immagini (.pdf, .png, .jpg) per arricchire il prodotto." /></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+              @case ('channels') {
+                <orbit-tab-panel value="channels"
+                  ><orbit-panel
+                    ><orbit-form-section title="Canali di Vendita" [contentSpacing]="true"
+                      ><orbit-form-field label="Canale principale" inputId="channel-primary"
+                        ><orbit-select
+                          inputId="channel-primary"
+                          [options]="channelOptions" /></orbit-form-field
+                      ><orbit-badge
+                        tone="success"
+                        label="B2B Italia pubblicato" /></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+            }
+            <orbit-form-action-bar
+              confirmLabel="Salva modifiche"
+              draftLabel="Salva bozza"
+              statusLabel="Modifiche salvate localmente"
+            />
+          </section>
+        </orbit-tab-panel>
+      }
+
+      @case ('quick-action') {
+        <orbit-tab-panel value="quick-action">
+          <section class="examples__workspace" aria-labelledby="quick-action-title">
+            <div class="examples__modal-intro">
+              <h2 id="quick-action-title">Aggiornamento listino contestuale</h2>
               <p>
-                Una composizione decisionale che mette le opzioni al centro, prima dei dettagli.
+                Un micro-flusso che applica un’azione puntuale senza interrompere il lavoro sul
+                catalogo.
               </p>
             </div>
-            <orbit-badge tone="warning" label="Preventivo" />
-          </header>
-
-          <div class="examples__service-layout">
-            <div class="examples__service-options">
-              <orbit-selectable-tile label="Standard" description="Attivazione in 5 giorni" />
-              <orbit-selectable-tile
-                label="Prioritario"
-                description="Presa in carico entro 24 ore"
-                [selected]="true"
+            <orbit-modal labelledBy="price-modal-title" size="md">
+              <orbit-modal-header
+                titleId="price-modal-title"
+                title="Applica variazione prezzo di listino"
+                subtitle="6 prodotti selezionati · B2B Italia"
               />
-              <orbit-selectable-tile
-                label="Enterprise"
-                description="Gestione dedicata e monitoraggio"
-              />
-            </div>
-
-            <aside class="examples__summary" aria-label="Riepilogo servizio">
-              <p class="examples__eyebrow">Riepilogo</p>
-              <strong>Servizio prioritario</strong>
-              <span>Attivazione entro 24 ore</span>
-              <orbit-divider />
-              <orbit-form-field label="Importo" inputId="service-amount">
-                <orbit-text-input
-                  inputId="service-amount"
-                  type="currency"
-                  [formControl]="secondaryAmount"
-                  readonly
-                  tone="success"
-                />
-              </orbit-form-field>
-            </aside>
-          </div>
-
-          <orbit-form-action-bar
-            confirmTone="success"
-            statusLabel="Nessun impegno fino alla conferma"
-          />
-        </section>
-      }
-
-      @case ('document-workspace') {
-        <section
-          class="examples__surface examples__documents"
-          aria-labelledby="document-workspace-title"
-        >
-          <header class="examples__surface-header">
-            <div>
-              <p class="examples__eyebrow">Dossier pratica</p>
-              <h2 id="document-workspace-title">Workspace documenti</h2>
-              <p>Un’area dedicata alle evidenze, senza ripetere un form di configurazione.</p>
-            </div>
-            <orbit-badge tone="warning" label="1 da verificare" />
-          </header>
-
-          <div class="examples__document-layout">
-            <div>
-              <h3>Documenti acquisiti</h3>
-              <orbit-attachment-list [entries]="attachments" />
-              <orbit-attachment-list [entries]="reviewAttachments" />
-            </div>
-
-            <div>
-              <h3>Aggiungi evidenze</h3>
-              <orbit-attachment-dropzone hint="PDF, JPG, PNG · max 10 MB" />
-              <orbit-divider variant="dashed" />
-              <orbit-form-field label="Nota per il revisore" inputId="document-note">
-                <orbit-text-input inputId="document-note" placeholder="Indica cosa è cambiato" />
-              </orbit-form-field>
-            </div>
-          </div>
-
-          <orbit-form-action-bar
-            confirmTone="success"
-            statusLabel="Tutti i documenti sono sincronizzati"
-          />
-        </section>
+              <orbit-modal-body>
+                <orbit-form-section title="Tipo di aggiornamento" [contentSpacing]="true"
+                  ><orbit-form-grid
+                    ><div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile
+                        label="Percentuale"
+                        description="Incremento o sconto"
+                        [selected]="updateType() === 'percent'"
+                        (selectedChange)="setUpdateType('percent')"
+                      />
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile
+                        label="Valore fisso"
+                        description="Nuovo prezzo netto"
+                        [selected]="updateType() === 'fixed'"
+                        (selectedChange)="setUpdateType('fixed')"
+                      />
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile
+                        label="Listino sorgente"
+                        description="Copia da un canale"
+                        [selected]="updateType() === 'source'"
+                        (selectedChange)="setUpdateType('source')"
+                      /></div></orbit-form-grid
+                ></orbit-form-section>
+                <div class="examples__quick-action-content">
+                  <orbit-form-grid
+                    ><div orbitFormGridItem [span]="6">
+                      <orbit-form-field label="Variazione" inputId="price-change"
+                        ><orbit-text-input
+                          inputId="price-change"
+                          type="currency"
+                          placeholder="10,00"
+                      /></orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="6">
+                      <orbit-form-field label="Canale di vendita" inputId="price-channel"
+                        ><orbit-select inputId="price-channel" [options]="channelOptions"
+                      /></orbit-form-field></div
+                  ></orbit-form-grid>
+                  <orbit-panel
+                    ><orbit-badge tone="warning" label="Conferma richiesta" />
+                    <p class="examples__alert">
+                      La variazione verrà applicata ai 6 SKU selezionati e registrata nello storico
+                      del listino.
+                    </p></orbit-panel
+                  >
+                </div>
+              </orbit-modal-body>
+              <orbit-modal-footer variant="form"
+                ><orbit-form-action-bar
+                  confirmLabel="Aggiorna Listino"
+                  draftLabel="Annulla"
+                  [showCancel]="false"
+                  statusLabel="Nessuna variazione applicata"
+              /></orbit-modal-footer>
+            </orbit-modal>
+          </section>
+        </orbit-tab-panel>
       }
     }
   </lab-example>

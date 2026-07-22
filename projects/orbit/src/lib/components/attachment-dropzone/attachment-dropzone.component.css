@@ -10,10 +10,12 @@
   gap: var(--orbit-space-2);
   padding: var(--orbit-dropzone-padding-block) var(--orbit-dropzone-padding-inline);
   border: 2px dashed var(--orbit-border-subtle);
-  border-radius: var(--orbit-radius-icon-surface);
+  border-radius: var(--orbit-radius-surface);
   background: var(--orbit-surface-default);
   cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .orbit-drop__zone:hover:not(.orbit-drop__zone--disabled) {

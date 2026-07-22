@@ -43,4 +43,15 @@ describe('LabExampleComponent', () => {
     const preview = fixture.nativeElement.querySelector('.lab-example__preview');
     expect(preview).toBeTruthy();
   });
+
+  it('enables a full-width projection wrapper when requested', () => {
+    fixture.componentRef.setInput('fullWidth', true);
+    fixture.detectChanges();
+
+    expect(
+      fixture.nativeElement
+        .querySelector('.lab-example__content')
+        .classList.contains('lab-example__content--full-width'),
+    ).toBe(true);
+  });
 });

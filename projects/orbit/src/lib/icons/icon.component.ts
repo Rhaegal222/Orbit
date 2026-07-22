@@ -12,6 +12,12 @@ import { ORBIT_ICON_PATHS, OrbitIconName } from './icon-registry';
   selector: 'orbit-icon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './icon.component.html',
+  styles: [
+    `
+      :host { display: inline-flex; font-size: 1rem; line-height: 1; }
+      svg { width: 1em; height: 1em; }
+    `,
+  ],
 })
 export class OrbitIconComponent {
   name = input.required<OrbitIconName>();

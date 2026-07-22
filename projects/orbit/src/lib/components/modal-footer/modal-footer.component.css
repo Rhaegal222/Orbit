@@ -5,6 +5,10 @@
 
 .orbit-modal-footer__layout {
   display: grid;
+  min-block-size: calc(
+    var(--orbit-control-height) + var(--orbit-modal-footer-padding-block) +
+      var(--orbit-modal-footer-padding-block) + var(--orbit-font-size-sm)
+  );
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--orbit-layout-gap);
@@ -52,5 +56,7 @@
 
 :host(.orbit-modal-footer--form) {
   background: var(--orbit-surface-raised);
-  box-shadow: 0 -1px 0 var(--orbit-border-subtle), 0 -8px 20px color-mix(in srgb, var(--orbit-text-primary) 4%, transparent);
+  box-shadow:
+    0 -1px 0 var(--orbit-border-subtle),
+    0 -8px 20px color-mix(in srgb, var(--orbit-text-primary) 4%, transparent);
 }

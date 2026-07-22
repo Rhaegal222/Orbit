@@ -1,4 +1,6 @@
-:host { display: block; }
+:host {
+  display: block;
+}
 .orbit-modal {
   display: flex;
   flex-direction: column;
@@ -13,11 +15,21 @@
   transform-origin: center;
 }
 
-.orbit-modal--sm { width: min(100%, var(--orbit-modal-size-sm)); }
-.orbit-modal--lg { width: min(100%, var(--orbit-modal-size-lg)); }
-.orbit-modal--xl { width: min(100%, var(--orbit-modal-size-xl)); }
-.orbit-modal--xxl { width: min(100%, var(--orbit-modal-size-xxl)); }
-.orbit-modal--full { width: var(--orbit-modal-size-full); }
+.orbit-modal--sm {
+  width: min(100%, var(--orbit-modal-size-sm));
+}
+.orbit-modal--lg {
+  width: min(100%, var(--orbit-modal-size-lg));
+}
+.orbit-modal--xl {
+  width: min(100%, var(--orbit-modal-size-xl));
+}
+.orbit-modal--xxl {
+  width: min(100%, var(--orbit-modal-size-xxl));
+}
+.orbit-modal--full {
+  width: var(--orbit-modal-size-full);
+}
 
 @media (max-width: 48rem) {
   .orbit-modal,
@@ -28,6 +40,6 @@
   .orbit-modal--full {
     width: 100%;
     max-height: 100dvh;
-    border-radius: 0;
+    border-radius: var(--orbit-radius-none);
   }
 }

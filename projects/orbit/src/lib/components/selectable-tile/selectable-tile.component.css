@@ -15,7 +15,10 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 .orbit-selectable-tile:hover:not(:disabled) {
   border-color: var(--orbit-border-strong);
@@ -37,9 +40,16 @@
   flex: 0 0 auto;
   color: var(--orbit-text-secondary);
 }
-.orbit-selectable-tile__icon:empty { display: none; }
-.orbit-selectable-tile__icon ::ng-deep svg { width: 100%; height: 100%; }
-.orbit-selectable-tile--selected .orbit-selectable-tile__icon { color: var(--orbit-action-primary-bg); }
+.orbit-selectable-tile__icon:empty {
+  display: none;
+}
+.orbit-selectable-tile__icon ::ng-deep svg {
+  width: 100%;
+  height: 100%;
+}
+.orbit-selectable-tile--selected .orbit-selectable-tile__icon {
+  color: var(--orbit-action-primary-bg);
+}
 .orbit-selectable-tile:focus-visible {
   outline: 2px solid var(--orbit-action-primary-bg);
   outline-offset: 2px;
@@ -57,7 +67,7 @@
   flex: 0 0 auto;
   margin-inline-start: auto;
   border: 1px solid var(--orbit-border-strong);
-  border-radius: 50%;
+  border-radius: var(--orbit-radius-full);
   color: var(--orbit-text-inverse);
   font-size: var(--orbit-font-size-xs);
 }
@@ -69,7 +79,10 @@
 .orbit-selectable-tile__description {
   display: block;
 }
-.orbit-selectable-tile__content { min-width: 0; flex: 1 1 auto; }
+.orbit-selectable-tile__content {
+  min-width: 0;
+  flex: 1 1 auto;
+}
 .orbit-selectable-tile__label {
   font-size: var(--orbit-font-size-body);
   font-weight: var(--orbit-font-weight-emphasis);

@@ -31,11 +31,23 @@
   padding: var(--orbit-space-5);
 }
 
+.lab-example__content {
+  display: contents;
+}
+
+.lab-example__content--full-width {
+  display: block;
+  min-width: 0;
+  flex: 0 1 92%;
+  inline-size: 92%;
+}
+
 .lab-example__source {
   /* TODO(orbit-motion): animate expanding/collapsing source once the shared
      layout-motion primitive is available in Orbit. */
   padding: var(--orbit-space-3) var(--orbit-space-4) var(--orbit-space-4);
-  border-radius: 0 0 var(--orbit-radius-surface) var(--orbit-radius-surface);
+  border-radius: var(--orbit-radius-none) var(--orbit-radius-none) var(--orbit-radius-surface)
+    var(--orbit-radius-surface);
   background: var(--orbit-surface-subtle);
 }
 

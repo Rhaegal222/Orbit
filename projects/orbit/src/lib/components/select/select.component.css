@@ -12,7 +12,8 @@
 .orbit-select__input {
   width: 100%;
   height: var(--orbit-control-height);
-  padding: 0 calc(var(--orbit-control-action-size) + var(--orbit-space-2)) 0 var(--orbit-control-padding-inline);
+  padding: 0 calc(var(--orbit-control-action-size) + var(--orbit-space-2)) 0
+    var(--orbit-control-padding-inline);
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-raised);
@@ -21,7 +22,10 @@
   font-size: var(--orbit-font-size-body);
   line-height: 1.25;
   cursor: pointer;
-  transition: border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard), background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard),
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-select__input--searchable {
@@ -44,7 +48,10 @@
   box-shadow: var(--orbit-focus-ring);
 }
 
-.orbit-select__input:hover:not(:disabled):not(:focus) { border-color: var(--orbit-border-strong); background: var(--orbit-surface-default); }
+.orbit-select__input:hover:not(:disabled):not(:focus) {
+  border-color: var(--orbit-border-strong);
+  background: var(--orbit-surface-default);
+}
 
 /* ── Invalid ── */
 :host(.orbit-select--invalid) .orbit-select__input {
@@ -85,11 +92,15 @@
   box-sizing: border-box;
   border: 1px solid var(--orbit-border-subtle);
   border-left-color: var(--orbit-border-subtle);
-  border-radius: 0 var(--orbit-radius-control) var(--orbit-radius-control) 0;
+  border-radius: var(--orbit-radius-none) var(--orbit-radius-control) var(--orbit-radius-control)
+    var(--orbit-radius-none);
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-select__toggle:hover:not(:disabled) {
@@ -150,7 +161,9 @@
   font-size: var(--orbit-font-size-body);
   text-align: left;
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-select__option:hover:not(:disabled),

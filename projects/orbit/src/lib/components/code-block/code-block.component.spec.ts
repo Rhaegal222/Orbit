@@ -23,8 +23,7 @@ describe('OrbitCodeBlockComponent', () => {
 
   it('is collapsed by default when collapsible', () => {
     fixture.detectChanges();
-    const pre = fixture.nativeElement.querySelector('[data-code-block]');
-    expect(pre.hidden).toBe(true);
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__surface').hidden).toBe(true);
     expect(fixture.nativeElement.querySelector('[data-toggle-code]').getAttribute('aria-expanded')).toBe(
       'false',
     );
@@ -36,14 +35,14 @@ describe('OrbitCodeBlockComponent', () => {
     toggle.click();
     fixture.detectChanges();
     expect(toggle.getAttribute('aria-expanded')).toBe('true');
-    expect(fixture.nativeElement.querySelector('[data-code-block]').hidden).toBe(false);
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__surface').hidden).toBe(false);
   });
 
   it('is always expanded and has no toggle when collapsible is false', () => {
     fixture.componentRef.setInput('collapsible', false);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[data-toggle-code]')).toBeNull();
-    expect(fixture.nativeElement.querySelector('[data-code-block]').hidden).toBe(false);
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__surface').hidden).toBe(false);
   });
 
   it('can hide its built-in actions when a composite owns them', () => {
@@ -55,12 +54,25 @@ describe('OrbitCodeBlockComponent', () => {
   it('starts expanded when initiallyCollapsed is false', () => {
     fixture.componentRef.setInput('initiallyCollapsed', false);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[data-code-block]').hidden).toBe(false);
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__surface').hidden).toBe(false);
+  });
+
+  it('renders a numbered gutter for every source line', () => {
+    fixture.componentRef.setInput('code', 'prima riga\nseconda riga');
+    fixture.detectChanges();
+
+    const lines = fixture.nativeElement.querySelectorAll('.orbit-code-block__line');
+    const lineNumbers = fixture.nativeElement.querySelectorAll('.orbit-code-block__line-number');
+    expect(lines.length).toBe(2);
+    expect(lineNumbers[0].textContent.trim()).toBe('1');
+    expect(lineNumbers[1].textContent.trim()).toBe('2');
   });
 
   it('copies the code via OrbitClipboardService when the copy button is clicked', async () => {
     fixture.detectChanges();
-    fixture.nativeElement.querySelector('[data-copy-code]').click();
+    const copyButton = fixture.nativeElement.querySelector('[data-copy-code] button') as HTMLButtonElement;
+    expect(copyButton.getAttribute('aria-label')).toBe('Copia codice');
+    copyButton.click();
     await fixture.whenStable();
     expect(copyText).toHaveBeenCalledWith('<orbit-button label="Salva" />');
   });

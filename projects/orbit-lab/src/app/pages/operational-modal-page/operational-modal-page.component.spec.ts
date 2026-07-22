@@ -13,28 +13,9 @@ describe('OperationalModalPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('renders the Examples page with three selectable mock designs', () => {
-    const cards = fixture.nativeElement.querySelectorAll(
-      '.examples__card',
-    ) as NodeListOf<HTMLButtonElement>;
-
+  it('renders the catalog portfolio example', () => {
     expect(fixture.nativeElement.querySelector('h1')?.textContent).toContain('Examples');
-    expect(cards).toHaveLength(3);
-    expect(cards[0].getAttribute('aria-pressed')).toBe('true');
-    expect(fixture.nativeElement.textContent).toContain('Crea configurazione');
-    expect(fixture.nativeElement.textContent).toContain('Categoria');
-  });
-
-  it('shows the selected service-selection mock', () => {
-    const cards = fixture.nativeElement.querySelectorAll(
-      '.examples__card',
-    ) as NodeListOf<HTMLButtonElement>;
-
-    cards[1].click();
-    fixture.detectChanges();
-
-    expect(cards[1].getAttribute('aria-pressed')).toBe('true');
-    expect(fixture.nativeElement.textContent).toContain('Seleziona il servizio');
-    expect(fixture.nativeElement.textContent).toContain('Servizio prioritario');
+    expect(fixture.nativeElement.textContent).toContain('Catalogo Prodotti & Listini');
+    expect(fixture.nativeElement.textContent).toContain('PRD-8012-X');
   });
 });

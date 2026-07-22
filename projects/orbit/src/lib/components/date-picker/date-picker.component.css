@@ -10,7 +10,8 @@
 .orbit-dp__input {
   width: 100%;
   height: var(--orbit-control-height);
-  padding: 0 calc(var(--orbit-control-action-size) + var(--orbit-space-2)) 0 var(--orbit-control-padding-inline);
+  padding: 0 calc(var(--orbit-control-action-size) + var(--orbit-space-2)) 0
+    var(--orbit-control-padding-inline);
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-default);
@@ -18,7 +19,9 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   line-height: 1.25;
-  transition: border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__input::placeholder {
@@ -53,11 +56,14 @@
   box-sizing: border-box;
   border: 1px solid var(--orbit-border-subtle);
   border-left-color: var(--orbit-border-subtle);
-  border-radius: 0 var(--orbit-radius-control) var(--orbit-radius-control) 0;
+  border-radius: var(--orbit-radius-none) var(--orbit-radius-control) var(--orbit-radius-control)
+    var(--orbit-radius-none);
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__toggle:hover:not(:disabled) {
@@ -121,7 +127,9 @@
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__nav-btn:hover {
@@ -173,7 +181,9 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__day:hover:not(:disabled) {

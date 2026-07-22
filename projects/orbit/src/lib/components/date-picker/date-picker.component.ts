@@ -91,18 +91,22 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
     ),
   );
 
-  readonly monthLabels = Array.from({ length: 12 }, (_, index) =>
-    new Intl.DateTimeFormat(this.i18n.locale, { month: 'short' }).format(new Date(2024, index, 1)),
-  );
+  readonly monthLabels = Array.from({ length: 12 }, (_, index) => {
+    const label = new Intl.DateTimeFormat(this.i18n.locale, { month: 'short' }).format(
+      new Date(2024, index, 1),
+    );
+    return label.charAt(0).toLocaleUpperCase(this.i18n.locale) + label.slice(1);
+  });
 
   get yearOptions(): number[] {
     return Array.from({ length: 12 }, (_, index) => this.viewYear() - 5 + index);
   }
 
   monthLabel(): string {
-    const label = new Intl.DateTimeFormat(this.i18n.locale, { month: 'long', year: 'numeric' }).format(
-      new Date(this.viewYear(), this.viewMonth(), 1),
-    );
+    const label = new Intl.DateTimeFormat(this.i18n.locale, {
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date(this.viewYear(), this.viewMonth(), 1));
     return label.charAt(0).toLocaleUpperCase(this.i18n.locale) + label.slice(1);
   }
 
@@ -185,7 +189,9 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
 
   isMonthSelected(month: number): boolean {
     const selected = this.selectedDate();
-    return !!selected && selected.getFullYear() === this.viewYear() && selected.getMonth() === month;
+    return (
+      !!selected && selected.getFullYear() === this.viewYear() && selected.getMonth() === month
+    );
   }
 
   isYearSelected(year: number): boolean {
@@ -272,9 +278,7 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
       const match = text.match(MONTH_VALUE_PATTERN);
       if (!match || Number(match[1]) === 0) return null;
       const value = new Date(Number(match[2]), Number(match[1]) - 1, 1);
-      return value.getMonth() === Number(match[1]) - 1 && !this.isOutOfRange(value)
-        ? value
-        : null;
+      return value.getMonth() === Number(match[1]) - 1 && !this.isOutOfRange(value) ? value : null;
     }
     const match = text.match(DATE_VALUE_PATTERN);
     if (!match) return null;

@@ -19,31 +19,31 @@ body {
 }
 
 .lab-shell__content article > h1 {
-  margin: 0 0 var(--orbit-ref-space-2);
+  margin: 0 0 var(--orbit-space-2);
   font-size: var(--orbit-font-size-display);
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-primary);
 }
 
 .lab-shell__content article > p:first-of-type {
-  margin: 0 0 var(--orbit-ref-space-6);
+  margin: 0 0 var(--orbit-space-6);
   color: var(--orbit-text-secondary);
   max-width: 48rem;
 }
 
-.lab-shell__content article section {
-  margin-bottom: var(--orbit-ref-space-6);
+.lab-shell__content article > section {
+  margin-bottom: var(--orbit-space-6);
 }
 
-.lab-shell__content article section h2 {
-  margin: 0 0 var(--orbit-ref-space-3);
+.lab-shell__content article > section > h2 {
+  margin: 0 0 var(--orbit-space-3);
   font-size: var(--orbit-font-size-subtitle);
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-primary);
 }
 
-.lab-shell__content article section h3 {
-  margin: var(--orbit-ref-space-4) 0 var(--orbit-ref-space-2);
+.lab-shell__content article > section > h3 {
+  margin: var(--orbit-space-4) 0 var(--orbit-space-2);
   font-size: var(--orbit-font-size-label);
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-secondary);
@@ -51,22 +51,22 @@ body {
   letter-spacing: 0.04em;
 }
 
-.lab-shell__content article section p {
-  margin: 0 0 var(--orbit-ref-space-2);
+.lab-shell__content article > section > p {
+  margin: 0 0 var(--orbit-space-2);
   color: var(--orbit-text-secondary);
   max-width: 42rem;
   line-height: 1.5;
 }
 
-.lab-shell__content article section ul {
+.lab-shell__content article > section > ul {
   margin: 0;
-  padding-left: var(--orbit-ref-space-5);
+  padding-left: var(--orbit-space-5);
   color: var(--orbit-text-secondary);
   line-height: 1.6;
 }
 
-.lab-shell__content article section ul li {
-  margin-bottom: var(--orbit-ref-space-2);
+.lab-shell__content article > section > ul li {
+  margin-bottom: var(--orbit-space-2);
 }
 
 .lab-shell__content article code {

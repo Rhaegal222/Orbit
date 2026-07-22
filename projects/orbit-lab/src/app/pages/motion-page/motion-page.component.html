@@ -9,7 +9,11 @@
     <h2>Token</h2>
     <div class="motion-page__tokens">
       @for (token of tokens; track token.name) {
-        <article class="motion-page__token">
+        <article
+          class="motion-page__token"
+          [style.--motion-token-duration]="token.duration"
+          [style.--motion-token-easing]="token.easing"
+        >
           <code>{{ token.name }}</code>
           <strong>{{ token.value }}</strong>
           <span>{{ token.usage }}</span>
@@ -27,6 +31,26 @@
           <span role="cell"><b>Enter</b>{{ pattern.enter }}</span>
           <span role="cell"><b>Exit</b>{{ pattern.exit }}</span>
           <code role="cell">{{ pattern.token }}</code>
+          <span class="motion-page__pattern-action" role="cell">
+            <span class="motion-page__pattern-preview" aria-hidden="true">
+              @for (run of patternRuns(pattern.area); track run) {
+                <span
+                  [class]="'motion-page__pattern-demo motion-page__pattern-demo--' + pattern.preview"
+                ></span>
+              }
+            </span>
+            <orbit-button
+              [label]="isPatternPlaying(pattern.area) ? 'Stop' : 'Riproduci'"
+              [ariaLabel]="
+                (isPatternPlaying(pattern.area) ? 'Ferma' : 'Riproduci') +
+                ' animazione ' +
+                pattern.area
+              "
+              variant="outline"
+              tone="neutral"
+              (clicked)="togglePattern(pattern.area)"
+            />
+          </span>
         </article>
       }
     </div>
@@ -72,7 +96,7 @@
     <h2>Espansione sezione</h2>
     <p>La sezione usa grid height e fade con durata base; in chiusura usa la curva accelerate.</p>
     <lab-example [code]="collapsibleSnippet">
-      <orbit-form-section title="Dettagli operativi" [collapsible]="true">
+      <orbit-form-section title="Dettagli operativi" collapsible>
         <p>Il contenuto resta nel DOM durante la transizione e conserva la relazione ARIA.</p>
       </orbit-form-section>
     </lab-example>

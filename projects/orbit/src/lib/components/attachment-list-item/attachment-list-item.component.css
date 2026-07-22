@@ -22,7 +22,7 @@
   width: 2rem;
   height: 2rem;
   border: 1px solid var(--orbit-border-subtle);
-  border-radius: calc(var(--orbit-radius-control) - var(--orbit-space-1));
+  border-radius: var(--orbit-radius-icon-surface);
   background: color-mix(in srgb, var(--orbit-action-primary-bg) 8%, var(--orbit-surface-default));
   color: var(--orbit-action-primary-bg);
 }

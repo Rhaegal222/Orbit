@@ -35,7 +35,7 @@
   height: var(--orbit-space-5);
   border: 2px solid var(--orbit-border-subtle);
   border-top-color: var(--orbit-action-primary-bg);
-  border-radius: var(--orbit-radius-sm);
+  border-radius: var(--orbit-radius-full);
   animation: orbit-modal-body-spin 0.6s linear infinite;
 }
 

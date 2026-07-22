@@ -129,8 +129,11 @@ surface, so consumers do not need size-specific responsive CSS.
 `--orbit-modal-footer-padding-block` maintain equal header/footer heights: 80px
 in spacious, 70px in comfortable, 60px in compact and 52px in dense density at
 text scale `1`.
-`--orbit-section-index-size` and `--orbit-section-divider` define the numbered
-section header without requiring consumer CSS.
+`--orbit-section-index-size`, `--orbit-section-divider`,
+`--orbit-section-index-bg`, `--orbit-section-index-fg` and
+`--orbit-section-index-border` define the numbered section header without
+requiring consumer CSS. The default index is a soft brand surface rather than a
+high-contrast ink badge, so it supports hierarchy without dominating the title.
 
 The operational refresh additionally exposes `--orbit-text-label`,
 `--orbit-text-tertiary`, `--orbit-text-placeholder`, `--orbit-radius-tile`,

@@ -18,7 +18,12 @@
   line-height: 1.2;
   letter-spacing: 0;
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard), transform var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard),
+    transform var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 /* ── Focus ── */
@@ -54,7 +59,11 @@
   --btn-border: var(--orbit-status-success);
   --btn-soft-bg: var(--orbit-status-success-subtle);
   --btn-soft-text: var(--orbit-status-success);
-  --btn-soft-border: color-mix(in srgb, var(--orbit-status-success) 28%, var(--orbit-surface-default));
+  --btn-soft-border: color-mix(
+    in srgb,
+    var(--orbit-status-success) 28%,
+    var(--orbit-surface-default)
+  );
 }
 
 /* ── Tone: danger ── */
@@ -65,7 +74,11 @@
   --btn-border: var(--orbit-status-danger);
   --btn-soft-bg: var(--orbit-status-danger-subtle);
   --btn-soft-text: var(--orbit-status-danger);
-  --btn-soft-border: color-mix(in srgb, var(--orbit-status-danger) 28%, var(--orbit-surface-default));
+  --btn-soft-border: color-mix(
+    in srgb,
+    var(--orbit-status-danger) 28%,
+    var(--orbit-surface-default)
+  );
 }
 
 /* ── Tone: neutral ── */
@@ -95,7 +108,9 @@
   background: var(--btn-bg-hover);
   border-color: var(--btn-bg-hover);
 }
-.orbit-btn:active:not(:disabled) { transform: translateY(1px); }
+.orbit-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
 
 /* ── Variant: soft ── */
 .orbit-btn--soft {
@@ -144,7 +159,7 @@
   height: 1em;
   border: 2px solid currentColor;
   border-right-color: transparent;
-  border-radius: 50%;
+  border-radius: var(--orbit-radius-full);
   animation: orbit-spin 0.6s linear infinite;
 }
 

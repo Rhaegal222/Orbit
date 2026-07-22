@@ -284,7 +284,7 @@ export class LabShellComponent {
   protected readonly optionalIconDisplay = computed(() =>
     parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
   );
-  protected readonly searchControl = new FormControl('', { nonNullable: true });
+  readonly searchControl = new FormControl('', { nonNullable: true });
   protected readonly sidebarCollapsed = signal(false);
   private readonly document = inject(DOCUMENT);
 

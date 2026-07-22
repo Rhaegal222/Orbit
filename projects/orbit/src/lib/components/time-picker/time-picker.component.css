@@ -75,11 +75,10 @@
 :host(.orbit-tp--invalid) .orbit-tp__input {
   border-color: var(--orbit-status-danger);
 }
+/* Rendered through a CDK connected overlay (see time-picker.component.ts), so
+   it escapes any ancestor's overflow/stacking context instead of being
+   clipped. Positioning and z-index are owned by the overlay pane. */
 .orbit-tp__dropdown {
-  position: absolute;
-  z-index: var(--orbit-z-modal);
-  top: calc(100% + var(--orbit-space-1));
-  left: 0;
   width: 16rem;
   overflow: hidden;
   border: 1px solid var(--orbit-border-subtle);

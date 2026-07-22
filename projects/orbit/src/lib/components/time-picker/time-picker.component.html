@@ -30,7 +30,9 @@
     </svg>
   </button>
 
-  @if (isOpen()) {
+</div>
+
+<ng-template #dropdownTemplate>
     <div class="orbit-tp__dropdown" role="dialog" [attr.aria-label]="i18n.labels.timePicker">
       <div class="orbit-tp__segments">
         <div class="orbit-tp__segment">
@@ -108,5 +110,4 @@
         </div>
       }
     </div>
-  }
-</div>
+</ng-template>

@@ -31,7 +31,8 @@
 }
 
 .orbit-select-panel,
-.orbit-ac-panel {
+.orbit-ac-panel,
+.orbit-tp-panel {
   outline: 0;
 }
 

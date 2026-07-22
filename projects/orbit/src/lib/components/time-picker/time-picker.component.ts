@@ -3,15 +3,22 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   forwardRef,
   HostListener,
   inject,
   input,
+  OnDestroy,
   output,
   signal,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 const TIME_VALUE_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
@@ -43,9 +50,11 @@ export interface OrbitTimePickerQuickOption {
     '[class.orbit-tp--invalid]': 'invalid()',
   },
 })
-export class OrbitTimePickerComponent implements ControlValueAccessor {
+export class OrbitTimePickerComponent implements ControlValueAccessor, OnDestroy {
   readonly i18n = inject(ORBIT_I18N);
   private readonly hostElement = inject(ElementRef<HTMLElement>);
+  private readonly overlay = inject(Overlay);
+  private readonly vcr = inject(ViewContainerRef);
   inputId = input('');
   required = input(false, { transform: booleanAttribute });
   invalid = input(false, { transform: booleanAttribute });
@@ -53,14 +62,22 @@ export class OrbitTimePickerComponent implements ControlValueAccessor {
   quickOptions = input<readonly OrbitTimePickerQuickOption[]>([]);
   valueChange = output<OrbitTimeValue | null>();
 
+  @ViewChild('dropdownTemplate') private dropdownTemplate!: TemplateRef<unknown>;
+
   isOpen = signal(false);
   isDisabled = signal(false);
   selectedHours = signal<number | null>(null);
   selectedMinutes = signal<number | null>(null);
   inputText = signal('');
 
+  private overlayRef: OverlayRef | null = null;
   private onChange: (value: OrbitTimeValue | null) => void = () => undefined;
   private onTouched: () => void = () => undefined;
+
+  private readonly overlaySyncEffect = effect(() => {
+    if (this.isOpen() && !this.isDisabled()) this.attachOverlay();
+    else this.detachOverlay();
+  });
 
   readonly hours = Array.from({ length: 24 }, (_, i) => i);
 
@@ -158,7 +175,11 @@ export class OrbitTimePickerComponent implements ControlValueAccessor {
 
   @HostListener('document:pointerdown', ['$event'])
   onDocumentPointerDown(event: PointerEvent): void {
-    if (this.isOpen() && !this.hostElement.nativeElement.contains(event.target as Node)) {
+    if (!this.isOpen()) return;
+    const target = event.target as Node;
+    const insideTrigger = this.hostElement.nativeElement.contains(target);
+    const insideDropdown = this.overlayRef?.overlayElement.contains(target) ?? false;
+    if (!insideTrigger && !insideDropdown) {
       this.isOpen.set(false);
     }
   }
@@ -212,5 +233,39 @@ export class OrbitTimePickerComponent implements ControlValueAccessor {
   private maskInput(text: string): string {
     const digits = text.replace(/\D/g, '').slice(0, 4);
     return digits.length > 2 ? `${digits.slice(0, 2)}:${digits.slice(2)}` : digits;
+  }
+
+  ngOnDestroy(): void {
+    this.detachOverlay();
+  }
+
+  private attachOverlay(): void {
+    if (this.overlayRef) return;
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.hostElement)
+      .withFlexibleDimensions(false)
+      .withPush(false)
+      .withPositions([
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      panelClass: 'orbit-tp-panel',
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    });
+
+    const portal = new TemplatePortal(this.dropdownTemplate, this.vcr);
+    this.overlayRef.attach(portal);
+  }
+
+  private detachOverlay(): void {
+    if (!this.overlayRef) return;
+    this.overlayRef.detach();
+    this.overlayRef.dispose();
+    this.overlayRef = null;
   }
 }

@@ -1,9 +1,12 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { OrbitTimePickerComponent } from './time-picker.component';
 
 describe('OrbitTimePickerComponent', () => {
   let fixture: ComponentFixture<OrbitTimePickerComponent>;
   let component: OrbitTimePickerComponent;
+  let overlayContainer: OverlayContainer;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,6 +16,19 @@ describe('OrbitTimePickerComponent', () => {
     fixture = TestBed.createComponent(OrbitTimePickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    overlayContainer = TestBed.inject(OverlayContainer);
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
+  });
+
+  it('renders the dropdown in a CDK overlay (not clipped by an ancestor) when open', () => {
+    component.toggle();
+    fixture.detectChanges();
+    expect(
+      overlayContainer.getContainerElement().querySelector('.orbit-tp__dropdown'),
+    ).toBeTruthy();
   });
 
   it('creates', () => {

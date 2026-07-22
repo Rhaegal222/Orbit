@@ -1,0 +1,25 @@
+:host { display: block; overflow-x: auto; }
+.orbit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-sm);
+  color: var(--orbit-text-primary);
+}
+.orbit-table ::ng-deep th,
+.orbit-table ::ng-deep td {
+  padding: var(--orbit-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+.orbit-table ::ng-deep thead th {
+  color: var(--orbit-text-secondary);
+  font-weight: var(--orbit-font-weight-emphasis);
+  font-size: var(--orbit-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.orbit-table ::ng-deep .orbit-table-row--disabled {
+  color: var(--orbit-text-secondary);
+  opacity: 0.65;
+}

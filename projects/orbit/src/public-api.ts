@@ -31,6 +31,8 @@ export * from './lib/components/panel';
 export * from './lib/components/tab';
 export * from './lib/components/tab-panel';
 export * from './lib/components/tablist';
+export * from './lib/components/table';
+export * from './lib/components/table-column';
 export * from './lib/types';
 // Keep the barrel target explicit: the library compiler resolves public exports
 // with ESM semantics and does not consistently infer a directory `index.ts`.

@@ -60,9 +60,10 @@ jobs:
         if: github.ref_name == 'main'
         run: |
           set -euo pipefail
-          cloudflare_secret=$(docker exec vault vault kv get -format=json wyrmrest/shared/cloudflare)
-          export CLOUDFLARE_API_TOKEN=$(printf '%s' "$cloudflare_secret" | jq -r '.data.data.CLOUDFLARE_API_TOKEN')
-          python3 scripts/publish_dns.py
+          dns_script=/home/rhaegal222/Server/main/rhaegal222/wyrmrest/wyrmrest-cloudflare/scripts/cf_dns.py
+          dns_env=/home/rhaegal222/Server/main/rhaegal222/env/cloudflare-sync.env
+          python3 "$dns_script" --env-file "$dns_env" upsert orbit.wyrmrest.it CNAME wyrmrest.it --proxied --comment "Orbit UI foundations"
+          python3 "$dns_script" --env-file "$dns_env" upsert orbit.wyrmrest.com CNAME wyrmrest.com --proxied --comment "Orbit UI foundations"
 
       - name: Verify public website
         if: github.ref_name == 'main'

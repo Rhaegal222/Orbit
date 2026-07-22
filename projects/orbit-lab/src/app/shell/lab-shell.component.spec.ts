@@ -36,7 +36,9 @@ describe('LabShellComponent', () => {
 
     const overlay = overlayContainer.getContainerElement();
     expect(overlay.querySelector('.orbit-panel--left')).toBeTruthy();
-    expect(overlay.querySelectorAll('[data-lab-panel-nav-link]')).toHaveLength(CATALOG_ENTRIES.length);
+    expect(overlay.querySelectorAll('[data-lab-panel-nav-link]')).toHaveLength(
+      CATALOG_ENTRIES.length,
+    );
   });
 
   it('opens theme and density options in a right offcanvas', () => {
@@ -57,11 +59,15 @@ describe('LabShellComponent', () => {
     ) as HTMLElement;
     optionsButton.querySelector('button')?.click();
 
-    const themeSelect = overlayContainer
+    const themeInput = overlayContainer
       .getContainerElement()
-      .querySelector('.lab-catalog-panel__field select') as HTMLSelectElement;
-    themeSelect.value = 'dark';
-    themeSelect.dispatchEvent(new Event('change'));
+      .querySelector('.lab-catalog-panel__field orbit-select input') as HTMLInputElement;
+    themeInput.click();
+    fixture.detectChanges();
+    const darkOption = [
+      ...overlayContainer.getContainerElement().querySelectorAll('.orbit-select__option'),
+    ].find((option) => option.textContent?.includes('Regressione')) as HTMLButtonElement;
+    darkOption.click();
     fixture.detectChanges();
 
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');

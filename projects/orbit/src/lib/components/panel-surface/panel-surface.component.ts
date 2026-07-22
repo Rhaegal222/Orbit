@@ -13,11 +13,13 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     cdkTrapFocus
     cdkTrapFocusAutoCapture
     [attr.aria-labelledby]="labelledBy() || null"
+    [attr.aria-label]="labelledBy() ? null : ariaLabel() || null"
     [attr.aria-describedby]="describedBy() || null"
   ><ng-content /></section>`,
   styleUrl: './panel-surface.component.css',
 })
 export class OrbitPanelSurfaceComponent {
   labelledBy = input('');
+  ariaLabel = input('');
   describedBy = input('');
 }

@@ -10,6 +10,7 @@ import {
 import { OrbitIconComponent } from '../../icons/icon.component';
 import type { OrbitIconName } from '../../icons/icon-registry';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
+import { formatOrbitSidebarBadge } from './sidebar-navigation.util';
 
 export interface OrbitSidebarItem {
   id: string;
@@ -79,7 +80,6 @@ export class OrbitSidebarComponent {
   }
 
   displayBadge(badge: string | number | undefined): string {
-    if (typeof badge !== 'number') return badge ?? '';
-    return badge > 99 ? '99+' : String(badge);
+    return formatOrbitSidebarBadge(badge);
   }
 }

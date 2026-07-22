@@ -37,31 +37,3 @@
 .lab-catalog-panel__nav-link--blocked {
   color: var(--orbit-text-secondary);
 }
-
-.lab-catalog-panel__field {
-  display: grid;
-  gap: var(--orbit-field-stack-gap);
-  color: var(--orbit-text-label);
-  font-size: var(--orbit-font-size-label);
-  font-weight: var(--orbit-font-weight-emphasis);
-}
-
-.lab-catalog-panel__field select {
-  min-height: var(--orbit-control-height);
-  padding-inline: var(--orbit-control-padding-inline);
-  border: 1px solid var(--orbit-border-subtle);
-  border-radius: var(--orbit-radius-control);
-  background: var(--orbit-surface-raised);
-  color: var(--orbit-text-primary);
-  font: inherit;
-}
-
-.lab-catalog-panel__field select:hover {
-  border-color: var(--orbit-border-strong);
-}
-
-.lab-catalog-panel__field select:focus-visible {
-  outline: 2px solid var(--orbit-action-primary-bg);
-  outline-offset: 2px;
-  box-shadow: var(--orbit-focus-ring);
-}

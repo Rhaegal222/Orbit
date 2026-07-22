@@ -6,30 +6,51 @@
   </p>
 
   <section>
-    <h2>Avanzata</h2>
+    <h2>Varianti</h2>
     <lab-example [code]="snippet" fullWidth>
       <div class="sidebar-page__preview">
         <orbit-sidebar
           brand="Orbit"
           brandShort="O"
           brandIcon="layers"
-          ariaLabel="Navigazione di esempio"
-          [sections]="sections"
+          ariaLabel="Anteprima sidebar"
+          [sections]="currentSections()"
           [activeId]="activeId()"
           [collapsed]="collapsed()"
           (itemSelected)="select($event)"
-          (collapsedChange)="collapsed.set($event)"
+          (collapsedChange)="setCollapsed($event)"
         >
-          <div orbitSidebarFooter class="sidebar-page__footer">
-            <orbit-icon name="user" aria-hidden="true" />
-            <span>Account</span>
-          </div>
+          <span orbitSidebarFooter>Footer proiettato</span>
         </orbit-sidebar>
-        <div class="sidebar-page__content">
-          <strong>{{ activeId() }}</strong>
-          <span>Seleziona una voce o riduci la sidebar.</span>
-        </div>
+        <aside class="sidebar-page__variant-panel" aria-label="Selettore variante sidebar">
+          <div class="sidebar-page__variant-copy" aria-live="polite">
+            <span>Variante in anteprima</span>
+            <strong>{{ variantLabel() }}</strong>
+          </div>
+
+          <div class="sidebar-page__variant-actions" aria-label="Varianti sidebar">
+            <orbit-button
+              label="Espansa"
+              [variant]="variant() === 'expanded' ? 'solid' : 'outline'"
+              [tone]="variant() === 'expanded' ? 'primary' : 'neutral'"
+              (clicked)="setVariant('expanded')"
+            />
+            <orbit-button
+              label="Compatta"
+              [variant]="variant() === 'compact' ? 'solid' : 'outline'"
+              [tone]="variant() === 'compact' ? 'primary' : 'neutral'"
+              (clicked)="setVariant('compact')"
+            />
+            <orbit-button
+              label="Stati item"
+              [variant]="variant() === 'states' ? 'solid' : 'outline'"
+              [tone]="variant() === 'states' ? 'primary' : 'neutral'"
+              (clicked)="setVariant('states')"
+            />
+          </div>
+        </aside>
       </div>
     </lab-example>
   </section>
+
 </article>

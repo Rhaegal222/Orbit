@@ -6,15 +6,18 @@ import {
   signal,
   type WritableSignal,
 } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import {
   OrbitButtonComponent,
+  OrbitFormFieldComponent,
   OrbitModalBodyComponent,
   OrbitModalFooterComponent,
   OrbitModalHeaderComponent,
   ORBIT_PANEL_DATA,
   OrbitPanelService,
   OrbitPanelSurfaceComponent,
+  OrbitSelectComponent,
   type OrbitDensity,
 } from '@galileo/orbit';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
@@ -111,10 +114,13 @@ class LabCatalogNavigationPanelComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OrbitButtonComponent,
+    OrbitFormFieldComponent,
     OrbitModalBodyComponent,
     OrbitModalFooterComponent,
     OrbitModalHeaderComponent,
     OrbitPanelSurfaceComponent,
+    OrbitSelectComponent,
+    ReactiveFormsModule,
   ],
   host: {
     '[attr.data-orbit-theme]': 'data.theme() === "dark" ? "dark" : null',
@@ -132,40 +138,42 @@ class LabCatalogNavigationPanelComponent {
     />
     <orbit-modal-body>
       <div class="lab-catalog-panel__options">
-        <label class="lab-catalog-panel__field">
-          Tema
-          <select [value]="data.theme()" (change)="data.setTheme($any($event.target).value)">
-            <option value="default">Default</option>
-            <option value="dark">Regressione (dark)</option>
-          </select>
-        </label>
-        <label class="lab-catalog-panel__field">
-          Densità
-          <select [value]="data.density()" (change)="data.setDensity($any($event.target).value)">
-            <option value="spacious">Spaziosa</option>
-            <option value="comfortable">Comfortable</option>
-            <option value="compact">Compact</option>
-            <option value="dense">Densa</option>
-          </select>
-        </label>
-        <label class="lab-catalog-panel__field">
-          Scala testo
-          <select [value]="data.textScale()" (change)="data.setTextScale($any($event.target).value)">
-            <option value="0.85">85%</option>
-            <option value="1">100%</option>
-            <option value="1.1">110%</option>
-            <option value="1.25">125%</option>
-            <option value="1.5">150%</option>
-          </select>
-        </label>
-        <label class="lab-catalog-panel__field">
-          Font
-          <select [value]="data.font()" (change)="data.setFont($any($event.target).value)">
-            <option value="public-sans">Public Sans</option>
-            <option value="inter">Inter</option>
-            <option value="system">System UI</option>
-          </select>
-        </label>
+        <orbit-form-field class="lab-catalog-panel__field" label="Tema" inputId="lab-theme">
+          <orbit-select
+            inputId="lab-theme"
+            [options]="themeOptions"
+            [formControl]="themeControl"
+            (valueChange)="setTheme($event)"
+          />
+        </orbit-form-field>
+        <orbit-form-field class="lab-catalog-panel__field" label="Densità" inputId="lab-density">
+          <orbit-select
+            inputId="lab-density"
+            [options]="densityOptions"
+            [formControl]="densityControl"
+            (valueChange)="setDensity($event)"
+          />
+        </orbit-form-field>
+        <orbit-form-field
+          class="lab-catalog-panel__field"
+          label="Scala testo"
+          inputId="lab-text-scale"
+        >
+          <orbit-select
+            inputId="lab-text-scale"
+            [options]="textScaleOptions"
+            [formControl]="textScaleControl"
+            (valueChange)="setTextScale($event)"
+          />
+        </orbit-form-field>
+        <orbit-form-field class="lab-catalog-panel__field" label="Font" inputId="lab-font">
+          <orbit-select
+            inputId="lab-font"
+            [options]="fontOptions"
+            [formControl]="fontControl"
+            (valueChange)="setFont($event)"
+          />
+        </orbit-form-field>
       </div>
     </orbit-modal-body>
     <orbit-modal-footer>
@@ -179,11 +187,71 @@ class LabCatalogNavigationPanelComponent {
 })
 class LabCatalogOptionsPanelComponent {
   readonly data = inject(ORBIT_PANEL_DATA) as LabOptionsPanelData;
+  readonly themeControl = new FormControl<LabTheme>(this.data.theme(), { nonNullable: true });
+  readonly densityControl = new FormControl<LabDensity>(this.data.density(), { nonNullable: true });
+  readonly textScaleControl = new FormControl<LabTextScale>(this.data.textScale(), {
+    nonNullable: true,
+  });
+  readonly fontControl = new FormControl<LabFont>(this.data.font(), { nonNullable: true });
+  readonly themeOptions = [
+    { value: 'default', label: 'Default' },
+    { value: 'dark', label: 'Regressione (dark)' },
+  ];
+  readonly densityOptions = [
+    { value: 'spacious', label: 'Spaziosa' },
+    { value: 'comfortable', label: 'Comfortable' },
+    { value: 'compact', label: 'Compact' },
+    { value: 'dense', label: 'Densa' },
+  ];
+  readonly textScaleOptions = [
+    { value: '0.85', label: '85%' },
+    { value: '1', label: '100%' },
+    { value: '1.1', label: '110%' },
+    { value: '1.25', label: '125%' },
+    { value: '1.5', label: '150%' },
+  ];
+  readonly fontOptions = [
+    { value: 'public-sans', label: 'Public Sans' },
+    { value: 'inter', label: 'Inter' },
+    { value: 'system', label: 'System UI' },
+  ];
   readonly fontStack = computed(() => LAB_FONT_STACKS[this.data.font()]);
   readonly optionalIconDisplay = computed(() =>
     parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
   );
   private readonly panel = inject(OrbitPanelService);
+
+  setTheme(value: string | number | null): void {
+    if (value === 'default' || value === 'dark') this.data.setTheme(value);
+  }
+
+  setDensity(value: string | number | null): void {
+    if (
+      value === 'spacious' ||
+      value === 'comfortable' ||
+      value === 'compact' ||
+      value === 'dense'
+    ) {
+      this.data.setDensity(value);
+    }
+  }
+
+  setTextScale(value: string | number | null): void {
+    if (
+      value === '0.85' ||
+      value === '1' ||
+      value === '1.1' ||
+      value === '1.25' ||
+      value === '1.5'
+    ) {
+      this.data.setTextScale(value);
+    }
+  }
+
+  setFont(value: string | number | null): void {
+    if (value === 'public-sans' || value === 'inter' || value === 'system')
+      this.data.setFont(value);
+  }
 
   close(): void {
     this.panel.closeAll();
@@ -211,7 +279,9 @@ export class LabShellComponent {
   protected readonly textScale = signal<LabTextScale>('1');
   protected readonly font = signal<LabFont>('public-sans');
   protected readonly fontStack = computed(() => LAB_FONT_STACKS[this.font()]);
-  protected readonly optionalIconDisplay = computed(() => (parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid'));
+  protected readonly optionalIconDisplay = computed(() =>
+    parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
+  );
 
   setTheme(theme: LabTheme): void {
     this.theme.set(theme);

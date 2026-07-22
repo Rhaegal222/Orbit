@@ -1,5 +1,6 @@
 <aside
   class="orbit-sidebar"
+  [class.orbit-sidebar--embedded]="embedded()"
   [attr.aria-label]="ariaLabel() || null"
   (pointermove)="onPointerMove($event)"
   (pointerleave)="onPointerLeave()"
@@ -17,7 +18,7 @@
     </header>
   }
 
-  <nav class="orbit-sidebar__nav" [attr.aria-label]="ariaLabel() || null">
+  <nav class="orbit-sidebar__nav" [attr.aria-label]="ariaLabel() || brand() || null">
     @for (section of sections(); track section.id) {
       @if (section.label) {
         <h2 class="orbit-sidebar__section-label">{{ section.label }}</h2>

@@ -69,6 +69,16 @@ describe('OrbitSidebarComponent', () => {
 
     expect(component.toggleTop()).toBe(50);
   });
+
+  it('can hide the sidebar header and footer independently', () => {
+    fixture.componentRef.setInput('showHeader', false);
+    fixture.componentRef.setInput('showFooter', false);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.orbit-sidebar__header')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.orbit-sidebar__footer')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.orbit-sidebar__nav')).toBeTruthy();
+  });
 });
 
 describe('OrbitSidebarComponent header search projection', () => {

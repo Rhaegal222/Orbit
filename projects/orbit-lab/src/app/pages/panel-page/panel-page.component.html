@@ -25,6 +25,8 @@
           [sections]="currentSections()"
           [activeId]="activeId()"
           [collapsed]="collapsed()"
+          [showHeader]="showSidebarHeader()"
+          [showFooter]="showSidebarFooter()"
           (itemSelected)="select($event)"
           (collapsedChange)="setCollapsed($event)"
         >
@@ -55,32 +57,84 @@
             </orbit-selectable-tile>
           </div>
 
-          <div class="panel-page__sidebar-tile-group" aria-label="Stati item">
+          <div class="panel-page__sidebar-config-row" aria-label="Stati item">
             <orbit-selectable-tile
-              label="Stati item"
-              description="Attivo, badge e disabilitato"
-              [selected]="showItemStates()"
-              (selectedChange)="setShowItemStates($event)"
+              label="Attivo"
+              description="Elemento selezionato"
+              [selected]="showActiveItem()"
+              (selectedChange)="setItemState('active', $event)"
             >
               <orbit-icon orbitSelectableTileIcon name="check" aria-hidden="true" />
             </orbit-selectable-tile>
-          </div>
-
-          <div class="panel-page__sidebar-tile-group" aria-label="Aspetto brand">
             <orbit-selectable-tile
-              label="Con logo"
-              description="Icona del brand"
-              [selected]="showBrandIcon()"
-              (selectedChange)="selectBrandIcon(true)"
+              label="Con badge"
+              description="Contatore visibile"
+              [selected]="showBadgeItem()"
+              (selectedChange)="setItemState('badge', $event)"
             >
               <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
             </orbit-selectable-tile>
             <orbit-selectable-tile
-              label="Senza logo"
-              description="Iniziale del brand"
-              [selected]="!showBrandIcon()"
-              (selectedChange)="selectBrandIcon(false)"
-            />
+              label="Disabilitato"
+              description="Azione non disponibile"
+              [selected]="showDisabledItem()"
+              (selectedChange)="setItemState('disabled', $event)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="settings" aria-hidden="true" />
+            </orbit-selectable-tile>
+          </div>
+
+          <div class="panel-page__sidebar-config-row">
+            <div class="panel-page__sidebar-tile-group" aria-label="Aspetto brand">
+              <orbit-selectable-tile
+                label="Con logo"
+                description="Icona del brand"
+                [selected]="showBrandIcon()"
+                (selectedChange)="selectBrandIcon(true)"
+              >
+                <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+              </orbit-selectable-tile>
+              <orbit-selectable-tile
+                label="Senza logo"
+                description="Iniziale del brand"
+                [selected]="!showBrandIcon()"
+                (selectedChange)="selectBrandIcon(false)"
+              />
+            </div>
+
+            <div class="panel-page__sidebar-tile-group" aria-label="Header sidebar">
+              <orbit-selectable-tile
+                label="Con header"
+                description="Brand e ricerca"
+                [selected]="showSidebarHeader()"
+                (selectedChange)="setShowSidebarHeader(true)"
+              >
+                <orbit-icon orbitSelectableTileIcon name="window" aria-hidden="true" />
+              </orbit-selectable-tile>
+              <orbit-selectable-tile
+                label="Senza header"
+                description="Solo navigazione"
+                [selected]="!showSidebarHeader()"
+                (selectedChange)="setShowSidebarHeader(false)"
+              />
+            </div>
+
+            <div class="panel-page__sidebar-tile-group" aria-label="Footer sidebar">
+              <orbit-selectable-tile
+                label="Con footer"
+                description="Contenuto proiettato"
+                [selected]="showSidebarFooter()"
+                (selectedChange)="setShowSidebarFooter(true)"
+              >
+                <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+              </orbit-selectable-tile>
+              <orbit-selectable-tile
+                label="Senza footer"
+                description="Navigazione essenziale"
+                [selected]="!showSidebarFooter()"
+                (selectedChange)="setShowSidebarFooter(false)"
+              />
+            </div>
           </div>
         </aside>
       </div>

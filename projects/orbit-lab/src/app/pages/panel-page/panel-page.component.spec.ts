@@ -26,7 +26,13 @@ describe('PanelPageComponent', () => {
     const preview = fixture.nativeElement.querySelector('.panel-page__sidebar-preview');
 
     expect(preview.querySelector('orbit-sidebar')).toBeTruthy();
-    expect(preview.querySelectorAll('orbit-selectable-tile').length).toBe(5);
+    expect(preview.querySelectorAll('orbit-selectable-tile').length).toBe(11);
+    expect(preview.textContent).toContain('Con badge');
+    expect(preview.textContent).toContain('Disabilitato');
+    expect(preview.textContent).toContain('Con header');
+    expect(preview.textContent).toContain('Senza header');
+    expect(preview.textContent).toContain('Con footer');
+    expect(preview.textContent).toContain('Senza footer');
   });
 
   it('opens the offcanvas panel on the overlay when "Apri da destra" is clicked', () => {

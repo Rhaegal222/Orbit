@@ -46,6 +46,10 @@ export class OrbitSidebarComponent {
   activeId = input<string | null>(null);
   collapsed = input(false, { transform: booleanAttribute });
   collapsible = input(true, { transform: booleanAttribute });
+  /** Shows the brand and projected search chrome above the navigation. */
+  showHeader = input(true, { transform: booleanAttribute });
+  /** Shows the projected footer chrome below the navigation. */
+  showFooter = input(true, { transform: booleanAttribute });
   embedded = input(false, { transform: booleanAttribute });
   readonly toggleTop = signal(50);
   itemSelected = output<OrbitSidebarItem>();

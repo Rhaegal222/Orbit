@@ -96,13 +96,38 @@ export class PanelPageComponent {
   protected readonly sections = SIDEBAR_SECTIONS;
   protected readonly stateSections = SIDEBAR_STATE_SECTIONS;
   protected readonly railVariant = signal<'expanded' | 'compact'>('expanded');
-  protected readonly showItemStates = signal(false);
+  protected readonly showActiveItem = signal(false);
+  protected readonly showBadgeItem = signal(false);
+  protected readonly showDisabledItem = signal(false);
   protected readonly showBrandIcon = signal(false);
+  protected readonly showSidebarHeader = signal(true);
+  protected readonly showSidebarFooter = signal(true);
   protected readonly activeId = signal('overview');
   protected readonly collapsed = signal(false);
-  protected readonly currentSections = computed(() =>
-    this.showItemStates() ? this.stateSections : this.sections,
+  protected readonly showItemStates = computed(
+    () => this.showActiveItem() || this.showBadgeItem() || this.showDisabledItem(),
   );
+  protected readonly currentSections = computed(() => {
+    if (!this.showItemStates()) {
+      return this.sections;
+    }
+
+    const stateSection = this.stateSections[0];
+    if (!stateSection) {
+      return this.sections;
+    }
+
+    return [
+      {
+        ...stateSection,
+        items: stateSection.items.filter((item) =>
+          (item.id === 'active' && this.showActiveItem()) ||
+          (item.id === 'badge' && this.showBadgeItem()) ||
+          (item.id === 'disabled' && this.showDisabledItem()),
+        ),
+      },
+    ];
+  });
   protected readonly variantLabel = computed(() => {
     const railLabel = this.collapsed() ? 'Rail compatta' : 'Rail espansa';
     return this.showItemStates() ? `Stati item · ${railLabel.toLowerCase()}` : railLabel;
@@ -121,6 +146,8 @@ export class PanelPageComponent {
   [sections]="showItemStates ? stateSections : sections"
   [activeId]="activeId"
   [collapsed]="collapsed"
+  [showHeader]="showHeader"
+  [showFooter]="showFooter"
   (itemSelected)="activeId = $event.id"
   (collapsedChange)="collapsed = $event"
 >
@@ -144,13 +171,31 @@ export class PanelPageComponent {
     }
   }
 
-  setShowItemStates(show: boolean): void {
-    this.showItemStates.set(show);
-    this.activeId.set(show ? 'active' : this.collapsed() ? 'collections' : 'overview');
+  setItemState(state: 'active' | 'badge' | 'disabled', show: boolean): void {
+    const stateVisibility = {
+      active: this.showActiveItem,
+      badge: this.showBadgeItem,
+      disabled: this.showDisabledItem,
+    };
+    stateVisibility[state].set(show);
+
+    const visibleItems = this.currentSections()[0]?.items ?? [];
+    const firstAvailableItem = visibleItems.find((item) => !item.disabled) ?? visibleItems[0];
+    this.activeId.set(
+      firstAvailableItem?.id ?? (this.collapsed() ? 'collections' : 'overview'),
+    );
   }
 
   selectBrandIcon(showIcon: boolean): void {
     this.showBrandIcon.set(showIcon);
+  }
+
+  setShowSidebarHeader(show: boolean): void {
+    this.showSidebarHeader.set(show);
+  }
+
+  setShowSidebarFooter(show: boolean): void {
+    this.showSidebarFooter.set(show);
   }
 
   setCollapsed(collapsed: boolean): void {

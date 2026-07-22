@@ -52,6 +52,7 @@ All notable changes to Galileo Orbit are documented here.
 - Added `orbit-icon`, with a four-icon starter registry and optional scale-sensitive rendering.
 - `orbit-text-input` now provides opt-in semantic leading icons for search, telephone and URL fields; currency symbols use the same leading-adornment surface as icons.
 - Populated search inputs now expose a keyboard-accessible trailing clear action; `ORBIT_I18N` adds the `clearSearch` label.
+- `orbit-sidebar` now exposes `showHeader` and `showFooter` to omit its optional chrome while retaining navigation.
 - Striped tables now use the dedicated `--orbit-table-stripe-bg` token, improving alternate-row recognition in the light theme while preserving dark-theme contrast.
 - Added selected-tile pop-in and attachment-list-item hover feedback.
 - `orbit-code-block` can hide its built-in actions when a composite owns the source controls.

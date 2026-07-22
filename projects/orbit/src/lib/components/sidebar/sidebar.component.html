@@ -4,7 +4,7 @@
   [attr.aria-label]="ariaLabel() || null"
   (pointermove)="onPointerMove($event)"
 >
-  @if (!embedded()) {
+  @if (!embedded() && showHeader()) {
     <header class="orbit-sidebar__header">
       <div class="orbit-sidebar__header-brand">
         <span class="orbit-sidebar__brand-mark" aria-hidden="true">
@@ -58,7 +58,7 @@
     }
   </nav>
 
-  @if (!embedded()) {
+  @if (!embedded() && showFooter()) {
     <footer class="orbit-sidebar__footer">
       <ng-content select="[orbitSidebarFooter]" />
     </footer>

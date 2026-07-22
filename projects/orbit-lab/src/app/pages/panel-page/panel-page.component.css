@@ -1,6 +1,7 @@
 .panel-page__sidebar-preview {
-  display: flex;
-  min-height: 30rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  block-size: 42rem;
   overflow: hidden;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-surface);
@@ -8,18 +9,18 @@
 }
 
 .panel-page__sidebar-preview orbit-sidebar {
-  align-self: stretch;
-  flex: 0 0 auto;
+  block-size: 100%;
+  min-block-size: 0;
 }
 
 .panel-page__sidebar-variant-panel {
   display: grid;
-  flex: 1 1 auto;
-  place-content: center;
+  align-content: start;
   justify-items: center;
   gap: var(--orbit-space-5);
   min-width: 0;
   padding: var(--orbit-space-6);
+  overflow-y: auto;
   text-align: center;
 }
 
@@ -42,8 +43,20 @@
 
 .panel-page__sidebar-tile-group {
   display: grid;
-  width: min(100%, 24rem);
+  width: min(100%, 14rem);
   gap: var(--orbit-space-2);
+}
+
+.panel-page__sidebar-config-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: center;
+  width: min(100%, calc(42rem + (var(--orbit-space-2) * 2)));
+  gap: var(--orbit-space-2);
+}
+
+.panel-page__sidebar-config-row .panel-page__sidebar-tile-group {
+  width: 100%;
 }
 
 .panel-page__sidebar-tile-group orbit-selectable-tile {
@@ -52,10 +65,21 @@
 
 @media (max-width: 42rem) {
   .panel-page__sidebar-preview {
-    min-height: 38rem;
+    grid-template-columns: 1fr;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .panel-page__sidebar-preview orbit-sidebar {
+    block-size: 30rem;
   }
 
   .panel-page__sidebar-variant-panel {
     padding: var(--orbit-space-4);
+    overflow-y: visible;
+  }
+
+  .panel-page__sidebar-config-row {
+    grid-template-columns: minmax(0, 14rem);
   }
 }

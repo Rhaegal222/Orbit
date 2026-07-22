@@ -38,10 +38,15 @@
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
+  justify-content: center;
   gap: var(--orbit-space-2);
   min-height: var(--orbit-sidebar-header-height);
   padding: var(--orbit-space-3);
   border-bottom: 1px solid var(--orbit-sidebar-border);
+}
+
+.orbit-sidebar__header-search:empty {
+  display: none;
 }
 
 .orbit-sidebar__header-brand {

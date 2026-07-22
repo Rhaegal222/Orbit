@@ -2,6 +2,7 @@
   class="orbit-sidebar"
   [class.orbit-sidebar--embedded]="embedded()"
   [attr.aria-label]="ariaLabel() || null"
+  (pointermove)="onPointerMove($event)"
 >
   @if (!embedded() && showHeader()) {
     <header class="orbit-sidebar__header">
@@ -13,7 +14,9 @@
             {{ brandShort() || brand().slice(0, 1) }}
           }
         </span>
-        <span class="orbit-sidebar__brand">{{ brand() }}</span>
+        @if (brand()) {
+          <span class="orbit-sidebar__brand">{{ brand() }}</span>
+        }
       </div>
       <div class="orbit-sidebar__header-search">
         <ng-content select="[orbitSidebarSearch]" />
@@ -67,6 +70,7 @@
     <button
       type="button"
       class="orbit-sidebar__toggle"
+      [style.top.%]="toggleTop()"
       [attr.aria-label]="collapsed() ? i18n.labels.expandSidebar : i18n.labels.collapseSidebar"
       (click)="toggle()"
     >

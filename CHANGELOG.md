@@ -7,6 +7,7 @@ All notable changes to Galileo Orbit are documented here.
 ### Added
 
 - Initial package metadata, publication pipeline and portable design tokens.
+- Added `orbit-panel-surface`/`orbit-panel` (offcanvas + sidebar) via a new `OrbitPanelService`, `orbit-tab`/`orbit-tab-panel`/`orbit-tablist`, and `orbit-table`/`orbit-table-column`/`orbitTableRow`.
 - Public theming contract with semantic CSS tokens and comfortable/compact density.
 - `orbit-form-section` can now collapse through an accessible native button.
 - Component token alignment for form controls, pill switch and badge; added `--orbit-radius-full` and badge foreground tokens.

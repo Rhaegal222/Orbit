@@ -1,6 +1,13 @@
 <header class="lab-shell__header">
   <div class="lab-shell__header-actions lab-shell__header-actions--start">
-    <orbit-button label="Navigazione" variant="outline" tone="neutral" (clicked)="openNavigation()" />
+    <orbit-text-input
+      type="search"
+      inputId="lab-catalog-search"
+      placeholder="Cerca sezione…"
+      showLeadingIcon
+      leadingIconName="search"
+      [formControl]="searchControl"
+    />
   </div>
 
   <div class="lab-shell__brand" aria-label="Orbit Lab">
@@ -23,6 +30,14 @@
   [style.--orbit-optional-icon-display]="optionalIconDisplay()"
   [style.--orbit-font-sans]="fontStack()"
 >
+  <orbit-sidebar
+    ariaLabel="Catalogo tecnico"
+    [sections]="sidebarSections()"
+    [activeId]="activeSidebarId()"
+    [collapsed]="sidebarCollapsed()"
+    (itemSelected)="onSidebarItemSelected($event)"
+    (collapsedChange)="onSidebarCollapsedChange($event)"
+  />
   <main class="lab-shell__content">
     <router-outlet />
   </main>

@@ -44,6 +44,12 @@ npm run check
 
 `check` verifies the package contents with `npm pack --dry-run`. See [the contribution guide](CONTRIBUTING.md) and [the release guide](docs/PUBLISHING.md).
 
+## Website
+
+`orbit.wyrmrest.it` is the public home of Orbit and uses the package token stylesheet directly. It contains the overview, the token reference at `/lab/`, and composition examples at `/studio/`.
+
+The static site is served by the repository's Nginx container. Traefik remains disabled by default; production enables it through `TRAEFIK_ENABLE=true` after DNS and the protected promotion flow are complete.
+
 ## Compatibility policy
 
 The package follows semantic versioning. Component APIs and token names are public contracts; breaking changes require a major version and an upgrade note.

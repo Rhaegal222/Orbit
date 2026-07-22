@@ -31,6 +31,14 @@
   grid-column: span 12;
 }
 
+:host(.orbit-form-grid--7-5) ::ng-deep [primary] {
+  grid-column: span 7;
+}
+
+:host(.orbit-form-grid--7-5) ::ng-deep [secondary] {
+  grid-column: span 5;
+}
+
 @media (min-width: 36rem) {
   :host ::ng-deep .orbit-form-grid__item {
     grid-column: span var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12));

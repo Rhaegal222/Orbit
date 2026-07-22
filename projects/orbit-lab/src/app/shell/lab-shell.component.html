@@ -63,9 +63,7 @@
   [attr.data-orbit-density]="density() === 'compact' ? 'compact' : null"
   [attr.data-orbit-text-scale]="textScale()"
   [style.--orbit-text-scale]="textScale()"
-  [style.--orbit-optional-icon-display]="
-    textScale() === '1.25' || textScale() === '1.5' ? 'none' : 'grid'
-  "
+  [style.--orbit-optional-icon-display]="optionalIconDisplay()"
   [style.--orbit-font-sans]="fontStack()"
 >
   <nav class="lab-shell__nav" aria-label="Catalogo Orbit">

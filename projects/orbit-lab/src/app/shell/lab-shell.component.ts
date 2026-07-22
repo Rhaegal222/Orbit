@@ -23,7 +23,7 @@ const LAB_FONT_STACKS: Record<LabFont, string> = {
   host: {
     '[attr.data-orbit-text-scale]': 'textScale()',
     '[style.--orbit-text-scale]': 'textScale()',
-    '[style.--orbit-optional-icon-display]': "textScale() === '1.25' || textScale() === '1.5' ? 'none' : 'grid'",
+    '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
     '[style.--orbit-font-sans]': 'fontStack()',
   },
 })
@@ -34,6 +34,7 @@ export class LabShellComponent {
   protected readonly textScale = signal<LabTextScale>('1');
   protected readonly font = signal<LabFont>('public-sans');
   protected readonly fontStack = computed(() => LAB_FONT_STACKS[this.font()]);
+  protected readonly optionalIconDisplay = computed(() => (parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid'));
 
   setTheme(theme: LabTheme): void {
     this.theme.set(theme);

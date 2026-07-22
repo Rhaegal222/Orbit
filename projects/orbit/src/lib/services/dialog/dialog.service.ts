@@ -53,6 +53,7 @@ export class OrbitDialogService {
       }),
     );
     const componentRef = overlayRef.attach(portal);
+    componentRef.changeDetectorRef.detectChanges();
 
     this.openDialogs.push(overlayRef);
 

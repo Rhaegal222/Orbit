@@ -85,4 +85,19 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/motion-page/motion-page.component').then((m) => m.MotionPageComponent),
   },
+  {
+    path: 'dialog',
+    loadComponent: () =>
+      import('./pages/dialog-page/dialog-page.component').then((m) => m.DialogPageComponent),
+  },
+  {
+    path: 'popover',
+    loadComponent: () =>
+      import('./pages/popover-page/popover-page.component').then((m) => m.PopoverPageComponent),
+  },
+  {
+    path: 'tooltip',
+    loadComponent: () =>
+      import('./pages/tooltip-page/tooltip-page.component').then((m) => m.TooltipPageComponent),
+  },
 ];

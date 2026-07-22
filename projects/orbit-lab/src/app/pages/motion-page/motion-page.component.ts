@@ -18,7 +18,7 @@ export class MotionPageComponent {
 
   protected readonly tileSelected = signal(false);
 
-  protected readonly buttonSnippet = '<orbit-button variant="solid">Passa il mouse</orbit-button>';
+  protected readonly buttonSnippet = '<orbit-button variant="solid" label="Passa il mouse" />';
   protected readonly tileSnippet =
     '<orbit-selectable-tile label="Seleziona" [selected]="selected" (selectedChange)="selected = $event" />';
 

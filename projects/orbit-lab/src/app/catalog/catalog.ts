@@ -14,4 +14,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'attachments', label: 'Attachments', status: 'verified' },
   { slug: 'pickers', label: 'Pickers', status: 'verified' },
   { slug: 'motion', label: 'Animazioni', status: 'verified' },
+  { slug: 'dialog', label: 'Dialog', status: 'verified' },
+  { slug: 'popover', label: 'Popover', status: 'verified' },
+  { slug: 'tooltip', label: 'Tooltip', status: 'verified' },
 ];

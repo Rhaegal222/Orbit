@@ -1,0 +1,18 @@
+<article>
+  <h1>Dialog</h1>
+  <p>
+    <code>OrbitDialogService</code> apre qualsiasi componente su un overlay CDK centrato, con
+    backdrop e chiusura su Escape. <code>orbit-confirm-dialog</code> è il contenuto di conferma
+    generico pronto all'uso.
+  </p>
+
+  <section>
+    <h2>Conferma distruttiva</h2>
+    <lab-example [code]="snippet">
+      <orbit-button variant="solid" tone="danger" label="Elimina allegato…" (clicked)="openConfirm()" />
+    </lab-example>
+    @if (lastResult()) {
+      <p>Ultimo esito: <strong>{{ lastResult() }}</strong></p>
+    }
+  </section>
+</article>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { provideRouter } from '@angular/router';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { provideRouter, Router } from '@angular/router';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LabShellComponent } from './lab-shell.component';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
 
@@ -12,7 +12,7 @@ describe('LabShellComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LabShellComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([{ path: 'badge', children: [] }])],
     }).compileComponents();
     fixture = TestBed.createComponent(LabShellComponent);
     fixture.detectChanges();
@@ -54,6 +54,15 @@ describe('LabShellComponent', () => {
 
     const items = fixture.nativeElement.querySelectorAll('orbit-sidebar button.orbit-sidebar__item');
     expect(items.length).toBe(0);
+  });
+
+  it('navigates to the selected catalog entry route', () => {
+    const router = TestBed.inject(Router);
+    const navigateSpy = vi.spyOn(router, 'navigate');
+
+    fixture.componentInstance.onSidebarItemSelected({ id: 'badge', label: 'Badge' });
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/', 'badge']);
   });
 
   it('opens theme and density options in a right offcanvas', () => {

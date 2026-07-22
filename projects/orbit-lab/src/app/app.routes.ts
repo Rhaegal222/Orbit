@@ -80,4 +80,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/pickers-page/pickers-page.component').then((m) => m.PickersPageComponent),
   },
+  {
+    path: 'motion',
+    loadComponent: () =>
+      import('./pages/motion-page/motion-page.component').then((m) => m.MotionPageComponent),
+  },
 ];

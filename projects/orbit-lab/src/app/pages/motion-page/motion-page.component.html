@@ -1,0 +1,43 @@
+<article>
+  <h1>Animazioni</h1>
+  <p>
+    Orbit non ha ancora un sistema di transizioni enter/exit (modal, overlay, liste). Questa
+    pagina documenta i motion token già esistenti e le transizioni che li usano oggi, come punto
+    di partenza per costruirlo.
+  </p>
+
+  <section>
+    <h2>Token</h2>
+    @for (token of tokens; track token.name) {
+      <p>
+        <code>{{ token.name }}</code> — <strong>{{ token.value }}</strong
+        ><br />
+        {{ token.usage }}
+      </p>
+    }
+  </section>
+
+  <section>
+    <h2>Transizione di hover (button)</h2>
+    <p>Usa <code>--orbit-motion-fast</code> e <code>--orbit-easing-standard</code> su sfondo, bordo e ombra.</p>
+    <lab-example [code]="buttonSnippet">
+      <orbit-button variant="solid">Passa il mouse</orbit-button>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Animazione di selezione (selectable-tile)</h2>
+    <p>
+      L'indicatore di selezione entra con un <code>@keyframes</code> (<code>orbit-pop</code>) che usa
+      <code>--orbit-easing-standard</code>; lo sfondo e il bordo della tile cambiano invece senza
+      transizione.
+    </p>
+    <lab-example [code]="tileSnippet">
+      <orbit-selectable-tile
+        label="Seleziona"
+        [selected]="tileSelected()"
+        (selectedChange)="toggleTile()"
+      />
+    </lab-example>
+  </section>
+</article>

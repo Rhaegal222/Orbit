@@ -1,7 +1,3 @@
-<header class="lab-shell__header">
-  <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
-</header>
-
 <div
   class="lab-shell__body"
   data-lab-theme-container
@@ -31,7 +27,13 @@
       [formControl]="searchControl"
     />
   </orbit-sidebar>
-  <main class="lab-shell__content">
-    <router-outlet />
-  </main>
+
+  <div class="lab-shell__main">
+    <header class="lab-shell__header">
+      <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
+    </header>
+    <main class="lab-shell__content">
+      <router-outlet />
+    </main>
+  </div>
 </div>

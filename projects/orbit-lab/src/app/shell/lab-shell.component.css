@@ -10,25 +10,34 @@
   background: linear-gradient(135deg, var(--orbit-surface-canvas), var(--orbit-surface-subtle));
 }
 
+.lab-shell__body {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  font-size: var(--orbit-font-size-body);
+  line-height: var(--orbit-line-height-body);
+}
+
+.lab-shell__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
 .lab-shell__header {
   display: flex;
+  flex: 0 0 auto;
   justify-content: flex-end;
   align-items: center;
   min-height: calc(var(--orbit-control-height) + var(--orbit-space-3));
   padding: var(--orbit-space-2) var(--orbit-space-4);
   border-bottom: 1px solid var(--orbit-border-subtle);
   background: var(--orbit-surface-default);
-}
-
-.lab-shell__body {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  flex: 1 0 auto;
-  min-width: 0;
-  min-height: 0;
-  font-size: var(--orbit-font-size-body);
-  line-height: var(--orbit-line-height-body);
 }
 
 .lab-shell__content {

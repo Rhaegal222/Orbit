@@ -16,8 +16,10 @@
     (blur)="onBlur()"
     (keydown)="onKeydown($event)"
   />
+</div>
 
-  @if (isOpen() && !isDisabled() && filteredOptions().length > 0) {
+<ng-template #menuTemplate>
+  @if (filteredOptions().length > 0) {
     <div class="orbit-ac__menu" role="listbox">
       @for (option of filteredOptions(); track option.value; let i = $index) {
         <div
@@ -33,11 +35,9 @@
         </div>
       }
     </div>
-  }
-
-  @if (isOpen() && !isDisabled() && filteredOptions().length === 0 && query()) {
+  } @else if (query()) {
     <div class="orbit-ac__menu">
       <div class="orbit-ac__empty">{{ i18n.labels.noResults }}</div>
     </div>
   }
-</div>
+</ng-template>

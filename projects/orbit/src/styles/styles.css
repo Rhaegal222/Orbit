@@ -30,7 +30,8 @@
   transform-origin: top center;
 }
 
-.orbit-select-panel {
+.orbit-select-panel,
+.orbit-ac-panel {
   outline: 0;
 }
 

@@ -1,9 +1,12 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { OrbitAutocompleteComponent } from './autocomplete.component';
 
 describe('OrbitAutocompleteComponent', () => {
   let fixture: ComponentFixture<OrbitAutocompleteComponent>;
   let component: OrbitAutocompleteComponent;
+  let overlayContainer: OverlayContainer;
 
   const OPTIONS = [
     { label: 'Roma', value: 'RM' },
@@ -20,6 +23,11 @@ describe('OrbitAutocompleteComponent', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('options', OPTIONS);
     fixture.detectChanges();
+    overlayContainer = TestBed.inject(OverlayContainer);
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
   it('creates', () => {
@@ -71,5 +79,20 @@ describe('OrbitAutocompleteComponent', () => {
   it('sets query on input', () => {
     component.onInput({ target: { value: 'nap' } } as any);
     expect(component.inputText()).toBe('nap');
+  });
+
+  it('renders matching options in a CDK overlay (not clipped by an ancestor) when open', () => {
+    component.isOpen.set(true);
+    component.query.set('roma');
+    fixture.detectChanges();
+    const items = overlayContainer.getContainerElement().querySelectorAll('.orbit-ac__option');
+    expect(items.length).toBe(1);
+    expect(items[0].textContent?.trim()).toBe('Roma');
+  });
+
+  it('renders nothing in the overlay when closed', () => {
+    component.isOpen.set(false);
+    fixture.detectChanges();
+    expect(overlayContainer.getContainerElement().querySelector('.orbit-ac__menu')).toBeNull();
   });
 });

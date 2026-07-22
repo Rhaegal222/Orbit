@@ -47,15 +47,15 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--orbit-status-danger) 12%, transparent);
 }
 
-/* ── Menu ── */
+/* ── Menu ──
+   Rendered through a CDK connected overlay (see autocomplete.component.ts), so
+   it escapes any ancestor's overflow/stacking context instead of being
+   clipped. Positioning, width and z-index are owned by the overlay pane. */
 .orbit-ac__menu {
-  position: absolute;
-  z-index: var(--orbit-z-modal, 1050);
-  top: calc(100% + 0.25rem);
-  left: 0;
-  right: 0;
+  width: 100%;
   max-height: 15rem;
   padding: 0.25rem;
+  box-sizing: border-box;
   overflow-y: auto;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);

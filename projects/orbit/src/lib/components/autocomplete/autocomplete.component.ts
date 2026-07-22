@@ -11,17 +11,13 @@ import {
   OnDestroy,
   output,
   signal,
+  TemplateRef,
+  ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {
-  ConnectionPositionPair,
-  FlexibleConnectedPositionStrategy,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { take } from 'rxjs';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export type OrbitAutocompleteValue = string | number;
@@ -53,7 +49,7 @@ export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestr
   readonly i18n = inject(ORBIT_I18N);
   private overlay = inject(Overlay);
   private vcr = inject(ViewContainerRef);
-  private hostRef = inject(ElementRef);
+  private hostRef = inject(ElementRef<HTMLElement>);
 
   options = input<OrbitAutocompleteOption[]>([]);
   placeholder = input('');
@@ -64,6 +60,8 @@ export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestr
 
   optionSelected = output<OrbitAutocompleteOption>();
   searchChange = output<string>();
+
+  @ViewChild('menuTemplate') private menuTemplate!: TemplateRef<unknown>;
 
   inputText = signal('');
   activeIndex = signal(-1);
@@ -84,9 +82,16 @@ export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestr
     );
   });
 
-  private closeEffect = effect(() => {
-    const open = this.isOpen();
-    if (!open) this.detachOverlay();
+  private readonly hasMenuContent = computed(
+    () => this.filteredOptions().length > 0 || (this.filteredOptions().length === 0 && !!this.query()),
+  );
+
+  private overlaySyncEffect = effect(() => {
+    if (this.isOpen() && !this.isDisabled() && this.hasMenuContent()) {
+      this.attachOverlay();
+    } else {
+      this.detachOverlay();
+    }
   });
 
   writeValue(val: OrbitAutocompleteValue | null): void {
@@ -184,11 +189,35 @@ export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestr
     }
   }
 
+  private attachOverlay(): void {
+    if (this.overlayRef) return;
+
+    const triggerWidth = this.hostRef.nativeElement.getBoundingClientRect().width;
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.hostRef)
+      .withFlexibleDimensions(false)
+      .withPush(false)
+      .withPositions([
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      width: triggerWidth,
+      panelClass: 'orbit-ac-panel',
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    });
+
+    const portal = new TemplatePortal(this.menuTemplate, this.vcr);
+    this.overlayRef.attach(portal);
+  }
+
   private detachOverlay(): void {
-    if (this.overlayRef) {
-      this.overlayRef.detach();
-      this.overlayRef.dispose();
-      this.overlayRef = null;
-    }
+    if (!this.overlayRef) return;
+    this.overlayRef.detach();
+    this.overlayRef.dispose();
+    this.overlayRef = null;
   }
 }

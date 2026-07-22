@@ -43,9 +43,18 @@ export class SelectPageComponent {
   protected readonly searchableSnippet =
     '<orbit-select inputId="periodicita" [options]="periodicita" [searchable]="true" [formControl]="periodicitaControl" />';
 
-  protected readonly statesSnippet = `<orbit-select inputId="periodicita-non-valida" [options]="periodicita" [invalid]="true" /> <!-- Stato non valido -->
+  protected readonly statesSnippet = `<orbit-form-field
+  label="Periodicità"
+  inputId="periodicita-non-valida"
+  error="Seleziona una periodicità"
+  reserveMessageSpace
+>
+  <orbit-select inputId="periodicita-non-valida" [options]="periodicita" [invalid]="true" />
+</orbit-form-field> <!-- Stato non valido con spazio riservato -->
 
-<orbit-select inputId="periodicita-disabilitata" [options]="periodicita" [formControl]="periodicitaControl" /> <!-- Stato disabilitato: gestito dal FormControl -->
+<orbit-form-field label="Campo disabilitato" inputId="periodicita-disabilitata" reserveMessageSpace>
+  <orbit-select inputId="periodicita-disabilitata" [options]="periodicita" [formControl]="periodicitaControl" />
+</orbit-form-field> <!-- Stato disabilitato: gestito dal FormControl -->
 // periodicitaControl = new FormControl({ value: 'monthly', disabled: true });`;
 
   protected readonly tileSnippet = `<orbit-selectable-tile

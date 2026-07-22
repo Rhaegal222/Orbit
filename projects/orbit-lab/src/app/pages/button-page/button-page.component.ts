@@ -19,7 +19,7 @@ export class ButtonPageComponent {
   ];
   protected readonly tones: OrbitButtonTone[] = ['primary', 'success', 'danger', 'neutral'];
   protected readonly usageSnippet =
-    '<orbit-button label="Salva" variant="solid" tone="primary" (clicked)="onSave()" />';
+    '<orbit-button label="Salva bozza" variant="solid" tone="primary" (clicked)="onSave()" />';
 
   protected readonly defaultSnippet =
     '<orbit-button label="Default" variant="solid" tone="primary" />';

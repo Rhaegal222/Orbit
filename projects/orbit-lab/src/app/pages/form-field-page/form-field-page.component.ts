@@ -11,7 +11,7 @@ import { LabExampleComponent } from '../../catalog/example-panel.component';
 })
 export class FormFieldPageComponent {
   protected readonly usageSnippet =
-    '<orbit-form-field label="Organizzazione" inputId="org" required>\n  <orbit-text-input inputId="org" />\n</orbit-form-field>';
+    '<orbit-form-field label="Ragione sociale" inputId="company-name" required>\n  <orbit-text-input inputId="company-name" />\n</orbit-form-field>';
 
   protected readonly hintSnippet =
     '<orbit-form-field label="Codice fiscale" inputId="cf" hint="16 caratteri alfanumerici">\n  <orbit-text-input inputId="cf" />\n</orbit-form-field>';

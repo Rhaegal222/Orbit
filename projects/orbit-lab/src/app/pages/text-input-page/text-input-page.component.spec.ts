@@ -25,6 +25,10 @@ describe('TextInputPageComponent', () => {
   it('marks the invalid example as invalid via the host class', () => {
     const el = fixture.nativeElement.querySelector('[data-example="invalid"] orbit-text-input');
     expect(el.classList.contains('orbit-input--invalid')).toBe(true);
+    expect(fixture.nativeElement.querySelector('[data-example="invalid"] .orbit-form-field__error')?.textContent).toContain(
+      'Inserisci un indirizzo email valido',
+    );
+    expect(fixture.nativeElement.querySelectorAll('.orbit-form-field__feedback--reserved').length).toBe(2);
   });
 
   it('disables the native input in the disabled example via a disabled FormControl', () => {

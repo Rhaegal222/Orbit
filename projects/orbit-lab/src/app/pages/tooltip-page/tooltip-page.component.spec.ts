@@ -31,6 +31,6 @@ describe('TooltipPageComponent', () => {
     fixture.detectChanges();
 
     const overlayEl = overlayContainer.getContainerElement();
-    expect(overlayEl.textContent).toContain('Testo del tooltip');
+    expect(overlayEl.textContent).toContain('Il codice SKU è visibile ai soli operatori.');
   });
 });

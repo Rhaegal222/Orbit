@@ -26,6 +26,7 @@ describe('PanelPageComponent', () => {
     const preview = fixture.nativeElement.querySelector('.panel-page__sidebar-preview');
 
     expect(preview.querySelector('orbit-sidebar')).toBeTruthy();
+    expect(preview.querySelector('orbit-slider')).toBeTruthy();
     expect(preview.querySelectorAll('orbit-selectable-tile').length).toBe(11);
     expect(preview.textContent).toContain('Con badge');
     expect(preview.textContent).toContain('Disabilitato');

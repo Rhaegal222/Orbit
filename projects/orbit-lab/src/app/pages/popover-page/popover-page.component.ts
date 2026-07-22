@@ -10,7 +10,7 @@ import { LabExampleComponent } from '../../catalog/example-panel.component';
   templateUrl: './popover-page.component.html',
 })
 export class PopoverPageComponent {
-  protected readonly snippet = `<orbit-popover content="Testo del popover" position="bottom">
-  <orbit-button label="Apri popover" />
+  protected readonly snippet = `<orbit-popover content="La disponibilità è aggiornata ogni 15 minuti." position="bottom">
+  <orbit-button label="Verifica disponibilità" />
 </orbit-popover>`;
 }

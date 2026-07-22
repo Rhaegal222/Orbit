@@ -19,7 +19,7 @@ export class SliderPageComponent {
   protected readonly steppedControl = new FormControl<number>(50, { nonNullable: true });
 
   protected readonly usageSnippet =
-    '<orbit-slider inputId="volume" ariaLabel="Volume" showValue [formControl]="volume" />';
+    '<orbit-slider inputId="notification-volume" ariaLabel="Volume della notifica" showValue [formControl]="notificationVolume" />';
 
   protected readonly disabledSnippet =
     '<orbit-slider inputId="volume" ariaLabel="Volume disabilitato" showValue [formControl]="volume" />\n// volume = new FormControl({ value: 30, disabled: true })';

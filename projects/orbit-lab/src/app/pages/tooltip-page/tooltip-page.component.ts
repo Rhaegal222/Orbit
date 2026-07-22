@@ -10,7 +10,7 @@ import { LabExampleComponent } from '../../catalog/example-panel.component';
   templateUrl: './tooltip-page.component.html',
 })
 export class TooltipPageComponent {
-  protected readonly snippet = `<button orbitTooltip="Testo del tooltip" orbitTooltipPosition="top">
-  Passa il mouse o naviga con Tab
+  protected readonly snippet = `<button orbitTooltip="Il codice SKU è visibile ai soli operatori." orbitTooltipPosition="top">
+  Informazioni sul codice SKU
 </button>`;
 }

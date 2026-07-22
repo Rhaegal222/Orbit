@@ -35,6 +35,14 @@ describe('OrbitFormFieldComponent', () => {
     expect(fixture.nativeElement.querySelector('.orbit-form-field__error')?.textContent?.trim()).toBe('Campo obbligatorio');
   });
 
+  it('can reserve feedback space before an error is present', () => {
+    fixture.componentRef.setInput('reserveMessageSpace', true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.orbit-form-field__feedback--reserved')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.orbit-form-field__error')).toBeNull();
+  });
+
   it('shows required asterisk', () => {
     fixture.componentRef.setInput('label', 'Email');
     fixture.componentRef.setInput('required', true);

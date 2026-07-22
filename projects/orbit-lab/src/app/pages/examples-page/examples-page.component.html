@@ -1,37 +1,47 @@
 <article>
-  <h1>Examples</h1>
-  <p>Composizioni realistiche del dominio Catalogo Prodotti &amp; Listini, costruite con Orbit.</p>
+  @if (selectedExample() !== 'landing') {
+    <h1>Examples</h1>
+    <p>
+      Composizioni realistiche del dominio Catalogo Prodotti &amp; Listini, costruite con Orbit.
+    </p>
+  }
 
-  <lab-example [fullWidth]="true">
-    <orbit-tablist
-      ariaLabel="Esempi del catalogo prodotti"
-      (selectedChange)="selectExample($event)"
-    >
-      <orbit-tab
-        value="portfolio"
-        label="Portafoglio catalogo"
-        [selected]="selectedExample() === 'portfolio'"
+  <lab-example [fullWidth]="true" [bare]="selectedExample() === 'landing'">
+    @if (selectedExample() !== 'landing') {
+      <orbit-tablist
+        ariaLabel="Esempi del catalogo prodotti"
+        (selectedChange)="selectExample($event)"
       >
-        <orbit-badge orbitTabBadge tone="primary" label="Tabella" />
-      </orbit-tab>
-      <orbit-tab
-        value="dossier"
-        label="Dossier prodotto"
-        [selected]="selectedExample() === 'dossier'"
-      >
-        <orbit-badge orbitTabBadge tone="info" label="Workspace" />
-      </orbit-tab>
-      <orbit-tab
-        value="quick-action"
-        label="Azione rapida"
-        [selected]="selectedExample() === 'quick-action'"
-      >
-        <orbit-badge orbitTabBadge tone="warning" label="Modale" />
-      </orbit-tab>
-      <orbit-tab value="landing" label="Landing partner" [selected]="selectedExample() === 'landing'">
-        <orbit-badge orbitTabBadge tone="success" label="Landing" />
-      </orbit-tab>
-    </orbit-tablist>
+        <orbit-tab
+          value="portfolio"
+          label="Portafoglio catalogo"
+          [selected]="selectedExample() === 'portfolio'"
+        >
+          <orbit-badge orbitTabBadge tone="primary" label="Tabella" />
+        </orbit-tab>
+        <orbit-tab
+          value="dossier"
+          label="Dossier prodotto"
+          [selected]="selectedExample() === 'dossier'"
+        >
+          <orbit-badge orbitTabBadge tone="info" label="Workspace" />
+        </orbit-tab>
+        <orbit-tab
+          value="quick-action"
+          label="Azione rapida"
+          [selected]="selectedExample() === 'quick-action'"
+        >
+          <orbit-badge orbitTabBadge tone="warning" label="Modale" />
+        </orbit-tab>
+        <orbit-tab
+          value="landing"
+          label="Landing partner"
+          [selected]="selectedExample() === 'landing'"
+        >
+          <orbit-badge orbitTabBadge tone="success" label="Landing" />
+        </orbit-tab>
+      </orbit-tablist>
+    }
 
     @switch (selectedExample()) {
       @case ('portfolio') {
@@ -424,18 +434,23 @@
               [activeId]="selectedLandingNav()"
               (itemSelected)="selectLandingNav($event)"
             >
-              <orbit-button orbitNavbarActions label="Area riservata" variant="outline" tone="neutral" />
+              <orbit-button
+                orbitNavbarActions
+                label="Area riservata"
+                variant="outline"
+                tone="neutral"
+              />
               <orbit-button orbitNavbarActions label="Parla con noi" />
             </orbit-navbar>
 
             <div class="examples__landing-hero">
               <div class="examples__landing-copy">
-                <orbit-badge tone="info" label="Illuminazione professionale" />
+                <orbit-badge tone="neutral" label="Illuminazione professionale" />
                 <p class="examples__landing-eyebrow">Progetti che restano accesi</p>
                 <h2 id="landing-title">Luce affidabile per ogni spazio che conta.</h2>
                 <p>
-                  Soluzioni LED, controllo intelligente e supporto progettuale per industria,
-                  retail e spazi pubblici.
+                  Soluzioni LED, controllo intelligente e supporto progettuale per industria, retail
+                  e spazi pubblici.
                 </p>
                 <div class="examples__landing-actions">
                   <orbit-button label="Esplora le soluzioni" />
@@ -476,12 +491,12 @@
                   <p>Analisi illuminotecnica e simulazioni per decidere con dati concreti.</p>
                 </orbit-panel>
                 <orbit-panel>
-                  <orbit-badge tone="success" label="02" />
+                  <orbit-badge tone="primary" label="02" />
                   <h4>Controllo intelligente</h4>
                   <p>Scene, sensori e telemetria per rendere ogni kWh misurabile.</p>
                 </orbit-panel>
                 <orbit-panel>
-                  <orbit-badge tone="warning" label="03" />
+                  <orbit-badge tone="primary" label="03" />
                   <h4>Continuità operativa</h4>
                   <p>Supporto tecnico e ricambi per proteggere l’investimento nel tempo.</p>
                 </orbit-panel>

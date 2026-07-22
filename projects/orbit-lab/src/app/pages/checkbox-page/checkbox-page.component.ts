@@ -16,7 +16,7 @@ export class CheckboxPageComponent {
   protected readonly disabledControl = new FormControl({ value: true, disabled: true });
 
   protected readonly usageSnippet =
-    '<orbit-checkbox label="Accetto le condizioni" inputId="terms" [formControl]="terms" />';
+    '<orbit-checkbox label="Invia una notifica al responsabile" inputId="notify-owner" [formControl]="notifyOwner" />';
 
   protected readonly checkedSnippet =
     '<orbit-checkbox label="Selezionato" inputId="opt" [formControl]="opt" />\n// opt = new FormControl(true)';

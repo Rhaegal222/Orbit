@@ -15,11 +15,18 @@
     <ng-content />
   </div>
 
-  @if (hint() && !error()) {
-    <p class="orbit-form-field__hint">{{ hint() }}</p>
-  }
+  @if (hint() || error() || reserveMessageSpace()) {
+    <div
+      class="orbit-form-field__feedback"
+      [class.orbit-form-field__feedback--reserved]="reserveMessageSpace()"
+    >
+      @if (hint() && !error()) {
+        <p class="orbit-form-field__hint">{{ hint() }}</p>
+      }
 
-  @if (error()) {
-    <p class="orbit-form-field__error" role="alert">{{ error() }}</p>
+      @if (error()) {
+        <p class="orbit-form-field__error" role="alert">{{ error() }}</p>
+      }
+    </div>
   }
 </div>

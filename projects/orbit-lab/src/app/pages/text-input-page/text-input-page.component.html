@@ -3,10 +3,10 @@
   <p>Campo di testo con <code>ControlValueAccessor</code>, otto tipi supportati e formattazione valuta integrata.</p>
 
   <section>
-    <h2>Esempio base</h2>
+    <h2>Esempio</h2>
     <lab-example [code]="usageSnippet">
       <div data-example="base">
-        <orbit-form-field label="Organizzazione" inputId="ti-base">
+        <orbit-form-field label="Ragione sociale" inputId="ti-base">
           <orbit-text-input inputId="ti-base" [formControl]="baseControl" />
         </orbit-form-field>
       </div>
@@ -73,12 +73,19 @@
     <lab-example [code]="statesSnippet" fullWidth>
       <div class="text-input-page__state-preview">
         <div data-example="invalid">
-          <p class="text-input-page__type-label">Non valido</p>
-          <orbit-text-input inputId="ti-invalid" type="email" [invalid]="true" />
+          <orbit-form-field
+            label="Non valido"
+            inputId="ti-invalid"
+            error="Inserisci un indirizzo email valido"
+            reserveMessageSpace
+          >
+            <orbit-text-input inputId="ti-invalid" type="email" [invalid]="true" />
+          </orbit-form-field>
         </div>
         <div data-example="disabled">
-          <p class="text-input-page__type-label">Disabilitato</p>
-          <orbit-text-input inputId="ti-disabled" [formControl]="disabledControl" />
+          <orbit-form-field label="Disabilitato" inputId="ti-disabled" reserveMessageSpace>
+            <orbit-text-input inputId="ti-disabled" [formControl]="disabledControl" />
+          </orbit-form-field>
         </div>
       </div>
     </lab-example>

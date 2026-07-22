@@ -29,6 +29,6 @@ describe('PopoverPageComponent', () => {
     fixture.detectChanges();
 
     const overlayEl = overlayContainer.getContainerElement();
-    expect(overlayEl.textContent).toContain('Testo del popover');
+    expect(overlayEl.textContent).toContain('La disponibilità è aggiornata ogni 15 minuti.');
   });
 });

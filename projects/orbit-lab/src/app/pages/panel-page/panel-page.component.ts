@@ -9,6 +9,7 @@ import {
   OrbitPanelSurfaceComponent,
   OrbitSelectableTileComponent,
   OrbitSidebarComponent,
+  OrbitSliderComponent,
   type OrbitSidebarItem,
   type OrbitSidebarSection,
 } from '@galileo/orbit';
@@ -85,6 +86,7 @@ class LabPanelDemoContentComponent {
     OrbitIconComponent,
     OrbitSelectableTileComponent,
     OrbitSidebarComponent,
+    OrbitSliderComponent,
     LabExampleComponent,
   ],
   templateUrl: './panel-page.component.html',
@@ -102,6 +104,7 @@ export class PanelPageComponent {
   protected readonly showBrandIcon = signal(false);
   protected readonly showSidebarHeader = signal(true);
   protected readonly showSidebarFooter = signal(true);
+  protected readonly toggleMargin = signal(0);
   protected readonly activeId = signal('overview');
   protected readonly collapsed = signal(false);
   protected readonly showItemStates = computed(
@@ -148,6 +151,7 @@ export class PanelPageComponent {
   [collapsed]="collapsed"
   [showHeader]="showHeader"
   [showFooter]="showFooter"
+  [toggleMargin]="toggleMargin"
   (itemSelected)="activeId = $event.id"
   (collapsedChange)="collapsed = $event"
 >
@@ -196,6 +200,10 @@ export class PanelPageComponent {
 
   setShowSidebarFooter(show: boolean): void {
     this.showSidebarFooter.set(show);
+  }
+
+  setToggleMargin(margin: number): void {
+    this.toggleMargin.set(margin);
   }
 
   setCollapsed(collapsed: boolean): void {

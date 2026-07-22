@@ -1,16 +1,29 @@
 <article>
   <h1>Panel</h1>
-  <p>Due varianti: overlay offcanvas transitorio (via <code>OrbitPanelService</code>) e rail di navigazione persistente (<code>orbit-sidebar</code>).</p>
+  <p>
+    Due varianti: overlay offcanvas transitorio (via <code>OrbitPanelService</code>) e rail di
+    navigazione persistente (<code>orbit-sidebar</code>).
+  </p>
 
   <section>
-    <h2>Offcanvas</h2>
-    <p>Compone gli stessi <code>orbit-modal-header</code>, <code>orbit-modal-body</code> e <code>orbit-modal-footer</code> del modal.</p>
+    <h2>Esempio</h2>
+    <p>
+      Compone gli stessi <code>orbit-modal-header</code>, <code>orbit-modal-body</code> e
+      <code>orbit-modal-footer</code> del modal.
+    </p>
     <lab-example [code]="offcanvasSnippet">
-      <orbit-button label="Apri da sinistra" tone="neutral" variant="outline" (clicked)="openOffcanvas('left')" />
+      <orbit-button
+        label="Apri da sinistra"
+        tone="neutral"
+        variant="outline"
+        (clicked)="openOffcanvas('left')"
+      />
       <orbit-button label="Apri da destra" (clicked)="openOffcanvas('right')" />
     </lab-example>
     @if (lastOpenedSide()) {
-      <p>Ultimo lato aperto: <strong>{{ lastOpenedSide() }}</strong></p>
+      <p>
+        Ultimo lato aperto: <strong>{{ lastOpenedSide() }}</strong>
+      </p>
     }
   </section>
 
@@ -27,6 +40,7 @@
           [collapsed]="collapsed()"
           [showHeader]="showSidebarHeader()"
           [showFooter]="showSidebarFooter()"
+          [toggleMargin]="toggleMargin()"
           (itemSelected)="select($event)"
           (collapsedChange)="setCollapsed($event)"
         >
@@ -82,6 +96,19 @@
             >
               <orbit-icon orbitSelectableTileIcon name="settings" aria-hidden="true" />
             </orbit-selectable-tile>
+          </div>
+
+          <div class="panel-page__sidebar-toggle-range">
+            <span>Margine del toggle</span>
+            <orbit-slider
+              ariaLabel="Margine del toggle della sidebar"
+              [ariaValueText]="toggleMargin() + '%'"
+              [min]="0"
+              [max]="40"
+              [step]="1"
+              showValue
+              (valueChange)="setToggleMargin($event)"
+            />
           </div>
 
           <div class="panel-page__sidebar-config-row">

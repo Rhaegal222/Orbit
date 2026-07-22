@@ -20,14 +20,16 @@ describe('ExamplesPageComponent', () => {
   });
 
   it('renders the complete landing-page mock when selected', () => {
-    const landingTab = Array.from(fixture.nativeElement.querySelectorAll('orbit-tab button')).find(
-      (button) => button.textContent?.includes('Landing partner'),
-    ) as HTMLButtonElement;
+    const landingTab = fixture.nativeElement.querySelector('#orbit-tab-landing') as HTMLElement;
     landingTab.click();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('.examples__landing orbit-navbar')).toBeTruthy();
-    expect(fixture.nativeElement.textContent).toContain('Luce affidabile per ogni spazio che conta.');
-    expect(fixture.nativeElement.querySelectorAll('.examples__landing-features orbit-panel').length).toBe(3);
+    expect(fixture.nativeElement.textContent).toContain(
+      'Luce affidabile per ogni spazio che conta.',
+    );
+    expect(
+      fixture.nativeElement.querySelectorAll('.examples__landing-features orbit-panel').length,
+    ).toBe(3);
   });
 });

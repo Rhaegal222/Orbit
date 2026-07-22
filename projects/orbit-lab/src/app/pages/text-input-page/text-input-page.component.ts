@@ -34,7 +34,7 @@ export class TextInputPageComponent {
   protected readonly disabledControl = new FormControl({ value: 'Valore bloccato', disabled: true });
 
   protected readonly usageSnippet =
-    '<orbit-text-input inputId="organizzazione" [formControl]="organizzazione" />';
+    '<orbit-text-input inputId="company-name" [formControl]="companyName" />';
 
   protected readonly typeExamplesSnippet = this.types
     .map((type) => {
@@ -56,8 +56,17 @@ export class TextInputPageComponent {
   [formControl]="password"
 />`;
 
-  protected readonly statesSnippet = `<orbit-text-input inputId="email" type="email" [invalid]="true" /> <!-- Stato non valido -->
+  protected readonly statesSnippet = `<orbit-form-field
+  label="Email"
+  inputId="email"
+  error="Inserisci un indirizzo email valido"
+  reserveMessageSpace
+>
+  <orbit-text-input inputId="email" type="email" [invalid]="true" />
+</orbit-form-field> <!-- Stato non valido con spazio riservato -->
 
-<orbit-text-input inputId="bloccato" [formControl]="bloccato" /> <!-- Stato disabilitato: gestito dal FormControl -->
+<orbit-form-field label="Campo disabilitato" inputId="bloccato" reserveMessageSpace>
+  <orbit-text-input inputId="bloccato" [formControl]="bloccato" />
+</orbit-form-field> <!-- Stato disabilitato: gestito dal FormControl -->
 // bloccato = new FormControl({ value: 'Valore bloccato', disabled: true });`;
 }

@@ -4,7 +4,9 @@ import {
   Component,
   inject,
   input,
+  numberAttribute,
   output,
+  signal,
 } from '@angular/core';
 import { OrbitIconComponent } from '../../icons/icon.component';
 import type { OrbitIconName } from '../../icons/icon-registry';
@@ -50,6 +52,9 @@ export class OrbitSidebarComponent {
   /** Shows the projected footer chrome below the navigation. */
   showFooter = input(true, { transform: booleanAttribute });
   embedded = input(false, { transform: booleanAttribute });
+  /** Symmetric percentage margin that constrains mouse-tracking toggle placement. */
+  toggleMargin = input(0, { transform: numberAttribute });
+  readonly toggleTop = signal(50);
   itemSelected = output<OrbitSidebarItem>();
   collapsedChange = output<boolean>();
 
@@ -59,6 +64,15 @@ export class OrbitSidebarComponent {
 
   toggle(): void {
     this.collapsedChange.emit(!this.collapsed());
+  }
+
+  onPointerMove(event: PointerEvent): void {
+    const sidebar = event.currentTarget as HTMLElement;
+    const bounds = sidebar.getBoundingClientRect();
+    const offset = ((event.clientY - bounds.top) / bounds.height) * 100;
+    const margin = Math.min(50, Math.max(0, this.toggleMargin()));
+
+    this.toggleTop.set(Math.max(margin, Math.min(offset, 100 - margin)));
   }
 
   displayBadge(badge: string | number | undefined): string {

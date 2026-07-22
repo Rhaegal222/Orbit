@@ -620,6 +620,40 @@
     var(--orbit-action-primary-bg) 14%,
     var(--orbit-surface-default)
   );
+  /* Component tokens are resolved in this scope so they do not retain the
+     inherited light-theme value when a component sits below a dark ancestor. */
+  --orbit-sidebar-bg: var(--orbit-surface-raised);
+  --orbit-sidebar-fg: var(--orbit-text-primary);
+  --orbit-sidebar-fg-muted: var(--orbit-text-secondary);
+  --orbit-sidebar-border: var(--orbit-border-subtle);
+  --orbit-sidebar-brand-mark-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 16%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-sidebar-brand-mark-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-sidebar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-sidebar-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-sidebar-item-active-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-sidebar-item-active-border: var(--orbit-border-subtle);
+  --orbit-sidebar-item-active-indicator: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-bg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-fg: var(--orbit-action-primary-fg);
+  --orbit-select-option-hover-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 16%,
+    var(--orbit-surface-floating)
+  );
+  --orbit-select-option-selected-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 28%,
+    var(--orbit-surface-floating)
+  );
+  --orbit-select-option-selected-fg: var(--orbit-action-primary-fg-subtle);
 }
 
 [data-orbit-theme='dark'][data-orbit-shadow-intensity='0.5'],

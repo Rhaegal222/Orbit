@@ -3,6 +3,23 @@
   margin-bottom: var(--orbit-space-5);
 }
 
+:host(.lab-example-host--bare) {
+  margin-bottom: 0;
+}
+
+:host(.lab-example-host--bare) .lab-example {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:host(.lab-example-host--bare) .lab-example__preview {
+  min-block-size: 0;
+  padding: 0;
+  background: transparent;
+}
+
 .lab-example {
   position: relative;
   display: flex;

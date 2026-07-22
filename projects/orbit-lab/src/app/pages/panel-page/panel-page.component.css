@@ -59,6 +59,16 @@
   width: 100%;
 }
 
+.panel-page__sidebar-toggle-range {
+  display: grid;
+  width: min(100%, 14rem);
+  gap: var(--orbit-space-1);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-label);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-align: start;
+}
+
 .panel-page__sidebar-tile-group orbit-selectable-tile {
   min-width: 0;
 }

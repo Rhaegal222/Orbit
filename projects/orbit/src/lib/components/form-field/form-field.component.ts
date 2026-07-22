@@ -14,6 +14,8 @@ export class OrbitFormFieldComponent {
   inputId = input('');
   hint = input('');
   error = input('');
+  /** Keeps space for hint or error feedback to avoid layout shifts in aligned fields. */
+  reserveMessageSpace = input(false, { transform: booleanAttribute });
   required = input(false, { transform: booleanAttribute });
   disabled = input(false, { transform: booleanAttribute });
 }

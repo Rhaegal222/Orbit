@@ -29,6 +29,11 @@ export class ButtonPageComponent {
     '<orbit-button label="Caricamento" variant="solid" tone="primary" [loading]="true" />';
 
   protected variantSnippet(variant: OrbitButtonVariant): string {
-    return `<orbit-button label="Salva" variant="${variant}" tone="primary" />`;
+    return this.tones
+      .map(
+        (tone) =>
+          `<orbit-button label="${tone}" variant="${variant}" tone="${tone}" /> <!-- Tono ${tone} -->`,
+      )
+      .join('\n');
   }
 }

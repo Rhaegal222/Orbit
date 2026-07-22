@@ -37,6 +37,13 @@ describe('SelectPageComponent', () => {
     expect(input.disabled).toBe(true);
   });
 
+  it('groups the invalid and disabled states in one documented preview', () => {
+    const preview = fixture.nativeElement.querySelector('.select-page__state-preview');
+
+    expect(preview.querySelector('[data-example="invalid"]')).toBeTruthy();
+    expect(preview.querySelector('[data-example="disabled"]')).toBeTruthy();
+  });
+
   it('renders a copyable usage snippet', () => {
     expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
       '<orbit-select',

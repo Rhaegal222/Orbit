@@ -51,14 +51,16 @@
 
   <section>
     <h2>Stati</h2>
-    <lab-example [code]="invalidSnippet" fullWidth>
-      <div data-example="invalid">
-        <orbit-select inputId="sel-invalid" [options]="options" [invalid]="true" />
-      </div>
-    </lab-example>
-    <lab-example [code]="disabledSnippet" fullWidth>
-      <div data-example="disabled">
-        <orbit-select inputId="sel-disabled" [options]="options" [formControl]="disabledControl" />
+    <lab-example [code]="statesSnippet" fullWidth>
+      <div class="select-page__state-preview">
+        <div data-example="invalid">
+          <p class="select-page__state-label">Non valido</p>
+          <orbit-select inputId="sel-invalid" [options]="options" [invalid]="true" />
+        </div>
+        <div data-example="disabled">
+          <p class="select-page__state-label">Disabilitato</p>
+          <orbit-select inputId="sel-disabled" [options]="options" [formControl]="disabledControl" />
+        </div>
       </div>
     </lab-example>
     <div data-example="option-disabled">

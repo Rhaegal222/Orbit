@@ -9,7 +9,6 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'checkbox', label: 'Caselle di controllo', status: 'verified', icon: 'check' },
   { slug: 'dialog', label: 'Dialoghi', status: 'verified', icon: 'window' },
   { slug: 'operational-modal', label: 'Esempi', status: 'verified', icon: 'window' },
-  { slug: 'form-grid', label: 'Griglia modulo', status: 'verified', icon: 'grid' },
   { slug: 'layout', label: 'Layout', status: 'verified', icon: 'grid' },
   { slug: 'text-input', label: 'Input di testo', status: 'verified', icon: 'document' },
   { slug: 'panel', label: 'Panel', status: 'verified', icon: 'window' },

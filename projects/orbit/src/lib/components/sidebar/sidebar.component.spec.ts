@@ -9,7 +9,9 @@ import { OrbitSidebarComponent } from './sidebar.component';
   template: `
     <orbit-sidebar
       brand="Orbit"
-      [sections]="[{ id: 'main', label: 'Principale', items: [{ id: 'home', label: 'Panoramica' }] }]"
+      [sections]="[
+        { id: 'main', label: 'Principale', items: [{ id: 'home', label: 'Panoramica' }] },
+      ]"
       [collapsed]="collapsed()"
     >
       <input orbitSidebarSearch type="search" placeholder="Cerca" />
@@ -30,7 +32,11 @@ describe('OrbitSidebarComponent', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('brand', 'Orbit');
     fixture.componentRef.setInput('sections', [
-      { id: 'main', label: 'Principale', items: [{ id: 'home', label: 'Panoramica', icon: 'home', badge: 3 }] },
+      {
+        id: 'main',
+        label: 'Principale',
+        items: [{ id: 'home', label: 'Panoramica', icon: 'home', badge: 3 }],
+      },
     ]);
     fixture.detectChanges();
   });
@@ -53,6 +59,15 @@ describe('OrbitSidebarComponent', () => {
     component.collapsedChange.subscribe((value) => (collapsed = value));
     (fixture.nativeElement.querySelector('.orbit-sidebar__toggle') as HTMLButtonElement).click();
     expect(collapsed).toBe(true);
+  });
+
+  it('positions the edge toggle relative to the pointer within the sidebar', () => {
+    const sidebar = document.createElement('aside');
+    sidebar.getBoundingClientRect = () => ({ top: 100, height: 400 }) as DOMRect;
+
+    component.onPointerMove({ currentTarget: sidebar, clientY: 300 } as unknown as PointerEvent);
+
+    expect(component.toggleTop()).toBe(50);
   });
 });
 

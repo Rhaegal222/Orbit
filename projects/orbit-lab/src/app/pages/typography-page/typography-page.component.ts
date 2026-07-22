@@ -70,13 +70,13 @@ export class TypographyPageComponent {
     },
   ];
 
-  protected readonly rolesSnippet = `<p class="typography-page__body">
-  Contenuto operativo con il ruolo Body.
-</p>
-
-<span class="typography-page__label">
-  Salvataggio automatico attivo
-</span>`;
+  protected readonly rolesSnippet = `<span class="typography-page__display">Titolo operativo</span> <!-- Display -->
+<span class="typography-page__title">Configurazione record</span> <!-- Title -->
+<span class="typography-page__subtitle">Dettagli operativi</span> <!-- Subtitle -->
+<p class="typography-page__body">La modifica viene applicata immediatamente.</p> <!-- Body -->
+<span class="typography-page__label">Salvataggio automatico attivo</span> <!-- Label -->
+<span class="typography-page__caption">Aggiornato pochi istanti fa</span> <!-- Caption -->
+<code class="typography-page__code">--orbit-text-scale: 1.1;</code> <!-- Code -->`;
 
   protected readonly scaleSnippet = `/* Applicare sullo shell consumer */
 [data-orbit-theme='consumer'] {

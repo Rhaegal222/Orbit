@@ -47,9 +47,7 @@ export class OrbitSidebarComponent {
   collapsed = input(false, { transform: booleanAttribute });
   collapsible = input(true, { transform: booleanAttribute });
   embedded = input(false, { transform: booleanAttribute });
-  readonly toggleVisible = signal(false);
   readonly toggleTop = signal(50);
-
   itemSelected = output<OrbitSidebarItem>();
   collapsedChange = output<boolean>();
 
@@ -64,19 +62,9 @@ export class OrbitSidebarComponent {
   onPointerMove(event: PointerEvent): void {
     const sidebar = event.currentTarget as HTMLElement;
     const bounds = sidebar.getBoundingClientRect();
-    const distanceFromEdge = bounds.right - event.clientX;
-    if (distanceFromEdge > 2 * 16) {
-      this.toggleVisible.set(false);
-      return;
-    }
+    const offset = ((event.clientY - bounds.top) / bounds.height) * 100;
 
-    const offset = event.clientY - bounds.top;
-    this.toggleTop.set(Math.max(24, Math.min(offset, bounds.height - 24)));
-    this.toggleVisible.set(true);
-  }
-
-  onPointerLeave(): void {
-    this.toggleVisible.set(false);
+    this.toggleTop.set(Math.max(5, Math.min(offset, 95)));
   }
 
   displayBadge(badge: string | number | undefined): string {

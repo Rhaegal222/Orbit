@@ -3,7 +3,6 @@
   [class.orbit-sidebar--embedded]="embedded()"
   [attr.aria-label]="ariaLabel() || null"
   (pointermove)="onPointerMove($event)"
-  (pointerleave)="onPointerLeave()"
 >
   @if (!embedded()) {
     <header class="orbit-sidebar__header">
@@ -42,7 +41,11 @@
               (click)="selectItem(item)"
             >
               @if (item.icon) {
-                <orbit-icon class="orbit-sidebar__item-icon" [name]="item.icon" aria-hidden="true" />
+                <orbit-icon
+                  class="orbit-sidebar__item-icon"
+                  [name]="item.icon"
+                  aria-hidden="true"
+                />
               }
               <span class="orbit-sidebar__item-label">{{ item.label }}</span>
               @if (item.badge !== undefined && item.badge !== null) {
@@ -65,8 +68,7 @@
     <button
       type="button"
       class="orbit-sidebar__toggle"
-      [class.orbit-sidebar__toggle--visible]="toggleVisible()"
-      [style.top.px]="toggleTop()"
+      [style.top.%]="toggleTop()"
       [attr.aria-label]="collapsed() ? i18n.labels.expandSidebar : i18n.labels.collapseSidebar"
       (click)="toggle()"
     >

@@ -43,11 +43,20 @@ export class SelectPageComponent {
   protected readonly searchableSnippet =
     '<orbit-select inputId="periodicita" [options]="periodicita" [searchable]="true" [formControl]="periodicitaControl" />';
 
-  protected readonly invalidSnippet = '<orbit-select inputId="periodicita" [options]="periodicita" [invalid]="true" />';
+  protected readonly statesSnippet = `<orbit-select inputId="periodicita-non-valida" [options]="periodicita" [invalid]="true" /> <!-- Stato non valido -->
 
-  protected readonly disabledSnippet =
-    '<orbit-select inputId="periodicita" [options]="periodicita" [formControl]="periodicitaControl" />\n// periodicitaControl = new FormControl({ value: \'monthly\', disabled: true })';
+<orbit-select inputId="periodicita-disabilitata" [options]="periodicita" [formControl]="periodicitaControl" /> <!-- Stato disabilitato: gestito dal FormControl -->
+// periodicitaControl = new FormControl({ value: 'monthly', disabled: true });`;
 
-  protected readonly tileSnippet =
-    '<orbit-selectable-tile\n  label="Opzione"\n  [selected]="selected()"\n  (selectedChange)="selected.set($event)"\n/>';
+  protected readonly tileSnippet = `<orbit-selectable-tile
+  label="Opzione con icona"
+  description="La selezione è controllata dal consumer."
+  [selected]="selected()"
+  (selectedChange)="selected.set($event)"
+>
+  <!-- Proiezione opzionale dell'icona -->
+</orbit-selectable-tile> <!-- Interattiva -->
+
+<orbit-selectable-tile label="Selezionata" [selected]="true" /> <!-- Selezionata -->
+<orbit-selectable-tile label="Disabilitata" [selected]="true" disabled /> <!-- Selezionata e disabilitata -->`;
 }

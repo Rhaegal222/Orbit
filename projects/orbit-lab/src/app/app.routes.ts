@@ -18,10 +18,8 @@ export const routes: Routes = [
   },
   {
     path: 'form-grid',
-    loadComponent: () =>
-      import('./pages/form-grid-page/form-grid-page.component').then(
-        (m) => m.FormGridPageComponent,
-      ),
+    redirectTo: 'layout',
+    pathMatch: 'full',
   },
   {
     path: 'layout',

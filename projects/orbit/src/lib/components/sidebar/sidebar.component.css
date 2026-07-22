@@ -76,7 +76,10 @@
   font-weight: var(--orbit-font-weight-emphasis);
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: flex-basis var(--orbit-motion-base) var(--orbit-easing-shared), max-width var(--orbit-motion-base) var(--orbit-easing-shared), opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    flex-basis var(--orbit-motion-base) var(--orbit-easing-shared),
+    max-width var(--orbit-motion-base) var(--orbit-easing-shared),
+    opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-sidebar__toggle {
@@ -97,10 +100,14 @@
   pointer-events: none;
   transform: translateY(-50%);
   box-shadow: var(--orbit-shadow-raised);
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard), transform var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    transform var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
-.orbit-sidebar__toggle--visible,
+.orbit-sidebar:hover .orbit-sidebar__toggle,
 .orbit-sidebar__toggle:focus-visible {
   opacity: 1;
   pointer-events: auto;
@@ -129,6 +136,11 @@
   transform: rotate(90deg);
 }
 
+/* The asymmetric chevron needs a small optical correction within its circular target. */
+.orbit-sidebar__toggle orbit-icon {
+  margin-inline-start: 0.0625rem;
+}
+
 .orbit-sidebar__nav {
   flex: 1 1 auto;
   min-height: 0;
@@ -147,7 +159,10 @@
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: max-height var(--orbit-motion-base) var(--orbit-easing-shared), margin var(--orbit-motion-base) var(--orbit-easing-shared), opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    max-height var(--orbit-motion-base) var(--orbit-easing-shared),
+    margin var(--orbit-motion-base) var(--orbit-easing-shared),
+    opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-sidebar__list {
@@ -175,7 +190,10 @@
   font-weight: var(--orbit-font-weight-emphasis);
   text-align: left;
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-sidebar__item:hover:not(:disabled) {
@@ -213,7 +231,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: max-width var(--orbit-motion-base) var(--orbit-easing-shared), opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    max-width var(--orbit-motion-base) var(--orbit-easing-shared),
+    opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-sidebar__badge {

@@ -16,7 +16,7 @@ interface Row {
   templateUrl: './table-page.component.html',
 })
 export class TablePageComponent {
-  private readonly rows: Row[] = [
+  protected readonly rows: Row[] = [
     { name: 'Mario Rossi', status: 'Attivo', active: true },
     { name: 'Luca Bianchi', status: 'Scaduto', active: false },
     { name: 'Anna Verdi', status: 'Attivo', active: true },
@@ -43,6 +43,10 @@ export class TablePageComponent {
     }
   </tbody>
 </orbit-table>`;
+
+  protected readonly borderedSnippet = '<orbit-table bordered>…</orbit-table>';
+  protected readonly stripedSnippet = '<orbit-table striped>…</orbit-table>';
+  protected readonly borderedStripedSnippet = '<orbit-table bordered striped>…</orbit-table>';
 
   onSortChange(direction: 'asc' | 'desc'): void {
     this.sortDirection.set(direction);

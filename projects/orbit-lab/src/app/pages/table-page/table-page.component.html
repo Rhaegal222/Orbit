@@ -31,4 +31,92 @@
       </orbit-table>
     </lab-example>
   </section>
+
+  <section>
+    <h2>Varianti</h2>
+    <p>
+      <code>bordered</code> aggiunge bordi verticali e un contorno alla tabella;
+      <code>striped</code> alterna lo sfondo delle righe.
+    </p>
+
+    <h3>Default</h3>
+    <lab-example [fullWidth]="true">
+      <orbit-table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+
+    <h3>Bordered</h3>
+    <lab-example [code]="borderedSnippet" [fullWidth]="true">
+      <orbit-table bordered>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+
+    <h3>Striped</h3>
+    <lab-example [code]="stripedSnippet" [fullWidth]="true">
+      <orbit-table striped>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+
+    <h3>Bordered + Striped</h3>
+    <lab-example [code]="borderedStripedSnippet" [fullWidth]="true">
+      <orbit-table bordered striped>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+  </section>
 </article>

@@ -106,6 +106,11 @@ export const routes: Routes = [
       import('./pages/panel-page/panel-page.component').then((m) => m.PanelPageComponent),
   },
   {
+    path: 'sidebar',
+    loadComponent: () =>
+      import('./pages/sidebar-page/sidebar-page.component').then((m) => m.SidebarPageComponent),
+  },
+  {
     path: 'tab',
     loadComponent: () => import('./pages/tab-page/tab-page.component').then((m) => m.TabPageComponent),
   },

@@ -1,0 +1,31 @@
+.sidebar-page__preview {
+  display: flex;
+  min-height: 34rem;
+  overflow: hidden;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+}
+
+.sidebar-page__content {
+  display: grid;
+  align-content: center;
+  gap: var(--orbit-space-2);
+  min-width: 0;
+  flex: 1;
+  padding: var(--orbit-space-6);
+  color: var(--orbit-text-secondary);
+}
+
+.sidebar-page__content strong {
+  color: var(--orbit-text-primary);
+  font-size: var(--orbit-font-size-title);
+}
+
+.sidebar-page__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-2);
+  color: var(--orbit-sidebar-fg-muted);
+  font-size: var(--orbit-font-size-label);
+}

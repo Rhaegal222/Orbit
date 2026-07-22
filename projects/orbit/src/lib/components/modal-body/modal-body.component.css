@@ -1,12 +1,16 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
   background: var(--orbit-surface-modal);
 }
 
 .orbit-modal-body__scroll {
   position: relative;
+  box-sizing: border-box;
+  height: 100%;
   overflow-y: auto;
   padding: var(--orbit-modal-padding-block) var(--orbit-modal-padding-inline);
   min-height: 4rem;

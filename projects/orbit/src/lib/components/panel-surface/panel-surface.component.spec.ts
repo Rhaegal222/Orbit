@@ -30,4 +30,9 @@ describe('OrbitPanelSurfaceComponent', () => {
   it('projects content', () => {
     expect(fixture.nativeElement.textContent).toContain('Contenuto');
   });
+
+  it('fills the full overlay pane width', () => {
+    const host = fixture.nativeElement.querySelector('orbit-panel-surface') as HTMLElement;
+    expect(getComputedStyle(host).width).toBe('100%');
+  });
 });

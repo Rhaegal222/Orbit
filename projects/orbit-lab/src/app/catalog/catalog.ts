@@ -16,6 +16,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'pill-switch', label: 'Selettore a pillola', status: 'verified' },
   { slug: 'pickers', label: 'Selettori', status: 'verified' },
   { slug: 'select', label: 'Selezione', status: 'verified' },
+  { slug: 'sidebar', label: 'Sidebar', status: 'verified' },
   { slug: 'form-section', label: 'Sezioni modulo', status: 'verified' },
   { slug: 'tooltip', label: 'Suggerimenti', status: 'verified' },
   { slug: 'tab', label: 'Tab', status: 'verified' },

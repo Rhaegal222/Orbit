@@ -141,6 +141,13 @@ The operational refresh additionally exposes `--orbit-text-label`,
 `--orbit-dropzone-padding-inline`. They keep field labels, metadata, selectable
 tiles and upload areas visually coherent when a consumer changes brand tokens.
 
+`orbit-sidebar` is a generic navigation rail. Its width, collapsed width,
+surface, foreground, active state and badge are controlled by the documented
+`--orbit-sidebar-*` component tokens. The default derives from Orbit semantic
+surfaces, text and primary-action tokens; consumers can override those tokens
+to align it with their brand without application-specific navigation CSS. This includes the floating
+edge toggle, icon sizes for expanded/compact modes and the active indicator.
+
 ## Visual roles
 
 The default theme exposes raised, floating and modal surfaces, floating elevation,

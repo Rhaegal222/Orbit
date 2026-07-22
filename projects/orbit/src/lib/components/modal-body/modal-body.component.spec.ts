@@ -14,6 +14,13 @@ describe('OrbitModalBodyComponent', () => {
     expect(fixture.nativeElement.querySelector('.orbit-modal-body__loader')).toBeNull();
   });
 
+  it('provides a full-height scroll region for modal and offcanvas bodies', () => {
+    const scrollRegion = fixture.nativeElement.querySelector('.orbit-modal-body__scroll') as HTMLElement;
+    expect(scrollRegion).toBeTruthy();
+    expect(getComputedStyle(scrollRegion).overflowY).toBe('auto');
+    expect(getComputedStyle(scrollRegion).height).toBe('100%');
+  });
+
   it('shows the labelled loading overlay', () => {
     fixture.componentRef.setInput('loading', true);
     fixture.componentRef.setInput('loadingLabel', 'Caricamento elementi');

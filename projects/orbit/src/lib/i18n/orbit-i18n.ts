@@ -27,6 +27,8 @@ export interface OrbitI18n {
     decreaseValue: string;
     showPassword: string;
     hidePassword: string;
+    collapseSidebar: string;
+    expandSidebar: string;
     segmentedControl: string;
     uploadLabel: string;
     uploadHint: string;
@@ -47,7 +49,7 @@ export const DEFAULT_ORBIT_I18N: OrbitI18n = {
   labels: {
     close: 'Chiudi', openCalendar: 'Apri calendario', previousMonth: 'Mese precedente', nextMonth: 'Mese successivo', selectMonth: 'Seleziona mese', selectYear: 'Seleziona anno', startDate: 'Data iniziale', endDate: 'Data finale',
     select: 'Seleziona…', search: 'Cerca…', openList: 'Apri elenco', noResults: 'Nessun risultato',
-    openTimePicker: 'Apri selettore orario', hours: 'Ore', minutes: 'Minuti', timePicker: 'Selettore orario', nextHour: 'Ora successiva', previousHour: 'Ora precedente', nextMinutes: 'Minuti successivi', previousMinutes: 'Minuti precedenti', increaseValue: 'Aumenta valore', decreaseValue: 'Riduci valore', showPassword: 'Mostra password', hidePassword: 'Nascondi password', segmentedControl: 'Selettore',
+    openTimePicker: 'Apri selettore orario', hours: 'Ore', minutes: 'Minuti', timePicker: 'Selettore orario', nextHour: 'Ora successiva', previousHour: 'Ora precedente', nextMinutes: 'Minuti successivi', previousMinutes: 'Minuti precedenti', increaseValue: 'Aumenta valore', decreaseValue: 'Riduci valore', showPassword: 'Mostra password', hidePassword: 'Nascondi password', collapseSidebar: 'Riduci barra laterale', expandSidebar: 'Espandi barra laterale', segmentedControl: 'Selettore',
     uploadLabel: 'Trascina i file qui oppure clicca per sfogliare', uploadHint: 'PDF, JPG, PNG · max 10 MB',
     loading: 'Operazione in corso', cancel: 'ANNULLA', confirm: 'Conferma', saveDraft: 'SALVA BOZZA', saveAndContinue: 'SALVA E CONTINUA',
   },

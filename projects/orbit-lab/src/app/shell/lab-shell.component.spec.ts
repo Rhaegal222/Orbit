@@ -1,11 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { provideRouter } from '@angular/router';
-import { describe, expect, it, beforeEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { LabShellComponent } from './lab-shell.component';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
 
 describe('LabShellComponent', () => {
   let fixture: ComponentFixture<LabShellComponent>;
+  let overlayContainer: OverlayContainer;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,22 +16,56 @@ describe('LabShellComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(LabShellComponent);
     fixture.detectChanges();
+    overlayContainer = TestBed.inject(OverlayContainer);
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
   it('creates', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('renders one nav link per catalog entry', () => {
-    const links = fixture.nativeElement.querySelectorAll('[data-lab-nav-link]');
-    expect(links.length).toBe(CATALOG_ENTRIES.length);
+  it('opens the catalog navigation in a left offcanvas', () => {
+    const navigationButton = [...fixture.nativeElement.querySelectorAll('orbit-button')].find(
+      (button: HTMLElement) => button.textContent?.includes('Navigazione'),
+    ) as HTMLElement;
+    navigationButton.querySelector('button')?.click();
+    fixture.detectChanges();
+
+    const overlay = overlayContainer.getContainerElement();
+    expect(overlay.querySelector('.orbit-panel--left')).toBeTruthy();
+    expect(overlay.querySelectorAll('[data-lab-panel-nav-link]')).toHaveLength(CATALOG_ENTRIES.length);
   });
 
-  it('renders the static technical-catalog context in the sidebar', () => {
-    const navigation = fixture.nativeElement.querySelector('nav[aria-label="Catalogo Orbit"]');
+  it('opens theme and density options in a right offcanvas', () => {
+    const optionsButton = [...fixture.nativeElement.querySelectorAll('orbit-button')].find(
+      (button: HTMLElement) => button.textContent?.includes('Opzioni'),
+    ) as HTMLElement;
+    optionsButton.querySelector('button')?.click();
+    fixture.detectChanges();
 
-    expect(navigation.textContent).toContain('Catalogo tecnico');
-    expect(navigation.textContent).toContain('Orbit Core');
+    const overlay = overlayContainer.getContainerElement();
+    expect(overlay.querySelector('.orbit-panel--right')).toBeTruthy();
+    expect(overlay.querySelectorAll('.lab-catalog-panel__field')).toHaveLength(4);
+  });
+
+  it('applies an option selected in the right offcanvas to the Lab surface', () => {
+    const optionsButton = [...fixture.nativeElement.querySelectorAll('orbit-button')].find(
+      (button: HTMLElement) => button.textContent?.includes('Opzioni'),
+    ) as HTMLElement;
+    optionsButton.querySelector('button')?.click();
+
+    const themeSelect = overlayContainer
+      .getContainerElement()
+      .querySelector('.lab-catalog-panel__field select') as HTMLSelectElement;
+    themeSelect.value = 'dark';
+    themeSelect.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+
+    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
+    expect(container.getAttribute('data-orbit-theme')).toBe('dark');
   });
 
   it('defaults to default theme and comfortable density', () => {

@@ -1,60 +1,9 @@
 <header class="lab-shell__header">
   <span class="lab-shell__brand">Orbit Lab</span>
 
-  <div class="lab-shell__controls">
-    <label class="lab-shell__control">
-      Tema
-      <select
-        class="lab-shell__select"
-        [value]="theme()"
-        (change)="setTheme($any($event.target).value)"
-      >
-        <option value="default">Default</option>
-        <option value="dark">Regressione (dark)</option>
-      </select>
-    </label>
-
-    <label class="lab-shell__control">
-      Densità
-      <select
-        class="lab-shell__select"
-        [value]="density()"
-        (change)="setDensity($any($event.target).value)"
-      >
-        <option value="spacious">Spaziosa</option>
-        <option value="comfortable">Comfortable</option>
-        <option value="compact">Compact</option>
-        <option value="dense">Densa</option>
-      </select>
-    </label>
-
-    <label class="lab-shell__control">
-      Scala testo
-      <select
-        class="lab-shell__select"
-        [value]="textScale()"
-        (change)="setTextScale($any($event.target).value)"
-      >
-        <option value="0.85">85%</option>
-        <option value="1">100%</option>
-        <option value="1.1">110%</option>
-        <option value="1.25">125%</option>
-        <option value="1.5">150%</option>
-      </select>
-    </label>
-
-    <label class="lab-shell__control">
-      Font
-      <select
-        class="lab-shell__select"
-        [value]="font()"
-        (change)="setFont($any($event.target).value)"
-      >
-        <option value="public-sans">Public Sans</option>
-        <option value="inter">Inter</option>
-        <option value="system">System UI</option>
-      </select>
-    </label>
+  <div class="lab-shell__actions">
+    <orbit-button label="Navigazione" variant="outline" tone="neutral" (clicked)="openNavigation()" />
+    <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
   </div>
 </header>
 
@@ -68,35 +17,6 @@
   [style.--orbit-optional-icon-display]="optionalIconDisplay()"
   [style.--orbit-font-sans]="fontStack()"
 >
-  <nav class="lab-shell__nav" aria-label="Catalogo Orbit">
-    <div class="lab-shell__nav-intro">
-      <span class="lab-shell__nav-eyebrow">Catalogo tecnico</span>
-      <span class="lab-shell__nav-title">Orbit Core</span>
-      <span class="lab-shell__nav-description">Componenti, varianti e stati</span>
-    </div>
-
-    <div class="lab-shell__nav-list">
-      @for (entry of entries; track entry.slug) {
-        <a
-          data-lab-nav-link
-          class="lab-shell__nav-link"
-          [class.lab-shell__nav-link--blocked]="entry.status !== 'verified'"
-          [routerLink]="['/', entry.slug]"
-          routerLinkActive="lab-shell__nav-link--active"
-        >
-          {{ entry.label }}
-          @if (entry.status === 'token-blocked') {
-            <span class="lab-shell__nav-badge" aria-label="Bloccato su token Core">⛔</span>
-          } @else if (entry.status === 'stabilizing') {
-            <span class="lab-shell__nav-badge" aria-label="In stabilizzazione Core">⏳</span>
-          }
-        </a>
-      }
-    </div>
-
-    <p class="lab-shell__nav-note">Usa il selettore in alto per verificare tema e densità.</p>
-  </nav>
-
   <main class="lab-shell__content">
     <router-outlet />
   </main>

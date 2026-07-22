@@ -151,6 +151,28 @@
     var(--orbit-action-primary-bg) 20%,
     var(--orbit-border-subtle)
   );
+  --orbit-sidebar-width: 16rem;
+  --orbit-sidebar-width-collapsed: 4.5rem;
+  --orbit-sidebar-header-height: 5rem;
+  --orbit-sidebar-brand-mark-size: var(--orbit-header-icon-surface-size);
+  --orbit-sidebar-toggle-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
+  --orbit-sidebar-toggle-offset: calc(var(--orbit-sidebar-toggle-size) / -2);
+  --orbit-sidebar-icon-size: var(--orbit-font-size-lg);
+  --orbit-sidebar-icon-size-collapsed: var(--orbit-font-size-xl);
+  --orbit-sidebar-active-indicator-width: 0.1875rem;
+  --orbit-sidebar-bg: var(--orbit-surface-raised);
+  --orbit-sidebar-fg: var(--orbit-text-primary);
+  --orbit-sidebar-fg-muted: var(--orbit-text-secondary);
+  --orbit-sidebar-border: var(--orbit-border-subtle);
+  --orbit-sidebar-brand-mark-bg: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-subtle));
+  --orbit-sidebar-brand-mark-fg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-sidebar-item-active-bg: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-subtle));
+  --orbit-sidebar-item-active-fg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-item-active-border: var(--orbit-border-subtle);
+  --orbit-sidebar-item-active-indicator: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-bg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-fg: var(--orbit-action-primary-fg);
   --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));

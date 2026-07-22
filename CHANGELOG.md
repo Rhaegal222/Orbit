@@ -40,3 +40,4 @@ All notable changes to Galileo Orbit are documented here.
 - `orbit-text-input` now supports opt-in semantic leading icons for email and password through `showLeadingIcon`.
 - Text-input leading and trailing adornments now distinguish decorative icons from actions through typed icon names and explicit action labels.
 - Numbered form-section indices now use documented soft brand surface, foreground and border tokens instead of an ink-filled badge.
+- Added `orbit-sidebar`: an advanced, generic expandable navigation rail with typed sections/items, badges, active state, keyboard-native buttons and projected footer content.

@@ -4,4 +4,5 @@
 }
 :host(.orbit-divider--dashed) {
   border-top-style: dashed;
+  border-top-color: var(--orbit-border-strong);
 }

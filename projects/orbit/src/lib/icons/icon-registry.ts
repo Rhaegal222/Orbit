@@ -1,4 +1,15 @@
-export type OrbitIconName = 'close' | 'calendar' | 'chevron-down' | 'check' | 'copy' | 'mail' | 'lock';
+export type OrbitIconName =
+  | 'close'
+  | 'calendar'
+  | 'chevron-down'
+  | 'check'
+  | 'copy'
+  | 'mail'
+  | 'lock'
+  | 'home'
+  | 'layers'
+  | 'settings'
+  | 'user';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],
@@ -21,5 +32,19 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   lock: [
     'M6 10h12v10H6V10Z',
     'M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10',
+  ],
+  home: ['m4 10 8-6 8 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9Z', 'M9 20v-6h6v6'],
+  layers: [
+    'm12 3 8 4.5-8 4.5L4 7.5 12 3Z',
+    'm4 12 8 4.5 8-4.5',
+    'm4 16.5 8 4.5 8-4.5',
+  ],
+  settings: [
+    'M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5Z',
+    'M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.34 2.34-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.55V20.5H11.2v-.07a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06-2.34-2.34.06-.06A1.7 1.7 0 0 0 6.32 15a1.7 1.7 0 0 0-1.55-1H4.7v-3.3h.07a1.7 1.7 0 0 0 1.55-1A1.7 1.7 0 0 0 5.98 7.8l-.06-.06L8.26 5.4l.06.06a1.7 1.7 0 0 0 1.88.34 1.7 1.7 0 0 0 1-1.55V4.2h3.3v.07a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06 2.34 2.34-.06.06a1.7 1.7 0 0 0-.34 1.88 1.7 1.7 0 0 0 1.55 1h.07V14h-.07a1.7 1.7 0 0 0-1.55 1Z',
+  ],
+  user: [
+    'M20 20a8 8 0 0 0-16 0',
+    'A4 4 0 1 0 12 4a4 4 0 0 0 0 8 4 4 0 0 0 0-8Z',
   ],
 };

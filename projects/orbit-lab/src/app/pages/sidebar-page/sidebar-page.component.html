@@ -1,0 +1,35 @@
+<article>
+  <h1>Sidebar</h1>
+  <p>
+    Rail di navigazione generico, con sezioni tipizzate, badge, stato attivo, footer proiettabile e
+    modalità compatta controllata dal consumer.
+  </p>
+
+  <section>
+    <h2>Avanzata</h2>
+    <lab-example [code]="snippet" fullWidth>
+      <div class="sidebar-page__preview">
+        <orbit-sidebar
+          brand="Orbit"
+          brandShort="O"
+          brandIcon="layers"
+          ariaLabel="Navigazione di esempio"
+          [sections]="sections"
+          [activeId]="activeId()"
+          [collapsed]="collapsed()"
+          (itemSelected)="select($event)"
+          (collapsedChange)="collapsed.set($event)"
+        >
+          <div orbitSidebarFooter class="sidebar-page__footer">
+            <orbit-icon name="user" aria-hidden="true" />
+            <span>Account</span>
+          </div>
+        </orbit-sidebar>
+        <div class="sidebar-page__content">
+          <strong>{{ activeId() }}</strong>
+          <span>Seleziona una voce o riduci la sidebar.</span>
+        </div>
+      </div>
+    </lab-example>
+  </section>
+</article>

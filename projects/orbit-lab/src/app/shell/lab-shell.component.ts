@@ -53,6 +53,13 @@ interface LabOptionsPanelData {
     RouterLink,
     RouterLinkActive,
   ],
+  host: {
+    '[attr.data-orbit-theme]': 'data.theme() === "dark" ? "dark" : null',
+    '[attr.data-orbit-density]': 'data.density()',
+    '[style.--orbit-text-scale]': 'data.textScale()',
+    '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
+    '[style.--orbit-font-sans]': 'fontStack()',
+  },
   template: `<orbit-panel-surface labelledBy="catalog-navigation-title">
     <orbit-modal-header
       title="Catalogo tecnico"
@@ -87,6 +94,11 @@ interface LabOptionsPanelData {
 })
 class LabCatalogNavigationPanelComponent {
   readonly entries = CATALOG_ENTRIES;
+  readonly data = inject(ORBIT_PANEL_DATA) as LabOptionsPanelData;
+  readonly fontStack = computed(() => LAB_FONT_STACKS[this.data.font()]);
+  readonly optionalIconDisplay = computed(() =>
+    parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
+  );
   private readonly panel = inject(OrbitPanelService);
 
   close(): void {
@@ -104,6 +116,13 @@ class LabCatalogNavigationPanelComponent {
     OrbitModalHeaderComponent,
     OrbitPanelSurfaceComponent,
   ],
+  host: {
+    '[attr.data-orbit-theme]': 'data.theme() === "dark" ? "dark" : null',
+    '[attr.data-orbit-density]': 'data.density()',
+    '[style.--orbit-text-scale]': 'data.textScale()',
+    '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
+    '[style.--orbit-font-sans]': 'fontStack()',
+  },
   template: `<orbit-panel-surface labelledBy="catalog-options-title">
     <orbit-modal-header
       title="Opzioni catalogo"
@@ -160,6 +179,10 @@ class LabCatalogNavigationPanelComponent {
 })
 class LabCatalogOptionsPanelComponent {
   readonly data = inject(ORBIT_PANEL_DATA) as LabOptionsPanelData;
+  readonly fontStack = computed(() => LAB_FONT_STACKS[this.data.font()]);
+  readonly optionalIconDisplay = computed(() =>
+    parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
+  );
   private readonly panel = inject(OrbitPanelService);
 
   close(): void {
@@ -171,7 +194,7 @@ class LabCatalogOptionsPanelComponent {
   selector: 'lab-shell',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [OrbitButtonComponent, RouterOutlet],
   templateUrl: './lab-shell.component.html',
   styleUrl: './lab-shell.component.css',
   host: {
@@ -182,7 +205,7 @@ class LabCatalogOptionsPanelComponent {
   },
 })
 export class LabShellComponent {
-  protected readonly entries = CATALOG_ENTRIES;
+  private readonly panel = inject(OrbitPanelService);
   protected readonly theme = signal<LabTheme>('default');
   protected readonly density = signal<LabDensity>('comfortable');
   protected readonly textScale = signal<LabTextScale>('1');
@@ -204,5 +227,34 @@ export class LabShellComponent {
 
   setFont(font: LabFont): void {
     this.font.set(font);
+  }
+
+  openNavigation(): void {
+    this.panel.open(LabCatalogNavigationPanelComponent, {
+      side: 'left',
+      size: 'sm',
+      data: this.createPanelData(),
+    });
+  }
+
+  openOptions(): void {
+    this.panel.open(LabCatalogOptionsPanelComponent, {
+      side: 'right',
+      size: 'md',
+      data: this.createPanelData(),
+    });
+  }
+
+  private createPanelData(): LabOptionsPanelData {
+    return {
+      theme: this.theme,
+      density: this.density,
+      textScale: this.textScale,
+      font: this.font,
+      setTheme: (theme) => this.setTheme(theme),
+      setDensity: (density) => this.setDensity(density),
+      setTextScale: (textScale) => this.setTextScale(textScale),
+      setFont: (font) => this.setFont(font),
+    } satisfies LabOptionsPanelData;
   }
 }

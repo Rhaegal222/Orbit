@@ -32,6 +32,10 @@ describe('LabShellComponent', () => {
     expect(items.length).toBe(CATALOG_ENTRIES.length);
   });
 
+  it('keeps the sidebar footer disabled in the application shell', () => {
+    expect(fixture.nativeElement.querySelector('.orbit-sidebar__footer')).toBeNull();
+  });
+
   it('renders an icon for every sidebar item so the collapsed view is never empty', () => {
     const icons = fixture.nativeElement.querySelectorAll('orbit-sidebar .orbit-sidebar__item-icon');
     expect(icons.length).toBe(CATALOG_ENTRIES.length);

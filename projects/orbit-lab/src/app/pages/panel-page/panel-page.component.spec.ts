@@ -35,6 +35,23 @@ describe('PanelPageComponent', () => {
     expect(preview.textContent).toContain('Senza footer');
   });
 
+  it('hides the sidebar header and footer from their preview controls', () => {
+    const preview = fixture.nativeElement.querySelector('.panel-page__sidebar-preview') as HTMLElement;
+    const clickTile = (label: string) => {
+      const tile = [...preview.querySelectorAll('orbit-selectable-tile')].find((element) =>
+        element.textContent?.includes(label),
+      ) as HTMLElement;
+      tile.querySelector('button')?.click();
+      fixture.detectChanges();
+    };
+
+    clickTile('Senza header');
+    expect(preview.querySelector('.orbit-sidebar__header')).toBeNull();
+
+    clickTile('Senza footer');
+    expect(preview.querySelector('.orbit-sidebar__footer')).toBeNull();
+  });
+
   it('opens the offcanvas panel on the overlay when "Apri da destra" is clicked', () => {
     const openButton = Array.from(fixture.nativeElement.querySelectorAll('orbit-button button')).find((btn) =>
       (btn as HTMLButtonElement).textContent?.includes('Apri da destra'),

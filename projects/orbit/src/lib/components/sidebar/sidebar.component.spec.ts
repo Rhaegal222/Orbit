@@ -61,13 +61,10 @@ describe('OrbitSidebarComponent', () => {
     expect(collapsed).toBe(true);
   });
 
-  it('positions the edge toggle relative to the pointer within the sidebar', () => {
-    const sidebar = document.createElement('aside');
-    sidebar.getBoundingClientRect = () => ({ top: 100, height: 400 }) as DOMRect;
+  it('keeps the edge toggle centred instead of following the pointer', () => {
+    const toggle = fixture.nativeElement.querySelector('.orbit-sidebar__toggle') as HTMLButtonElement;
 
-    component.onPointerMove({ currentTarget: sidebar, clientY: 300 } as unknown as PointerEvent);
-
-    expect(component.toggleTop()).toBe(50);
+    expect(toggle.style.top).toBe('');
   });
 
   it('can hide the sidebar header and footer independently', () => {

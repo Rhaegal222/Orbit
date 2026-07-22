@@ -2,7 +2,6 @@
   class="orbit-sidebar"
   [class.orbit-sidebar--embedded]="embedded()"
   [attr.aria-label]="ariaLabel() || null"
-  (pointermove)="onPointerMove($event)"
 >
   @if (!embedded() && showHeader()) {
     <header class="orbit-sidebar__header">
@@ -68,7 +67,6 @@
     <button
       type="button"
       class="orbit-sidebar__toggle"
-      [style.top.%]="toggleTop()"
       [attr.aria-label]="collapsed() ? i18n.labels.expandSidebar : i18n.labels.collapseSidebar"
       (click)="toggle()"
     >

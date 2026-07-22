@@ -286,6 +286,7 @@ export class LabShellComponent {
   );
   readonly searchControl = new FormControl('', { nonNullable: true });
   protected readonly sidebarCollapsed = signal(false);
+  protected readonly showSidebarHeader = signal(true);
   private readonly document = inject(DOCUMENT);
 
   private readonly searchQuery: Signal<string> = toSignal(this.searchControl.valueChanges, {

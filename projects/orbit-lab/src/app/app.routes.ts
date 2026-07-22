@@ -73,7 +73,9 @@ export const routes: Routes = [
   {
     path: 'examples',
     loadComponent: () =>
-      import('./pages/examples-page/examples-page.component').then((m) => m.ExamplesPageComponent),
+      import('./pages/examples-page/examples-page.component').then(
+        ({ ExamplesPageComponent }) => ExamplesPageComponent,
+      ),
   },
   {
     path: 'attachments',

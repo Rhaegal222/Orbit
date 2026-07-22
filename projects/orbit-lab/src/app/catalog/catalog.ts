@@ -18,4 +18,5 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'select', label: 'Selezione', status: 'verified' },
   { slug: 'form-section', label: 'Sezioni modulo', status: 'verified' },
   { slug: 'tooltip', label: 'Suggerimenti', status: 'verified' },
+  { slug: 'tab', label: 'Tab', status: 'verified' },
 ];

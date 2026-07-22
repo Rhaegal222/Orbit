@@ -27,18 +27,28 @@ describe('LabShellComponent', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('opens the catalog navigation in a left offcanvas', () => {
-    const navigationButton = [...fixture.nativeElement.querySelectorAll('orbit-button')].find(
-      (button: HTMLElement) => button.textContent?.includes('Navigazione'),
-    ) as HTMLElement;
-    navigationButton.querySelector('button')?.click();
+  it('renders every catalog entry as a sidebar item', () => {
+    const items = fixture.nativeElement.querySelectorAll('orbit-sidebar button.orbit-sidebar__item');
+    expect(items.length).toBe(CATALOG_ENTRIES.length);
+  });
+
+  it('filters the sidebar items as the search box changes', () => {
+    fixture.componentInstance.searchControl.setValue('badge');
     fixture.detectChanges();
 
-    const overlay = overlayContainer.getContainerElement();
-    expect(overlay.querySelector('.orbit-panel--left')).toBeTruthy();
-    expect(overlay.querySelectorAll('[data-lab-panel-nav-link]')).toHaveLength(
-      CATALOG_ENTRIES.length,
-    );
+    const items = [
+      ...fixture.nativeElement.querySelectorAll('orbit-sidebar button.orbit-sidebar__item'),
+    ] as HTMLElement[];
+    expect(items.length).toBe(1);
+    expect(items[0].textContent).toContain('Badge');
+  });
+
+  it('shows no sidebar items when the search matches nothing', () => {
+    fixture.componentInstance.searchControl.setValue('zzz-no-match');
+    fixture.detectChanges();
+
+    const items = fixture.nativeElement.querySelectorAll('orbit-sidebar button.orbit-sidebar__item');
+    expect(items.length).toBe(0);
   });
 
   it('opens theme and density options in a right offcanvas', () => {

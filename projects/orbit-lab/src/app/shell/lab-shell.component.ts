@@ -5,11 +5,14 @@ import {
   effect,
   inject,
   signal,
+  Signal,
   type WritableSignal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DOCUMENT } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
 import {
   OrbitButtonComponent,
   OrbitFormFieldComponent,
@@ -20,9 +23,13 @@ import {
   OrbitPanelService,
   OrbitPanelSurfaceComponent,
   OrbitSelectComponent,
+  OrbitSidebarComponent,
   OrbitSliderComponent,
   OrbitSwitchComponent,
+  OrbitTextInputComponent,
   type OrbitDensity,
+  type OrbitSidebarItem,
+  type OrbitSidebarSection,
 } from '@galileo/orbit';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
 
@@ -51,72 +58,6 @@ interface LabOptionsPanelData {
   setFont: (font: LabFont) => void;
   setShadowIntensity: (shadowIntensity: LabShadowIntensity) => void;
   setMotionEnabled: (motionEnabled: boolean) => void;
-}
-
-@Component({
-  selector: 'lab-catalog-navigation-panel',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    OrbitButtonComponent,
-    OrbitModalBodyComponent,
-    OrbitModalFooterComponent,
-    OrbitModalHeaderComponent,
-    OrbitPanelSurfaceComponent,
-    RouterLink,
-    RouterLinkActive,
-  ],
-  host: {
-    '[attr.data-orbit-theme]': 'data.theme() === "dark" ? "dark" : null',
-    '[attr.data-orbit-density]': 'data.density()',
-    '[style.--orbit-text-scale]': 'data.textScale()',
-    '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
-    '[style.--orbit-font-sans]': 'fontStack()',
-    '[attr.data-orbit-shadow-intensity]': 'data.shadowIntensity()',
-  },
-  template: `<orbit-panel-surface labelledBy="catalog-navigation-title">
-    <orbit-modal-header
-      title="Catalogo tecnico"
-      subtitle="Componenti, varianti e stati"
-      titleId="catalog-navigation-title"
-      (closeClicked)="close()"
-    />
-    <orbit-modal-body>
-      <nav class="lab-catalog-panel__nav" aria-label="Catalogo Orbit">
-        @for (entry of entries; track entry.slug) {
-          <a
-            data-lab-panel-nav-link
-            class="lab-catalog-panel__nav-link"
-            [class.lab-catalog-panel__nav-link--blocked]="entry.status !== 'verified'"
-            [routerLink]="['/', entry.slug]"
-            routerLinkActive="lab-catalog-panel__nav-link--active"
-            (click)="close()"
-          >
-            {{ entry.label }}
-          </a>
-        }
-      </nav>
-    </orbit-modal-body>
-    <orbit-modal-footer>
-      <span orbitModalFooterLeft>Orbit Core</span>
-      <span orbitModalFooterRight>
-        <orbit-button label="Chiudi" variant="outline" tone="neutral" (clicked)="close()" />
-      </span>
-    </orbit-modal-footer>
-  </orbit-panel-surface>`,
-  styleUrl: './catalog-panel.component.css',
-})
-class LabCatalogNavigationPanelComponent {
-  readonly entries = CATALOG_ENTRIES;
-  readonly data = inject(ORBIT_PANEL_DATA) as LabOptionsPanelData;
-  readonly fontStack = computed(() => LAB_FONT_STACKS[this.data.font()]);
-  readonly optionalIconDisplay = computed(() =>
-    parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
-  );
-  private readonly panel = inject(OrbitPanelService);
-
-  close(): void {
-    this.panel.closeAll();
-  }
 }
 
 @Component({
@@ -316,7 +257,7 @@ class LabCatalogOptionsPanelComponent {
   selector: 'lab-shell',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitButtonComponent, RouterOutlet],
+  imports: [OrbitButtonComponent, OrbitSidebarComponent, OrbitTextInputComponent, ReactiveFormsModule, RouterOutlet],
   templateUrl: './lab-shell.component.html',
   styleUrl: './lab-shell.component.css',
   host: {
@@ -332,6 +273,7 @@ class LabCatalogOptionsPanelComponent {
 })
 export class LabShellComponent {
   private readonly panel = inject(OrbitPanelService);
+  private readonly router = inject(Router);
   protected readonly theme = signal<LabTheme>('default');
   protected readonly density = signal<LabDensity>('comfortable');
   protected readonly textScale = signal<LabTextScale>('1');
@@ -342,7 +284,30 @@ export class LabShellComponent {
   protected readonly optionalIconDisplay = computed(() =>
     parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
   );
+  protected readonly searchControl = new FormControl('', { nonNullable: true });
+  protected readonly sidebarCollapsed = signal(false);
   private readonly document = inject(DOCUMENT);
+
+  private readonly searchQuery: Signal<string> = toSignal(this.searchControl.valueChanges, {
+    initialValue: this.searchControl.value,
+  });
+
+  protected readonly sidebarSections: Signal<readonly OrbitSidebarSection[]> = computed(() => {
+    const query = this.searchQuery().trim().toLowerCase();
+    const items: OrbitSidebarItem[] = CATALOG_ENTRIES.filter((entry) =>
+      entry.label.toLowerCase().includes(query),
+    ).map((entry) => ({ id: entry.slug, label: entry.label }));
+    return [{ id: 'catalog', items }];
+  });
+
+  protected readonly activeSidebarId: Signal<string | null> = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.currentSlugFromUrl()),
+      startWith(this.currentSlugFromUrl()),
+    ),
+    { initialValue: this.currentSlugFromUrl() },
+  );
 
   constructor() {
     effect((onCleanup) => {
@@ -375,20 +340,25 @@ export class LabShellComponent {
     this.motionEnabled.set(motionEnabled);
   }
 
-  openNavigation(): void {
-    this.panel.open(LabCatalogNavigationPanelComponent, {
-      side: 'left',
-      size: 'sm',
-      data: this.createPanelData(),
-    });
-  }
-
   openOptions(): void {
     this.panel.open(LabCatalogOptionsPanelComponent, {
       side: 'right',
       size: 'md',
       data: this.createPanelData(),
     });
+  }
+
+  onSidebarItemSelected(item: OrbitSidebarItem): void {
+    this.router.navigate(['/', item.id]);
+  }
+
+  onSidebarCollapsedChange(collapsed: boolean): void {
+    this.sidebarCollapsed.set(collapsed);
+  }
+
+  private currentSlugFromUrl(): string | null {
+    const [, slug] = this.router.url.split('/');
+    return slug?.split('?')[0] || null;
   }
 
   private createPanelData(): LabOptionsPanelData {

@@ -100,4 +100,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/tooltip-page/tooltip-page.component').then((m) => m.TooltipPageComponent),
   },
+  {
+    path: 'panel',
+    loadComponent: () =>
+      import('./pages/panel-page/panel-page.component').then((m) => m.PanelPageComponent),
+  },
 ];

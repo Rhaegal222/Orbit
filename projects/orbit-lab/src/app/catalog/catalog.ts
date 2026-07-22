@@ -10,6 +10,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'operational-modal', label: 'Esempi', status: 'verified' },
   { slug: 'form-grid', label: 'Griglia modulo', status: 'verified' },
   { slug: 'text-input', label: 'Input di testo', status: 'verified' },
+  { slug: 'panel', label: 'Panel', status: 'verified' },
   { slug: 'popover', label: 'Popover', status: 'verified' },
   { slug: 'button', label: 'Pulsanti', status: 'verified' },
   { slug: 'pill-switch', label: 'Selettore a pillola', status: 'verified' },

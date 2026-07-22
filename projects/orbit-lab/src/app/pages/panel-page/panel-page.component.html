@@ -1,0 +1,22 @@
+<article>
+  <h1>Panel</h1>
+  <p>Due varianti: overlay offcanvas transitorio (via <code>OrbitPanelService</code>) e sidebar persistente di layout (<code>orbit-panel</code>).</p>
+
+  <section>
+    <h2>Offcanvas</h2>
+    <lab-example [code]="offcanvasSnippet">
+      <orbit-button label="Apri da destra" (clicked)="openOffcanvas('right')" />
+      <orbit-button label="Apri da sinistra" tone="neutral" variant="outline" (clicked)="openOffcanvas('left')" />
+    </lab-example>
+    @if (lastOpenedSide()) {
+      <p>Ultimo lato aperto: <strong>{{ lastOpenedSide() }}</strong></p>
+    }
+  </section>
+
+  <section>
+    <h2>Sidebar</h2>
+    <lab-example [code]="sidebarSnippet">
+      <orbit-panel><p>Contenuto fisso di layout</p></orbit-panel>
+    </lab-example>
+  </section>
+</article>

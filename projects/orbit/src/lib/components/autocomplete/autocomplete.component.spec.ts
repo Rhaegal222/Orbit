@@ -95,4 +95,18 @@ describe('OrbitAutocompleteComponent', () => {
     fixture.detectChanges();
     expect(overlayContainer.getContainerElement().querySelector('.orbit-ac__menu')).toBeNull();
   });
+
+  it('closes when an interaction moves outside the trigger and overlay', () => {
+    component.isOpen.set(true);
+    component.onDocumentPointerDown(new PointerEvent('pointerdown'));
+
+    expect(component.isOpen()).toBe(false);
+  });
+
+  it('closes on Escape', () => {
+    component.isOpen.set(true);
+    component.onEscape();
+
+    expect(component.isOpen()).toBe(false);
+  });
 });

@@ -14,8 +14,8 @@
   background: var(--orbit-surface-default);
   cursor: pointer;
   transition:
-    border-color 0.15s ease,
-    background-color 0.15s ease;
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-drop__zone:hover:not(.orbit-drop__zone--disabled) {

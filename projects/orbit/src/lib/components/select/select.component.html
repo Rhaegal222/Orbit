@@ -1,20 +1,37 @@
 <div class="orbit-select__wrapper">
-  <input
-    type="text"
-    class="orbit-select__input"
-    [class.orbit-select__input--searchable]="searchable()"
-    [id]="inputId() || null"
-    [placeholder]="placeholder() || i18n.labels.select"
-    [value]="inputText()"
-    [readonly]="!searchable()"
-    [disabled]="isDisabled()"
-    [required]="required()"
-    (input)="onInputChange($any($event.target).value)"
-    (focus)="onFocus()"
-    (click)="onInputClick()"
-    (blur)="onBlur()"
-    (keydown)="onKeydown($event)"
-  />
+  @if (searchable()) {
+    <input
+      type="text"
+      class="orbit-select__input orbit-select__input--searchable"
+      [id]="inputId() || null"
+      [placeholder]="placeholder() || i18n.labels.select"
+      [value]="inputText()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      (input)="onInputChange($any($event.target).value)"
+      (focus)="onFocus()"
+      (click)="onInputClick()"
+      (blur)="onBlur()"
+      (keydown)="onKeydown($event)"
+    />
+  } @else {
+    <button
+      type="button"
+      class="orbit-select__input orbit-select__trigger"
+      [class.orbit-select__trigger--placeholder]="!inputText()"
+      [id]="inputId() || null"
+      [disabled]="isDisabled()"
+      [attr.aria-label]="inputText() || placeholder() || i18n.labels.select"
+      [attr.aria-expanded]="isOpen()"
+      aria-haspopup="listbox"
+      (focus)="onFocus()"
+      (click)="onInputClick()"
+      (blur)="onBlur()"
+      (keydown)="onKeydown($event)"
+    >
+      {{ inputText() || placeholder() || i18n.labels.select }}
+    </button>
+  }
   <button
     type="button"
     class="orbit-select__toggle"

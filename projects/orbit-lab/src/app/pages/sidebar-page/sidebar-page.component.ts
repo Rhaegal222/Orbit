@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import {
-  OrbitButtonComponent,
+  OrbitIconComponent,
+  OrbitSelectableTileComponent,
   OrbitSidebarComponent,
   type OrbitSidebarItem,
   type OrbitSidebarSection,
@@ -38,7 +39,12 @@ const SIDEBAR_STATE_SECTIONS: readonly OrbitSidebarSection[] = [
   selector: 'lab-sidebar-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LabExampleComponent, OrbitButtonComponent, OrbitSidebarComponent],
+  imports: [
+    LabExampleComponent,
+    OrbitIconComponent,
+    OrbitSelectableTileComponent,
+    OrbitSidebarComponent,
+  ],
   templateUrl: './sidebar-page.component.html',
   styleUrl: './sidebar-page.component.css',
 })
@@ -46,6 +52,8 @@ export class SidebarPageComponent {
   protected readonly sections = SIDEBAR_SECTIONS;
   protected readonly stateSections = SIDEBAR_STATE_SECTIONS;
   protected readonly variant = signal<'expanded' | 'compact' | 'states'>('expanded');
+  protected readonly selectedVariant = signal<'expanded' | 'compact' | 'states'>('expanded');
+  protected readonly showBrandIcon = signal(false);
   protected readonly activeId = signal('overview');
   protected readonly collapsed = signal(false);
   protected readonly currentSections = computed(() =>
@@ -64,8 +72,6 @@ export class SidebarPageComponent {
 
   protected readonly snippet = `<orbit-sidebar
   brand="Orbit"
-  brandShort="O"
-  brandIcon="layers"
   [sections]="sections"
   [activeId]="activeId"
   [collapsed]="collapsed"
@@ -79,16 +85,22 @@ export class SidebarPageComponent {
     this.activeId.set(item.id);
   }
 
-  setVariant(variant: 'expanded' | 'compact' | 'states'): void {
+  selectVariant(variant: 'expanded' | 'compact' | 'states'): void {
+    this.selectedVariant.set(variant);
     this.variant.set(variant);
     this.collapsed.set(variant === 'compact');
     this.activeId.set(variant === 'states' ? 'active' : variant === 'compact' ? 'collections' : 'overview');
+  }
+
+  selectBrandIcon(showIcon: boolean): void {
+    this.showBrandIcon.set(showIcon);
   }
 
   setCollapsed(collapsed: boolean): void {
     this.collapsed.set(collapsed);
     if (this.variant() !== 'states') {
       this.variant.set(collapsed ? 'compact' : 'expanded');
+      this.selectedVariant.set(this.variant());
     }
   }
 }

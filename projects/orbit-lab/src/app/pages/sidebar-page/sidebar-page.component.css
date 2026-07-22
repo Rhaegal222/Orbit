@@ -8,7 +8,7 @@
 }
 
 .sidebar-page__preview orbit-sidebar {
-  height: 30rem;
+  align-self: stretch;
   flex: 0 0 auto;
 }
 
@@ -40,11 +40,18 @@
   font-weight: var(--orbit-font-weight-emphasis);
 }
 
-.sidebar-page__variant-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.sidebar-page__tile-group {
+  display: grid;
+  width: min(100%, 24rem);
   gap: var(--orbit-space-2);
+}
+
+.sidebar-page__tile-group orbit-selectable-tile {
+  min-width: 0;
+}
+
+.sidebar-page__tile--separated {
+  margin-block-start: var(--orbit-space-3);
 }
 
 @media (max-width: 42rem) {

@@ -10,6 +10,7 @@
 
 /* ── Input ── */
 .orbit-select__input {
+  box-sizing: border-box;
   width: 100%;
   height: var(--orbit-control-height);
   padding: 0 calc(var(--orbit-control-action-size) + var(--orbit-space-2)) 0
@@ -30,6 +31,19 @@
 
 .orbit-select__input--searchable {
   cursor: text;
+}
+
+.orbit-select__trigger {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.orbit-select__trigger--placeholder {
+  color: var(--orbit-text-placeholder);
 }
 
 .orbit-select__input::placeholder {
@@ -138,7 +152,7 @@
 .orbit-select__menu {
   width: 100%;
   max-height: 13.5rem;
-  padding: 0.25rem;
+  padding: var(--orbit-space-xs);
   box-sizing: border-box;
   overflow-y: auto;
   border: 1px solid var(--orbit-border-subtle);

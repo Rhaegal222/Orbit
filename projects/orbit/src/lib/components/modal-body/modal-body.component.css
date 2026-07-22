@@ -40,7 +40,7 @@
   border: 2px solid var(--orbit-border-subtle);
   border-top-color: var(--orbit-action-primary-bg);
   border-radius: var(--orbit-radius-full);
-  animation: orbit-modal-body-spin 0.6s linear infinite;
+  animation: orbit-modal-body-spin var(--orbit-motion-spin) linear infinite;
 }
 
 .orbit-modal-body__loader--small .orbit-modal-body__spinner {

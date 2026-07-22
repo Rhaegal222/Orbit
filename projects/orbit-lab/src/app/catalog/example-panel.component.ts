@@ -12,7 +12,7 @@ import { OrbitButtonComponent, OrbitCodeBlockComponent } from '@galileo/orbit';
 export class LabExampleComponent {
   /** Optional source snippet rendered below the interactive preview. */
   code = input('');
-  /** Constrains a projected block component to 92% of the preview width. */
+  /** Lets a projected block component use the full preview width. */
   fullWidth = input(false, { transform: booleanAttribute });
   protected readonly isCodeVisible = signal(false);
 

@@ -75,5 +75,5 @@ body {
   background: var(--orbit-surface-subtle);
   color: var(--orbit-text-primary);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.875em;
+  font-size: var(--orbit-font-size-code);
 }

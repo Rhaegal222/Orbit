@@ -1,13 +1,7 @@
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 export type OrbitButtonTone = 'primary' | 'success' | 'danger' | 'neutral';
-export type OrbitButtonVariant = 'solid' | 'soft' | 'outline' | 'flat';
+export type OrbitButtonVariant = 'solid' | 'soft' | 'translucent' | 'outline' | 'flat';
 
 @Component({
   selector: 'orbit-button',

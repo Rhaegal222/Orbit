@@ -3,7 +3,7 @@
   width: 100%;
   border-collapse: collapse;
   font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-sm);
+  font-size: var(--orbit-font-size-body);
   color: var(--orbit-text-primary);
 }
 .orbit-table ::ng-deep th,
@@ -15,7 +15,7 @@
 .orbit-table ::ng-deep thead th {
   color: var(--orbit-text-secondary);
   font-weight: var(--orbit-font-weight-emphasis);
-  font-size: var(--orbit-font-size-xs);
+  font-size: var(--orbit-font-size-label);
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }

@@ -9,6 +9,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'dialog', label: 'Dialoghi', status: 'verified' },
   { slug: 'operational-modal', label: 'Esempi', status: 'verified' },
   { slug: 'form-grid', label: 'Griglia modulo', status: 'verified' },
+  { slug: 'layout', label: 'Layout', status: 'verified' },
   { slug: 'text-input', label: 'Input di testo', status: 'verified' },
   { slug: 'panel', label: 'Panel', status: 'verified' },
   { slug: 'popover', label: 'Popover', status: 'verified' },
@@ -21,4 +22,5 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'tooltip', label: 'Suggerimenti', status: 'verified' },
   { slug: 'tab', label: 'Tab', status: 'verified' },
   { slug: 'table', label: 'Table', status: 'verified' },
+  { slug: 'typography', label: 'Tipografia', status: 'verified' },
 ];

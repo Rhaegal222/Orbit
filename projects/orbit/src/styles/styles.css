@@ -13,7 +13,9 @@
   animation: orbit-modal-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
 }
 
-.orbit-panel-backdrop { background: var(--orbit-overlay-backdrop); }
+.orbit-panel-backdrop {
+  background: var(--orbit-overlay-backdrop);
+}
 .orbit-panel-pane {
   display: flex;
   height: 100%;
@@ -37,7 +39,10 @@
 }
 
 .orbit-tooltip-panel {
-  animation: orbit-tooltip-enter var(--orbit-motion-fast) var(--orbit-easing-standard);
+  /* The CDK position strategy owns the pane transform. Animate the tooltip
+     content instead, otherwise the keyframe overwrites its translate3d and
+     makes the overlay jump while it is being positioned. */
+  pointer-events: none;
 }
 
 .orbit-panel-backdrop {
@@ -53,34 +58,66 @@
   animation-name: orbit-panel-enter-from-left;
 }
 
+[data-orbit-motion='off'],
+[data-orbit-motion='off'] *,
+[data-orbit-motion='off'] *::before,
+[data-orbit-motion='off'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
 @keyframes orbit-backdrop-enter {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes orbit-modal-enter {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes orbit-floating-enter {
-  from { opacity: 0; transform: scaleY(0.96); }
-  to { opacity: 1; transform: scaleY(1); }
-}
-
-@keyframes orbit-tooltip-enter {
-  from { opacity: 0; transform: translateY(0.25rem); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: scaleY(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes orbit-panel-enter {
-  from { opacity: 0; transform: translateX(100%); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes orbit-panel-enter-from-left {
-  from { opacity: 0; transform: translateX(-100%); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

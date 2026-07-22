@@ -1,5 +1,6 @@
 export * from './lib/components/button';
 export * from './lib/components/icon-button';
+export * from './lib/components/layout';
 export * from './lib/components/divider';
 export * from './lib/components/selectable-tile';
 export * from './lib/components/badge';
@@ -9,6 +10,8 @@ export * from './lib/components/form-grid';
 export * from './lib/components/form-section';
 export * from './lib/components/pill-switch';
 export * from './lib/components/select';
+export * from './lib/components/slider';
+export * from './lib/components/switch';
 export * from './lib/components/text-input';
 export * from './lib/components/autocomplete';
 export * from './lib/components/date-picker';

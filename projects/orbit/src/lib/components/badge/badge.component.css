@@ -5,9 +5,9 @@
 .orbit-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  height: 1.375rem;
-  padding: 0 0.5rem;
+  gap: var(--orbit-badge-gap);
+  height: var(--orbit-badge-height);
+  padding: 0 var(--orbit-badge-padding-inline);
   border-radius: var(--orbit-radius-full);
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-xs);

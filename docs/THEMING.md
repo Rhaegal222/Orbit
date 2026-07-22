@@ -22,7 +22,36 @@ The import includes the default Orbit tokens and Tailwind v4 theme aliases. Tail
 
 Components must consume semantic or component tokens. They must not use a reference token or a literal visual value directly.
 
+### Action foregrounds and dark theme
+
+Action tokens separate the foreground used on a solid surface from the brighter foreground used by `soft`, `translucent`, `outline` and `flat` variants. This prevents dark-on-dark text when a theme changes the canvas.
+
+| Tone    | Solid surface / foreground                               | Subtle foreground                  |
+| ------- | -------------------------------------------------------- | ---------------------------------- |
+| Primary | `--orbit-action-primary-bg`, `--orbit-action-primary-fg` | `--orbit-action-primary-fg-subtle` |
+| Success | `--orbit-action-success-bg`, `--orbit-action-success-fg` | `--orbit-action-success-fg-subtle` |
+| Danger  | `--orbit-action-danger-bg`, `--orbit-action-danger-fg`   | `--orbit-action-danger-fg-subtle`  |
+| Neutral | `--orbit-action-neutral-bg`, `--orbit-action-neutral-fg` | `--orbit-action-neutral-fg-subtle` |
+
+For a dark theme, set solid foregrounds to a light value where the action surface is saturated, and set subtle foregrounds to a lighter, contrast-tested tone. Do not rely on a dark brand colour for text on a dark surface.
+
 Core also exposes narrowly scoped component tokens where a semantic token alone cannot express a readable state. Current examples are `--orbit-radius-full` and the `--orbit-badge-*-fg` foreground tokens. They have default values and remain overrideable, but themes should prefer semantic tokens unless a component-specific exception is intentional.
+
+### Typography roles
+
+Every `font-size` declaration in Core maps to a semantic role and scales through `--orbit-text-scale`:
+
+| Role     | Token                        | Intended use                                          |
+| -------- | ---------------------------- | ----------------------------------------------------- |
+| Display  | `--orbit-font-size-display`  | Page-level title                                      |
+| Title    | `--orbit-font-size-title`    | Modal and surface title                               |
+| Subtitle | `--orbit-font-size-subtitle` | Section heading                                       |
+| Body     | `--orbit-font-size-body`     | Navigation, controls, table data and operational text |
+| Label    | `--orbit-font-size-label`    | Field labels, table headers and compact metadata      |
+| Caption  | `--orbit-font-size-caption`  | Secondary hints and badges                            |
+| Code     | `--orbit-font-size-code`     | Code blocks and inline code                           |
+
+Errors and persistent action status use the Label role, not Caption, so they remain readable in compact and dark interfaces.
 
 ## Create an application theme
 
@@ -102,6 +131,19 @@ overrides of `orbit-form-grid` and `orbit-form-section` accept
 
 ## Composition spacing
 
+## Layout primitives
+
+The semantic spacing scale is exposed as `--orbit-space-2xs`, `--orbit-space-xs`,
+`--orbit-space-sm`, `--orbit-space-md`, `--orbit-space-lg`, `--orbit-space-xl`
+and `--orbit-space-2xl`. These aliases inherit the active density and text scale;
+use them through `orbit-stack` and `orbit-cluster` instead of child margins.
+
+`orbit-page-shell` uses `--orbit-page-padding-inline`,
+`--orbit-page-max-width-document` and `--orbit-page-max-width-workspace` to
+maintain page gutters and readable content widths. `orbit-workspace` composes a
+responsive sidebar and main area, while `orbitDataAlign` aligns table data by
+reading direction (`start`, `center`, `end`).
+
 Use `--orbit-layout-gap`, `--orbit-field-stack-gap`, `--orbit-section-gap`,
 `--orbit-modal-padding-inline` and
 `--orbit-modal-padding-block` to tune dense operational forms consistently.
@@ -156,6 +198,20 @@ typography roles and motion tokens. Override `--orbit-surface-raised`,
 `--orbit-motion-fast`, `--orbit-motion-base` and `--orbit-easing-standard` rather
 than individual component CSS values.
 
+Set `data-orbit-shadow-intensity` to one of `0`, `0.25`, `0.5`, `0.75`, `1`,
+`1.25` or `1.5`
+on an application shell to scale the opacity of the shared raised, floating and
+overlay shadows. The semantic `--orbit-shadow-raised`, `--orbit-shadow-floating`
+and `--orbit-shadow-overlay` tokens remain the component contract. The same
+level also scales the derived action-button and form-footer elevation tokens,
+so no raised component is excluded from the setting.
+
+Set `data-orbit-motion="off"` on the application shell to disable all Orbit
+animations and transitions, including CDK overlay surfaces. Components use
+`--orbit-motion-fast`, `--orbit-motion-base`, `--orbit-motion-slow` and
+`--orbit-motion-spin` for their motion durations; the global attribute is the
+appropriate user preference override.
+
 The default values follow the operational visual contract: ink-based text,
 subtle borders, 10px control radius, 14px selectable tiles and 20px modal
 surfaces. Consumers can replace these semantic roles, including
@@ -201,15 +257,15 @@ Orbit motion is semantic and token-driven. Use `fast` for micro-feedback,
 overlay surfaces. Enter uses `--orbit-easing-standard`; collapse and exit use
 `--orbit-easing-accelerate`; shared movement uses `--orbit-easing-shared`.
 
-| Token | Default | Role |
-| --- | --- | --- |
-| `--orbit-motion-fast` | `120ms` | Hover, pressed, toggle and fast exit |
-| `--orbit-motion-base` | `180ms` | Dropdown, popover, tooltip and expand |
-| `--orbit-motion-slow` | `240ms` | Modal and large overlay entry |
-| `--orbit-motion-shimmer` | `1200ms` | Continuous skeleton treatment |
-| `--orbit-easing-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Enter and state change |
-| `--orbit-easing-accelerate` | `cubic-bezier(0.4, 0, 1, 1)` | Exit and collapse |
-| `--orbit-easing-shared` | `cubic-bezier(0.4, 0, 0.2, 1)` | Shared movement |
+| Token                       | Default                        | Role                                  |
+| --------------------------- | ------------------------------ | ------------------------------------- |
+| `--orbit-motion-fast`       | `120ms`                        | Hover, pressed, toggle and fast exit  |
+| `--orbit-motion-base`       | `180ms`                        | Dropdown, popover, tooltip and expand |
+| `--orbit-motion-slow`       | `240ms`                        | Modal and large overlay entry         |
+| `--orbit-motion-shimmer`    | `1200ms`                       | Continuous skeleton treatment         |
+| `--orbit-easing-standard`   | `cubic-bezier(0.2, 0, 0, 1)`   | Enter and state change                |
+| `--orbit-easing-accelerate` | `cubic-bezier(0.4, 0, 1, 1)`   | Exit and collapse                     |
+| `--orbit-easing-shared`     | `cubic-bezier(0.4, 0, 0.2, 1)` | Shared movement                       |
 
 The shipped stylesheet honors `prefers-reduced-motion: reduce` by reducing
 transition and animation durations and limiting animated loops. Do not add

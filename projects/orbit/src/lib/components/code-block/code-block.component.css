@@ -41,7 +41,9 @@
   font-size: var(--orbit-font-size-sm);
   font-family: var(--orbit-font-sans);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-code-block__action:hover {
@@ -57,11 +59,9 @@
 .orbit-code-block__pre {
   margin: 0;
   width: 100%;
-  padding:
-    var(--orbit-space-3)
-    calc(var(--orbit-control-height) + 2 * var(--orbit-space-2))
-    var(--orbit-space-3)
-    0;
+  min-block-size: calc(var(--orbit-control-height) + 2 * var(--orbit-space-2));
+  padding: var(--orbit-space-3) calc(var(--orbit-control-height) + 2 * var(--orbit-space-2))
+    var(--orbit-space-3) 0;
   border: 0;
   background: transparent;
   color: var(--orbit-text-primary);

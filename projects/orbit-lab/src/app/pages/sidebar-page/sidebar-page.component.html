@@ -6,13 +6,11 @@
   </p>
 
   <section>
-    <h2>Varianti</h2>
     <lab-example [code]="snippet" fullWidth>
       <div class="sidebar-page__preview">
         <orbit-sidebar
           brand="Orbit"
-          brandShort="O"
-          brandIcon="layers"
+          [brandIcon]="showBrandIcon() ? 'layers' : null"
           ariaLabel="Anteprima sidebar"
           [sections]="currentSections()"
           [activeId]="activeId()"
@@ -28,29 +26,52 @@
             <strong>{{ variantLabel() }}</strong>
           </div>
 
-          <div class="sidebar-page__variant-actions" aria-label="Varianti sidebar">
-            <orbit-button
+          <div class="sidebar-page__tile-group" aria-label="Varianti sidebar">
+            <orbit-selectable-tile
               label="Espansa"
-              [variant]="variant() === 'expanded' ? 'solid' : 'outline'"
-              [tone]="variant() === 'expanded' ? 'primary' : 'neutral'"
-              (clicked)="setVariant('expanded')"
-            />
-            <orbit-button
+              description="Rail completa"
+              [selected]="selectedVariant() === 'expanded'"
+              (selectedChange)="selectVariant('expanded')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
               label="Compatta"
-              [variant]="variant() === 'compact' ? 'solid' : 'outline'"
-              [tone]="variant() === 'compact' ? 'primary' : 'neutral'"
-              (clicked)="setVariant('compact')"
-            />
-            <orbit-button
+              description="Solo icone"
+              [selected]="selectedVariant() === 'compact'"
+              (selectedChange)="selectVariant('compact')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="home" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              class="sidebar-page__tile--separated"
               label="Stati item"
-              [variant]="variant() === 'states' ? 'solid' : 'outline'"
-              [tone]="variant() === 'states' ? 'primary' : 'neutral'"
-              (clicked)="setVariant('states')"
+              description="Attivo, badge e disabilitato"
+              [selected]="selectedVariant() === 'states'"
+              (selectedChange)="selectVariant('states')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="check" aria-hidden="true" />
+            </orbit-selectable-tile>
+          </div>
+
+          <div class="sidebar-page__tile-group" aria-label="Aspetto brand">
+            <orbit-selectable-tile
+              label="Con logo"
+              description="Icona del brand"
+              [selected]="showBrandIcon()"
+              (selectedChange)="selectBrandIcon(true)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              label="Senza logo"
+              description="Iniziale del brand"
+              [selected]="!showBrandIcon()"
+              (selectedChange)="selectBrandIcon(false)"
             />
           </div>
         </aside>
       </div>
     </lab-example>
   </section>
-
 </article>

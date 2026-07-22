@@ -45,6 +45,15 @@ describe('OrbitButtonComponent', () => {
     expect(btn.classList.contains('orbit-btn--danger')).toBe(true);
   });
 
+  it('applies the translucent variant class', () => {
+    fixture.componentRef.setInput('variant', 'translucent');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('button').classList).toContain(
+      'orbit-btn--translucent',
+    );
+  });
+
   it('sets disabled attribute', () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();

@@ -7,7 +7,7 @@
   margin-bottom: var(--orbit-space-1);
   color: var(--orbit-text-label);
   font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-sm);
+  font-size: var(--orbit-font-size-label);
   font-weight: var(--orbit-font-weight-emphasis);
   line-height: 1.35;
 }
@@ -25,7 +25,7 @@
   margin: var(--orbit-space-1) 0 0;
   color: var(--orbit-text-tertiary);
   font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-xs);
+  font-size: var(--orbit-font-size-caption);
   line-height: 1.35;
 }
 
@@ -33,7 +33,7 @@
   margin: var(--orbit-space-1) 0 0;
   color: var(--orbit-status-danger);
   font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-xs);
+  font-size: var(--orbit-font-size-label);
   line-height: 1.35;
 }
 

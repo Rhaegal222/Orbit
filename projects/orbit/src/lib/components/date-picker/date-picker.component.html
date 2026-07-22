@@ -43,7 +43,9 @@
     </svg>
   </button>
 
-  @if (isOpen()) {
+</div>
+
+<ng-template #dropdownTemplate>
     <div class="orbit-dp__dropdown" role="dialog" [attr.aria-label]="i18n.labels.openCalendar">
       <div class="orbit-dp__nav">
         <button
@@ -135,5 +137,4 @@
         </div>
       }
     </div>
-  }
-</div>
+</ng-template>

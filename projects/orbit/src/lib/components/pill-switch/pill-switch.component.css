@@ -55,7 +55,7 @@
   background: var(--orbit-surface-default);
   border-color: var(--orbit-border-subtle);
   color: var(--orbit-action-primary-bg);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+  box-shadow: var(--orbit-shadow-raised);
 }
 
 .orbit-pill-switch__option--selected:hover:not(:disabled) {

@@ -37,11 +37,12 @@ describe('OrbitSelectComponent', () => {
   it('renders placeholder', () => {
     fixture.componentRef.setInput('placeholder', 'Scegli paese');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('input')?.getAttribute('placeholder')).toBe('Scegli paese');
+    const trigger = fixture.nativeElement.querySelector('button.orbit-select__trigger');
+    expect(trigger?.textContent.trim()).toBe('Scegli paese');
   });
 
   it('opens dropdown on focus', () => {
-    fixture.nativeElement.querySelector('input').focus();
+    fixture.nativeElement.querySelector('.orbit-select__trigger').focus();
     expect(component.isOpen()).toBe(true);
   });
 
@@ -103,13 +104,14 @@ describe('OrbitSelectComponent', () => {
   it('closes on Escape', () => {
     component.isOpen.set(true);
     const event = new KeyboardEvent('keydown', { key: 'Escape' });
-    fixture.nativeElement.querySelector('input').dispatchEvent(event);
+    fixture.nativeElement.querySelector('.orbit-select__trigger').dispatchEvent(event);
     expect(component.isOpen()).toBe(false);
   });
 
   it('filters options when searchable', () => {
     fixture.componentRef.setInput('searchable', true);
     fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('input')).toBeTruthy();
     component.onInputChange('ita');
     expect(component.filteredOptions.length).toBe(1);
     expect(component.filteredOptions[0].label).toBe('Italia');

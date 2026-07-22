@@ -93,14 +93,14 @@
   height: 1rem;
 }
 
-/* ── Dropdown ── */
+/* ── Dropdown ──
+   Rendered through a CDK connected overlay (see date-picker.component.ts), so
+   it escapes any ancestor's overflow/stacking context instead of being
+   clipped. Positioning and z-index are owned by the overlay pane. */
 .orbit-dp__dropdown {
-  position: absolute;
-  z-index: var(--orbit-z-modal, 1050);
-  top: calc(100% + 0.25rem);
-  left: 0;
   width: 18rem;
   padding: var(--orbit-space-3);
+  box-sizing: border-box;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-default);

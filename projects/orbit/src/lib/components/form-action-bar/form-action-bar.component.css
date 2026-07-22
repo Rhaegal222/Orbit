@@ -30,7 +30,7 @@
   align-items: center;
   gap: var(--orbit-space-1);
   color: var(--orbit-text-secondary);
-  font-size: var(--orbit-font-size-caption);
+  font-size: var(--orbit-font-size-label);
 }
 
 .orbit-form-action-bar__status::before {

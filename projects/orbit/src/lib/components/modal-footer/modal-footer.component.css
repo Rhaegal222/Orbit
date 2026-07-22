@@ -1,6 +1,7 @@
 :host {
   display: block;
   background: var(--orbit-surface-raised);
+  color: var(--orbit-text-secondary);
 }
 
 .orbit-modal-footer__layout {
@@ -56,7 +57,5 @@
 
 :host(.orbit-modal-footer--form) {
   background: var(--orbit-surface-raised);
-  box-shadow:
-    0 -1px 0 var(--orbit-border-subtle),
-    0 -8px 20px color-mix(in srgb, var(--orbit-text-primary) 4%, transparent);
+  box-shadow: var(--orbit-modal-footer-form-shadow);
 }

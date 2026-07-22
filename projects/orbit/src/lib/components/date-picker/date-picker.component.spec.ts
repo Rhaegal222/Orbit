@@ -1,9 +1,12 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { OrbitDatePickerComponent } from './date-picker.component';
 
 describe('OrbitDatePickerComponent', () => {
   let fixture: ComponentFixture<OrbitDatePickerComponent>;
   let component: OrbitDatePickerComponent;
+  let overlayContainer: OverlayContainer;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,6 +16,11 @@ describe('OrbitDatePickerComponent', () => {
     fixture = TestBed.createComponent(OrbitDatePickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    overlayContainer = TestBed.inject(OverlayContainer);
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
   it('creates', () => {
@@ -28,6 +36,15 @@ describe('OrbitDatePickerComponent', () => {
     expect(component.isOpen()).toBe(true);
     component.toggle();
     expect(component.isOpen()).toBe(false);
+  });
+
+  it('renders the calendar in a CDK overlay when open', () => {
+    component.toggle();
+    fixture.detectChanges();
+
+    expect(
+      overlayContainer.getContainerElement().querySelector('.orbit-dp__dropdown'),
+    ).toBeTruthy();
   });
 
   it('renders calendar days', () => {

@@ -6,6 +6,7 @@ import {
   effect,
   ElementRef,
   forwardRef,
+  HostListener,
   inject,
   input,
   OnDestroy,
@@ -130,7 +131,26 @@ export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestr
 
   onBlur(): void {
     this.onTouched();
-    setTimeout(() => this.isOpen.set(false), 150);
+    this.isOpen.set(false);
+  }
+
+  /**
+   * The suggestion panel lives in a CDK overlay, outside this component's
+   * DOM subtree. Test the trigger and overlay separately so a click in either
+   * remains open, while opening another Orbit picker closes this one.
+   */
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent): void {
+    if (!this.isOpen()) return;
+    const target = event.target as Node;
+    const insideTrigger = this.hostRef.nativeElement.contains(target);
+    const insideMenu = this.overlayRef?.overlayElement.contains(target) ?? false;
+    if (!insideTrigger && !insideMenu) this.isOpen.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.isOpen.set(false);
   }
 
   onKeydown(event: KeyboardEvent): void {

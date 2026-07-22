@@ -14,7 +14,7 @@ import { ORBIT_ICON_PATHS, OrbitIconName } from './icon-registry';
   templateUrl: './icon.component.html',
   styles: [
     `
-      :host { display: inline-flex; font-size: 1rem; line-height: 1; }
+      :host { display: inline-flex; font-size: 1em; line-height: 1; }
       svg { width: 1em; height: 1em; }
     `,
   ],

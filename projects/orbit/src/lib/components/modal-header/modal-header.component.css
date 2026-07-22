@@ -51,7 +51,7 @@
   border: 2px solid var(--orbit-border-subtle);
   border-top-color: var(--orbit-action-primary-bg);
   border-radius: var(--orbit-radius-full);
-  animation: orbit-modal-header-spin 0.6s linear infinite;
+  animation: orbit-modal-header-spin var(--orbit-motion-spin) linear infinite;
   flex-shrink: 0;
 }
 
@@ -71,7 +71,7 @@
 .orbit-modal-header__subtitle {
   margin: var(--orbit-space-1) 0 0;
   font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-sm);
+  font-size: var(--orbit-font-size-body);
   line-height: var(--orbit-line-height-body);
   color: var(--orbit-text-secondary);
 }

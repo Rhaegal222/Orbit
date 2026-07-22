@@ -25,6 +25,9 @@ describe('LabExampleComponent', () => {
     fixture.componentRef.setInput('code', '<orbit-button label="Salva" />');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.lab-example__actions')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.lab-example__actions button').classList).toContain(
+      'orbit-btn--translucent',
+    );
     expect(fixture.nativeElement.querySelector('orbit-code-block')).toBeNull();
   });
 

@@ -4,7 +4,7 @@
 
   <section>
     <h2>Esempio base</h2>
-    <lab-example [code]="usageSnippet">
+    <lab-example [code]="usageSnippet" fullWidth>
       <div data-example="base">
         <orbit-form-field label="Periodicità" inputId="sel-base">
           <orbit-select inputId="sel-base" [options]="options" [formControl]="baseControl" />
@@ -15,7 +15,7 @@
 
   <section>
     <h2>Con ricerca (searchable)</h2>
-    <lab-example [code]="searchableSnippet">
+    <lab-example [code]="searchableSnippet" fullWidth>
       <div data-example="searchable">
         <orbit-select
           inputId="sel-searchable"
@@ -30,7 +30,7 @@
   <section>
     <h2>Tile selezionabile</h2>
     <p>Alternativa visiva per una scelta discreta, quando l’opzione beneficia di etichetta, icona o descrizione.</p>
-    <lab-example [code]="tileSnippet">
+    <lab-example [code]="tileSnippet" fullWidth>
       <div data-example="selectable-tile">
         <orbit-selectable-tile
           label="Opzione con icona"
@@ -51,12 +51,12 @@
 
   <section>
     <h2>Stati</h2>
-    <lab-example [code]="invalidSnippet">
+    <lab-example [code]="invalidSnippet" fullWidth>
       <div data-example="invalid">
         <orbit-select inputId="sel-invalid" [options]="options" [invalid]="true" />
       </div>
     </lab-example>
-    <lab-example [code]="disabledSnippet">
+    <lab-example [code]="disabledSnippet" fullWidth>
       <div data-example="disabled">
         <orbit-select inputId="sel-disabled" [options]="options" [formControl]="disabledControl" />
       </div>

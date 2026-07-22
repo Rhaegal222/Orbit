@@ -9,10 +9,16 @@ import {
   HostListener,
   inject,
   input,
+  OnDestroy,
   output,
   signal,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 const DATE_VALUE_PATTERN = /^([0-3]\d)\/([01]\d)\/(\d{4})$/;
@@ -48,9 +54,11 @@ interface CalendarDay {
     '[class.orbit-dp--invalid]': 'invalid()',
   },
 })
-export class OrbitDatePickerComponent implements ControlValueAccessor {
+export class OrbitDatePickerComponent implements ControlValueAccessor, OnDestroy {
   readonly i18n = inject(ORBIT_I18N);
   private readonly hostElement = inject(ElementRef<HTMLElement>);
+  private readonly overlay = inject(Overlay);
+  private readonly vcr = inject(ViewContainerRef);
   inputId = input('');
   ariaLabel = input('');
   placeholder = input('');
@@ -67,6 +75,8 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
 
   valueChange = output<Date | null>();
 
+  @ViewChild('dropdownTemplate') private dropdownTemplate!: TemplateRef<unknown>;
+
   isOpen = signal(false);
   private readonly cvaDisabled = signal(false);
   readonly isDisabled = computed(() => this.cvaDisabled() || this.disabled());
@@ -75,6 +85,7 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   viewYear = signal(new Date().getFullYear());
   inputText = signal('');
 
+  private overlayRef: OverlayRef | null = null;
   private onChange: (value: Date | null) => void = () => undefined;
   private onTouched: () => void = () => undefined;
 
@@ -82,6 +93,10 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
     effect(() => {
       const value = this.value();
       if (value !== undefined) this.writeValue(value);
+    });
+    effect(() => {
+      if (this.isOpen() && !this.isDisabled()) this.attachOverlay();
+      else this.detachOverlay();
     });
   }
 
@@ -247,7 +262,11 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
 
   @HostListener('document:pointerdown', ['$event'])
   onDocumentPointerDown(event: PointerEvent): void {
-    if (this.isOpen() && !this.hostElement.nativeElement.contains(event.target as Node)) {
+    if (!this.isOpen()) return;
+    const target = event.target as Node;
+    const insideTrigger = this.hostElement.nativeElement.contains(target);
+    const insideDropdown = this.overlayRef?.overlayElement.contains(target) ?? false;
+    if (!insideTrigger && !insideDropdown) {
       this.isOpen.set(false);
     }
   }
@@ -348,5 +367,39 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
     this.inputText.set(this.formatDate(value));
     this.viewMonth.set(value.getMonth());
     this.viewYear.set(value.getFullYear());
+  }
+
+  ngOnDestroy(): void {
+    this.detachOverlay();
+  }
+
+  private attachOverlay(): void {
+    if (this.overlayRef) return;
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.hostElement)
+      .withFlexibleDimensions(false)
+      .withPush(false)
+      .withPositions([
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      panelClass: 'orbit-dp-panel',
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    });
+
+    const portal = new TemplatePortal(this.dropdownTemplate, this.vcr);
+    this.overlayRef.attach(portal);
+  }
+
+  private detachOverlay(): void {
+    if (!this.overlayRef) return;
+    this.overlayRef.detach();
+    this.overlayRef.dispose();
+    this.overlayRef = null;
   }
 }

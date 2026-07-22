@@ -5,18 +5,47 @@
   <section>
     <h2>Esempio base</h2>
     <lab-example [code]="usageSnippet">
-      <orbit-form-grid>
-        <div primary>Contenuto primario (7fr)</div>
-        <div secondary>Contenuto secondario (5fr)</div>
+      <orbit-form-grid layout="7-5">
+        <div primary>
+          <orbit-form-field label="Nome prodotto" inputId="fg-name"
+            ><orbit-text-input inputId="fg-name" placeholder="Modulo LED Smart"
+          /></orbit-form-field>
+        </div>
+        <div secondary>
+          <orbit-form-field label="Codice SKU" inputId="fg-sku"
+            ><orbit-text-input inputId="fg-sku" placeholder="PRD-9042-X"
+          /></orbit-form-field>
+        </div>
       </orbit-form-grid>
     </lab-example>
   </section>
 
   <section>
+    <h2>Span responsivi</h2>
+    <lab-example [code]="spansSnippet"
+      ><orbit-form-grid
+        ><div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
+          <orbit-form-field label="Famiglia" inputId="fg-family"
+            ><orbit-text-input inputId="fg-family" placeholder="Illuminazione"
+          /></orbit-form-field>
+        </div>
+        <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
+          <orbit-form-field label="Canale" inputId="fg-channel"
+            ><orbit-text-input inputId="fg-channel" placeholder="B2B Italia"
+          /></orbit-form-field>
+        </div>
+        <div orbitFormGridItem [span]="12" [spanLg]="4">
+          <orbit-form-field label="Margine target" inputId="fg-margin"
+            ><orbit-text-input inputId="fg-margin" placeholder="32%"
+          /></orbit-form-field></div></orbit-form-grid
+    ></lab-example>
+  </section>
+
+  <section>
     <h2>Comportamento responsive</h2>
     <p>
-      Sotto 991.98px la griglia collassa a singola colonna: il proprio CSS lo gestisce già con
-      una media query interna, verificabile ridimensionando la finestra.
+      Sotto 991.98px la griglia collassa a singola colonna: il proprio CSS lo gestisce già con una
+      media query interna, verificabile ridimensionando la finestra.
     </p>
   </section>
 </article>

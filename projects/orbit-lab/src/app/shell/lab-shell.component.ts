@@ -2,10 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   signal,
   type WritableSignal,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import {
@@ -18,6 +20,8 @@ import {
   OrbitPanelService,
   OrbitPanelSurfaceComponent,
   OrbitSelectComponent,
+  OrbitSliderComponent,
+  OrbitSwitchComponent,
   type OrbitDensity,
 } from '@galileo/orbit';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
@@ -26,6 +30,7 @@ type LabTheme = 'default' | 'dark';
 type LabDensity = OrbitDensity;
 type LabTextScale = '0.85' | '1' | '1.1' | '1.25' | '1.5';
 type LabFont = 'public-sans' | 'inter' | 'system';
+type LabShadowIntensity = '0' | '0.25' | '0.5' | '0.75' | '1';
 
 const LAB_FONT_STACKS: Record<LabFont, string> = {
   'public-sans': "'Public Sans', Inter, ui-sans-serif, system-ui, sans-serif",
@@ -38,10 +43,14 @@ interface LabOptionsPanelData {
   density: WritableSignal<LabDensity>;
   textScale: WritableSignal<LabTextScale>;
   font: WritableSignal<LabFont>;
+  shadowIntensity: WritableSignal<LabShadowIntensity>;
+  motionEnabled: WritableSignal<boolean>;
   setTheme: (theme: LabTheme) => void;
   setDensity: (density: LabDensity) => void;
   setTextScale: (textScale: LabTextScale) => void;
   setFont: (font: LabFont) => void;
+  setShadowIntensity: (shadowIntensity: LabShadowIntensity) => void;
+  setMotionEnabled: (motionEnabled: boolean) => void;
 }
 
 @Component({
@@ -62,6 +71,7 @@ interface LabOptionsPanelData {
     '[style.--orbit-text-scale]': 'data.textScale()',
     '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
     '[style.--orbit-font-sans]': 'fontStack()',
+    '[attr.data-orbit-shadow-intensity]': 'data.shadowIntensity()',
   },
   template: `<orbit-panel-surface labelledBy="catalog-navigation-title">
     <orbit-modal-header
@@ -120,6 +130,8 @@ class LabCatalogNavigationPanelComponent {
     OrbitModalHeaderComponent,
     OrbitPanelSurfaceComponent,
     OrbitSelectComponent,
+    OrbitSliderComponent,
+    OrbitSwitchComponent,
     ReactiveFormsModule,
   ],
   host: {
@@ -128,11 +140,12 @@ class LabCatalogNavigationPanelComponent {
     '[style.--orbit-text-scale]': 'data.textScale()',
     '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
     '[style.--orbit-font-sans]': 'fontStack()',
+    '[attr.data-orbit-shadow-intensity]': 'data.shadowIntensity()',
   },
   template: `<orbit-panel-surface labelledBy="catalog-options-title">
     <orbit-modal-header
       title="Opzioni catalogo"
-      subtitle="Tema, densità, scala e font"
+      subtitle="Tema, densità, scala, font, ombre e motion"
       titleId="catalog-options-title"
       (closeClicked)="close()"
     />
@@ -166,12 +179,36 @@ class LabCatalogNavigationPanelComponent {
             (valueChange)="setTextScale($event)"
           />
         </orbit-form-field>
+        <orbit-form-field class="lab-catalog-panel__field" label="Animazioni" inputId="lab-motion">
+          <orbit-switch
+            inputId="lab-motion"
+            ariaLabel="Attiva animazioni"
+            [formControl]="motionEnabledControl"
+            (checkedChange)="setMotionEnabled($event)"
+          />
+        </orbit-form-field>
         <orbit-form-field class="lab-catalog-panel__field" label="Font" inputId="lab-font">
           <orbit-select
             inputId="lab-font"
             [options]="fontOptions"
             [formControl]="fontControl"
             (valueChange)="setFont($event)"
+          />
+        </orbit-form-field>
+        <orbit-form-field
+          class="lab-catalog-panel__field"
+          label="Intensità ombre"
+          inputId="lab-shadow-intensity"
+        >
+          <orbit-slider
+            inputId="lab-shadow-intensity"
+            ariaLabel="Intensità ombre"
+            [min]="0"
+            [max]="100"
+            [step]="25"
+            showValue
+            [formControl]="shadowIntensityControl"
+            (valueChange)="setShadowIntensity($event)"
           />
         </orbit-form-field>
       </div>
@@ -193,6 +230,13 @@ class LabCatalogOptionsPanelComponent {
     nonNullable: true,
   });
   readonly fontControl = new FormControl<LabFont>(this.data.font(), { nonNullable: true });
+  readonly shadowIntensityControl = new FormControl<number>(
+    Number(this.data.shadowIntensity()) * 100,
+    { nonNullable: true },
+  );
+  readonly motionEnabledControl = new FormControl<boolean>(this.data.motionEnabled(), {
+    nonNullable: true,
+  });
   readonly themeOptions = [
     { value: 'default', label: 'Default' },
     { value: 'dark', label: 'Regressione (dark)' },
@@ -253,6 +297,16 @@ class LabCatalogOptionsPanelComponent {
       this.data.setFont(value);
   }
 
+  setShadowIntensity(value: number): void {
+    if ([0, 25, 50, 75, 100].includes(value)) {
+      this.data.setShadowIntensity(String(value / 100) as LabShadowIntensity);
+    }
+  }
+
+  setMotionEnabled(value: boolean): void {
+    this.data.setMotionEnabled(value);
+  }
+
   close(): void {
     this.panel.closeAll();
   }
@@ -266,10 +320,14 @@ class LabCatalogOptionsPanelComponent {
   templateUrl: './lab-shell.component.html',
   styleUrl: './lab-shell.component.css',
   host: {
+    '[attr.data-orbit-theme]': 'theme() === "dark" ? "dark" : null',
+    '[attr.data-orbit-density]': 'density()',
     '[attr.data-orbit-text-scale]': 'textScale()',
     '[style.--orbit-text-scale]': 'textScale()',
     '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
     '[style.--orbit-font-sans]': 'fontStack()',
+    '[attr.data-orbit-shadow-intensity]': 'shadowIntensity()',
+    '[attr.data-orbit-motion]': 'motionEnabled() ? "on" : "off"',
   },
 })
 export class LabShellComponent {
@@ -278,10 +336,20 @@ export class LabShellComponent {
   protected readonly density = signal<LabDensity>('comfortable');
   protected readonly textScale = signal<LabTextScale>('1');
   protected readonly font = signal<LabFont>('public-sans');
+  protected readonly shadowIntensity = signal<LabShadowIntensity>('1');
+  protected readonly motionEnabled = signal(true);
   protected readonly fontStack = computed(() => LAB_FONT_STACKS[this.font()]);
   protected readonly optionalIconDisplay = computed(() =>
     parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
   );
+  private readonly document = inject(DOCUMENT);
+
+  constructor() {
+    effect((onCleanup) => {
+      this.document.body.dataset['orbitMotion'] = this.motionEnabled() ? 'on' : 'off';
+      onCleanup(() => this.document.body.removeAttribute('data-orbit-motion'));
+    });
+  }
 
   setTheme(theme: LabTheme): void {
     this.theme.set(theme);
@@ -297,6 +365,14 @@ export class LabShellComponent {
 
   setFont(font: LabFont): void {
     this.font.set(font);
+  }
+
+  setShadowIntensity(shadowIntensity: LabShadowIntensity): void {
+    this.shadowIntensity.set(shadowIntensity);
+  }
+
+  setMotionEnabled(motionEnabled: boolean): void {
+    this.motionEnabled.set(motionEnabled);
   }
 
   openNavigation(): void {
@@ -321,10 +397,14 @@ export class LabShellComponent {
       density: this.density,
       textScale: this.textScale,
       font: this.font,
+      shadowIntensity: this.shadowIntensity,
+      motionEnabled: this.motionEnabled,
       setTheme: (theme) => this.setTheme(theme),
       setDensity: (density) => this.setDensity(density),
       setTextScale: (textScale) => this.setTextScale(textScale),
       setFont: (font) => this.setFont(font),
+      setShadowIntensity: (shadowIntensity) => this.setShadowIntensity(shadowIntensity),
+      setMotionEnabled: (motionEnabled) => this.setMotionEnabled(motionEnabled),
     } satisfies LabOptionsPanelData;
   }
 }

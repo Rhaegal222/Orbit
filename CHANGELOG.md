@@ -7,14 +7,23 @@ All notable changes to Galileo Orbit are documented here.
 ### Added
 
 - Initial package metadata, publication pipeline and portable design tokens.
+- `orbit-button` now supports the `translucent` variant for colored, semi-transparent actions, derived from shared theme tokens.
+- Added `orbit-slider`, an accessible numeric range control with reactive-form support, value output and semantic token styling.
+- Added `orbit-switch`, an accessible boolean control with reactive-form support and `checkedChange` output.
+- Added layout primitives: `orbit-stack`, `orbit-cluster`, `orbit-page-shell`, `orbit-page-header`, `orbit-workspace` and `orbitDataAlign`.
 - Added `orbit-panel-surface`/`orbit-panel` (offcanvas + sidebar) via a new `OrbitPanelService`, `orbit-tab`/`orbit-tab-panel`/`orbit-tablist`, and `orbit-table`/`orbit-table-column`/`orbitTableRow`.
 - `orbit-table` gained `bordered` and `striped` boolean inputs.
 - `OrbitPanelService.open()` accepts `fullWidth`, `minWidth` and `maxWidth` to size an offcanvas panel beyond the preset `size` steps.
 
 ### Changed
 
+- Button tones now use documented semantic action foreground tokens. The dark theme provides contrast-safe solid and subtle foregrounds for primary, success, danger and neutral variants.
+- Typography roles now distinguish operational body text from labels and captions: catalog navigation, sidebar items and table data use Body; validation and persistent action status use Label.
 - Radius tokens now scale with text size and adapt to spacious, comfortable, compact and dense layouts; component internals consistently consume the semantic radius contract, including explicit square edges and circular indicators.
 - Spacing and composition tokens now scale with text size across every density; Lab editorial spacing uses semantic tokens without leaking into nested Orbit components.
+- Primary CTA buttons now follow the shared primary-action token, matching the sidebar and active navigation state.
+- `data-orbit-shadow-intensity` now selects shared elevation levels across raised, floating, overlay, solid-action and form-footer surfaces.
+- `data-orbit-motion="off"` disables Orbit transitions and animations, including CDK overlay surfaces; spinner and interaction durations now consume shared motion tokens.
 - Public theming contract with semantic CSS tokens and comfortable/compact density.
 - `orbit-form-section` can now collapse through an accessible native button.
 - Component token alignment for form controls, pill switch and badge; added `--orbit-radius-full` and badge foreground tokens.

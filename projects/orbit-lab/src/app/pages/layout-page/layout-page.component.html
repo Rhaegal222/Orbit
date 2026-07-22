@@ -1,0 +1,61 @@
+<article>
+  <h1>Layout</h1>
+  <p>
+    Primitive compositive per ritmo, allineamento e workspace enterprise. I gap usano esclusivamente
+    la scala Orbit: 2xs, xs, sm, md, lg, xl e 2xl.
+  </p>
+  <section>
+    <h2>Stack e cluster</h2>
+    <lab-example [code]="stackSnippet"
+      ><orbit-stack gap="lg"
+        ><strong>Catalogo prodotti</strong><span>Gestisci attributi, listini e canali B2B.</span
+        ><orbit-cluster gap="sm"
+          ><span>Attivo</span><span>98% completo</span
+          ><span>Ultima revisione oggi</span></orbit-cluster
+        ></orbit-stack
+      ></lab-example
+    >
+  </section>
+  <section>
+    <h2>Page shell e header</h2>
+    <lab-example [fullWidth]="true"
+      ><orbit-page-shell width="document"
+        ><orbit-page-header title="Listino Italia" subtitle="Aggiornato il 22 luglio 2026"
+          ><orbit-cluster gap="sm"
+            ><span>Bozza</span><span>3 modifiche</span></orbit-cluster
+          ></orbit-page-header
+        ></orbit-page-shell
+      ></lab-example
+    >
+  </section>
+  <section>
+    <h2>Sidebar e workspace</h2>
+    <lab-example [code]="workspaceSnippet" [fullWidth]="true"
+      ><orbit-workspace
+        ><aside orbitWorkspaceSidebar>
+          <orbit-stack gap="sm"
+            ><strong>Filtri</strong><span>Illuminazione</span><span>Attivi</span
+            ><span>Completeness ≥ 80%</span></orbit-stack
+          >
+        </aside>
+        <main orbitWorkspaceMain>
+          <orbit-stack gap="md"
+            ><strong>Portafoglio catalogo</strong
+            ><span>La griglia collassa in una colonna su schermi stretti.</span>
+            <div>
+              <span orbitDataAlign="start">SKU PRD-9042-X</span> ·
+              <span orbitDataAlign="end">€ 240,00</span>
+            </div></orbit-stack
+          >
+        </main></orbit-workspace
+      ></lab-example
+    >
+  </section>
+  <section>
+    <h2>Allineamento dati</h2>
+    <p>
+      Usa <code>orbitDataAlign="start"</code> per testo e codici, <code>"end"</code> per importi e
+      quantità, <code>"center"</code> per stati, icone e selezioni.
+    </p>
+  </section>
+</article>

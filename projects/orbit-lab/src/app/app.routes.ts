@@ -24,6 +24,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'layout',
+    loadComponent: () =>
+      import('./pages/layout-page/layout-page.component').then((m) => m.LayoutPageComponent),
+  },
+  {
     path: 'form-field',
     loadComponent: () =>
       import('./pages/form-field-page/form-field-page.component').then(
@@ -52,9 +57,7 @@ export const routes: Routes = [
   {
     path: 'checkbox',
     loadComponent: () =>
-      import('./pages/checkbox-page/checkbox-page.component').then(
-        (m) => m.CheckboxPageComponent,
-      ),
+      import('./pages/checkbox-page/checkbox-page.component').then((m) => m.CheckboxPageComponent),
   },
   {
     path: 'pill-switch',
@@ -73,7 +76,9 @@ export const routes: Routes = [
   {
     path: 'attachments',
     loadComponent: () =>
-      import('./pages/attachment-page/attachment-page.component').then((m) => m.AttachmentPageComponent),
+      import('./pages/attachment-page/attachment-page.component').then(
+        (m) => m.AttachmentPageComponent,
+      ),
   },
   {
     path: 'pickers',
@@ -112,11 +117,19 @@ export const routes: Routes = [
   },
   {
     path: 'tab',
-    loadComponent: () => import('./pages/tab-page/tab-page.component').then((m) => m.TabPageComponent),
+    loadComponent: () =>
+      import('./pages/tab-page/tab-page.component').then((m) => m.TabPageComponent),
   },
   {
     path: 'table',
     loadComponent: () =>
       import('./pages/table-page/table-page.component').then((m) => m.TablePageComponent),
+  },
+  {
+    path: 'typography',
+    loadComponent: () =>
+      import('./pages/typography-page/typography-page.component').then(
+        (m) => m.TypographyPageComponent,
+      ),
   },
 ];

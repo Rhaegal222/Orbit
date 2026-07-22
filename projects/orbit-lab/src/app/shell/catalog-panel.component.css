@@ -11,7 +11,7 @@
   padding: var(--orbit-space-2) var(--orbit-space-3);
   border-radius: var(--orbit-radius-control);
   color: var(--orbit-text-primary);
-  font-size: var(--orbit-font-size-label);
+  font-size: var(--orbit-font-size-body);
   font-weight: var(--orbit-font-weight-emphasis);
   text-decoration: none;
   transition:

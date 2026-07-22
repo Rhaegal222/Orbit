@@ -50,7 +50,7 @@ describe('LabShellComponent', () => {
 
     const overlay = overlayContainer.getContainerElement();
     expect(overlay.querySelector('.orbit-panel--right')).toBeTruthy();
-    expect(overlay.querySelectorAll('.lab-catalog-panel__field')).toHaveLength(4);
+    expect(overlay.querySelectorAll('.lab-catalog-panel__field')).toHaveLength(6);
   });
 
   it('applies an option selected in the right offcanvas to the Lab surface', () => {
@@ -85,6 +85,21 @@ describe('LabShellComponent', () => {
     fixture.detectChanges();
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
     expect(container.getAttribute('data-orbit-theme')).toBe('dark');
+    expect(fixture.nativeElement.getAttribute('data-orbit-theme')).toBe('dark');
+  });
+
+  it('applies the selected shadow intensity to the shared shadow token scope', () => {
+    fixture.componentInstance.setShadowIntensity('0');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.getAttribute('data-orbit-shadow-intensity')).toBe('0');
+  });
+
+  it('applies the motion setting to the document so overlays are covered too', () => {
+    fixture.componentInstance.setMotionEnabled(false);
+    fixture.detectChanges();
+
+    expect(document.body.getAttribute('data-orbit-motion')).toBe('off');
   });
 
   it('applies compact density attribute when selected', () => {
@@ -92,6 +107,7 @@ describe('LabShellComponent', () => {
     fixture.detectChanges();
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
     expect(container.getAttribute('data-orbit-density')).toBe('compact');
+    expect(fixture.nativeElement.getAttribute('data-orbit-density')).toBe('compact');
   });
 
   it('applies spacious and dense density attributes when selected', () => {

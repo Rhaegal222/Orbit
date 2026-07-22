@@ -1,0 +1,36 @@
+{
+  "name": "@wyrmrest/orbit",
+  "version": "0.1.0",
+  "description": "Reusable UI foundations and design tokens for Wyrmrest applications.",
+  "license": "UNLICENSED",
+  "private": false,
+  "sideEffects": [
+    "./src/styles/tokens.css"
+  ],
+  "files": [
+    "README.md",
+    "LICENSE",
+    "src/styles"
+  ],
+  "exports": {
+    "./styles": "./src/styles/tokens.css"
+  },
+  "scripts": {
+    "check": "npm pack --dry-run",
+    "release:check": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git.wyrmrest.it/wyrmrest/wyrmrest-orbit.git"
+  },
+  "bugs": {
+    "url": "https://git.wyrmrest.it/wyrmrest/wyrmrest-orbit/issues"
+  },
+  "homepage": "https://git.wyrmrest.it/wyrmrest/wyrmrest-orbit#readme",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

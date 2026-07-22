@@ -1,0 +1,28 @@
+.skeleton-page__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--orbit-space-4);
+  width: 100%;
+}
+
+.skeleton-page__card {
+  display: grid;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-4);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+}
+
+.skeleton-page__card h3 {
+  margin: 0;
+  color: var(--orbit-text-primary);
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.skeleton-page__card p {
+  margin: 0;
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-body);
+}

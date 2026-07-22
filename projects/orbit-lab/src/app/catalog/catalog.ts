@@ -19,6 +19,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'pickers', label: 'Selettori', status: 'verified', icon: 'calendar' },
   { slug: 'select', label: 'Selezione', status: 'verified', icon: 'chevron-down' },
   { slug: 'form-section', label: 'Sezioni modulo', status: 'verified', icon: 'layers' },
+  { slug: 'skeleton', label: 'Skeleton', status: 'verified', icon: 'square' },
   { slug: 'slider', label: 'Slider', status: 'verified', icon: 'slider' },
   { slug: 'tooltip', label: 'Suggerimenti', status: 'verified', icon: 'message-circle' },
   { slug: 'tab', label: 'Tab', status: 'verified', icon: 'layers' },

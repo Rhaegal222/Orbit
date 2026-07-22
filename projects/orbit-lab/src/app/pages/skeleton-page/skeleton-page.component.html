@@ -1,0 +1,60 @@
+<article>
+  <h1>Skeleton</h1>
+  <p>
+    Placeholder di caricamento per contenuti asincroni (liste, card, testo che arriva da rete):
+    mostra la forma approssimativa del contenuto finale mentre viene caricato, riducendo il
+    "flash of empty content".
+  </p>
+
+  <section>
+    <h2>Forme</h2>
+    <lab-example [code]="textSnippet">
+      <orbit-skeleton shape="text" width="70%" />
+    </lab-example>
+    <lab-example [code]="circleSnippet">
+      <orbit-skeleton shape="circle" width="3rem" />
+    </lab-example>
+    <lab-example [code]="rectSnippet">
+      <orbit-skeleton shape="rect" width="100%" height="8rem" />
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Caricamento simulato</h2>
+    <p>
+      Le card sottostanti restano in stato skeleton per {{ 1800 / 1000 }}s, poi transitano al
+      contenuto reale, per verificare visivamente la transizione da placeholder a dato caricato.
+    </p>
+    <lab-example [code]="loadingSnippet">
+      <div class="skeleton-page__cards" data-example="loading-cards">
+        @for (card of cards; track card.id) {
+          <div class="skeleton-page__card">
+            @if (cardsLoading()) {
+              <orbit-skeleton shape="text" width="60%" />
+              <orbit-skeleton shape="rect" width="100%" height="4rem" />
+            } @else {
+              <h3>{{ card.title }}</h3>
+              <p>{{ card.body }}</p>
+            }
+          </div>
+        }
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>
+        Ogni <code>orbit-skeleton</code> è <code>aria-hidden="true"</code>: non viene mai
+        annunciato da uno screen reader, che deve ignorare il placeholder e attendere il
+        contenuto reale.
+      </li>
+      <li>
+        L'animazione shimmer rispetta <code>prefers-reduced-motion: reduce</code>: se l'utente ha
+        disattivato le animazioni di sistema, viene mostrato solo il colore piatto di base, senza
+        movimento.
+      </li>
+    </ul>
+  </section>
+</article>

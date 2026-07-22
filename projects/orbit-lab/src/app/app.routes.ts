@@ -53,6 +53,13 @@ export const routes: Routes = [
       import('./pages/select-page/select-page.component').then((m) => m.SelectPageComponent),
   },
   {
+    path: 'skeleton',
+    loadComponent: () =>
+      import('./pages/skeleton-page/skeleton-page.component').then(
+        (m) => m.SkeletonPageComponent,
+      ),
+  },
+  {
     path: 'slider',
     loadComponent: () =>
       import('./pages/slider-page/slider-page.component').then((m) => m.SliderPageComponent),

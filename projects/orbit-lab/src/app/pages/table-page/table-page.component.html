@@ -1,0 +1,34 @@
+<article>
+  <h1>Table</h1>
+  <p>
+    Componente presentazionale: il consumer possiede l'iterazione riga e la logica di
+    ordinamento. <code>orbit-table-column</code> emette solo la direzione richiesta;
+    <code>orbitTableRow</code> marca lo stato disabilitato/muted.
+  </p>
+
+  <section>
+    <h2>Colonna ordinabile e riga disabilitata</h2>
+    <lab-example [code]="snippet">
+      <orbit-table>
+        <thead>
+          <tr>
+            <th>
+              <orbit-table-column sortable [sortDirection]="sortDirection()" (sortChange)="onSortChange($event)"
+                >Nome</orbit-table-column
+              >
+            </th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of sortedRows(); track row.name) {
+            <tr orbitTableRow [disabled]="!row.active" [attr.data-row-disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+  </section>
+</article>

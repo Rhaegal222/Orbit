@@ -109,4 +109,9 @@ export const routes: Routes = [
     path: 'tab',
     loadComponent: () => import('./pages/tab-page/tab-page.component').then((m) => m.TabPageComponent),
   },
+  {
+    path: 'table',
+    loadComponent: () =>
+      import('./pages/table-page/table-page.component').then((m) => m.TablePageComponent),
+  },
 ];

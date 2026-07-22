@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Injectable, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   OrbitButtonComponent,
   OrbitModalHeaderComponent,

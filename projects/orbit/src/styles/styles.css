@@ -7,3 +7,10 @@
   max-width: calc(100vw - 2 * var(--orbit-space-3));
   outline: 0;
 }
+
+.orbit-panel-backdrop { background: var(--orbit-overlay-backdrop); }
+.orbit-panel-pane {
+  display: flex;
+  height: 100%;
+  outline: 0;
+}

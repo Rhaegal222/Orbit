@@ -26,7 +26,8 @@ export type OrbitIconName =
   | 'message-circle'
   | 'sidebar'
   | 'paperclip'
-  | 'square';
+  | 'square'
+  | 'slider';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],
@@ -103,5 +104,9 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   ],
   square: [
     'M4 7.5A3.5 3.5 0 0 1 7.5 4h9A3.5 3.5 0 0 1 20 7.5v9a3.5 3.5 0 0 1-3.5 3.5h-9A3.5 3.5 0 0 1 4 16.5v-9Z',
+  ],
+  slider: [
+    'M4 12h16',
+    'M15.5 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z',
   ],
 };

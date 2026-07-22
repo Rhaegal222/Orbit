@@ -94,6 +94,13 @@ describe('OrbitIconComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('path').length).toBe(1);
   });
 
+  it('renders the slider icon with a track and a handle path', () => {
+    fixture.componentRef.setInput('name', 'slider');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
+  });
+
   it('uses a 24x24 viewBox with the shared stroke contract', () => {
     fixture.componentRef.setInput('name', 'chevron-down');
     fixture.detectChanges();

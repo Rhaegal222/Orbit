@@ -10,6 +10,7 @@
   border-radius: var(--orbit-radius-surface);
   background: var(--orbit-surface-modal);
   box-shadow: var(--orbit-shadow-floating);
+  transform-origin: center;
 }
 
 .orbit-modal--sm { width: min(100%, var(--orbit-modal-size-sm)); }

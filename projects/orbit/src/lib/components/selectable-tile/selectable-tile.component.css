@@ -15,6 +15,7 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 .orbit-selectable-tile:hover:not(:disabled) {
   border-color: var(--orbit-border-strong);
@@ -92,5 +93,5 @@
 }
 
 .orbit-selectable-tile--selected .orbit-selectable-tile__indicator {
-  animation: orbit-pop 0.25s var(--orbit-easing-standard);
+  animation: orbit-pop var(--orbit-motion-fast) var(--orbit-easing-standard);
 }

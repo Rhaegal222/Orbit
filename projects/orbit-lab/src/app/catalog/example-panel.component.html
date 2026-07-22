@@ -1,8 +1,26 @@
 <div class="lab-example">
+  @if (code()) {
+    <div class="lab-example__actions">
+      <orbit-button
+        [label]="isCodeVisible() ? 'Nascondi codice' : 'Mostra codice'"
+        tone="neutral"
+        variant="outline"
+        (clicked)="toggleCode()"
+      />
+      <orbit-button
+        [label]="copyLabel()"
+        tone="neutral"
+        variant="outline"
+        (clicked)="copyCode()"
+      />
+    </div>
+  }
   <div class="lab-example__preview">
     <ng-content />
   </div>
-  @if (code()) {
-    <orbit-code-block class="lab-example__code" [code]="code()" />
+  @if (code() && isCodeVisible()) {
+    <div class="lab-example__source">
+      <orbit-code-block class="lab-example__code" [code]="code()" [collapsible]="false" [showActions]="false" />
+    </div>
   }
 </div>

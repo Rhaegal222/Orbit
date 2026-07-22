@@ -54,6 +54,18 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--orbit-status-danger) 25%, transparent);
 }
 
+/* The toggle owns its own border, so draw the invalid state at wrapper level.
+   This keeps the danger outline visually continuous over the toggle border. */
+:host(.orbit-select--invalid) .orbit-select__wrapper::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border: 1px solid var(--orbit-status-danger);
+  border-radius: var(--orbit-radius-control);
+  content: '';
+  pointer-events: none;
+}
+
 /* ── Disabled ── */
 :host(.orbit-select--disabled) .orbit-select__wrapper {
   opacity: 0.55;
@@ -77,7 +89,7 @@
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-select__toggle:hover:not(:disabled) {
@@ -100,7 +112,7 @@
 .orbit-select__chevron {
   width: 1rem;
   height: 1rem;
-  transition: transform 0.15s ease;
+  transition: transform var(--orbit-motion-fast) var(--orbit-easing-shared);
 }
 
 .orbit-select__chevron--open {
@@ -121,6 +133,8 @@
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-floating);
   box-shadow: var(--orbit-shadow-floating);
+  animation: orbit-floating-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+  transform-origin: top left;
 }
 
 .orbit-select__option {
@@ -136,7 +150,7 @@
   font-size: var(--orbit-font-size-body);
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-select__option:hover:not(:disabled),

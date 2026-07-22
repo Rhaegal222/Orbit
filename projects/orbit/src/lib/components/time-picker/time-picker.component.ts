@@ -14,6 +14,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
+const TIME_VALUE_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
 export interface OrbitTimeValue {
   hours: number;
   minutes: number;
@@ -138,8 +140,9 @@ export class OrbitTimePickerComponent implements ControlValueAccessor {
 
   onInputChange(text: string): void {
     this.isOpen.set(false);
-    this.inputText.set(text);
-    const value = this.parseValue(text);
+    const maskedText = this.maskInput(text);
+    this.inputText.set(maskedText);
+    const value = this.parseValue(maskedText);
     if (!value) return;
 
     this.selectedHours.set(value.hours);
@@ -201,10 +204,13 @@ export class OrbitTimePickerComponent implements ControlValueAccessor {
   }
 
   private parseValue(text: string): OrbitTimeValue | null {
-    const match = text.match(/^(\d{1,2}):(\d{2})$/);
+    const match = text.match(TIME_VALUE_PATTERN);
     if (!match) return null;
-    const hours = Number(match[1]);
-    const minutes = Number(match[2]);
-    return hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60 ? { hours, minutes } : null;
+    return { hours: Number(match[1]), minutes: Number(match[2]) };
+  }
+
+  private maskInput(text: string): string {
+    const digits = text.replace(/\D/g, '').slice(0, 4);
+    return digits.length > 2 ? `${digits.slice(0, 2)}:${digits.slice(2)}` : digits;
   }
 }

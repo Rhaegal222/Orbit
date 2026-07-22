@@ -4,11 +4,38 @@
 
   <section>
     <h2>Date picker</h2>
-    <orbit-date-picker inputId="lab-date-picker" [formControl]="date" />
+    <lab-example [code]="dateSnippet">
+      <orbit-date-picker inputId="lab-date-picker" [formControl]="date" />
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Date precision</h2>
+    <lab-example [code]="precisionSnippet">
+      <orbit-date-picker inputId="lab-month-picker" mode="month" [formControl]="month" />
+      <orbit-date-picker inputId="lab-year-picker" mode="year" [formControl]="year" />
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Date range picker</h2>
+    <lab-example [code]="rangeSnippet">
+      <orbit-date-range-picker
+        startInputId="lab-range-start"
+        endInputId="lab-range-end"
+        [formControl]="range"
+      />
+    </lab-example>
   </section>
 
   <section>
     <h2>Time picker</h2>
-    <orbit-time-picker inputId="lab-time-picker" [formControl]="time" [quickOptions]="quickOptions" />
+    <lab-example [code]="timeSnippet">
+      <orbit-time-picker
+        inputId="lab-time-picker"
+        [formControl]="time"
+        [quickOptions]="quickOptions"
+      />
+    </lab-example>
   </section>
 </article>

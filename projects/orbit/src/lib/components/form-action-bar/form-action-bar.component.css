@@ -1,5 +1,12 @@
 :host {
   display: block;
+  width: 100%;
+}
+
+:host([orbitModalFooterLeft]),
+:host([orbitModalFooterCenter]),
+:host([orbitModalFooterRight]) {
+  width: auto;
 }
 
 .orbit-form-action-bar {

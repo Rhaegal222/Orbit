@@ -45,6 +45,12 @@ describe('OrbitSelectComponent', () => {
     expect(component.isOpen()).toBe(false);
   });
 
+  it('closes when interaction moves outside the select', () => {
+    component.isOpen.set(true);
+    component.onDocumentPointerDown(new PointerEvent('pointerdown'));
+    expect(component.isOpen()).toBe(false);
+  });
+
   it('renders options when open', () => {
     component.isOpen.set(true);
     fixture.detectChanges();

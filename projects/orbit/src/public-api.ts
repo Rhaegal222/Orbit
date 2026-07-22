@@ -12,6 +12,7 @@ export * from './lib/components/select';
 export * from './lib/components/text-input';
 export * from './lib/components/autocomplete';
 export * from './lib/components/date-picker';
+export * from './lib/components/date-range-picker';
 export * from './lib/components/time-picker';
 export * from './lib/components/attachment-dropzone';
 export * from './lib/components/attachment-list-item';
@@ -25,7 +26,10 @@ export * from './lib/components/form-action-bar';
 export * from './lib/components/tooltip';
 export * from './lib/components/popover';
 export * from './lib/components/code-block';
-export * from './lib/icons';
+export * from './lib/types';
+// Keep the barrel target explicit: the library compiler resolves public exports
+// with ESM semantics and does not consistently infer a directory `index.ts`.
+export * from './lib/icons/index';
 export * from './lib/services/dialog';
 export * from './lib/services/panel';
 export * from './lib/i18n';

@@ -60,6 +60,10 @@ When a component needs business data, expose typed inputs and outputs. The consu
 - Keep style scope local to the component or an explicit Orbit theme file. Do not use broad global selectors, `!important`, or selectors that target a consuming application.
 - Include `cursor-pointer`, clear focus-visible treatment and disabled-state feedback for every clickable control.
 - Treat responsive and dense enterprise layouts as first-class: test narrow, standard desktop and large desktop widths. Avoid decorative cards, accidental whitespace and text overlap.
+- For dimensional CSS (`width`, `height`, `padding`, `margin`, `gap`, `font-size`, `line-height`, radii and positional offsets), use a `rem` value or an `--orbit-*` token; never introduce a bare `px` literal.
+- The only allowed `px` exceptions are 1–2px solid hairline borders, the established visually-hidden `sr-only` pattern, and focus-ring `box-shadow` spread values. Any other `px` use is a defect.
+- Size outer SVG icons from CSS with `rem` or `1em`; never give the outer `<svg>` a `px` `width` or `height` attribute.
+- Before completing a new component, inspect it in `orbit-lab` at `--orbit-text-scale: 1.5` and at 200% browser page zoom.
 
 ## Component API and accessibility
 

@@ -18,7 +18,7 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   line-height: 1.25;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__input::placeholder {
@@ -50,18 +50,26 @@
   place-items: center;
   width: var(--orbit-control-action-size);
   height: 100%;
-  border: 0;
-  border-left: 1px solid var(--orbit-border-subtle);
+  box-sizing: border-box;
+  border: 1px solid var(--orbit-border-subtle);
+  border-left-color: var(--orbit-border-subtle);
   border-radius: 0 var(--orbit-radius-control) var(--orbit-radius-control) 0;
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__toggle:hover:not(:disabled) {
   background: var(--orbit-surface-subtle);
+  border-color: var(--orbit-border-strong);
+  border-left-color: var(--orbit-border-strong);
   color: var(--orbit-action-primary-bg);
+}
+
+.orbit-dp:focus-within .orbit-dp__toggle:not(:disabled) {
+  border-color: var(--orbit-action-primary-bg);
+  border-left-color: var(--orbit-action-primary-bg);
 }
 
 .orbit-dp__toggle:focus-visible {
@@ -91,6 +99,8 @@
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-default);
   box-shadow: var(--orbit-shadow-overlay);
+  animation: orbit-floating-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+  transform-origin: top left;
 }
 
 /* ── Navigation ── */
@@ -111,7 +121,7 @@
   background: transparent;
   color: var(--orbit-text-secondary);
   cursor: pointer;
-  transition: background-color 0.1s ease, color 0.1s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__nav-btn:hover {
@@ -163,7 +173,7 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   cursor: pointer;
-  transition: background-color 0.1s ease, color 0.1s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-dp__day:hover:not(:disabled) {
@@ -197,4 +207,41 @@
 .orbit-dp__day:focus-visible {
   outline: 2px solid var(--orbit-action-primary-bg);
   outline-offset: -1px;
+}
+
+.orbit-dp__period-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--orbit-space-1);
+}
+
+.orbit-dp__period-option {
+  min-height: var(--orbit-control-action-size);
+  padding: 0 var(--orbit-space-1);
+  border: 1px solid transparent;
+  border-radius: var(--orbit-radius-control);
+  background: transparent;
+  color: var(--orbit-text-primary);
+  font: var(--orbit-font-weight-emphasis) var(--orbit-font-size-sm) var(--orbit-font-sans);
+  cursor: pointer;
+}
+
+.orbit-dp__period-option:hover:not(:disabled) {
+  background: var(--orbit-surface-subtle);
+}
+
+.orbit-dp__period-option--selected,
+.orbit-dp__period-option--selected:hover:not(:disabled) {
+  background: var(--orbit-action-primary-bg);
+  color: var(--orbit-text-inverse);
+}
+
+.orbit-dp__period-option:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: -1px;
+}
+
+.orbit-dp__period-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
 }

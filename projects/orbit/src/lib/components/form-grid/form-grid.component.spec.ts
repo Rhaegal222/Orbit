@@ -30,7 +30,7 @@ describe('OrbitFormGridComponent', () => {
   it('renders a twelve-column form grid with a compact density override', () => {
     const grid = fixture.nativeElement.querySelector('orbit-form-grid') as HTMLElement;
 
-    expect(grid.classList).toContain('orbit-form-grid--compact');
+    expect(grid.getAttribute('data-orbit-density')).toBe('compact');
     expect(grid.classList).toContain('orbit-form-grid--single');
   });
 

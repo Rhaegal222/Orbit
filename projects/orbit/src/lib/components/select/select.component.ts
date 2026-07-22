@@ -2,7 +2,9 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   forwardRef,
+  HostListener,
   inject,
   input,
   output,
@@ -38,6 +40,7 @@ export interface OrbitSelectOption {
 })
 export class OrbitSelectComponent implements ControlValueAccessor {
   readonly i18n = inject(ORBIT_I18N);
+  private readonly hostElement = inject(ElementRef<HTMLElement>);
   options = input<OrbitSelectOption[]>([]);
   placeholder = input('');
   inputId = input('');
@@ -123,6 +126,23 @@ export class OrbitSelectComponent implements ControlValueAccessor {
     this.onTouched();
     this.isOpen.set(false);
     if (this.selectedValue() == null) this.inputText.set('');
+  }
+
+  /**
+   * Pointer events are observed before another control's click handler runs.
+   * Closing here makes every Orbit picker/select mutually exclusive, including
+   * controls whose trigger deliberately preserves input focus on mousedown.
+   */
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent): void {
+    if (this.isOpen() && !this.hostElement.nativeElement.contains(event.target as Node)) {
+      this.isOpen.set(false);
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.isOpen.set(false);
   }
 
   onKeydown(event: KeyboardEvent): void {

@@ -18,7 +18,7 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   line-height: 1.25;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color var(--orbit-motion-fast) var(--orbit-easing-standard), box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-ac__input::placeholder {
@@ -59,6 +59,8 @@
   border-radius: var(--orbit-radius-control);
   background: var(--orbit-surface-floating);
   box-shadow: var(--orbit-shadow-overlay);
+  animation: orbit-floating-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+  transform-origin: top left;
 }
 
 .orbit-ac__option {
@@ -71,7 +73,7 @@
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   cursor: pointer;
-  transition: background-color 0.1s ease;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-ac__option--active {

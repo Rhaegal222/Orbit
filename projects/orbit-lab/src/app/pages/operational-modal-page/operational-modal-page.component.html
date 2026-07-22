@@ -1,116 +1,253 @@
 <article>
-  <h1>Operational modal</h1>
-  <p>Composizione neutra che riproduce densità, gerarchia e layout del riferimento.</p>
+  <h1>Examples</h1>
+  <p>
+    Composizioni di pagina costruite con Orbit, per mostrare usi reali delle componenti oltre il
+    singolo controllo.
+  </p>
 
-  <div class="operational-modal__toolbar">
-    <label for="operational-modal-size">Dimensione modale</label>
-    <select
-      id="operational-modal-size"
-      [value]="modalSize()"
-      (change)="setModalSize($any($event.target).value)"
-    >
-      <option value="sm">SM · 480px</option>
-      <option value="md">MD · 720px</option>
-      <option value="lg">LG · 960px</option>
-      <option value="xl">XL · 1180px</option>
-      <option value="xxl">XXL · 1320px</option>
-      <option value="full">Full · 96vw</option>
-    </select>
-  </div>
+  <lab-example>
+    <div class="examples__picker" role="group" aria-label="Seleziona un mock design">
+      @for (example of examples; track example.id) {
+        <button
+          type="button"
+          class="examples__card"
+          [class.examples__card--selected]="selectedExample() === example.id"
+          [attr.aria-pressed]="selectedExample() === example.id"
+          (click)="selectExample(example.id)"
+        >
+          <span>{{ example.label }}</span>
+          <small>{{ example.description }}</small>
+        </button>
+      }
+    </div>
 
-  <orbit-modal labelledBy="operational-modal-title" [size]="modalSize()">
-    <orbit-modal-header
-      titleId="operational-modal-title"
-      title="Crea configurazione"
-      subtitle="Contesto · Identificativo 1837698"
-    >
-      <svg orbitModalHeaderIcon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 7h16M6 4h12l2 3v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7l2-3Z" />
-        <path d="M8 12h8M8 16h5" />
-      </svg>
-    </orbit-modal-header>
-
-    <orbit-modal-body>
-      <orbit-form-grid [layout]="modalSize() === 'sm' ? 'single' : '7-5'">
-        <div primary class="operational-modal__column">
-          <orbit-form-section [index]="1" title="Informazioni principali" [contentSpacing]="true">
-            <orbit-form-grid>
-              <div orbitFormGridItem [span]="12">
-                <orbit-form-field label="Categoria" inputId="modal-category">
-                  <orbit-select inputId="modal-category" [options]="categoryOptions" />
-                </orbit-form-field>
-              </div>
-              <div orbitFormGridItem [span]="12">
-                <orbit-form-field label="Titolo" inputId="modal-title">
-                  <orbit-text-input inputId="modal-title" placeholder="Elemento di esempio" />
-                </orbit-form-field>
-              </div>
-              <div orbitFormGridItem [span]="4">
-                <orbit-form-field label="Data iniziale" inputId="modal-start">
-                  <orbit-date-picker inputId="modal-start" placeholder="08 / 01 / 2026" />
-                </orbit-form-field>
-              </div>
-              <div orbitFormGridItem [span]="4">
-                <orbit-form-field label="Data finale" inputId="modal-end">
-                  <orbit-date-picker inputId="modal-end" placeholder="08 / 01 / 2027" />
-                </orbit-form-field>
-              </div>
-              <div orbitFormGridItem [span]="4">
-                <orbit-form-field label="Orario" inputId="modal-time">
-                  <orbit-time-picker inputId="modal-time" />
-                </orbit-form-field>
-              </div>
-            </orbit-form-grid>
-          </orbit-form-section>
-
-          <orbit-form-section [index]="2" title="Valori" [contentSpacing]="true">
-            <orbit-form-grid>
-              <div orbitFormGridItem [span]="6">
-                <orbit-form-field label="Valore principale" inputId="modal-value-a">
-                  <orbit-text-input
-                    inputId="modal-value-a"
-                    type="currency"
-                    [formControl]="primaryAmount"
-                    readonly
-                  />
-                </orbit-form-field>
-              </div>
-              <div orbitFormGridItem [span]="6">
-                <orbit-form-field label="Valore secondario" inputId="modal-value-b">
-                  <orbit-text-input
-                    inputId="modal-value-b"
-                    type="currency"
-                    [formControl]="secondaryAmount"
-                    readonly
-                    tone="success"
-                  />
-                </orbit-form-field>
-              </div>
-            </orbit-form-grid>
-          </orbit-form-section>
+    @switch (selectedExample()) {
+      @case ('inline-form') {
+        <div class="examples__modal-controls">
+          <label for="examples-modal-size">Dimensione modale</label>
+          <select
+            id="examples-modal-size"
+            [value]="modalSize()"
+            (change)="setModalSize($any($event.target).value)"
+          >
+            <option value="sm">SM · 480px</option>
+            <option value="md">MD · 720px</option>
+            <option value="lg">LG · 960px</option>
+            <option value="xl">XL · 1180px</option>
+            <option value="xxl">XXL · 1320px</option>
+            <option value="full">Full · 96vw</option>
+          </select>
         </div>
 
-        <div secondary class="operational-modal__column">
-          <orbit-form-section [index]="3" title="Opzioni" [contentSpacing]="true">
-            <orbit-badge orbitFormSectionMeta tone="primary" label="2 attive" />
-            <orbit-form-grid>
-              <div orbitFormGridItem [span]="4"><orbit-selectable-tile label="Opzione A" [selected]="true" /></div>
-              <div orbitFormGridItem [span]="4"><orbit-selectable-tile label="Opzione B" /></div>
-              <div orbitFormGridItem [span]="4"><orbit-selectable-tile label="Opzione C" /></div>
+        <orbit-modal labelledBy="examples-modal-title" [size]="modalSize()">
+          <orbit-modal-header
+            titleId="examples-modal-title"
+            title="Crea configurazione"
+            subtitle="Contesto · Identificativo 1837698"
+          >
+            <svg
+              orbitModalHeaderIcon
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 7h16M6 4h12l2 3v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7l2-3Z" />
+              <path d="M8 12h8M8 16h5" />
+            </svg>
+          </orbit-modal-header>
+
+          <orbit-modal-body>
+            <orbit-form-grid [layout]="modalSize() === 'sm' ? 'single' : '7-5'">
+              <div primary class="examples__modal-column">
+                <orbit-form-section
+                  [index]="1"
+                  title="Informazioni principali"
+                  [contentSpacing]="true"
+                >
+                  <orbit-form-grid>
+                    <div orbitFormGridItem [span]="12">
+                      <orbit-form-field label="Categoria" inputId="modal-category">
+                        <orbit-select inputId="modal-category" [options]="categoryOptions" />
+                      </orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="12">
+                      <orbit-form-field label="Titolo" inputId="modal-title">
+                        <orbit-text-input inputId="modal-title" placeholder="Elemento di esempio" />
+                      </orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-form-field label="Data iniziale" inputId="modal-start">
+                        <orbit-date-picker inputId="modal-start" placeholder="08 / 01 / 2026" />
+                      </orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-form-field label="Data finale" inputId="modal-end">
+                        <orbit-date-picker inputId="modal-end" placeholder="08 / 01 / 2027" />
+                      </orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-form-field label="Orario" inputId="modal-time">
+                        <orbit-time-picker inputId="modal-time" />
+                      </orbit-form-field>
+                    </div>
+                  </orbit-form-grid>
+                </orbit-form-section>
+
+                <orbit-form-section [index]="2" title="Valori" [contentSpacing]="true">
+                  <orbit-form-grid>
+                    <div orbitFormGridItem [span]="6">
+                      <orbit-form-field label="Valore principale" inputId="modal-value-a">
+                        <orbit-text-input
+                          inputId="modal-value-a"
+                          type="currency"
+                          [formControl]="primaryAmount"
+                          readonly
+                        />
+                      </orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="6">
+                      <orbit-form-field label="Valore secondario" inputId="modal-value-b">
+                        <orbit-text-input
+                          inputId="modal-value-b"
+                          type="currency"
+                          [formControl]="secondaryAmount"
+                          readonly
+                          tone="success"
+                        />
+                      </orbit-form-field>
+                    </div>
+                  </orbit-form-grid>
+                </orbit-form-section>
+              </div>
+
+              <div secondary class="examples__modal-column">
+                <orbit-form-section [index]="3" title="Opzioni" [contentSpacing]="true">
+                  <orbit-badge orbitFormSectionMeta tone="primary" label="2 attive" />
+                  <orbit-form-grid>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile label="Opzione A" [selected]="true" />
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile label="Opzione B" />
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile label="Opzione C" />
+                    </div>
+                  </orbit-form-grid>
+                </orbit-form-section>
+
+                <orbit-form-section [index]="4" title="Allegati" [contentSpacing]="true">
+                  <orbit-attachment-list [entries]="attachments" />
+                  <orbit-divider variant="dashed" />
+                  <orbit-attachment-dropzone hint="PDF, JPG, PNG · max 10 MB" />
+                </orbit-form-section>
+              </div>
             </orbit-form-grid>
-          </orbit-form-section>
+          </orbit-modal-body>
 
-          <orbit-form-section [index]="4" title="Allegati" [contentSpacing]="true">
-            <orbit-attachment-list [entries]="attachments" />
-            <orbit-divider variant="dashed" />
-            <orbit-attachment-dropzone hint="PDF, JPG, PNG · max 10 MB" />
-          </orbit-form-section>
-        </div>
-      </orbit-form-grid>
-    </orbit-modal-body>
+          <orbit-modal-footer variant="form">
+            <orbit-form-action-bar
+              confirmTone="success"
+              statusLabel="Salvataggio automatico attivo"
+            />
+          </orbit-modal-footer>
+        </orbit-modal>
+      }
 
-    <orbit-modal-footer variant="form">
-      <orbit-form-action-bar confirmTone="success" statusLabel="Salvataggio automatico attivo" />
-    </orbit-modal-footer>
-  </orbit-modal>
+      @case ('service-selection') {
+        <section
+          class="examples__surface examples__service"
+          aria-labelledby="service-selection-title"
+        >
+          <header class="examples__surface-header">
+            <div>
+              <p class="examples__eyebrow">Scelta guidata</p>
+              <h2 id="service-selection-title">Seleziona il servizio</h2>
+              <p>
+                Una composizione decisionale che mette le opzioni al centro, prima dei dettagli.
+              </p>
+            </div>
+            <orbit-badge tone="warning" label="Preventivo" />
+          </header>
+
+          <div class="examples__service-layout">
+            <div class="examples__service-options">
+              <orbit-selectable-tile label="Standard" description="Attivazione in 5 giorni" />
+              <orbit-selectable-tile
+                label="Prioritario"
+                description="Presa in carico entro 24 ore"
+                [selected]="true"
+              />
+              <orbit-selectable-tile
+                label="Enterprise"
+                description="Gestione dedicata e monitoraggio"
+              />
+            </div>
+
+            <aside class="examples__summary" aria-label="Riepilogo servizio">
+              <p class="examples__eyebrow">Riepilogo</p>
+              <strong>Servizio prioritario</strong>
+              <span>Attivazione entro 24 ore</span>
+              <orbit-divider />
+              <orbit-form-field label="Importo" inputId="service-amount">
+                <orbit-text-input
+                  inputId="service-amount"
+                  type="currency"
+                  [formControl]="secondaryAmount"
+                  readonly
+                  tone="success"
+                />
+              </orbit-form-field>
+            </aside>
+          </div>
+
+          <orbit-form-action-bar
+            confirmTone="success"
+            statusLabel="Nessun impegno fino alla conferma"
+          />
+        </section>
+      }
+
+      @case ('document-workspace') {
+        <section
+          class="examples__surface examples__documents"
+          aria-labelledby="document-workspace-title"
+        >
+          <header class="examples__surface-header">
+            <div>
+              <p class="examples__eyebrow">Dossier pratica</p>
+              <h2 id="document-workspace-title">Workspace documenti</h2>
+              <p>Un’area dedicata alle evidenze, senza ripetere un form di configurazione.</p>
+            </div>
+            <orbit-badge tone="warning" label="1 da verificare" />
+          </header>
+
+          <div class="examples__document-layout">
+            <div>
+              <h3>Documenti acquisiti</h3>
+              <orbit-attachment-list [entries]="attachments" />
+              <orbit-attachment-list [entries]="reviewAttachments" />
+            </div>
+
+            <div>
+              <h3>Aggiungi evidenze</h3>
+              <orbit-attachment-dropzone hint="PDF, JPG, PNG · max 10 MB" />
+              <orbit-divider variant="dashed" />
+              <orbit-form-field label="Nota per il revisore" inputId="document-note">
+                <orbit-text-input inputId="document-note" placeholder="Indica cosa è cambiato" />
+              </orbit-form-field>
+            </div>
+          </div>
+
+          <orbit-form-action-bar
+            confirmTone="success"
+            statusLabel="Tutti i documenti sono sincronizzati"
+          />
+        </section>
+      }
+    }
+  </lab-example>
 </article>

@@ -35,7 +35,7 @@ describe('LabShellComponent', () => {
   it('defaults to default theme and comfortable density', () => {
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
     expect(container.getAttribute('data-orbit-theme')).toBeNull();
-    expect(container.getAttribute('data-orbit-density')).toBeNull();
+    expect(container.getAttribute('data-orbit-density')).toBe('comfortable');
   });
 
   it('applies dark theme attribute when selected', () => {
@@ -52,6 +52,17 @@ describe('LabShellComponent', () => {
     expect(container.getAttribute('data-orbit-density')).toBe('compact');
   });
 
+  it('applies spacious and dense density attributes when selected', () => {
+    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
+    fixture.componentInstance.setDensity('spacious');
+    fixture.detectChanges();
+    expect(container.getAttribute('data-orbit-density')).toBe('spacious');
+
+    fixture.componentInstance.setDensity('dense');
+    fixture.detectChanges();
+    expect(container.getAttribute('data-orbit-density')).toBe('dense');
+  });
+
   it('applies one text-scale value to the Lab surface', () => {
     fixture.componentInstance.setTextScale('1.25');
     fixture.detectChanges();
@@ -61,9 +72,15 @@ describe('LabShellComponent', () => {
   });
 
   it('applies the selected font stack to the Lab surface', () => {
+    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
+    const publicSansStack = container.style.getPropertyValue('--orbit-font-sans');
+
     fixture.componentInstance.setFont('inter');
     fixture.detectChanges();
-    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
-    expect(container.style.getPropertyValue('--orbit-font-sans')).toContain('Inter');
+    const interStack = container.style.getPropertyValue('--orbit-font-sans');
+
+    expect(publicSansStack).toContain('Public Sans');
+    expect(interStack).toContain('Inter');
+    expect(interStack).not.toBe(publicSansStack);
   });
 });

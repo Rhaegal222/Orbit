@@ -4,9 +4,22 @@
 }
 
 .lab-example {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--orbit-space-4);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-raised);
+  box-shadow: var(--orbit-shadow-raised);
+}
+
+.lab-example__actions {
+  position: absolute;
+  z-index: var(--orbit-z-popover);
+  top: var(--orbit-space-3);
+  right: var(--orbit-space-3);
+  display: flex;
+  gap: var(--orbit-space-1);
 }
 
 .lab-example__preview {
@@ -15,11 +28,34 @@
   align-items: center;
   gap: var(--orbit-space-3);
   min-height: var(--orbit-control-height);
+  padding: var(--orbit-space-5);
+}
+
+.lab-example__source {
+  /* TODO(orbit-motion): animate expanding/collapsing source once the shared
+     layout-motion primitive is available in Orbit. */
+  padding: var(--orbit-space-3) var(--orbit-space-4) var(--orbit-space-4);
+  border-radius: 0 0 var(--orbit-radius-surface) var(--orbit-radius-surface);
+  background: var(--orbit-surface-subtle);
 }
 
 .lab-example__code {
   display: block;
   width: 100%;
-  padding-top: var(--orbit-space-3);
-  border-top: 1px solid var(--orbit-border-subtle);
+}
+
+@media (max-width: 40rem) {
+  .lab-example__actions {
+    position: static;
+    justify-content: flex-end;
+    padding: var(--orbit-space-3) var(--orbit-space-3) 0;
+  }
+
+  .lab-example__preview {
+    padding: var(--orbit-space-4);
+  }
+
+  .lab-example__source {
+    padding: var(--orbit-space-3);
+  }
 }

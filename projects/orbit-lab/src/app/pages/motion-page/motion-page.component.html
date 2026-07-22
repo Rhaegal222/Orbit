@@ -1,20 +1,48 @@
 <article>
   <h1>Animazioni</h1>
   <p>
-    Orbit non ha ancora un sistema di transizioni enter/exit (modal, overlay, liste). Questa
-    pagina documenta i motion token già esistenti e le transizioni che li usano oggi, come punto
-    di partenza per costruirlo.
+    Motion tokenizzati per feedback, overlay, picker e contenuti espandibili. Le uscite sono più
+    rapide degli ingressi e <code>prefers-reduced-motion</code> riduce ogni animazione.
   </p>
 
   <section>
     <h2>Token</h2>
-    @for (token of tokens; track token.name) {
-      <p>
-        <code>{{ token.name }}</code> — <strong>{{ token.value }}</strong
-        ><br />
-        {{ token.usage }}
-      </p>
-    }
+    <div class="motion-page__tokens">
+      @for (token of tokens; track token.name) {
+        <article class="motion-page__token">
+          <code>{{ token.name }}</code>
+          <strong>{{ token.value }}</strong>
+          <span>{{ token.usage }}</span>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section>
+    <h2>Mappa dei pattern</h2>
+    <div class="motion-page__patterns" role="table" aria-label="Pattern di animazione Orbit">
+      @for (pattern of patterns; track pattern.area) {
+        <article class="motion-page__pattern" role="row">
+          <strong role="cell">{{ pattern.area }}</strong>
+          <span role="cell"><b>Enter</b>{{ pattern.enter }}</span>
+          <span role="cell"><b>Exit</b>{{ pattern.exit }}</span>
+          <code role="cell">{{ pattern.token }}</code>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section>
+    <h2>Floating controls</h2>
+    <p>Apri il calendario o il popover: entrambi usano entrata con fade e scala dall’ancora.</p>
+    <lab-example [code]="floatingSnippet">
+      <div class="motion-page__floating-preview">
+        <orbit-date-picker inputId="motion-date" [formControl]="date" />
+        <orbit-popover content="Il popover entra dall’ancora, senza spostare il layout.">
+          <orbit-button variant="outline" tone="neutral" label="Apri popover" />
+        </orbit-popover>
+      </div>
+    </lab-example>
   </section>
 
   <section>
@@ -29,8 +57,7 @@
     <h2>Animazione di selezione (selectable-tile)</h2>
     <p>
       L'indicatore di selezione entra con un <code>@keyframes</code> (<code>orbit-pop</code>) che usa
-      <code>--orbit-easing-standard</code>; lo sfondo e il bordo della tile cambiano invece senza
-      transizione.
+      <code>--orbit-easing-standard</code>; sfondo e bordo usano la stessa durata fast.
     </p>
     <lab-example [code]="tileSnippet">
       <orbit-selectable-tile
@@ -39,5 +66,23 @@
         (selectedChange)="toggleTile()"
       />
     </lab-example>
+  </section>
+
+  <section>
+    <h2>Espansione sezione</h2>
+    <p>La sezione usa grid height e fade con durata base; in chiusura usa la curva accelerate.</p>
+    <lab-example [code]="collapsibleSnippet">
+      <orbit-form-section title="Dettagli operativi" [collapsible]="true">
+        <p>Il contenuto resta nel DOM durante la transizione e conserva la relazione ARIA.</p>
+      </orbit-form-section>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <p>
+      Con <code>prefers-reduced-motion: reduce</code>, Orbit riduce transizioni e animazioni a
+      una durata impercettibile e interrompe le animazioni continue.
+    </p>
   </section>
 </article>

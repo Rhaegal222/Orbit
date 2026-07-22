@@ -21,6 +21,7 @@ export class OrbitCodeBlockComponent {
   code = input.required<string>();
   collapsible = input(true, { transform: booleanAttribute });
   initiallyCollapsed = input(true, { transform: booleanAttribute });
+  showActions = input(true, { transform: booleanAttribute });
 
   private readonly clipboard = inject(OrbitClipboardService);
 

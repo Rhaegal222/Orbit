@@ -21,12 +21,21 @@ describe('LabExampleComponent', () => {
     expect(fixture.nativeElement.querySelector('orbit-code-block')).toBeNull();
   });
 
-  it('renders orbit-code-block full width below the preview when code is set', () => {
+  it('renders top-right actions when code is set', () => {
     fixture.componentRef.setInput('code', '<orbit-button label="Salva" />');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.lab-example__actions')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('orbit-code-block')).toBeNull();
+  });
+
+  it('renders the source panel when the user expands the code', () => {
+    fixture.componentRef.setInput('code', '<orbit-button label="Salva" />');
+    fixture.componentInstance.toggleCode();
     fixture.detectChanges();
     const codeBlock = fixture.nativeElement.querySelector('orbit-code-block');
     expect(codeBlock).toBeTruthy();
     expect(codeBlock.classList.contains('lab-example__code')).toBe(true);
+    expect(fixture.nativeElement.querySelector('.lab-example__source')).toBeTruthy();
   });
 
   it('projects preview content', () => {

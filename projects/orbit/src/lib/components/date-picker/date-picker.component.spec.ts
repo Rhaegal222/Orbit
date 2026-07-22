@@ -75,10 +75,64 @@ describe('OrbitDatePickerComponent', () => {
     expect(component.viewMonth()).toBe(month === 11 ? 0 : month + 1);
   });
 
+  it('capitalizes the localized month heading', () => {
+    component.viewMonth.set(0);
+    component.viewYear.set(2026);
+
+    expect(component.monthLabel()).toBe('Gennaio 2026');
+  });
+
   it('parses date from input', () => {
     component.onInputChange('15/06/2025');
     expect(component.selectedDate()?.getDate()).toBe(15);
     expect(component.selectedDate()?.getMonth()).toBe(5);
+  });
+
+  it('emits the first day for month precision', () => {
+    fixture.componentRef.setInput('mode', 'month');
+    component.viewYear.set(2026);
+    component.selectMonth(4);
+
+    expect(component.selectedDate()).toEqual(new Date(2026, 4, 1));
+    expect(component.inputText()).toBe('05/2026');
+  });
+
+  it('emits the first day of January for year precision', () => {
+    fixture.componentRef.setInput('mode', 'year');
+    component.selectYear(2028);
+
+    expect(component.selectedDate()).toEqual(new Date(2028, 0, 1));
+    expect(component.inputText()).toBe('2028');
+  });
+
+  it('normalizes digit, dot and slash-separated input as DD/MM/YYYY', () => {
+    component.onInputChange('12101999');
+    expect(component.inputText()).toBe('12/10/1999');
+    expect(component.selectedDate()).toEqual(new Date(1999, 9, 12));
+
+    component.onInputChange('12.10.1999');
+    expect(component.inputText()).toBe('12/10/1999');
+    expect(component.selectedDate()).toEqual(new Date(1999, 9, 12));
+
+    component.onInputChange('12/10/1999');
+    expect(component.inputText()).toBe('12/10/1999');
+    expect(component.selectedDate()).toEqual(new Date(1999, 9, 12));
+  });
+
+  it('limits the input to a complete numeric date pattern', () => {
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    expect(input.maxLength).toBe(10);
+    expect(input.pattern).toBe('[0-3][0-9]/[0-1][0-9]/[0-9]{4}');
+  });
+
+  it('forwards an optional accessible input label', () => {
+    fixture.componentRef.setInput('ariaLabel', 'Data di emissione');
+    fixture.detectChanges();
+
+    expect((fixture.nativeElement.querySelector('input') as HTMLInputElement).ariaLabel).toBe(
+      'Data di emissione',
+    );
   });
 
   it('closes the calendar when the user starts typing', () => {

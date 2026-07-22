@@ -2,7 +2,6 @@
   class="orbit-form-section"
   [class.orbit-form-section--divided]="divided()"
   [class.orbit-form-section--content-spaced]="contentSpacing()"
-  [class.orbit-form-section--compact]="density() === 'compact'"
 >
   @if (title() || index() !== null) {
     <h2 class="orbit-form-section__title" [attr.id]="labelledBy">
@@ -43,11 +42,14 @@
   }
   <div
     class="orbit-form-section__body"
+    [class.orbit-form-section__body--collapsed]="collapsible() && collapsed()"
     [attr.id]="collapsible() ? bodyId : null"
     [attr.role]="collapsible() ? 'region' : null"
     [attr.aria-labelledby]="collapsible() ? labelledBy : null"
-    [hidden]="collapsible() && collapsed()"
+    [attr.aria-hidden]="collapsible() && collapsed()"
   >
-    <ng-content />
+    <div class="orbit-form-section__body-content">
+      <ng-content />
+    </div>
   </div>
 </section>

@@ -3,13 +3,51 @@
   background: var(--orbit-surface-raised);
 }
 
-.orbit-modal-footer__actions {
-  display: flex;
+.orbit-modal-footer__layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: flex-end;
-  gap: var(--orbit-layout-gap-compact);
+  gap: var(--orbit-layout-gap);
   padding: var(--orbit-modal-footer-padding-block) var(--orbit-modal-padding-inline);
   border-top: 1px solid var(--orbit-border-subtle);
+}
+
+.orbit-modal-footer__region {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--orbit-layout-gap);
+}
+
+.orbit-modal-footer__region--left {
+  justify-content: flex-start;
+}
+
+.orbit-modal-footer__region--center {
+  justify-content: center;
+}
+
+.orbit-modal-footer__region--right {
+  justify-content: flex-end;
+}
+
+.orbit-modal-footer__region--default {
+  grid-column: 1 / -1;
+}
+
+.orbit-modal-footer__region--default:empty {
+  display: none;
+}
+
+@media (max-width: 36rem) {
+  .orbit-modal-footer__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .orbit-modal-footer__region--center,
+  .orbit-modal-footer__region--right {
+    justify-content: flex-start;
+  }
 }
 
 :host(.orbit-modal-footer--form) {

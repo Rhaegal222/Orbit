@@ -25,3 +25,8 @@ All notable changes to Galileo Orbit are documented here.
 - Added accent, CTA and font-family token swatches; primary button CTAs can now be themed independently from the accent color.
 - Added `orbit-icon`, with a four-icon starter registry and optional scale-sensitive rendering.
 - Added selected-tile pop-in and attachment-list-item hover feedback.
+- `orbit-code-block` can hide its built-in actions when a composite owns the source controls.
+- Expanded the density contract to `spacious`, `comfortable`, `compact` and `dense`; Core now scales control targets, rhythm, modal chrome and upload areas together. Added public `OrbitDensity` and `OrbitDensityOverride` types.
+- Date picker now supports `date`, `month` and `year` precision through `mode`; added the typed CVA `orbit-date-range-picker` composed from two accessible Orbit calendars.
+- `orbit-modal-footer` now exposes left, center and right projection regions for operational status and action placement.
+- Formalized motion tokens for slow overlays, shimmer and accelerate/shared easing; applied reduced-motion guardrails and tokenized enter/state feedback to modal, floating controls, pickers, selectable tiles, checkbox and collapsible sections.

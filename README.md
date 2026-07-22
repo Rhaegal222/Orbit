@@ -37,6 +37,14 @@ Angular components will be imported from the same package entry point as they be
 `OrbitSelectComponent` is non-editable by default. Set `searchable` only when
 the consumer needs client-side typing and filtering.
 
+`OrbitDatePickerComponent` supports `date`, `month` and `year` precision;
+`OrbitDateRangePickerComponent` exposes one typed `{ start, end }` CVA value
+while composing the same accessible calendar primitive.
+
+Orbit deliberately exposes font stacks through `--orbit-font-sans`, but does
+not bundle font files: consumers load their licensed webfont or local font
+asset. Orbit Lab loads its Inter and Public Sans previews separately.
+
 ## Modal composition
 
 Compose a modal surface with `OrbitModalComponent`, `OrbitModalHeaderComponent`,
@@ -44,6 +52,9 @@ Compose a modal surface with `OrbitModalComponent`, `OrbitModalHeaderComponent`,
 `OrbitDialogService`, use the CDK overlay and close the returned reference from
 the consumer's explicit action handler. `OrbitConfirmDialogComponent` is the
 generic confirmation content; its data is supplied through `ORBIT_DIALOG_DATA`.
+The footer accepts projected `orbitModalFooterLeft`, `orbitModalFooterCenter`
+and `orbitModalFooterRight` regions. Unassigned content keeps the original
+full-width layout, so existing action bars do not wrap differently.
 
 ## Theming
 
@@ -61,7 +72,9 @@ Override a theme at application level:
 }
 ```
 
-Set a compact density where an operator-facing application needs more information on screen:
+Choose a density for the operating context: `spacious` (48px), `comfortable`
+(42px, default), `compact` (38px) or `dense` (34px, desktop expert flows).
+For example, set compact density where an operator-facing application needs more information on screen:
 
 ```html
 <body data-orbit-density="compact"></body>

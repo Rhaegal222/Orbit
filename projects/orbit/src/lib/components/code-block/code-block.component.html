@@ -1,21 +1,23 @@
 <div class="orbit-code-block">
-  <div class="orbit-code-block__actions">
-    @if (collapsible()) {
-      <button
-        type="button"
-        class="orbit-code-block__action"
-        data-toggle-code
-        [attr.aria-expanded]="!collapsed()"
-        [attr.aria-controls]="panelId"
-        (click)="toggle()"
-      >
-        {{ collapsed() ? 'Mostra codice' : 'Nascondi codice' }}
+  @if (showActions()) {
+    <div class="orbit-code-block__actions">
+      @if (collapsible()) {
+        <button
+          type="button"
+          class="orbit-code-block__action"
+          data-toggle-code
+          [attr.aria-expanded]="!collapsed()"
+          [attr.aria-controls]="panelId"
+          (click)="toggle()"
+        >
+          {{ collapsed() ? 'Mostra codice' : 'Nascondi codice' }}
+        </button>
+      }
+      <button type="button" class="orbit-code-block__action" data-copy-code (click)="copy()">
+        {{ copyLabel() }}
       </button>
-    }
-    <button type="button" class="orbit-code-block__action" data-copy-code (click)="copy()">
-      {{ copyLabel() }}
-    </button>
-  </div>
+    </div>
+  }
   <pre
     class="orbit-code-block__pre"
     data-code-block

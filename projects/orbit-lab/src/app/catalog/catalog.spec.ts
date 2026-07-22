@@ -1,29 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { CATALOG_ENTRIES } from './catalog';
 
-const PRIMITIVE_SLUGS_IN_ORDER = [
-  'button',
-  'badge',
-  'form-grid',
-  'form-field',
-  'form-section',
-  'text-input',
-  'select',
-  'checkbox',
-  'pill-switch',
-];
-
 describe('CATALOG_ENTRIES', () => {
-  it('lists the nine primitive entries in priority order (other entries may be appended by parallel work)', () => {
-    const slugs = CATALOG_ENTRIES.map((e) => e.slug);
-    const primitiveIndices = PRIMITIVE_SLUGS_IN_ORDER.map((slug) => slugs.indexOf(slug));
-    expect(primitiveIndices).not.toContain(-1);
-    expect(primitiveIndices).toEqual([...primitiveIndices].sort((a, b) => a - b));
+  it('lists every entry in alphabetical label order', () => {
+    const labels = CATALOG_ENTRIES.map((entry) => entry.label);
+    expect(labels).toEqual([...labels].sort((a, b) => a.localeCompare(b, 'it')));
   });
 
-  it('marks the nine primitive entries as verified (token drift resolved by Core)', () => {
-    for (const slug of PRIMITIVE_SLUGS_IN_ORDER) {
-      expect(CATALOG_ENTRIES.find((e) => e.slug === slug)?.status).toBe('verified');
+  it('marks every catalog entry as verified', () => {
+    for (const entry of CATALOG_ENTRIES) {
+      expect(entry.status).toBe('verified');
     }
   });
 

@@ -7,6 +7,10 @@ export interface OrbitI18n {
     openCalendar: string;
     previousMonth: string;
     nextMonth: string;
+    selectMonth: string;
+    selectYear: string;
+    startDate: string;
+    endDate: string;
     select: string;
     search: string;
     openList: string;
@@ -37,7 +41,7 @@ export type OrbitI18nConfig = Partial<Omit<OrbitI18n, 'labels'>> & {
 export const DEFAULT_ORBIT_I18N: OrbitI18n = {
   locale: 'it-IT',
   labels: {
-    close: 'Chiudi', openCalendar: 'Apri calendario', previousMonth: 'Mese precedente', nextMonth: 'Mese successivo',
+    close: 'Chiudi', openCalendar: 'Apri calendario', previousMonth: 'Mese precedente', nextMonth: 'Mese successivo', selectMonth: 'Seleziona mese', selectYear: 'Seleziona anno', startDate: 'Data iniziale', endDate: 'Data finale',
     select: 'Seleziona…', search: 'Cerca…', openList: 'Apri elenco', noResults: 'Nessun risultato',
     openTimePicker: 'Apri selettore orario', hours: 'Ore', minutes: 'Minuti', timePicker: 'Selettore orario', nextHour: 'Ora successiva', previousHour: 'Ora precedente', nextMinutes: 'Minuti successivi', previousMinutes: 'Minuti precedenti', segmentedControl: 'Selettore',
     uploadLabel: 'Trascina i file qui oppure clicca per sfogliare', uploadHint: 'PDF, JPG, PNG · max 10 MB',

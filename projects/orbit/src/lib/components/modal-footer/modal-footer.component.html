@@ -1,3 +1,14 @@
-<div class="orbit-modal-footer__actions">
-  <ng-content></ng-content>
+<div class="orbit-modal-footer__layout">
+  <div class="orbit-modal-footer__region orbit-modal-footer__region--left">
+    <ng-content select="[orbitModalFooterLeft]"></ng-content>
+  </div>
+  <div class="orbit-modal-footer__region orbit-modal-footer__region--center">
+    <ng-content select="[orbitModalFooterCenter]"></ng-content>
+  </div>
+  <div class="orbit-modal-footer__region orbit-modal-footer__region--right">
+    <ng-content select="[orbitModalFooterRight]"></ng-content>
+  </div>
+  <div class="orbit-modal-footer__region orbit-modal-footer__region--default">
+    <ng-content></ng-content>
+  </div>
 </div>

@@ -1,4 +1,5 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import type { OrbitDensityOverride } from '../../types';
 
 let formSectionSequence = 0;
 
@@ -9,6 +10,7 @@ let formSectionSequence = 0;
   styleUrl: './form-section.component.css',
   host: {
     '[class.orbit-form-section--fill]': 'fill()',
+    '[attr.data-orbit-density]': "density() === 'inherit' ? null : density()",
   },
 })
 export class OrbitFormSectionComponent {
@@ -20,7 +22,7 @@ export class OrbitFormSectionComponent {
   contentSpacing = input(false, { transform: booleanAttribute });
   collapsible = input(false, { transform: booleanAttribute });
   /** Overrides density for this section without changing its parent form. */
-  density = input<'inherit' | 'comfortable' | 'compact'>('inherit');
+  density = input<OrbitDensityOverride>('inherit');
 
   readonly collapsed = signal(false);
   readonly bodyId = `orbit-form-section-body-${++formSectionSequence}`;

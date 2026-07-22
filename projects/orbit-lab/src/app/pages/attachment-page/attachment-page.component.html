@@ -2,15 +2,40 @@
   <h1>Attachments</h1>
   <p>Lista, stati e dropzone generici per contenuti forniti dal consumer.</p>
 
-  <section><h2>Modificabile</h2><orbit-attachment-list [entries]="editable" /></section>
-  <section><h2>Sola lettura</h2><orbit-attachment-list [entries]="readOnly" /></section>
-  <section><h2>Completato</h2><orbit-attachment-list [entries]="completed" /></section>
-  <section><h2>Errore con azione</h2><orbit-attachment-list [entries]="failed" /></section>
-  <section><h2>Lista vuota</h2><orbit-attachment-list emptyLabel="Nessun elemento disponibile" /></section>
-
-  <orbit-divider variant="dashed" />
-
-  <section><h2>Dropzone pronta</h2><orbit-attachment-dropzone hint="PDF, PNG · max 10 MB" /></section>
-  <section><h2>Dropzone con errore</h2><orbit-attachment-dropzone error="Il file selezionato non è accettato" /></section>
-  <section><h2>Dropzone disabilitata</h2><orbit-attachment-dropzone [disabled]="true" /></section>
+  <section>
+    <h2>Modificabile</h2>
+    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="editable" /></lab-example>
+  </section>
+  <section>
+    <h2>Sola lettura</h2>
+    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="readOnly" /></lab-example>
+  </section>
+  <section>
+    <h2>Completato</h2>
+    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="completed" /></lab-example>
+  </section>
+  <section>
+    <h2>Errore con azione</h2>
+    <lab-example [code]="listSnippet"><orbit-attachment-list [entries]="failed" /></lab-example>
+  </section>
+  <section>
+    <h2>Lista vuota</h2>
+    <lab-example [code]="emptySnippet"><orbit-attachment-list emptyLabel="Nessun elemento disponibile" /></lab-example>
+  </section>
+  <section>
+    <h2>Divider tratteggiato</h2>
+    <lab-example [code]="dividerSnippet"><orbit-divider variant="dashed" /></lab-example>
+  </section>
+  <section>
+    <h2>Dropzone pronta</h2>
+    <lab-example [code]="dropzoneSnippet"><orbit-attachment-dropzone hint="PDF, PNG · max 10 MB" /></lab-example>
+  </section>
+  <section>
+    <h2>Dropzone con errore</h2>
+    <lab-example [code]="dropzoneErrorSnippet"><orbit-attachment-dropzone error="Il file selezionato non è accettato" /></lab-example>
+  </section>
+  <section>
+    <h2>Dropzone disabilitata</h2>
+    <lab-example [code]="disabledSnippet"><orbit-attachment-dropzone [disabled]="true" /></lab-example>
+  </section>
 </article>

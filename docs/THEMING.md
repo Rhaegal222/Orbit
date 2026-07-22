@@ -65,47 +65,72 @@ If a platform hosts more than one branded area, scope the overrides to its shell
 
 ## Density
 
-`comfortable` is the default. Set `data-orbit-density="compact"` on an application shell for data-dense operational screens:
+Orbit has four density presets. Apply one on the application shell; nested
+components inherit it unless their typed `density` input explicitly overrides it.
+
+| Preset        | Control height at text scale `1` | Intended use                                             |
+| ------------- | -------------------------------: | -------------------------------------------------------- |
+| `spacious`    |                             48px | review, accessibility-focused flows and touch-heavy work |
+| `comfortable` |                             42px | default operational forms                                |
+| `compact`     |                             38px | information-dense desktop forms                          |
+| `dense`       |                             34px | expert desktop tables and high-volume back-office work   |
 
 ```html
-<main data-orbit-density="compact">
+<main data-orbit-density="dense">
   <!-- Orbit components -->
 </main>
 ```
 
-Density only changes control height and spacing tokens. It must never change keyboard navigation, hit-area accessibility, hierarchy or component behavior.
+`comfortable` is the default when the attribute is omitted. `dense` is designed
+for pointer-driven desktop work; do not use it as the only presentation on a
+touch-first surface.
+
+```html
+<orbit-form-grid density="compact">
+  <!-- This grid overrides a surrounding density without changing its behavior. -->
+</orbit-form-grid>
+```
+
+Density changes the complete operational rhythm: control and action-target
+height, control padding, component spacing, form/section gap, modal chrome and
+dropzone padding. It must never change keyboard navigation, hierarchy or
+component behavior.
+
+The four values are represented by the public `OrbitDensity` type; the local
+overrides of `orbit-form-grid` and `orbit-form-section` accept
+`OrbitDensityOverride` (`'inherit'` plus those values).
 
 ## Composition spacing
 
-Use `--orbit-layout-gap`, `--orbit-layout-gap-compact`, `--orbit-field-stack-gap`,
-`--orbit-section-gap`, `--orbit-modal-padding-inline` and
+Use `--orbit-layout-gap`, `--orbit-field-stack-gap`, `--orbit-section-gap`,
+`--orbit-modal-padding-inline` and
 `--orbit-modal-padding-block` to tune dense operational forms consistently.
-Form grid, form sections and modal chrome consume these semantic tokens. Compact
-density overrides them together, without consumer-specific margins.
+Form grid, form sections and modal chrome consume these semantic tokens. Every
+density preset overrides them together, without consumer-specific margins.
 
 `--orbit-modal-size-sm`, `--orbit-modal-size-md`, `--orbit-modal-size-lg`,
 `--orbit-modal-size-xl`, `--orbit-modal-size-xxl` and `--orbit-modal-size-full` define the compositional
 widths of `orbit-modal`:
 
-| Size | Default | Intended composition |
-| --- | ---: | --- |
-| `sm` | 480px | confirmation and short decisions |
-| `md` | 720px | linear operational form |
-| `lg` | 960px | dense two-column form |
-| `xl` | 1180px | workspace, detail or complex data |
-| `xxl` | 1320px | broad workspace or information-dense review |
-| `full` | 96vw, max 1440px | focused workspace |
+| Size   |          Default | Intended composition                        |
+| ------ | ---------------: | ------------------------------------------- |
+| `sm`   |            480px | confirmation and short decisions            |
+| `md`   |            720px | linear operational form                     |
+| `lg`   |            960px | dense two-column form                       |
+| `xl`   |           1180px | workspace, detail or complex data           |
+| `xxl`  |           1320px | broad workspace or information-dense review |
+| `full` | 96vw, max 1440px | focused workspace                           |
 
 At 768px and below every size becomes full-width with a full-height mobile
 surface, so consumers do not need size-specific responsive CSS.
 
 `--orbit-modal-header-padding-block-start`,
 `--orbit-modal-header-padding-block-end` and
-`--orbit-modal-footer-padding-block` maintain equal header/footer heights: 70px
-in comfortable density and 60px in compact density at text scale `1`.
+`--orbit-modal-footer-padding-block` maintain equal header/footer heights: 80px
+in spacious, 70px in comfortable, 60px in compact and 52px in dense density at
+text scale `1`.
 `--orbit-section-index-size` and `--orbit-section-divider` define the numbered
-section header without requiring consumer CSS. The standard control is 42px in
-comfortable density and 38px in compact density.
+section header without requiring consumer CSS.
 
 The operational refresh additionally exposes `--orbit-text-label`,
 `--orbit-text-tertiary`, `--orbit-text-placeholder`, `--orbit-radius-tile`,
@@ -143,6 +168,43 @@ At a scale above `1.2`, set `--orbit-optional-icon-display: none` on the same
 shell. `orbit-selectable-tile` uses it to hide its optional leading icon while
 keeping its trailing selection check visible.
 
+### Authoring scale-safe components
+
+All dimensional component CSS (`width`, `height`, `padding`, `margin`, `gap`,
+`font-size`, `line-height`, border radius and positional offsets) must resolve
+to `rem` or an `--orbit-*` token. Do not introduce bare `px` values. The only
+exceptions are 1–2px solid hairline borders, the established visually-hidden
+`sr-only` pattern, and focus-ring `box-shadow` spread values.
+
+Size the outer SVG element from CSS with `rem` or `1em`; do not put a `px`
+`width` or `height` attribute on it. This lets the icon inherit the same text
+scale as surrounding content.
+
+Before a new component is complete, inspect it in Orbit Lab with
+`--orbit-text-scale: 1.5` and at 200% browser page zoom. Check for clipping,
+overlap and broken icon or label alignment.
+
+## Motion
+
+Orbit motion is semantic and token-driven. Use `fast` for micro-feedback,
+`base` for floating controls and expandable content, and `slow` only for large
+overlay surfaces. Enter uses `--orbit-easing-standard`; collapse and exit use
+`--orbit-easing-accelerate`; shared movement uses `--orbit-easing-shared`.
+
+| Token | Default | Role |
+| --- | --- | --- |
+| `--orbit-motion-fast` | `120ms` | Hover, pressed, toggle and fast exit |
+| `--orbit-motion-base` | `180ms` | Dropdown, popover, tooltip and expand |
+| `--orbit-motion-slow` | `240ms` | Modal and large overlay entry |
+| `--orbit-motion-shimmer` | `1200ms` | Continuous skeleton treatment |
+| `--orbit-easing-standard` | `cubic-bezier(0.2, 0, 0, 1)` | Enter and state change |
+| `--orbit-easing-accelerate` | `cubic-bezier(0.4, 0, 1, 1)` | Exit and collapse |
+| `--orbit-easing-shared` | `cubic-bezier(0.4, 0, 0.2, 1)` | Shared movement |
+
+The shipped stylesheet honors `prefers-reduced-motion: reduce` by reducing
+transition and animation durations and limiting animated loops. Do not add
+unconditional JavaScript timers to reproduce a CSS transition.
+
 ## Localization
 
 Orbit provides Italian labels by default and has no dependency on a specific
@@ -162,9 +224,11 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-The date picker uses the configured locale through `Intl.DateTimeFormat` for
-month and weekday names. Explicit component inputs still take precedence over
-translated default labels.
+The date and date-range pickers use the configured locale through
+`Intl.DateTimeFormat` for month and weekday names. `orbit-date-picker` supports
+`date`, `month` and `year` precision; the latter two emit a `Date` normalized to
+the first day of the selected period. Explicit component inputs still take
+precedence over translated default labels.
 
 ## Tailwind v4
 

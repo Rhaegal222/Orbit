@@ -2,10 +2,14 @@
 @import './theme.css';
 
 /* CDK overlay classes are global by design: the overlay is outside component encapsulation. */
-.orbit-dialog-backdrop { background: var(--orbit-overlay-backdrop); }
+.orbit-dialog-backdrop {
+  background: var(--orbit-overlay-backdrop);
+  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+}
 .orbit-dialog-panel {
   max-width: calc(100vw - 2 * var(--orbit-space-3));
   outline: 0;
+  animation: orbit-modal-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
 }
 
 .orbit-panel-backdrop { background: var(--orbit-overlay-backdrop); }
@@ -13,4 +17,67 @@
   display: flex;
   height: 100%;
   outline: 0;
+}
+
+.orbit-popover-panel {
+  animation: orbit-floating-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+  transform-origin: top center;
+}
+
+.orbit-tooltip-panel {
+  animation: orbit-tooltip-enter var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-panel-backdrop {
+  background: var(--orbit-overlay-backdrop);
+  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+
+.orbit-panel-pane {
+  animation: orbit-panel-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
+}
+
+.orbit-panel--left {
+  animation-name: orbit-panel-enter-from-left;
+}
+
+@keyframes orbit-backdrop-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes orbit-modal-enter {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes orbit-floating-enter {
+  from { opacity: 0; transform: scaleY(0.96); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes orbit-tooltip-enter {
+  from { opacity: 0; transform: translateY(0.25rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes orbit-panel-enter {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes orbit-panel-enter-from-left {
+  from { opacity: 0; transform: translateX(-100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

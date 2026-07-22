@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import type { OrbitDensity } from '@galileo/orbit';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
 
 type LabTheme = 'default' | 'dark';
-type LabDensity = 'comfortable' | 'compact';
+type LabDensity = OrbitDensity;
 type LabTextScale = '0.85' | '1' | '1.1' | '1.25' | '1.5';
 type LabFont = 'public-sans' | 'inter' | 'system';
 

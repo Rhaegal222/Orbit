@@ -46,6 +46,12 @@ describe('OrbitCodeBlockComponent', () => {
     expect(fixture.nativeElement.querySelector('[data-code-block]').hidden).toBe(false);
   });
 
+  it('can hide its built-in actions when a composite owns them', () => {
+    fixture.componentRef.setInput('showActions', false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__actions')).toBeNull();
+  });
+
   it('starts expanded when initiallyCollapsed is false', () => {
     fixture.componentRef.setInput('initiallyCollapsed', false);
     fixture.detectChanges();

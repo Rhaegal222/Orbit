@@ -80,7 +80,7 @@ describe('OrbitTimePickerComponent', () => {
 
   it('accepts a typed valid time and closes the picker', () => {
     let emitted: { hours: number; minutes: number } | undefined;
-    component.valueChange.subscribe((value) => (emitted = value));
+    component.valueChange.subscribe((value) => (emitted = value!));
     component.isOpen.set(true);
 
     component.onInputChange('09:05');
@@ -88,6 +88,33 @@ describe('OrbitTimePickerComponent', () => {
     expect(component.inputText()).toBe('09:05');
     expect(component.isOpen()).toBe(false);
     expect(emitted).toEqual({ hours: 9, minutes: 5 });
+  });
+
+  it('masks typed and pasted digits as HH:MM', () => {
+    let emitted: { hours: number; minutes: number } | undefined;
+    component.valueChange.subscribe((value) => (emitted = value!));
+
+    component.onInputChange('12a3:45');
+
+    expect(component.inputText()).toBe('12:34');
+    expect(emitted).toEqual({ hours: 12, minutes: 34 });
+  });
+
+  it('does not emit invalid times after masking', () => {
+    let emitted = false;
+    component.valueChange.subscribe(() => (emitted = true));
+
+    component.onInputChange('25:99');
+
+    expect(component.inputText()).toBe('25:99');
+    expect(emitted).toBe(false);
+  });
+
+  it('declares the native time pattern and input length', () => {
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    expect(input.maxLength).toBe(5);
+    expect(input.pattern).toBe('(?:[01][0-9]|2[0-3]):[0-5][0-9]');
   });
 
   it('closes when interaction moves outside the picker', () => {

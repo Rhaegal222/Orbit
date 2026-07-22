@@ -23,7 +23,8 @@ describe('OrbitFormSectionComponent', () => {
     expect(button.getAttribute('aria-expanded')).toBe('true');
     expect(button.getAttribute('aria-controls')).toBe(body.id);
     expect(body.getAttribute('role')).toBe('region');
-    expect(body.hidden).toBe(false);
+    expect(body.getAttribute('aria-hidden')).toBe('false');
+    expect(body.classList).not.toContain('orbit-form-section__body--collapsed');
   });
 
   it('collapses and expands from the native button', () => {
@@ -33,12 +34,14 @@ describe('OrbitFormSectionComponent', () => {
     button.click();
     fixture.detectChanges();
     expect(button.getAttribute('aria-expanded')).toBe('false');
-    expect(body.hidden).toBe(true);
+    expect(body.getAttribute('aria-hidden')).toBe('true');
+    expect(body.classList).toContain('orbit-form-section__body--collapsed');
 
     button.click();
     fixture.detectChanges();
     expect(button.getAttribute('aria-expanded')).toBe('true');
-    expect(body.hidden).toBe(false);
+    expect(body.getAttribute('aria-hidden')).toBe('false');
+    expect(body.classList).not.toContain('orbit-form-section__body--collapsed');
   });
 
   it('preserves a non-interactive heading when not collapsible', () => {
@@ -46,7 +49,7 @@ describe('OrbitFormSectionComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('button')).toBeNull();
-    expect(fixture.nativeElement.querySelector('.orbit-form-section__body').hidden).toBe(false);
+    expect(fixture.nativeElement.querySelector('.orbit-form-section__body').getAttribute('aria-hidden')).toBe('false');
   });
 
   it('renders an optional workflow index and labels the collapsible region', () => {
@@ -58,5 +61,11 @@ describe('OrbitFormSectionComponent', () => {
 
     expect(title.textContent).toContain('03');
     expect(body.getAttribute('aria-labelledby')).toBe(title.id);
+  });
+
+  it('accepts an explicit density override', () => {
+    fixture.componentRef.setInput('density', 'dense');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.getAttribute('data-orbit-density')).toBe('dense');
   });
 });

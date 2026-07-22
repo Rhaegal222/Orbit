@@ -21,8 +21,10 @@
         [value]="density()"
         (change)="setDensity($any($event.target).value)"
       >
+        <option value="spacious">Spaziosa</option>
         <option value="comfortable">Comfortable</option>
         <option value="compact">Compact</option>
+        <option value="dense">Densa</option>
       </select>
     </label>
 
@@ -60,7 +62,7 @@
   class="lab-shell__body"
   data-lab-theme-container
   [attr.data-orbit-theme]="theme() === 'dark' ? 'dark' : null"
-  [attr.data-orbit-density]="density() === 'compact' ? 'compact' : null"
+  [attr.data-orbit-density]="density()"
   [attr.data-orbit-text-scale]="textScale()"
   [style.--orbit-text-scale]="textScale()"
   [style.--orbit-optional-icon-display]="optionalIconDisplay()"

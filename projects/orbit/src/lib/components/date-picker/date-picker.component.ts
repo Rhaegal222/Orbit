@@ -2,7 +2,9 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
+  effect,
   forwardRef,
   HostListener,
   inject,
@@ -12,6 +14,13 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
+
+const DATE_VALUE_PATTERN = /^([0-3]\d)\/([01]\d)\/(\d{4})$/;
+const MONTH_VALUE_PATTERN = /^([01]\d)\/(\d{4})$/;
+const YEAR_VALUE_PATTERN = /^\d{4}$/;
+
+/** Determines the precision emitted by an Orbit date picker. */
+export type OrbitDatePickerMode = 'date' | 'month' | 'year';
 
 interface CalendarDay {
   date: Date;
@@ -43,17 +52,24 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   readonly i18n = inject(ORBIT_I18N);
   private readonly hostElement = inject(ElementRef<HTMLElement>);
   inputId = input('');
-  placeholder = input('GG/MM/AAAA');
+  ariaLabel = input('');
+  placeholder = input('');
   required = input(false, { transform: booleanAttribute });
   invalid = input(false, { transform: booleanAttribute });
   minDate = input<Date | null>(null);
   maxDate = input<Date | null>(null);
   weekStartsOn = input<0 | 1>(1);
+  /** Optional one-way value for compositional, non-form use. Prefer CVA in forms. */
+  value = input<Date | null | undefined>(undefined);
+  disabled = input(false, { transform: booleanAttribute });
+  /** `month` emits the first day of the selected month; `year` emits 1 January. */
+  mode = input<OrbitDatePickerMode>('date');
 
   valueChange = output<Date | null>();
 
   isOpen = signal(false);
-  isDisabled = signal(false);
+  private readonly cvaDisabled = signal(false);
+  readonly isDisabled = computed(() => this.cvaDisabled() || this.disabled());
   selectedDate = signal<Date | null>(null);
   viewMonth = signal(new Date().getMonth());
   viewYear = signal(new Date().getFullYear());
@@ -62,14 +78,32 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   private onChange: (value: Date | null) => void = () => undefined;
   private onTouched: () => void = () => undefined;
 
+  constructor() {
+    effect(() => {
+      const value = this.value();
+      if (value !== undefined) this.writeValue(value);
+    });
+  }
+
   readonly weekdayLabels = Array.from({ length: 7 }, (_, index) =>
-    new Intl.DateTimeFormat(this.i18n.locale, { weekday: 'short' }).format(new Date(2024, 0, index + 1)),
+    new Intl.DateTimeFormat(this.i18n.locale, { weekday: 'short' }).format(
+      new Date(2024, 0, index + 1),
+    ),
   );
 
+  readonly monthLabels = Array.from({ length: 12 }, (_, index) =>
+    new Intl.DateTimeFormat(this.i18n.locale, { month: 'short' }).format(new Date(2024, index, 1)),
+  );
+
+  get yearOptions(): number[] {
+    return Array.from({ length: 12 }, (_, index) => this.viewYear() - 5 + index);
+  }
+
   monthLabel(): string {
-    return new Intl.DateTimeFormat(this.i18n.locale, { month: 'long', year: 'numeric' }).format(
+    const label = new Intl.DateTimeFormat(this.i18n.locale, { month: 'long', year: 'numeric' }).format(
       new Date(this.viewYear(), this.viewMonth(), 1),
     );
+    return label.charAt(0).toLocaleUpperCase(this.i18n.locale) + label.slice(1);
   }
 
   get calendarDays(): CalendarDay[] {
@@ -107,11 +141,10 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   }
 
   writeValue(val: Date | null): void {
-    this.selectedDate.set(val);
-    this.inputText.set(val ? this.formatDate(val) : '');
-    if (val) {
-      this.viewMonth.set(val.getMonth());
-      this.viewYear.set(val.getFullYear());
+    if (val) this.setDisplayedValue(val);
+    else {
+      this.selectedDate.set(null);
+      this.inputText.set('');
     }
   }
 
@@ -124,7 +157,7 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
+    this.cvaDisabled.set(isDisabled);
   }
 
   toggle(): void {
@@ -134,12 +167,39 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
 
   selectDay(day: CalendarDay): void {
     if (day.disabled) return;
-    this.selectedDate.set(day.date);
-    this.inputText.set(this.formatDate(day.date));
-    this.isOpen.set(false);
-    this.onChange(day.date);
-    this.onTouched();
-    this.valueChange.emit(day.date);
+    this.commitValue(day.date);
+  }
+
+  selectMonth(month: number): void {
+    const value = new Date(this.viewYear(), month, 1);
+    if (this.isOutOfRange(value)) return;
+    this.commitValue(value);
+  }
+
+  selectYear(year: number): void {
+    const value = new Date(year, 0, 1);
+    if (this.isOutOfRange(value)) return;
+    this.viewYear.set(year);
+    this.commitValue(value);
+  }
+
+  isMonthSelected(month: number): boolean {
+    const selected = this.selectedDate();
+    return !!selected && selected.getFullYear() === this.viewYear() && selected.getMonth() === month;
+  }
+
+  isYearSelected(year: number): boolean {
+    return this.selectedDate()?.getFullYear() === year;
+  }
+
+  isMonthDisabled(month: number): boolean {
+    return this.isOutOfRange(new Date(this.viewYear(), month, 1));
+  }
+
+  isYearDisabled(year: number): boolean {
+    const min = this.minDate()?.getFullYear();
+    const max = this.maxDate()?.getFullYear();
+    return (min !== undefined && year < min) || (max !== undefined && year > max);
   }
 
   prevMonth(): void {
@@ -162,8 +222,9 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
 
   onInputChange(text: string): void {
     this.isOpen.set(false);
-    this.inputText.set(text);
-    const parsed = this.parseDate(text);
+    const maskedText = this.maskInput(text);
+    this.inputText.set(maskedText);
+    const parsed = this.parseValue(maskedText);
     if (parsed) {
       this.selectedDate.set(parsed);
       this.viewMonth.set(parsed.getMonth());
@@ -191,19 +252,50 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
   }
 
   private formatDate(d: Date): string {
+    if (this.mode() === 'year') return String(d.getFullYear());
+    if (this.mode() === 'month') {
+      return `${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+    }
     const dd = String(d.getDate()).padStart(2, '0');
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const yyyy = d.getFullYear();
     return `${dd}/${mm}/${yyyy}`;
   }
 
-  private parseDate(text: string): Date | null {
-    const match = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  private parseValue(text: string): Date | null {
+    if (this.mode() === 'year') {
+      if (!YEAR_VALUE_PATTERN.test(text)) return null;
+      const value = new Date(Number(text), 0, 1);
+      return this.isOutOfRange(value) ? null : value;
+    }
+    if (this.mode() === 'month') {
+      const match = text.match(MONTH_VALUE_PATTERN);
+      if (!match || Number(match[1]) === 0) return null;
+      const value = new Date(Number(match[2]), Number(match[1]) - 1, 1);
+      return value.getMonth() === Number(match[1]) - 1 && !this.isOutOfRange(value)
+        ? value
+        : null;
+    }
+    const match = text.match(DATE_VALUE_PATTERN);
     if (!match) return null;
     const [, dd, mm, yyyy] = match;
     const date = new Date(+yyyy, +mm - 1, +dd);
-    if (date.getDate() !== +dd) return null;
-    return date;
+    if (date.getFullYear() !== +yyyy || date.getMonth() !== +mm - 1 || date.getDate() !== +dd) {
+      return null;
+    }
+    return this.isOutOfRange(date) ? null : date;
+  }
+
+  private maskInput(text: string): string {
+    const maxDigits = this.mode() === 'date' ? 8 : this.mode() === 'month' ? 6 : 4;
+    const digits = text.replace(/\D/g, '').slice(0, maxDigits);
+    if (this.mode() === 'year') return digits;
+    if (this.mode() === 'month') {
+      return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+    }
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
   }
 
   private makeDay(
@@ -227,5 +319,30 @@ export class OrbitDatePickerComponent implements ControlValueAccessor {
       selected: selected ? d.getTime() === selected.getTime() : false,
       disabled: !!disabled,
     };
+  }
+
+  private commitValue(value: Date): void {
+    this.selectedDate.set(value);
+    this.inputText.set(this.formatDate(value));
+    this.isOpen.set(false);
+    this.onChange(value);
+    this.onTouched();
+    this.valueChange.emit(value);
+  }
+
+  private isOutOfRange(value: Date): boolean {
+    const min = this.minDate();
+    const max = this.maxDate();
+    return !!(
+      (min && value < new Date(min.getFullYear(), min.getMonth(), min.getDate())) ||
+      (max && value > new Date(max.getFullYear(), max.getMonth(), max.getDate()))
+    );
+  }
+
+  private setDisplayedValue(value: Date): void {
+    this.selectedDate.set(value);
+    this.inputText.set(this.formatDate(value));
+    this.viewMonth.set(value.getMonth());
+    this.viewYear.set(value.getFullYear());
   }
 }

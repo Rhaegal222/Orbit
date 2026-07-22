@@ -130,15 +130,16 @@
   transform: rotate(180deg);
 }
 
-/* ── Menu ── */
+/* ── Menu ──
+   Rendered through a CDK connected overlay (see select.component.ts), so it
+   escapes any ancestor's overflow/stacking context instead of being clipped
+   by the component's containing card/panel. Positioning, width and z-index
+   are owned by the overlay pane; this element only styles its own content. */
 .orbit-select__menu {
-  position: absolute;
-  z-index: var(--orbit-z-modal, 1050);
-  top: calc(100% + 0.25rem);
-  left: 0;
-  right: 0;
+  width: 100%;
   max-height: 13.5rem;
   padding: 0.25rem;
+  box-sizing: border-box;
   overflow-y: auto;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-control);

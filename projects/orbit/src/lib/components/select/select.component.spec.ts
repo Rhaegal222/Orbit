@@ -1,9 +1,12 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { OrbitSelectComponent } from './select.component';
 
 describe('OrbitSelectComponent', () => {
   let fixture: ComponentFixture<OrbitSelectComponent>;
   let component: OrbitSelectComponent;
+  let overlayContainer: OverlayContainer;
 
   const OPTIONS = [
     { label: 'Italia', value: 'IT' },
@@ -20,6 +23,11 @@ describe('OrbitSelectComponent', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('options', OPTIONS);
     fixture.detectChanges();
+    overlayContainer = TestBed.inject(OverlayContainer);
+  });
+
+  afterEach(() => {
+    overlayContainer.ngOnDestroy();
   });
 
   it('creates', () => {
@@ -51,11 +59,19 @@ describe('OrbitSelectComponent', () => {
     expect(component.isOpen()).toBe(false);
   });
 
-  it('renders options when open', () => {
+  it('renders options in a CDK overlay (not clipped by an ancestor) when open', () => {
     component.isOpen.set(true);
     fixture.detectChanges();
-    const items = fixture.nativeElement.querySelectorAll('.orbit-select__option');
+    const items = overlayContainer.getContainerElement().querySelectorAll('.orbit-select__option');
     expect(items.length).toBe(3);
+  });
+
+  it('does not close when a pointerdown bubbles up from inside the overlay menu', () => {
+    component.isOpen.set(true);
+    fixture.detectChanges();
+    const option = overlayContainer.getContainerElement().querySelector('.orbit-select__option') as HTMLElement;
+    option.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
+    expect(component.isOpen()).toBe(true);
   });
 
   it('selects option and closes', () => {

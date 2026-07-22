@@ -2,15 +2,22 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
   forwardRef,
   HostListener,
   inject,
   input,
+  OnDestroy,
   output,
   signal,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export type OrbitSelectValue = string | number;
@@ -38,9 +45,11 @@ export interface OrbitSelectOption {
     '[class.orbit-select--invalid]': 'invalid()',
   },
 })
-export class OrbitSelectComponent implements ControlValueAccessor {
+export class OrbitSelectComponent implements ControlValueAccessor, OnDestroy {
   readonly i18n = inject(ORBIT_I18N);
   private readonly hostElement = inject(ElementRef<HTMLElement>);
+  private readonly overlay = inject(Overlay);
+  private readonly vcr = inject(ViewContainerRef);
   options = input<OrbitSelectOption[]>([]);
   placeholder = input('');
   inputId = input('');
@@ -50,6 +59,8 @@ export class OrbitSelectComponent implements ControlValueAccessor {
 
   valueChange = output<OrbitSelectValue | null>();
 
+  @ViewChild('menuTemplate') private menuTemplate!: TemplateRef<unknown>;
+
   selectedValue = signal<OrbitSelectValue | null>(null);
   inputText = signal('');
   isOpen = signal(false);
@@ -57,8 +68,15 @@ export class OrbitSelectComponent implements ControlValueAccessor {
   activeIndex = signal(-1);
   isDisabled = signal(false);
 
+  private overlayRef: OverlayRef | null = null;
+
   private onChange: (value: OrbitSelectValue | null) => void = () => undefined;
   private onTouched: () => void = () => undefined;
+
+  private readonly overlaySyncEffect = effect(() => {
+    if (this.isOpen()) this.attachOverlay();
+    else this.detachOverlay();
+  });
 
   writeValue(val: OrbitSelectValue | null): void {
     this.selectedValue.set(val);
@@ -135,7 +153,11 @@ export class OrbitSelectComponent implements ControlValueAccessor {
    */
   @HostListener('document:pointerdown', ['$event'])
   onDocumentPointerDown(event: PointerEvent): void {
-    if (this.isOpen() && !this.hostElement.nativeElement.contains(event.target as Node)) {
+    if (!this.isOpen()) return;
+    const target = event.target as Node;
+    const insideTrigger = this.hostElement.nativeElement.contains(target);
+    const insideMenu = this.overlayRef?.overlayElement.contains(target) ?? false;
+    if (!insideTrigger && !insideMenu) {
       this.isOpen.set(false);
     }
   }
@@ -169,6 +191,10 @@ export class OrbitSelectComponent implements ControlValueAccessor {
     return option.value;
   }
 
+  ngOnDestroy(): void {
+    this.detachOverlay();
+  }
+
   private openAll(): void {
     this.isOpen.set(true);
     this.activeIndex.set(-1);
@@ -197,5 +223,37 @@ export class OrbitSelectComponent implements ControlValueAccessor {
 
   private getOptionLabel(val: OrbitSelectValue | null): string {
     return this.options().find((o) => o.value === val)?.label || '';
+  }
+
+  private attachOverlay(): void {
+    if (this.overlayRef) return;
+
+    const triggerWidth = this.hostElement.nativeElement.getBoundingClientRect().width;
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.hostElement)
+      .withFlexibleDimensions(false)
+      .withPush(false)
+      .withPositions([
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      width: triggerWidth,
+      panelClass: 'orbit-select-panel',
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    });
+
+    const portal = new TemplatePortal(this.menuTemplate, this.vcr);
+    this.overlayRef.attach(portal);
+  }
+
+  private detachOverlay(): void {
+    if (!this.overlayRef) return;
+    this.overlayRef.detach();
+    this.overlayRef.dispose();
+    this.overlayRef = null;
   }
 }

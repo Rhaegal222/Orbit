@@ -70,8 +70,9 @@
     <h2>Comportamento responsive</h2>
     <p>
       Larghezza al 100% del contenitore; il menu a tendina (<code>role="listbox"</code>) è
-      posizionato in <code>absolute</code> rispetto al wrapper, non un overlay CDK — su schermi
-      stretti resta ancorato sotto il campo senza riposizionamento automatico.
+      renderizzato tramite un overlay CDK connesso al campo, quindi non viene mai ritagliato da un
+      antenato con <code>overflow</code> impostato e si riposiziona sopra il campo quando non c'è
+      spazio sotto.
     </p>
   </section>
 

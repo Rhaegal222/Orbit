@@ -30,6 +30,10 @@
   transform-origin: top center;
 }
 
+.orbit-select-panel {
+  outline: 0;
+}
+
 .orbit-tooltip-panel {
   animation: orbit-tooltip-enter var(--orbit-motion-fast) var(--orbit-easing-standard);
 }

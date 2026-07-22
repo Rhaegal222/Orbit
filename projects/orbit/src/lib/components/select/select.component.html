@@ -29,25 +29,25 @@
       <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
-
-  @if (isOpen() && !isDisabled()) {
-    <div class="orbit-select__menu" role="listbox" [attr.aria-labelledby]="inputId() || null">
-      @for (option of filteredOptions; track option.value; let i = $index) {
-        <button
-          type="button"
-          class="orbit-select__option"
-          [class.orbit-select__option--selected]="option.value === selectedValue()"
-          [class.orbit-select__option--active]="i === activeIndex()"
-          [disabled]="option.disabled"
-          (mousedown)="$event.preventDefault()"
-          (click)="onOptionSelect(option)"
-        >
-          {{ option.label }}
-        </button>
-      }
-      @if (filteredOptions.length === 0) {
-        <p class="orbit-select__empty">{{ i18n.labels.noResults }}</p>
-      }
-    </div>
-  }
 </div>
+
+<ng-template #menuTemplate>
+  <div class="orbit-select__menu" role="listbox" [attr.aria-labelledby]="inputId() || null">
+    @for (option of filteredOptions; track option.value; let i = $index) {
+      <button
+        type="button"
+        class="orbit-select__option"
+        [class.orbit-select__option--selected]="option.value === selectedValue()"
+        [class.orbit-select__option--active]="i === activeIndex()"
+        [disabled]="option.disabled"
+        (mousedown)="$event.preventDefault()"
+        (click)="onOptionSelect(option)"
+      >
+        {{ option.label }}
+      </button>
+    }
+    @if (filteredOptions.length === 0) {
+      <p class="orbit-select__empty">{{ i18n.labels.noResults }}</p>
+    }
+  </div>
+</ng-template>

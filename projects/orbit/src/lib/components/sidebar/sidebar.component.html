@@ -7,14 +7,19 @@
 >
   @if (!embedded()) {
     <header class="orbit-sidebar__header">
-      <span class="orbit-sidebar__brand-mark" aria-hidden="true">
-        @if (brandIcon()) {
-          <orbit-icon [name]="brandIcon()!" />
-        } @else {
-          {{ brandShort() || brand().slice(0, 1) }}
-        }
-      </span>
-      <span class="orbit-sidebar__brand">{{ brand() }}</span>
+      <div class="orbit-sidebar__header-brand">
+        <span class="orbit-sidebar__brand-mark" aria-hidden="true">
+          @if (brandIcon()) {
+            <orbit-icon [name]="brandIcon()!" />
+          } @else {
+            {{ brandShort() || brand().slice(0, 1) }}
+          }
+        </span>
+        <span class="orbit-sidebar__brand">{{ brand() }}</span>
+      </div>
+      <div class="orbit-sidebar__header-search">
+        <ng-content select="[orbitSidebarSearch]" />
+      </div>
     </header>
   }
 

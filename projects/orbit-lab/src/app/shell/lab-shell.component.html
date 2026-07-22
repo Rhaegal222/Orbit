@@ -1,14 +1,5 @@
 <header class="lab-shell__header">
-  <div class="lab-shell__header-actions lab-shell__header-actions--start">
-    <orbit-text-input
-      type="search"
-      inputId="lab-catalog-search"
-      placeholder="Cerca sezione…"
-      showLeadingIcon
-      leadingIconName="search"
-      [formControl]="searchControl"
-    />
-  </div>
+  <div class="lab-shell__header-actions lab-shell__header-actions--start"></div>
 
   <div class="lab-shell__brand" aria-label="Orbit Lab">
     <span class="lab-shell__brand-mark" aria-hidden="true">O</span>
@@ -37,7 +28,17 @@
     [collapsed]="sidebarCollapsed()"
     (itemSelected)="onSidebarItemSelected($event)"
     (collapsedChange)="onSidebarCollapsedChange($event)"
-  />
+  >
+    <orbit-text-input
+      orbitSidebarSearch
+      type="search"
+      inputId="lab-catalog-search"
+      placeholder="Cerca sezione…"
+      showLeadingIcon
+      leadingIconName="search"
+      [formControl]="searchControl"
+    />
+  </orbit-sidebar>
   <main class="lab-shell__content">
     <router-outlet />
   </main>

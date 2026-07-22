@@ -35,12 +35,22 @@
 
 .orbit-sidebar__header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--orbit-sidebar-header-height);
+  flex-direction: column;
   gap: var(--orbit-space-2);
+  min-height: var(--orbit-sidebar-header-height);
   padding: var(--orbit-space-3);
   border-bottom: 1px solid var(--orbit-sidebar-border);
+}
+
+.orbit-sidebar__header-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--orbit-space-2);
+}
+
+.orbit-sidebar__header-search {
+  width: 100%;
 }
 
 .orbit-sidebar__brand-mark {
@@ -253,6 +263,10 @@
   max-width: 0;
   opacity: 0;
   overflow: hidden;
+}
+
+:host(.orbit-sidebar-host--collapsed) .orbit-sidebar__header-search {
+  display: none;
 }
 
 :host(.orbit-sidebar-host--collapsed) .orbit-sidebar__section-label {

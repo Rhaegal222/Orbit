@@ -699,6 +699,29 @@ export class LabShellComponent {
         this.beginSliderDrag(overlay, rangeInput, event);
         return;
       }
+
+      // Every real pointerdown lands on the overlay itself, never on the previewed content
+      // beneath it, so a component's own `document:pointerdown` outside-click detector (Orbit
+      // select, autocomplete, popover, date/time picker) can never see its own trigger or menu
+      // as the event target — it always looks "outside" and closes itself immediately, even when
+      // the tap is meant for an option inside its own open menu. By the time pointerup re-reads
+      // `elementFromPoint`, that menu has already closed and disappeared, so the tap lands on
+      // whatever is left exposed underneath instead — closing one control and opening another
+      // from a single tap. Forwarding a synthetic, bubbling pointerdown to the real target first
+      // (same idea as `beginSliderDrag` driving the real input directly) lets those checks
+      // evaluate against the actual element under the finger, exactly like a native touchscreen
+      // would report it, before anything decides to close.
+      target.dispatchEvent(
+        new PointerEvent('pointerdown', {
+          bubbles: true,
+          cancelable: true,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          pointerId: event.pointerId,
+          pointerType: event.pointerType,
+          isPrimary: event.isPrimary,
+        }),
+      );
     }
 
     overlay.setPointerCapture(event.pointerId);

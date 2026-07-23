@@ -42,6 +42,7 @@ export * from './lib/components/breadcrumb';
 export * from './lib/components/tab';
 export * from './lib/components/tab-panel';
 export * from './lib/components/tablist';
+export * from './lib/components/accordion';
 export * from './lib/components/table';
 export * from './lib/components/table-column';
 export * from './lib/components/table-row';

@@ -1,0 +1,58 @@
+:host.orbit-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--orbit-space-3);
+  padding: var(--orbit-space-4);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+  border: 1px solid var(--orbit-border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  min-width: 280px;
+  max-width: 420px;
+  pointer-events: auto;
+}
+
+:host.orbit-toast--success {
+  border-color: var(--orbit-status-success);
+}
+:host.orbit-toast--success .orbit-toast__icon {
+  color: var(--orbit-status-success);
+}
+
+:host.orbit-toast--danger {
+  border-color: var(--orbit-status-danger);
+}
+:host.orbit-toast--danger .orbit-toast__icon {
+  color: var(--orbit-status-danger);
+}
+
+:host.orbit-toast--warning {
+  border-color: var(--orbit-status-warning);
+}
+:host.orbit-toast--warning .orbit-toast__icon {
+  color: var(--orbit-status-warning);
+}
+
+:host.orbit-toast--info {
+  border-color: var(--orbit-status-info);
+}
+:host.orbit-toast--info .orbit-toast__icon {
+  color: var(--orbit-status-info);
+}
+
+.orbit-toast__icon {
+  flex: none;
+  margin-top: var(--orbit-space-1);
+}
+
+.orbit-toast__message {
+  flex: 1 1 auto;
+  margin: 0;
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-body);
+  color: var(--orbit-ref-neutral-900, inherit);
+}
+
+.orbit-toast__close {
+  flex: none;
+}

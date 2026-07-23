@@ -2,12 +2,14 @@ import { CatalogEntry } from './catalog-entry.model';
 
 export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'accordion', label: 'Accordion', status: 'verified', icon: 'layers' },
+  { slug: 'alert', label: 'Alert', status: 'verified', icon: 'alert-triangle' },
   { slug: 'attachments', label: 'Allegati', status: 'verified', icon: 'paperclip' },
   { slug: 'motion', label: 'Animazioni', status: 'verified', icon: 'retry' },
   { slug: 'avatar', label: 'Avatar', status: 'verified', icon: 'user' },
+  { slug: 'badge', label: 'Badge', status: 'verified', icon: 'tag' },
+  { slug: 'banner', label: 'Banner', status: 'verified', icon: 'window' },
   { slug: 'progress-bar', label: 'Barra di avanzamento', status: 'verified', icon: 'bar-chart' },
   { slug: 'navbar', label: 'Barra di navigazione', status: 'verified', icon: 'menu' },
-  { slug: 'badge', label: 'Badge', status: 'verified', icon: 'tag' },
   { slug: 'breadcrumb', label: 'Breadcrumb', status: 'verified', icon: 'chevron-down' },
   { slug: 'form-field', label: 'Campi modulo', status: 'verified', icon: 'document' },
   { slug: 'checkbox', label: 'Caselle di controllo', status: 'verified', icon: 'check' },
@@ -33,4 +35,5 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'table', label: 'Table', status: 'verified', icon: 'grid' },
   { slug: 'themes', label: 'Temi e superfici', status: 'verified', icon: 'settings' },
   { slug: 'typography', label: 'Tipografia', status: 'verified', icon: 'document' },
+  { slug: 'toast', label: 'Toast', status: 'verified', icon: 'message-circle' },
 ];

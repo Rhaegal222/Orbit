@@ -17,6 +17,11 @@ export const routes: Routes = [
       import('./pages/badge-page/badge-page.component').then((m) => m.BadgePageComponent),
   },
   {
+    path: 'alert',
+    loadComponent: () =>
+      import('./pages/alert-page/alert-page.component').then((m) => m.AlertPageComponent),
+  },
+  {
     path: 'avatar',
     loadComponent: () =>
       import('./pages/avatar-page/avatar-page.component').then((m) => m.AvatarPageComponent),
@@ -157,6 +162,11 @@ export const routes: Routes = [
       import('./pages/dialog-page/dialog-page.component').then((m) => m.DialogPageComponent),
   },
   {
+    path: 'banner',
+    loadComponent: () =>
+      import('./pages/banner-page/banner-page.component').then((m) => m.BannerPageComponent),
+  },
+  {
     path: 'popover',
     loadComponent: () =>
       import('./pages/popover-page/popover-page.component').then((m) => m.PopoverPageComponent),
@@ -170,6 +180,11 @@ export const routes: Routes = [
     path: 'panel',
     loadComponent: () =>
       import('./pages/panel-page/panel-page.component').then((m) => m.PanelPageComponent),
+  },
+  {
+    path: 'toast',
+    loadComponent: () =>
+      import('./pages/toast-page/toast-page.component').then((m) => m.ToastPageComponent),
   },
   {
     path: 'navbar',

@@ -1,0 +1,48 @@
+<article>
+  <h1>Toast</h1>
+  <p>Notifica transitoria fuori dal flusso, montata in un overlay CDK e impilata per angolo dello schermo.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="success">
+        <orbit-button label="Mostra toast di successo" variant="filled" tone="success" (clicked)="showTone('success')" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Tone</h2>
+    <div data-example="danger">
+      <orbit-button label="Danger" variant="outline" tone="danger" (clicked)="showTone('danger')" />
+    </div>
+    <div data-example="warning">
+      <orbit-button label="Warning" variant="outline" tone="neutral" (clicked)="showTone('warning')" />
+    </div>
+    <div data-example="info">
+      <orbit-button label="Info" variant="outline" tone="neutral" (clicked)="showTone('info')" />
+    </div>
+  </section>
+
+  <section>
+    <h2>Manuale (nessun auto-dismiss)</h2>
+    <lab-example [code]="dismissibleSnippet">
+      <div data-example="manual">
+        <orbit-button label="Mostra toast manuale" variant="outline" tone="neutral" (clicked)="showManual()" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Chiudi tutti</h2>
+    <orbit-button label="Dismiss all" variant="outline" tone="neutral" (clicked)="dismissAll()" />
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano <code>role="status"</code>.</li>
+      <li>Il timer di auto-dismiss si mette in pausa su hover/focus e riparte su mouseleave/blur.</li>
+    </ul>
+  </section>
+</article>

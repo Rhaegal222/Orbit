@@ -1,4 +1,24 @@
+/* This panel is always a slim side drawer (opened via OrbitPanelService, side: 'right'),
+   never a centered dialog — so it uses the sidebar's own compact spacing scale instead of
+   the header/body/footer's default modal padding (sized for a wide centered card). Setting
+   it here, on the component itself, means it looks the same whether opened through the real
+   CDK overlay or embedded inline in Orbit Lab's mobile-preview mockup. */
+:host {
+  --orbit-content-padding-block: var(--orbit-space-3);
+  --orbit-content-padding-inline: var(--orbit-space-2);
+  --orbit-modal-header-padding-block-start: var(--orbit-space-3);
+  --orbit-modal-header-padding-block-end: var(--orbit-space-3);
+  --orbit-modal-footer-padding-block: var(--orbit-space-3);
+  --orbit-modal-padding-inline: var(--orbit-space-2);
+}
+
 .lab-catalog-panel__options {
   display: grid;
   gap: var(--orbit-space-2);
+}
+
+/* Same per-row padding as .orbit-sidebar__item, so each field reads as one "item" in the
+   list rather than floating in the body's outer scroll padding alone. */
+.lab-catalog-panel__field {
+  padding: var(--orbit-item-padding-block) var(--orbit-item-padding-inline);
 }

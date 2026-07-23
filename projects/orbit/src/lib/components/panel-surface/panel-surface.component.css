@@ -8,6 +8,7 @@
   flex-direction: column;
   height: 100%;
   min-height: 0;
+  max-width: 70vw;
   overflow: hidden;
   background: var(--orbit-surface-overlay);
   color: var(--orbit-text-primary);

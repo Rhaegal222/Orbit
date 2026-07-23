@@ -484,17 +484,6 @@ body[data-orbit-motion='off'] .lab-shell__phone-touch-ripple {
   display: contents;
 }
 
-/* The options form uses the modal-header/body/footer padding scale, sized for a centered
-   dialog card; here it's embedded in a narrow side drawer, so match the sidebar's own
-   (denser) spacing scale instead. */
-.lab-shell__mobile-options-container {
-  --orbit-modal-padding-inline: var(--orbit-space-3);
-  --orbit-modal-padding-block: var(--orbit-space-3);
-  --orbit-modal-header-padding-block-start: var(--orbit-space-3);
-  --orbit-modal-header-padding-block-end: var(--orbit-space-3);
-  --orbit-modal-footer-padding-block: var(--orbit-space-3);
-}
-
 .lab-shell__mobile-options-backdrop {
   position: absolute;
   inset: 0;

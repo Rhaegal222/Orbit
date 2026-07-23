@@ -243,6 +243,13 @@
   --orbit-modal-header-padding-block-start: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
   --orbit-modal-header-padding-block-end: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
   --orbit-modal-footer-padding-block: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-content-padding-block: var(--orbit-modal-padding-block);
+  --orbit-content-padding-inline: var(--orbit-modal-padding-inline);
+  /* Per-row padding for an item inside a scrollable content area (a sidebar nav item, a
+     catalog options field, …) — defaults to the sidebar item's own current values so it's
+     defined once and other consumers can adopt it with no visual change to the sidebar. */
+  --orbit-item-padding-block: var(--orbit-space-2);
+  --orbit-item-padding-inline: var(--orbit-space-3);
   --orbit-dropzone-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
   --orbit-dropzone-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
   --orbit-modal-size-sm: 30rem;

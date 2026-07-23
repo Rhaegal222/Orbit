@@ -191,7 +191,7 @@
   width: 100%;
   min-height: var(--orbit-control-height);
   gap: var(--orbit-space-2);
-  padding: var(--orbit-space-2) var(--orbit-space-3);
+  padding: var(--orbit-item-padding-block) var(--orbit-item-padding-inline);
   border: 1px solid transparent;
   border-radius: var(--orbit-radius-control);
   background: transparent;

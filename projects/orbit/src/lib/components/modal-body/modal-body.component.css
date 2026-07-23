@@ -12,7 +12,7 @@
   box-sizing: border-box;
   height: 100%;
   overflow-y: auto;
-  padding: var(--orbit-modal-padding-block) var(--orbit-modal-padding-inline);
+  padding: var(--orbit-content-padding-block) var(--orbit-content-padding-inline);
   min-height: 4rem;
 }
 

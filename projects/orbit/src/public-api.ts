@@ -38,6 +38,7 @@ export * from './lib/components/panel';
 export * from './lib/components/progress-bar';
 export * from './lib/components/sidebar';
 export * from './lib/components/navbar';
+export * from './lib/components/breadcrumb';
 export * from './lib/components/tab';
 export * from './lib/components/tab-panel';
 export * from './lib/components/tablist';

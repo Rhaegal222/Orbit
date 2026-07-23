@@ -5,6 +5,7 @@ export * from './lib/components/divider';
 export * from './lib/components/avatar';
 export * from './lib/components/selectable-tile';
 export * from './lib/components/badge';
+export * from './lib/components/chip';
 export * from './lib/components/skeleton';
 export * from './lib/components/checkbox';
 export * from './lib/components/form-field';

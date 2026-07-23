@@ -21,9 +21,9 @@ describe('OrbitFormActionBarComponent', () => {
 
   it('renders default labels', () => {
     const el = fixture.nativeElement;
-    expect(el.textContent).toContain('SALVA E CONTINUA');
-    expect(el.textContent).toContain('SALVA BOZZA');
-    expect(el.textContent).toContain('ANNULLA');
+    expect(el.textContent).toContain('Salva bozza');
+    expect(el.textContent).toContain('Conferma');
+    expect(el.textContent).toContain('Annulla');
   });
 
   it('emits cancel', () => {
@@ -62,7 +62,9 @@ describe('OrbitFormActionBarComponent', () => {
   it('disables confirm when confirmDisabled', () => {
     fixture.componentRef.setInput('confirmDisabled', true);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--confirm button').disabled).toBe(true);
+    expect(
+      fixture.nativeElement.querySelector('.orbit-form-action-bar__btn--confirm button').disabled,
+    ).toBe(true);
   });
 
   it('disables all buttons when loading', () => {

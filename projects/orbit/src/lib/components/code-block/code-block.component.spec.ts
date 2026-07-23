@@ -76,4 +76,58 @@ describe('OrbitCodeBlockComponent', () => {
     await fixture.whenStable();
     expect(copyText).toHaveBeenCalledWith('<orbit-button label="Salva" />');
   });
+
+  describe('selection containment', () => {
+    let outside: HTMLParagraphElement;
+
+    beforeEach(() => {
+      fixture.componentRef.setInput('code', 'prima riga\nseconda riga');
+      fixture.detectChanges();
+      outside = document.createElement('p');
+      outside.textContent = 'testo fuori dal codeblock';
+      document.body.appendChild(fixture.nativeElement);
+      fixture.nativeElement.after(outside);
+    });
+
+    afterEach(() => {
+      outside.remove();
+      fixture.nativeElement.remove();
+    });
+
+    function selectFromPreIntoOutside(): void {
+      const pre = fixture.nativeElement.querySelector('[data-code-block]') as HTMLElement;
+      const firstLine = pre.querySelector('.orbit-code-block__line-content') as HTMLElement;
+      const range = document.createRange();
+      range.setStart(firstLine.firstChild as Node, 0);
+      range.setEnd(outside.firstChild as Node, outside.textContent!.length);
+      const selection = document.getSelection()!;
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    it('clamps a selection that started inside the code block but was dragged past it', async () => {
+      const pre = fixture.nativeElement.querySelector('[data-code-block]') as HTMLElement;
+      const firstLine = pre.querySelector('.orbit-code-block__line-content') as HTMLElement;
+      firstLine.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+
+      selectFromPreIntoOutside();
+      document.dispatchEvent(new Event('selectionchange'));
+      await fixture.whenStable();
+
+      const selection = document.getSelection()!;
+      expect(selection.toString()).not.toContain('testo fuori dal codeblock');
+      expect(pre.contains(selection.getRangeAt(0).endContainer)).toBe(true);
+    });
+
+    it('leaves a selection untouched when the drag did not start inside the code block', async () => {
+      outside.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+
+      selectFromPreIntoOutside();
+      document.dispatchEvent(new Event('selectionchange'));
+      await fixture.whenStable();
+
+      const selection = document.getSelection()!;
+      expect(selection.toString()).toContain('testo fuori dal codeblock');
+    });
+  });
 });

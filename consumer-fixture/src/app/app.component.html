@@ -1,5 +1,8 @@
 <h1>Orbit Consumer Fixture</h1>
-<p>Verifica che tutti i componenti vengano importati e renderizzati correttamente da <code>@galileo/orbit</code>.</p>
+<p>
+  Verifica che tutti i componenti vengano importati e renderizzati correttamente da
+  <code>@galileo/orbit</code>.
+</p>
 
 <section>
   <h2>Button</h2>
@@ -48,7 +51,7 @@
       [options]="[
         { label: 'Italia', value: 'IT' },
         { label: 'Francia', value: 'FR' },
-        { label: 'Germania', value: 'DE' }
+        { label: 'Germania', value: 'DE' },
       ]"
     />
   </orbit-form-field>
@@ -64,7 +67,7 @@
         { label: 'Roma', value: 'RM' },
         { label: 'Milano', value: 'MI' },
         { label: 'Napoli', value: 'NA' },
-        { label: 'Torino', value: 'TO' }
+        { label: 'Torino', value: 'TO' },
       ]"
     />
   </orbit-form-field>
@@ -94,7 +97,7 @@
   <orbit-pill-switch
     [options]="[
       { label: 'Mensile', value: 'monthly' },
-      { label: 'Annuale', value: 'yearly' }
+      { label: 'Annuale', value: 'yearly' },
     ]"
   />
 </section>
@@ -111,7 +114,7 @@
           inputId="periodicita"
           [options]="[
             { label: 'Mensile', value: 'M' },
-            { label: 'Annuale', value: 'A' }
+            { label: 'Annuale', value: 'A' },
           ]"
         />
       </orbit-form-field>
@@ -121,16 +124,16 @@
 
 <section>
   <h2>Modal Chrome (statico)</h2>
-  <div style="border: 1px solid #ccc; border-radius: 8px; max-width: 560px; overflow: hidden;">
+  <div style="border: 1px solid #ccc; border-radius: 8px; max-width: 560px; overflow: hidden">
     <orbit-modal-header title="Titolo modale" subtitle="Sottotitolo opzionale" />
     <orbit-modal-body>
       <p>Contenuto della modale.</p>
     </orbit-modal-body>
     <orbit-modal-footer>
       <orbit-form-action-bar
-        cancelLabel="ANNULLA"
-        draftLabel="SALVA BOZZA"
-        confirmLabel="CONFERMA"
+        cancelLabel="Annulla"
+        draftLabel="Salva bozza"
+        confirmLabel="Conferma"
       />
     </orbit-modal-footer>
   </div>

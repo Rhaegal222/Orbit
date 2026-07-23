@@ -305,9 +305,9 @@
   height: 1.5rem;
   margin-left: -0.75rem;
   margin-top: -0.75rem;
-  border: 0.125rem solid var(--orbit-action-primary-bg);
+  border: 0.125rem solid color-mix(in srgb, var(--orbit-action-neutral-bg) 60%, transparent);
   border-radius: var(--orbit-radius-full);
-  background: color-mix(in srgb, var(--orbit-action-primary-bg) 25%, transparent);
+  background: color-mix(in srgb, var(--orbit-action-neutral-bg) 25%, transparent);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
@@ -320,7 +320,7 @@
   margin-left: -1.25rem;
   margin-top: -1.25rem;
   border-radius: var(--orbit-radius-full);
-  background: var(--orbit-action-primary-bg);
+  background: var(--orbit-action-neutral-bg);
   opacity: 0.35;
   pointer-events: none;
   animation: lab-shell-touch-ripple var(--orbit-motion-base) var(--orbit-easing-standard);

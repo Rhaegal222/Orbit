@@ -6,6 +6,7 @@ import {
   ElementRef,
   inject,
   output,
+  Renderer2,
   signal,
   Signal,
   viewChild,
@@ -451,6 +452,7 @@ export class LabShellComponent {
   protected readonly sidebarCollapsed = signal(false);
   protected readonly showSidebarHeader = signal(true);
   private readonly document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
   private readonly mobilePreviewOverlayHost = inject(LabMobilePreviewOverlayHost);
   private readonly phoneScreen = viewChild('phoneScreen', { read: ElementRef });
 
@@ -528,11 +530,15 @@ export class LabShellComponent {
 
   private ensureTouchOverlay(phoneScreenEl: HTMLElement): void {
     if (!this.touchOverlayElement) {
-      const overlay = this.document.createElement('div');
+      // Renderer2.createElement (not document.createElement) so the element carries this
+      // component's `_ngcontent-*` attribute — without it, the emulated-encapsulation styles
+      // below (position, z-index, cursor, touch-action) silently never match, since this div
+      // is mounted as a real document.body child outside Angular's own template tree.
+      const overlay = this.renderer.createElement('div') as HTMLElement;
       overlay.className = 'lab-shell__phone-touch-overlay';
       overlay.setAttribute('aria-hidden', 'true');
 
-      const cursor = this.document.createElement('span');
+      const cursor = this.renderer.createElement('span') as HTMLElement;
       cursor.className = 'lab-shell__phone-touch-cursor';
       overlay.appendChild(cursor);
 
@@ -644,35 +650,6 @@ export class LabShellComponent {
     this.sizeControl.setValue(rem, { emitEvent: false });
   }
 
-  private isInteractiveElement(target: HTMLElement): boolean {
-    // Only elements that need genuine native pointer interaction (typing, native slider
-    // drag) get the overlay pass-through. Plain buttons/links don't: their tap is already
-    // forwarded as a synthetic click on pointerup, and letting the overlay pass through for
-    // them would leak real :hover onto controls that must stay touch-simulated (e.g.
-    // orbit-sidebar's nav items).
-    if (target.matches('input, textarea, select, [role="checkbox"], [role="slider"]')) {
-      return true;
-    }
-    if (
-      target.closest(
-        'orbit-slider, orbit-code-block, orbit-select, orbit-checkbox, orbit-switch, orbit-text-input',
-      )
-    ) {
-      return true;
-    }
-    // orbit-button/orbit-icon-button get real hover pass-through everywhere except inside
-    // orbit-sidebar: its header, body and footer actions (nav items, close action, footer
-    // actions) are all already tap-forwarded on pointerup, so pass-through would only leak
-    // desktop hover onto a surface that must stay touch-simulated end to end.
-    if (target.closest('orbit-button, orbit-icon-button') && !target.closest('orbit-sidebar')) {
-      return true;
-    }
-    if (target.closest('pre')) {
-      return true;
-    }
-    return false;
-  }
-
   onTouchOverlayPointerMove(event: PointerEvent): void {
     const overlay = event.currentTarget as HTMLElement;
     this.moveTouchCursor(overlay, event.clientX, event.clientY);
@@ -693,46 +670,10 @@ export class LabShellComponent {
       }
       return;
     }
-
-    // Check if the pointer is hovering over an interactive element inside the viewport
-    overlay.style.pointerEvents = 'none';
-    const target =
-      typeof this.document.elementFromPoint === 'function'
-        ? (this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null)
-        : null;
-    overlay.style.pointerEvents = '';
-
-    if (target && this.isInteractiveElement(target)) {
-      overlay.style.pointerEvents = 'none';
-
-      const restoreOverlay = (e: PointerEvent) => {
-        if (e.relatedTarget && !target.contains(e.relatedTarget as Node)) {
-          overlay.style.pointerEvents = '';
-          target.removeEventListener('pointerleave', restoreOverlay);
-          this.document.removeEventListener('pointerup', restoreOverlayGlobal);
-          this.document.removeEventListener('pointercancel', restoreOverlayGlobal);
-        }
-      };
-
-      const restoreOverlayGlobal = () => {
-        overlay.style.pointerEvents = '';
-        target.removeEventListener('pointerleave', restoreOverlay);
-        this.document.removeEventListener('pointerup', restoreOverlayGlobal);
-        this.document.removeEventListener('pointercancel', restoreOverlayGlobal);
-      };
-
-      target.addEventListener('pointerleave', restoreOverlay);
-      this.document.addEventListener('pointerup', restoreOverlayGlobal);
-      this.document.addEventListener('pointercancel', restoreOverlayGlobal);
-    }
   }
 
   onTouchOverlayPointerLeave(event: PointerEvent): void {
     this.hideTouchCursor(event.currentTarget as HTMLElement);
-  }
-
-  private isSlider(target: HTMLElement): boolean {
-    return target.matches('input[type="range"]') || !!target.closest('orbit-slider');
   }
 
   onTouchOverlayPointerDown(event: PointerEvent): void {
@@ -746,27 +687,18 @@ export class LabShellComponent {
         : null;
     overlay.style.pointerEvents = '';
 
-    if (target && this.isSlider(target)) {
-      overlay.style.pointerEvents = 'none';
-      const downEvent = new PointerEvent('pointerdown', {
-        bubbles: true,
-        cancelable: true,
-        clientX: event.clientX,
-        clientY: event.clientY,
-        pointerId: event.pointerId,
-        pointerType: event.pointerType,
-        isPrimary: event.isPrimary,
-      });
-      target.dispatchEvent(downEvent);
-
-      const restoreOverlay = () => {
-        overlay.style.pointerEvents = '';
-        this.document.removeEventListener('pointerup', restoreOverlay);
-        this.document.removeEventListener('pointercancel', restoreOverlay);
-      };
-      this.document.addEventListener('pointerup', restoreOverlay);
-      this.document.addEventListener('pointercancel', restoreOverlay);
-      return;
+    if (target) {
+      // Native slider dragging can't be started by forwarding a synthetic pointerdown:
+      // browsers only arm their own default drag behavior from a *trusted* event, and anything
+      // dispatched from JS is untrusted. Drive it by hand instead, off the overlay's own (real)
+      // pointermove/pointerup stream.
+      const rangeInput = target.matches('input[type="range"]')
+        ? (target as HTMLInputElement)
+        : target.closest('orbit-slider')?.querySelector<HTMLInputElement>('input[type="range"]');
+      if (rangeInput && !rangeInput.disabled) {
+        this.beginSliderDrag(overlay, rangeInput, event);
+        return;
+      }
     }
 
     overlay.setPointerCapture(event.pointerId);
@@ -784,6 +716,39 @@ export class LabShellComponent {
     };
   }
 
+  private beginSliderDrag(overlay: HTMLElement, input: HTMLInputElement, event: PointerEvent): void {
+    const min = parseFloat(input.min) || 0;
+    const max = input.max ? parseFloat(input.max) : 100;
+    const step = parseFloat(input.step) || 1;
+
+    const applyValueFromClientX = (clientX: number) => {
+      const rect = input.getBoundingClientRect();
+      const ratio = rect.width === 0 ? 0 : Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+      const stepped = Math.round((min + ratio * (max - min) - min) / step) * step + min;
+      const next = String(Math.min(max, Math.max(min, stepped)));
+      if (input.value !== next) {
+        input.value = next;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    };
+
+    overlay.style.pointerEvents = 'none';
+    applyValueFromClientX(event.clientX);
+
+    const onMove = (e: PointerEvent) => applyValueFromClientX(e.clientX);
+    const end = () => {
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      overlay.style.pointerEvents = '';
+      this.document.removeEventListener('pointermove', onMove);
+      this.document.removeEventListener('pointerup', end);
+      this.document.removeEventListener('pointercancel', end);
+    };
+
+    this.document.addEventListener('pointermove', onMove);
+    this.document.addEventListener('pointerup', end);
+    this.document.addEventListener('pointercancel', end);
+  }
+
   onTouchOverlayPointerUp(event: PointerEvent): void {
     const overlay = event.currentTarget as HTMLElement;
     if (overlay.hasPointerCapture(event.pointerId)) {
@@ -796,9 +761,12 @@ export class LabShellComponent {
       return;
     }
 
-    // Tap (no drag beyond the threshold): forward a real click to whatever sits below the
-    // overlay, since the overlay itself intercepts every pointer event to keep :hover from
-    // ever reaching the previewed content.
+    // Tap (no drag beyond the threshold): forward it to whatever sits below the overlay, since
+    // the overlay itself intercepts every pointer event to keep :hover from ever reaching the
+    // previewed content. `target.click()` — not a dispatched MouseEvent — because a dispatched
+    // event only reaches JS listeners; `.click()` also runs the element's real default action
+    // (toggling a checkbox/switch, opening a native <select>), which orbit's own checkbox and
+    // switch controls rely on (they wrap a real `<input type="checkbox">`).
     overlay.style.pointerEvents = 'none';
     const target =
       typeof this.document.elementFromPoint === 'function'
@@ -806,25 +774,23 @@ export class LabShellComponent {
         : null;
     overlay.style.pointerEvents = '';
     if (target) {
-      let clickEvent: MouseEvent;
-      try {
-        clickEvent = new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          clientX: event.clientX,
-          clientY: event.clientY,
-          view: this.document.defaultView,
-        });
-      } catch {
-        clickEvent = new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          clientX: event.clientX,
-          clientY: event.clientY,
-        });
-      }
-      target.dispatchEvent(clickEvent);
+      this.simulateTap(target);
     }
+  }
+
+  // `.click()` (not a dispatched MouseEvent) so the element's real default action also runs —
+  // toggling a checkbox/switch, opening a native <select> — which orbit's checkbox/switch rely
+  // on (they wrap a real `<input type="checkbox">`). SVG icon glyphs (icon-button icons) don't
+  // implement `.click()` though, so walk up to the nearest ancestor that does — normally the
+  // enclosing `<button>` itself.
+  private simulateTap(target: HTMLElement): void {
+    target.closest<HTMLElement>('input, textarea, select')?.focus();
+
+    let clickable: Element | null = target;
+    while (clickable && typeof (clickable as HTMLElement).click !== 'function') {
+      clickable = clickable.parentElement;
+    }
+    (clickable as HTMLElement | null)?.click();
   }
 
   private findPhoneViewport(overlay: HTMLElement): HTMLElement | null {
@@ -859,6 +825,16 @@ export class LabShellComponent {
       }
       node = node.parentElement;
     }
+
+    // An open dialog/panel/select/popover renders through the same CDK overlay the mockup
+    // redirects (LabScopedOverlayContainer), so it sits between `target` and `phoneScreen` in
+    // the walk above. A drag over its own non-scrollable surface (a label, a title, empty
+    // space) must not fall through to the page behind it — only a drag with no pane above the
+    // touched point (the base page itself) reaches the phone-viewport fallback.
+    if (target?.closest('.cdk-overlay-pane')) {
+      return null;
+    }
+
     return this.findPhoneViewport(overlay);
   }
 
@@ -882,7 +858,7 @@ export class LabShellComponent {
 
   private spawnTouchRipple(container: HTMLElement, clientX: number, clientY: number): void {
     const rect = container.getBoundingClientRect();
-    const ripple = this.document.createElement('span');
+    const ripple = this.renderer.createElement('span') as HTMLElement;
     ripple.className = 'lab-shell__phone-touch-ripple';
     ripple.style.left = `${clientX - rect.left}px`;
     ripple.style.top = `${clientY - rect.top}px`;

@@ -65,22 +65,6 @@
   gap: var(--orbit-space-1);
 }
 
-.lab-shell__frame-presets button {
-  font-family: inherit;
-  font-size: var(--orbit-font-size-caption);
-  line-height: 1;
-  padding: var(--orbit-space-1) var(--orbit-space-2);
-  border: 1px solid var(--orbit-border-subtle);
-  border-radius: var(--orbit-radius-control);
-  background: var(--orbit-surface-default);
-  color: var(--orbit-text-primary);
-  cursor: pointer;
-}
-
-.lab-shell__frame-presets button:hover {
-  background: var(--orbit-surface-subtle);
-}
-
 .lab-shell__content {
   padding: var(--orbit-space-6);
   flex: 1 1 auto;

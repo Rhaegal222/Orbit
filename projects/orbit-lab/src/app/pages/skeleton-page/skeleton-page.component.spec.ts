@@ -51,7 +51,8 @@ describe('SkeletonPageComponent', () => {
     showCode.click();
     fixture.detectChanges();
 
-    const snippet = fixture.nativeElement.querySelector('[data-code-block]');
-    expect(snippet.textContent).toContain('<orbit-skeleton');
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-skeleton',
+    );
   });
 });

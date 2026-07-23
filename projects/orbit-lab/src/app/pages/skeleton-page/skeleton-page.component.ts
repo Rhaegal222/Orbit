@@ -24,7 +24,7 @@ export class SkeletonPageComponent {
   protected readonly circleSnippet = '<orbit-skeleton shape="circle" width="3rem" />';
   protected readonly rectSnippet = '<orbit-skeleton shape="rect" width="100%" height="8rem" />';
   protected readonly loadingSnippet =
-    '@if (loading()) {\n' +
+    '@if (cardsLoading()) {\n' +
     '  <orbit-skeleton shape="text" width="60%" />\n' +
     '  <orbit-skeleton shape="rect" width="100%" height="4rem" />\n' +
     '} @else {\n' +

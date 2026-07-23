@@ -13,6 +13,9 @@ All notable changes to Galileo Orbit are documented here.
 
 - Added the shared `--orbit-breakpoint-{sm,md,lg,xl,2xl}` token scale, mapped to
   Tailwind v4's `sm:`/`md:`/`lg:`/`xl:`/`2xl:` utilities.
+- Added `--orbit-control-height-touch-min`, a `(pointer: coarse)` touch-target floor
+  applied to button, icon-button, checkbox, switch, pill-switch and select, independent
+  of the active density.
 - Added the `data-orbit-shape` geometry contract (`square`, `operational`, `soft`, `rounded`) and the Orbit Lab shape-style switcher.
 - Added the complete semantic surface/elevation and layering token contract, including overlay surfaces and base, sticky, popover, overlay and toast layers. Orbit Lab now includes a light/dark theme matrix for surfaces, actions and status badges.
 - Initial package metadata, publication pipeline and portable design tokens.

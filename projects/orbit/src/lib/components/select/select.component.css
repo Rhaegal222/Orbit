@@ -29,6 +29,12 @@
     background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
+@media (pointer: coarse) {
+  .orbit-select__input {
+    min-height: var(--orbit-control-height-touch-min);
+  }
+}
+
 .orbit-select__input--searchable {
   cursor: text;
 }

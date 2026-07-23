@@ -13,6 +13,14 @@
   color: var(--orbit-text-secondary);
   cursor: pointer;
 }
+
+@media (pointer: coarse) {
+  .orbit-icon-button {
+    width: var(--orbit-control-height-touch-min);
+    height: var(--orbit-control-height-touch-min);
+  }
+}
+
 .orbit-icon-button:hover:not(:disabled) {
   background: var(--orbit-surface-subtle);
   color: var(--orbit-text-primary);

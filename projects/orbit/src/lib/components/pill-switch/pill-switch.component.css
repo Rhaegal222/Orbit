@@ -41,6 +41,12 @@
     box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard), transform var(--orbit-motion-fast) var(--orbit-easing-shared);
 }
 
+@media (pointer: coarse) {
+  .orbit-pill-switch__option {
+    min-height: var(--orbit-control-height-touch-min);
+  }
+}
+
 .orbit-pill-switch__option:hover:not(:disabled) {
   background: color-mix(in srgb, var(--orbit-action-primary-bg) 8%, transparent);
   color: var(--orbit-text-primary);

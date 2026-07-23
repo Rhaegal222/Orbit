@@ -38,6 +38,13 @@ every Orbit component's own `@media` rule repeats the literal rem value with a
 comment naming the token it must match — treat the token as the documented source of
 truth, not a live reference.
 
+### Touch target
+
+`--orbit-control-height-touch-min` (`2.75rem`, WCAG 2.5.5) applies under
+`@media (pointer: coarse)` to button, icon-button, checkbox, switch, pill-switch and
+select — independent of density, so `compact`/`dense` stay touch-safe on a
+touch/hybrid device while a mouse-driven desktop window (even narrow) is unaffected.
+
 ### Action foregrounds and dark theme
 
 Action tokens separate the foreground used on a solid surface from the brighter foreground used by `soft`, `translucent`, `outline` and `flat` variants. This prevents dark-on-dark text when a theme changes the canvas.

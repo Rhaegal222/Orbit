@@ -13,6 +13,12 @@
   user-select: none;
 }
 
+@media (pointer: coarse) {
+  .orbit-checkbox {
+    min-height: var(--orbit-control-height-touch-min);
+  }
+}
+
 .orbit-checkbox--disabled {
   cursor: not-allowed;
   opacity: 0.55;

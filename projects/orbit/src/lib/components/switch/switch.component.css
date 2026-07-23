@@ -14,6 +14,12 @@
   user-select: none;
 }
 
+@media (pointer: coarse) {
+  .orbit-switch {
+    min-height: var(--orbit-control-height-touch-min);
+  }
+}
+
 .orbit-switch--disabled .orbit-switch {
   cursor: not-allowed;
   opacity: 0.55;

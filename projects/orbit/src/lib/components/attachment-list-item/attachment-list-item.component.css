@@ -85,7 +85,7 @@
   flex: 0 0 auto;
 }
 
-@media (max-width: 32rem) {
+@media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
   :host {
     align-items: flex-start;
     flex-wrap: wrap;

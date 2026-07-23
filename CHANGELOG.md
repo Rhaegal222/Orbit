@@ -35,6 +35,10 @@ All notable changes to Galileo Orbit are documented here.
 
 ### Changed
 
+- `orbit-attachment-list-item`, `orbit-form-action-bar`, `orbit-date-range-picker` and
+  `orbit-modal-footer` now switch to their compact mobile layout at
+  `--orbit-breakpoint-sm` (40rem) instead of their previous ad hoc 32rem/36rem
+  breakpoints — each keeps its current desktop layout slightly longer, never shorter.
 - Angular CDK is now a required peer dependency because the shipped overlay, focus and interaction primitives use it directly.
 - Status badges now use contrast-safe solid foreground/background pairings in light and dark themes, with a larger readable label and more representative Orbit Lab examples.
 - Select menus now preserve the scoped theme in their CDK overlay and visibly distinguish the selected option with an accessible checkmark.

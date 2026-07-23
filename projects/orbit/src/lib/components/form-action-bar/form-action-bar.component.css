@@ -41,7 +41,7 @@
   content: '';
 }
 
-@media (max-width: 32rem) {
+@media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
   .orbit-form-action-bar {
     align-items: stretch;
   }

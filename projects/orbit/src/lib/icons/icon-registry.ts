@@ -110,4 +110,9 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
     'M4 12h16',
     'M15.5 12a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z',
   ],
+  'bar-chart': [
+    'M4 20V14h4v6H4Z',
+    'M10 20V9h4v11h-4Z',
+    'M16 20V4h4v16h-4Z',
+  ],
 };

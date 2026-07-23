@@ -3,6 +3,7 @@ import { CatalogEntry } from './catalog-entry.model';
 export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'attachments', label: 'Allegati', status: 'verified', icon: 'paperclip' },
   { slug: 'motion', label: 'Animazioni', status: 'verified', icon: 'retry' },
+  { slug: 'progress-bar', label: 'Barra di avanzamento', status: 'verified', icon: 'bar-chart' },
   { slug: 'navbar', label: 'Barra di navigazione', status: 'verified', icon: 'menu' },
   { slug: 'badge', label: 'Badge', status: 'verified', icon: 'tag' },
   { slug: 'form-field', label: 'Campi modulo', status: 'verified', icon: 'document' },

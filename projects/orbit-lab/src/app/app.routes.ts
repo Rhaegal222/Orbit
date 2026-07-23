@@ -65,6 +65,13 @@ export const routes: Routes = [
       import('./pages/slider-page/slider-page.component').then((m) => m.SliderPageComponent),
   },
   {
+    path: 'progress-bar',
+    loadComponent: () =>
+      import('./pages/progress-bar-page/progress-bar-page.component').then(
+        (m) => m.ProgressBarPageComponent,
+      ),
+  },
+  {
     path: 'checkbox',
     loadComponent: () =>
       import('./pages/checkbox-page/checkbox-page.component').then((m) => m.CheckboxPageComponent),

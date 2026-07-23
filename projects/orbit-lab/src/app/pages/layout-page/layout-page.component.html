@@ -19,7 +19,9 @@
   <section>
     <h2>Griglia modulo</h2>
     <p>
-      Griglia a 12 colonne per form densi. Le composizioni <code>primary</code>/<code>secondary</code>
+      Griglia a 12 colonne per form densi. Le composizioni <code>primary</code>/<code
+        >secondary</code
+      >
       sono utili per un contenuto principale con metadati o azioni secondarie; gli item con
       <code>orbitFormGridItem</code> servono invece per definire gli span a ogni breakpoint.
     </p>
@@ -138,6 +140,15 @@
       La griglia modulo usa una colonna sotto <code>36rem</code>; gli span <code>sm</code>,
       <code>md</code>, <code>lg</code> e <code>xl</code> la rendono progressiva senza media query
       nel consumer.
+    </p>
+  </section>
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      <code>orbit-workspace</code> collassa dalla griglia a 2 colonne a una colonna sotto
+      <code>--orbit-breakpoint-md</code> (48rem). <code>orbit-form-grid</code> espande
+      progressivamente lo span delle colonne a <code>--orbit-breakpoint-sm</code>, <code>md</code>,
+      <code>lg</code> e <code>xl</code>.
     </p>
   </section>
 </article>

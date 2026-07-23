@@ -22,6 +22,22 @@ The import includes the default Orbit tokens and Tailwind v4 theme aliases. Tail
 
 Components must consume semantic or component tokens. They must not use a reference token or a literal visual value directly.
 
+## Breakpoints
+
+| Token                    |            Value | Typical role           |
+| ------------------------ | ---------------: | ---------------------- |
+| `--orbit-breakpoint-sm`  |  `40rem` (640px) | smartphone → tablet    |
+| `--orbit-breakpoint-md`  |  `48rem` (768px) | tablet → small desktop |
+| `--orbit-breakpoint-lg`  | `64rem` (1024px) | standard desktop       |
+| `--orbit-breakpoint-xl`  | `80rem` (1280px) | wide desktop           |
+| `--orbit-breakpoint-2xl` | `96rem` (1536px) | wide workspace         |
+
+These map to Tailwind v4's `sm:`/`md:`/`lg:`/`xl:`/`2xl:` utilities through `@theme`
+in `theme.css`. A native `@media` condition cannot read a CSS custom property, so
+every Orbit component's own `@media` rule repeats the literal rem value with a
+comment naming the token it must match — treat the token as the documented source of
+truth, not a live reference.
+
 ### Action foregrounds and dark theme
 
 Action tokens separate the foreground used on a solid surface from the brighter foreground used by `soft`, `translucent`, `outline` and `flat` variants. This prevents dark-on-dark text when a theme changes the canvas.

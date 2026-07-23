@@ -212,6 +212,14 @@
   --orbit-page-padding-inline: var(--orbit-space-lg);
   --orbit-page-max-width-document: 75rem;
   --orbit-page-max-width-workspace: 90rem;
+  /* Shared breakpoint scale (mobile-first). Cannot be read from a native @media
+     condition (custom properties aren't resolved there) — component @media rules
+     use the literal value below with a comment referencing the token name. */
+  --orbit-breakpoint-sm: 40rem;
+  --orbit-breakpoint-md: 48rem;
+  --orbit-breakpoint-lg: 64rem;
+  --orbit-breakpoint-xl: 80rem;
+  --orbit-breakpoint-2xl: 96rem;
   --orbit-button-gap: calc(var(--orbit-space-xs) + var(--orbit-space-2xs));
   --orbit-badge-height: calc((var(--orbit-control-height) / 2) + var(--orbit-space-1));
   --orbit-badge-padding-inline: var(--orbit-space-2);

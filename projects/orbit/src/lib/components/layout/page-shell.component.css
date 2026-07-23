@@ -15,3 +15,8 @@
 :host(.orbit-page-shell--full) .orbit-page-shell__content {
   max-width: none;
 }
+@media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
+  :host {
+    padding-inline: var(--orbit-space-md);
+  }
+}

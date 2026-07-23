@@ -8,6 +8,7 @@ All notable changes to Galileo Orbit are documented here.
 - Fixed badge padding, height and icon gap to follow the active density scope.
 - Replaced remaining legacy `--orbit-color-*` alias tokens in popover with current semantic tokens.
 - Replaced bare `px` literals in selectable-tile, date-picker and form-section with spacing tokens.
+- `orbit-page-shell` now reduces its inline padding under `--orbit-breakpoint-sm`.
 
 ### Added
 

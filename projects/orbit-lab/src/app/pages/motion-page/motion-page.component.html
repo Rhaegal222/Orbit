@@ -24,76 +24,68 @@
 
   <section>
     <h2>Mappa dei pattern</h2>
-    <!-- Vista desktop: Tabella a griglia con 5 colonne -->
-    <div
-      class="motion-page__patterns motion-page__patterns--desktop"
-      role="table"
-      aria-label="Pattern di animazione Orbit (Desktop)"
-    >
-      @for (pattern of patterns; track pattern.area) {
-        <article class="motion-page__pattern" role="row">
-          <strong role="cell">{{ pattern.area }}</strong>
-          <span role="cell"><b>Enter</b>{{ pattern.enter }}</span>
-          <span role="cell"><b>Exit</b>{{ pattern.exit }}</span>
-          <code role="cell">{{ pattern.token }}</code>
-          <span class="motion-page__pattern-action" role="cell">
-            <span class="motion-page__pattern-preview" aria-hidden="true">
-              @for (run of patternRuns(pattern.area); track run) {
-                <span
-                  [class]="
-                    'motion-page__pattern-demo motion-page__pattern-demo--' + pattern.preview
-                  "
-                ></span>
-              }
-            </span>
-            <orbit-button
-              [label]="isPatternPlaying(pattern.area) ? 'Stop' : 'Riproduci'"
-              [ariaLabel]="
-                (isPatternPlaying(pattern.area) ? 'Ferma' : 'Riproduci') +
-                ' animazione ' +
-                pattern.area
-              "
-              variant="outline"
-              tone="neutral"
-              (clicked)="togglePattern(pattern.area)"
-            />
-          </span>
-        </article>
-      }
-    </div>
+    <p>
+      La tabella usa <code>orbit-table</code>: su viewport strette scorre orizzontalmente invece
+      di sfondare il layout, senza bisogno di un layout alternativo hardcoded per il mobile. Sotto
+      48rem la colonna azioni si nasconde e la riga diventa tappabile: l'anteprima compare in
+      overlay tramite <code>OrbitDialogService</code> (CDK Overlay).
+    </p>
+    <orbit-table #patternsTable aria-label="Pattern di animazione Orbit">
+      <thead>
+        <tr>
+          <th>Area</th>
+          <th>Enter</th>
+          <th>Exit</th>
+          <th>Token</th>
+          <th class="motion-page__pattern-action-col">Anteprima</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pattern of patterns; track pattern.area) {
+          <tr
+            orbitTableRow
+            [class.motion-page__row--tappable]="isMobile()"
+            [attr.tabindex]="isMobile() ? 0 : null"
+            (click)="onRowTap(pattern)"
+            (keydown.enter)="onRowTap(pattern)"
+          >
+            <td>{{ pattern.area }}</td>
+            <td>{{ pattern.enter }}</td>
+            <td>{{ pattern.exit }}</td>
+            <td><code>{{ pattern.token }}</code></td>
+            <td class="motion-page__pattern-action motion-page__pattern-action-col">
+              <span class="motion-page__pattern-preview" aria-hidden="true">
+                @for (run of patternRuns(pattern.area); track run) {
+                  <span
+                    [class]="
+                      'motion-page__pattern-demo motion-page__pattern-demo--' + pattern.preview
+                    "
+                  ></span>
+                }
+              </span>
+              <orbit-button
+                [label]="isPatternPlaying(pattern.area) ? 'Stop' : 'Riproduci'"
+                [ariaLabel]="
+                  (isPatternPlaying(pattern.area) ? 'Ferma' : 'Riproduci') +
+                  ' animazione ' +
+                  pattern.area
+                "
+                variant="outline"
+                tone="neutral"
+                (clicked)="togglePattern(pattern.area)"
+              />
+            </td>
+          </tr>
+        }
+      </tbody>
+    </orbit-table>
 
-    <!-- Vista mobile: Lista compatta con icone e modal dettagli -->
-    <div
-      class="motion-page__patterns--mobile"
-      role="table"
-      aria-label="Pattern di animazione Orbit (Mobile)"
-    >
-      @for (pattern of patterns; track pattern.area) {
-        <article class="motion-page__pattern-mobile" role="row">
-          <strong role="cell">{{ pattern.area }}</strong>
-          <div class="motion-page__pattern-mobile-actions">
-            <orbit-icon-button
-              [icon]="isPatternPlaying(pattern.area) ? 'close' : 'play'"
-              [ariaLabel]="
-                (isPatternPlaying(pattern.area) ? 'Ferma' : 'Riproduci') +
-                ' animazione ' +
-                pattern.area
-              "
-              variant="outline"
-              tone="neutral"
-              (clicked)="togglePattern(pattern.area)"
-            />
-            <orbit-icon-button
-              icon="info"
-              [ariaLabel]="'Dettagli animazione ' + pattern.area"
-              variant="outline"
-              tone="neutral"
-              (clicked)="openDetails(pattern)"
-            />
-          </div>
-        </article>
-      }
-    </div>
+    @if (previewDialogPattern()) {
+      <div class="motion-page__preview-dialog-backdrop" aria-hidden="true"></div>
+      <div class="motion-page__preview-dialog-container" (click)="onPreviewDialogContainerClick($event)">
+        <lab-mobile-pattern-preview-host (closed)="closePreviewDialog()" />
+      </div>
+    }
   </section>
 
   <section>

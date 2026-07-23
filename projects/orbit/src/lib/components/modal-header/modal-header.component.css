@@ -17,6 +17,10 @@
   background: var(--orbit-surface-subtle);
 }
 
+:host(.orbit-modal-header--no-subtitle) {
+  align-items: center;
+}
+
 .orbit-modal-header__content {
   display: flex;
   align-items: center;

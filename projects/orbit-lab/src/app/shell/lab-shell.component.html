@@ -48,22 +48,16 @@
       <div class="lab-shell__header-center">
         @if (mobilePreview()) {
           <orbit-button
-            [label]="device() === 'smartphone' ? 'Vista tablet' : 'Vista smartphone'"
-            variant="outline"
-            tone="neutral"
-            (clicked)="toggleDevice()"
-          />
-          <orbit-button
             [label]="orientation() === 'portrait' ? 'Ruota orizzontale' : 'Ruota verticale'"
             variant="outline"
             tone="neutral"
             (clicked)="toggleOrientation()"
           />
-          <orbit-button
-            [label]="touchMode() ? 'Modalità hover' : 'Modalità tocco'"
-            variant="outline"
-            [tone]="touchMode() ? 'primary' : 'neutral'"
-            (clicked)="toggleTouchMode()"
+          <orbit-selectable-tile
+            class="lab-shell__touch-mode-tile"
+            label="Modalità tocco"
+            [selected]="touchMode()"
+            (selectedChange)="toggleTouchMode()"
           />
           <div class="lab-shell__frame-presets">
             <orbit-select
@@ -82,24 +76,33 @@
           tone="neutral"
           (clicked)="toggleMobilePreview()"
         />
-        <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
+        <orbit-button
+          class="lab-shell__options-toggle"
+          label="Opzioni"
+          variant="outline"
+          tone="neutral"
+          (clicked)="openOptions()"
+        />
+        <orbit-icon-button
+          class="lab-shell__options-toggle-icon"
+          icon="settings"
+          ariaLabel="Apri opzioni"
+          tone="neutral"
+          (clicked)="openOptions()"
+        />
       </div>
     </header>
     <main class="lab-shell__content">
       <div class="lab-shell__mobile-stage">
         <div
           class="lab-shell__phone"
-          [attr.aria-label]="
-            device() === 'smartphone' ? 'Anteprima smartphone' : 'Anteprima tablet'
-          "
-          [attr.data-lab-device]="device()"
+          aria-label="Anteprima smartphone"
           [attr.data-lab-orientation]="orientation()"
           [style.width.rem]="phoneWidthRem()"
           [style.height]="phoneHeightCss()"
         >
           <div class="lab-shell__phone-screen">
             <span class="lab-shell__phone-notch" aria-hidden="true"></span>
-            <span class="lab-shell__phone-camera" aria-hidden="true"></span>
             <header class="lab-shell__phone-header">
               <orbit-icon-button
                 class="lab-shell__phone-menu-btn"
@@ -108,13 +111,29 @@
                 (clicked)="openNavigation()"
               />
               <span class="lab-shell__phone-title">{{ activeEntryLabel() }}</span>
+              <orbit-icon-button
+                class="lab-shell__phone-options-btn"
+                icon="settings"
+                ariaLabel="Apri opzioni"
+                (clicked)="openOptions()"
+              />
             </header>
             <div class="lab-shell__phone-viewport">
               <router-outlet />
             </div>
 
-            @if (mobilePreview() && mobileNavOpen()) {
-              <div class="lab-shell__mobile-nav-container">
+            @if (mobilePreview() && (mobileNavOpen() || mobileNavClosing())) {
+              <div
+                class="lab-shell__mobile-nav-backdrop"
+                [class.lab-shell__mobile-nav-backdrop--closing]="mobileNavClosing()"
+                aria-hidden="true"
+                (click)="closeMobileNavigation()"
+              ></div>
+              <div
+                class="lab-shell__mobile-nav-container"
+                [class.lab-shell__mobile-nav-container--entering]="mobileNavEntering()"
+                [class.lab-shell__mobile-nav-container--closing]="mobileNavClosing()"
+              >
                 <orbit-panel-surface ariaLabel="Navigazione mobile">
                   <orbit-sidebar
                     embedded
@@ -137,6 +156,22 @@
                     />
                   </orbit-sidebar>
                 </orbit-panel-surface>
+              </div>
+            }
+
+            @if (mobilePreview() && (mobileOptionsOpen() || mobileOptionsClosing())) {
+              <div
+                class="lab-shell__mobile-options-backdrop"
+                [class.lab-shell__mobile-options-backdrop--closing]="mobileOptionsClosing()"
+                aria-hidden="true"
+                (click)="closeMobileOptions()"
+              ></div>
+              <div
+                class="lab-shell__mobile-options-container"
+                [class.lab-shell__mobile-options-container--entering]="mobileOptionsEntering()"
+                [class.lab-shell__mobile-options-container--closing]="mobileOptionsClosing()"
+              >
+                <lab-mobile-options-host (closed)="closeMobileOptions()" />
               </div>
             }
 

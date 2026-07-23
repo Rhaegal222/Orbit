@@ -3,7 +3,11 @@ import {
   Component,
   computed,
   effect,
+  forwardRef,
   inject,
+  input,
+  InjectionToken,
+  output,
   signal,
   Signal,
   type WritableSignal,
@@ -24,6 +28,7 @@ import {
   ORBIT_PANEL_DATA,
   OrbitPanelService,
   OrbitPanelSurfaceComponent,
+  OrbitSelectableTileComponent,
   OrbitSelectComponent,
   OrbitSidebarComponent,
   OrbitSliderComponent,
@@ -39,13 +44,21 @@ import { CATALOG_ENTRIES } from '../catalog/catalog';
 import { LabGoogleFontsDialogComponent } from './google-fonts-dialog.component';
 import { LabGoogleFontsService, type LabGoogleFont } from './google-fonts.service';
 
+/**
+ * Whether the current route is rendered inside Orbit Lab's simulated device-frame mockup
+ * (a fixed-size div, not the real browser viewport). Routed catalog pages inject this to
+ * decide whether an overlay they open (dialog, drawer, ...) must render inline, confined to
+ * the mockup, instead of through a real CDK service that would break out of the phone frame.
+ * `null` outside `lab-shell` (e.g. a page's own unit tests): treat as "not in preview".
+ */
+export const LAB_MOBILE_PREVIEW = new InjectionToken<Signal<boolean>>('LAB_MOBILE_PREVIEW');
+
 type LabTheme = 'default' | 'dark';
 type LabDensity = OrbitDensity;
 type LabTextScale = '0.85' | '1' | '1.1' | '1.25' | '1.5';
 type LabFont = string;
 type LabShadowIntensity = '0' | '0.25' | '0.5' | '0.75' | '1';
 type LabShape = OrbitShape;
-type LabDevice = 'smartphone' | 'tablet';
 type LabOrientation = 'portrait' | 'landscape';
 
 interface LabTouchDrag {
@@ -55,6 +68,7 @@ interface LabTouchDrag {
   startScrollLeft: number;
   startScrollTop: number;
   dragged: boolean;
+  scrollTarget: HTMLElement | null;
 }
 
 const LAB_FONT_STACKS: Record<string, string> = {
@@ -198,7 +212,7 @@ interface LabOptionsPanelData {
   </orbit-panel-surface>`,
   styleUrl: './catalog-panel.component.css',
 })
-class LabCatalogOptionsPanelComponent {
+export class LabCatalogOptionsPanelComponent {
   readonly data = inject(ORBIT_PANEL_DATA) as LabOptionsPanelData;
   readonly themeControl = new FormControl<LabTheme>(this.data.theme(), { nonNullable: true });
   readonly densityControl = new FormControl<LabDensity>(this.data.density(), { nonNullable: true });
@@ -246,6 +260,9 @@ class LabCatalogOptionsPanelComponent {
     parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
   );
   private readonly panel = inject(OrbitPanelService);
+  /** Emitted on close in addition to `OrbitPanelService.closeAll()`, so a host that embeds
+   *  this panel outside the service (e.g. the mobile preview mockup) can react too. */
+  readonly closed = output<void>();
 
   setTheme(value: string | number | null): void {
     if (value === 'default' || value === 'dark') this.data.setTheme(value);
@@ -300,8 +317,35 @@ class LabCatalogOptionsPanelComponent {
   }
 
   close(): void {
+    this.closed.emit();
     this.panel.closeAll();
   }
+}
+
+/** Provides ORBIT_PANEL_DATA to an inline `lab-catalog-options-panel`, so the mobile
+ *  preview mockup can embed the exact same options form used by the real overlay panel.
+ *
+ *  Reads the data from the already-constructed `LabShellComponent` ancestor rather than
+ *  from an `@Input` on this component: a provider factory that depends on `forwardRef(() =>
+ *  LabMobileOptionsHostComponent)` (i.e. on itself) runs before Angular has finished setting
+ *  this component's own inputs, so `host.data()` throws NG0950 ("Input is required but no
+ *  value is available yet") the moment a descendant injects ORBIT_PANEL_DATA. */
+@Component({
+  selector: 'lab-mobile-options-host',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [LabCatalogOptionsPanelComponent],
+  template: `<lab-catalog-options-panel (closed)="closed.emit()" />`,
+  providers: [
+    {
+      provide: ORBIT_PANEL_DATA,
+      useFactory: (shell: LabShellComponent) => shell.createPanelData(),
+      deps: [forwardRef(() => LabShellComponent)],
+    },
+  ],
+})
+export class LabMobileOptionsHostComponent {
+  closed = output<void>();
 }
 
 @Component({
@@ -367,12 +411,21 @@ class LabCatalogNavigationPanelComponent {
   imports: [
     OrbitButtonComponent,
     OrbitIconButtonComponent,
+    OrbitSelectableTileComponent,
     OrbitSidebarComponent,
     OrbitSelectComponent,
     OrbitTextInputComponent,
     OrbitPanelSurfaceComponent,
+    LabMobileOptionsHostComponent,
     ReactiveFormsModule,
     RouterOutlet,
+  ],
+  providers: [
+    {
+      provide: LAB_MOBILE_PREVIEW,
+      useFactory: (host: LabShellComponent) => host.mobilePreview,
+      deps: [forwardRef(() => LabShellComponent)],
+    },
   ],
   templateUrl: './lab-shell.component.html',
   styleUrl: './lab-shell.component.css',
@@ -410,11 +463,16 @@ export class LabShellComponent {
     parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
   );
   readonly searchControl = new FormControl('', { nonNullable: true });
-  protected readonly mobilePreview = signal(false);
-  protected readonly device = signal<LabDevice>('smartphone');
+  /** Public (not protected) so LAB_MOBILE_PREVIEW's factory below can read it from outside the class. */
+  readonly mobilePreview = signal(false);
   protected readonly orientation = signal<LabOrientation>('portrait');
   protected readonly touchMode = signal(false);
   protected readonly mobileNavOpen = signal(false);
+  protected readonly mobileNavClosing = signal(false);
+  protected readonly mobileNavEntering = signal(false);
+  protected readonly mobileOptionsOpen = signal(false);
+  protected readonly mobileOptionsClosing = signal(false);
+  protected readonly mobileOptionsEntering = signal(false);
   protected readonly frameWidthRem = signal(23.4375); // 375px, current smartphone default
   protected readonly sizeOptions: OrbitSelectOption[] = [
     { value: 23.4375, label: '375px (Cellulare)' },
@@ -532,10 +590,11 @@ export class LabShellComponent {
     this.mobilePreview.set(isMobilePreview);
     this.touchMode.set(isMobilePreview);
     this.mobileNavOpen.set(false);
-  }
-
-  toggleDevice(): void {
-    this.device.update((device) => (device === 'smartphone' ? 'tablet' : 'smartphone'));
+    this.mobileNavClosing.set(false);
+    this.mobileNavEntering.set(false);
+    this.mobileOptionsOpen.set(false);
+    this.mobileOptionsClosing.set(false);
+    this.mobileOptionsEntering.set(false);
   }
 
   toggleOrientation(): void {
@@ -554,18 +613,26 @@ export class LabShellComponent {
   }
 
   private isInteractiveElement(target: HTMLElement): boolean {
-    if (
-      target.matches(
-        'input, textarea, select, button, a, [role="button"], [role="checkbox"], [role="slider"]',
-      )
-    ) {
+    // Only elements that need genuine native pointer interaction (typing, native slider
+    // drag) get the overlay pass-through. Plain buttons/links don't: their tap is already
+    // forwarded as a synthetic click on pointerup, and letting the overlay pass through for
+    // them would leak real :hover onto controls that must stay touch-simulated (e.g.
+    // orbit-sidebar's nav items).
+    if (target.matches('input, textarea, select, [role="checkbox"], [role="slider"]')) {
       return true;
     }
     if (
       target.closest(
-        'orbit-slider, orbit-code-block, orbit-button, orbit-icon-button, orbit-select, orbit-checkbox, orbit-switch, orbit-text-input',
+        'orbit-slider, orbit-code-block, orbit-select, orbit-checkbox, orbit-switch, orbit-text-input',
       )
     ) {
+      return true;
+    }
+    // orbit-button/orbit-icon-button get real hover pass-through everywhere except inside
+    // orbit-sidebar: its header, body and footer actions (nav items, close action, footer
+    // actions) are all already tap-forwarded on pointerup, so pass-through would only leak
+    // desktop hover onto a surface that must stay touch-simulated end to end.
+    if (target.closest('orbit-button, orbit-icon-button') && !target.closest('orbit-sidebar')) {
       return true;
     }
     if (target.closest('pre')) {
@@ -580,7 +647,7 @@ export class LabShellComponent {
 
     const drag = this.touchDrag;
     if (drag && event.pointerId === drag.pointerId) {
-      const viewport = this.findPhoneViewport(overlay);
+      const viewport = drag.scrollTarget;
       if (viewport) {
         const deltaX = event.clientX - drag.startX;
         const deltaY = event.clientY - drag.startY;
@@ -673,14 +740,15 @@ export class LabShellComponent {
     overlay.setPointerCapture(event.pointerId);
     this.spawnTouchRipple(overlay, event.clientX, event.clientY);
 
-    const viewport = this.findPhoneViewport(overlay);
+    const scrollTarget = this.findScrollTarget(overlay, event.clientX, event.clientY);
     this.touchDrag = {
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
-      startScrollLeft: viewport?.scrollLeft ?? 0,
-      startScrollTop: viewport?.scrollTop ?? 0,
+      startScrollLeft: scrollTarget?.scrollLeft ?? 0,
+      startScrollTop: scrollTarget?.scrollTop ?? 0,
       dragged: false,
+      scrollTarget,
     };
   }
 
@@ -731,6 +799,33 @@ export class LabShellComponent {
     return overlay.parentElement?.querySelector<HTMLElement>('.lab-shell__phone-viewport') ?? null;
   }
 
+  /**
+   * The overlay always sits above everything (mobile nav drawer included), so a drag must
+   * scroll whatever is actually visible under the pointer — the drawer's own sidebar nav
+   * when it's open, the page content otherwise — not always the underlying page viewport.
+   */
+  private findScrollTarget(overlay: HTMLElement, clientX: number, clientY: number): HTMLElement | null {
+    overlay.style.pointerEvents = 'none';
+    const target =
+      typeof this.document.elementFromPoint === 'function'
+        ? (this.document.elementFromPoint(clientX, clientY) as HTMLElement | null)
+        : null;
+    overlay.style.pointerEvents = '';
+
+    const phoneScreen = overlay.closest('.lab-shell__phone-screen');
+    let node: HTMLElement | null = target;
+    while (node && node !== phoneScreen) {
+      if (node.scrollHeight > node.clientHeight) {
+        const overflowY = getComputedStyle(node).overflowY;
+        if (overflowY === 'auto' || overflowY === 'scroll') {
+          return node;
+        }
+      }
+      node = node.parentElement;
+    }
+    return this.findPhoneViewport(overlay);
+  }
+
   private moveTouchCursor(overlay: HTMLElement, clientX: number, clientY: number): void {
     const cursor = overlay.querySelector<HTMLElement>('.lab-shell__phone-touch-cursor');
     if (!cursor) {
@@ -761,7 +856,7 @@ export class LabShellComponent {
 
   openNavigation(): void {
     if (this.mobilePreview()) {
-      this.mobileNavOpen.set(true);
+      this.openMobileOverlay(this.mobileNavOpen, this.mobileNavEntering, '.lab-shell__mobile-nav-container');
     } else {
       this.panel.open(LabCatalogNavigationPanelComponent, {
         side: 'left',
@@ -784,20 +879,127 @@ export class LabShellComponent {
   }
 
   closeMobileNavigation(): void {
-    this.mobileNavOpen.set(false);
+    this.closeMobileOverlay(this.mobileNavOpen, this.mobileNavClosing, '.lab-shell__mobile-nav-container');
   }
 
   onMobileSidebarItemSelected(item: OrbitSidebarItem): void {
     this.onSidebarItemSelected(item);
-    this.mobileNavOpen.set(false);
+    this.closeMobileOverlay(this.mobileNavOpen, this.mobileNavClosing, '.lab-shell__mobile-nav-container');
+  }
+
+  closeMobileOptions(): void {
+    this.closeMobileOverlay(
+      this.mobileOptionsOpen,
+      this.mobileOptionsClosing,
+      '.lab-shell__mobile-options-container',
+    );
+  }
+
+  /**
+   * Mounts the drawer, then adds the entering-animation class only after two animation frames
+   * (letting the browser complete a real layout pass on the freshly-created content first) —
+   * this avoids a visible "opens too wide, then settles" flash on the very first paint. Keeping
+   * the `animation` property off the container's steady-state rule (only the transient
+   * `--entering` class carries it) also means toggling `data-orbit-motion` later, while the
+   * drawer just sits open, has no active animation to restart — it previously replayed the
+   * whole slide-in every time motion was flipped on/off.
+   */
+  private openMobileOverlay(
+    openSignal: WritableSignal<boolean>,
+    enteringSignal: WritableSignal<boolean>,
+    containerSelector: string,
+  ): void {
+    openSignal.set(true);
+
+    const window = this.document.defaultView;
+    const requestFrame = window?.requestAnimationFrame?.bind(window) ?? ((cb: () => void) => setTimeout(cb));
+
+    // Two frames to let the browser finish laying out the freshly-mounted content before the
+    // slide-in starts, then a third *after* setting `enteringSignal` so Angular has actually
+    // painted the `--entering` class before `getAnimationDuration` reads it — reading it in the
+    // same tick as the `.set()` call would still see the pre-update (un-animated) computed
+    // style and immediately clear the class again, so the animation never gets a chance to play.
+    requestFrame(() =>
+      requestFrame(() => {
+        enteringSignal.set(true);
+
+        requestFrame(() => {
+          const container = this.document.querySelector(containerSelector) as HTMLElement | null;
+          const duration = container ? this.getAnimationDuration(container) : 0;
+          const finish = () => enteringSignal.set(false);
+          if (!container || duration <= 0) {
+            finish();
+            return;
+          }
+
+          let finished = false;
+          const onAnimationEnd = () => {
+            if (finished) return;
+            finished = true;
+            finish();
+          };
+          container.addEventListener('animationend', onAnimationEnd, { once: true });
+          setTimeout(onAnimationEnd, duration + 50);
+        });
+      }),
+    );
+  }
+
+  /** Mirrors OrbitPanelService's animated close: play the exit animation, then unmount. */
+  private closeMobileOverlay(
+    openSignal: WritableSignal<boolean>,
+    closingSignal: WritableSignal<boolean>,
+    containerSelector: string,
+  ): void {
+    if (!openSignal() || closingSignal()) return;
+    closingSignal.set(true);
+
+    const container = this.document.querySelector(containerSelector) as HTMLElement | null;
+    const duration = container ? this.getAnimationDuration(container) : 0;
+    const finish = () => {
+      openSignal.set(false);
+      closingSignal.set(false);
+    };
+    if (!container || duration <= 0) {
+      finish();
+      return;
+    }
+
+    let finished = false;
+    const onAnimationEnd = () => {
+      if (finished) return;
+      finished = true;
+      finish();
+    };
+    container.addEventListener('animationend', onAnimationEnd, { once: true });
+    setTimeout(onAnimationEnd, duration + 50);
+  }
+
+  /** Longest `animation-duration` currently applied to the element, in milliseconds. */
+  private getAnimationDuration(el: HTMLElement): number {
+    return getComputedStyle(el)
+      .animationDuration.split(',')
+      .reduce((longest, value) => {
+        const trimmed = value.trim();
+        const ms = trimmed.endsWith('ms') ? parseFloat(trimmed) : parseFloat(trimmed) * 1000;
+        return Number.isFinite(ms) ? Math.max(longest, ms) : longest;
+      }, 0);
   }
 
   openOptions(): void {
-    this.panel.open(LabCatalogOptionsPanelComponent, {
-      side: 'right',
-      size: 'md',
-      data: this.createPanelData(),
-    });
+    if (this.mobilePreview()) {
+      this.openMobileOverlay(
+        this.mobileOptionsOpen,
+        this.mobileOptionsEntering,
+        '.lab-shell__mobile-options-container',
+      );
+    } else {
+      this.panel.open(LabCatalogOptionsPanelComponent, {
+        side: 'right',
+        size: 'md',
+        data: this.createPanelData(),
+      });
+    }
   }
 
   onSidebarItemSelected(item: OrbitSidebarItem): void {
@@ -813,7 +1015,8 @@ export class LabShellComponent {
     return slug?.split('?')[0] || null;
   }
 
-  private createPanelData(): LabOptionsPanelData {
+  /** Public: also injected by `LabMobileOptionsHostComponent` (defined in this file). */
+  createPanelData(): LabOptionsPanelData {
     return {
       theme: this.theme,
       density: this.density,

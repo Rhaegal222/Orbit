@@ -19,6 +19,10 @@
 .orbit-panel-pane {
   display: flex;
   height: 100%;
+  /* Same 85% cap the Lab's mobile-preview mockup uses (`min(20rem, 85%)`), so a narrow
+     real viewport gets the same visible backdrop margin as the sidebar drawer instead of
+     the configured px size (sm/md/lg…) running edge-to-edge. */
+  max-width: 85vw;
   outline: 0;
 }
 .orbit-panel-pane > * {

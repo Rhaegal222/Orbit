@@ -1,6 +1,26 @@
+import { SharedResizeObserver } from '@angular/cdk/observers/private';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { describe, expect, it } from 'vitest';
 import { MotionPageComponent } from './motion-page.component';
+
+function configure(widthPx: number): ComponentFixture<MotionPageComponent> {
+  TestBed.resetTestingModule();
+  TestBed.configureTestingModule({
+    imports: [MotionPageComponent],
+    providers: [
+      {
+        provide: SharedResizeObserver,
+        useValue: {
+          observe: () => of([{ contentRect: { width: widthPx } }]),
+        },
+      },
+    ],
+  });
+  const fixture = TestBed.createComponent(MotionPageComponent);
+  fixture.detectChanges();
+  return fixture;
+}
 
 describe('MotionPageComponent', () => {
   let fixture: ComponentFixture<MotionPageComponent>;
@@ -57,25 +77,37 @@ describe('MotionPageComponent', () => {
     expect(fixture.componentInstance['tileSelected']()).toBe(true);
   });
 
-  it('opens a dialog modal with pattern details when clicking the info button', () => {
-    const infoButton = fixture.nativeElement.querySelector(
-      '.motion-page__patterns--mobile orbit-icon-button[icon="info"]',
-    ) as HTMLElement;
-    expect(infoButton).toBeTruthy();
+  it('renders the pattern map as a single scrollable orbit-table (no desktop/mobile duplicate)', () => {
+    const table = fixture.nativeElement.querySelector('orbit-table');
+    expect(table).toBeTruthy();
+    expect(fixture.nativeElement.querySelectorAll('orbit-table').length).toBe(1);
+    expect(fixture.nativeElement.querySelectorAll('tbody tr[orbitTableRow]').length).toBe(5);
+  });
 
-    infoButton.querySelector('button')?.click();
-    fixture.detectChanges();
+  it('does not open the preview overlay on row tap when the table renders wide (desktop)', () => {
+    const desktopFixture = configure(1024);
+    const row = desktopFixture.nativeElement.querySelector('tbody tr[orbitTableRow]') as HTMLElement;
+    expect(row.classList).not.toContain('motion-page__row--tappable');
+
+    row.click();
+    desktopFixture.detectChanges();
+    expect(document.querySelector('orbit-modal')).toBeNull();
+  });
+
+  it('opens the pattern preview overlay via OrbitDialogService when the table renders narrow (mobile-preview mockup)', () => {
+    const mobileFixture = configure(360);
+    const row = mobileFixture.nativeElement.querySelector('tbody tr[orbitTableRow]') as HTMLElement;
+    expect(row.classList).toContain('motion-page__row--tappable');
+    expect(mobileFixture.nativeElement.querySelector('.motion-page__pattern-action')).toBeTruthy();
+
+    row.click();
+    mobileFixture.detectChanges();
 
     const modal = document.querySelector('orbit-modal');
     expect(modal).toBeTruthy();
-    expect(modal?.textContent).toContain('Dettagli: Overlay');
+    expect(modal?.textContent).toContain('Overlay');
 
-    const closeBtn = [
-      ...((modal?.querySelectorAll('orbit-button') as unknown as HTMLElement[]) || []),
-    ].find((btn) => btn.textContent?.includes('Chiudi')) as HTMLElement;
-    closeBtn.querySelector('button')?.click();
-    fixture.detectChanges();
-
-    expect(document.querySelector('orbit-modal')).toBeNull();
+    const closeBackdrop = document.querySelector('.orbit-dialog-backdrop') as HTMLElement;
+    closeBackdrop?.click();
   });
 });

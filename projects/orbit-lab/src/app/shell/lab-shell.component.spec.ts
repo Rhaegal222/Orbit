@@ -53,18 +53,16 @@ describe('LabShellComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Opzioni');
   });
 
-  it('shows device and orientation toggles only in mobile preview', () => {
-    expect(fixture.nativeElement.textContent).not.toContain('Vista tablet');
+  it('shows the orientation toggle only in mobile preview', () => {
     expect(fixture.nativeElement.textContent).not.toContain('Ruota orizzontale');
 
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Vista tablet');
     expect(fixture.nativeElement.textContent).toContain('Ruota orizzontale');
   });
 
-  it('toggles device and orientation state via header buttons', () => {
+  it('toggles orientation state via the header button', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
@@ -72,13 +70,6 @@ describe('LabShellComponent', () => {
       [...fixture.nativeElement.querySelectorAll('orbit-button')].find((button: HTMLElement) =>
         button.textContent?.includes(label),
       ) as HTMLElement;
-
-    findButton('Vista tablet').querySelector('button')?.click();
-    fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('.lab-shell__phone').getAttribute('data-lab-device'),
-    ).toBe('tablet');
-    expect(fixture.nativeElement.textContent).toContain('Vista smartphone');
 
     findButton('Ruota orizzontale').querySelector('button')?.click();
     fixture.detectChanges();
@@ -94,20 +85,21 @@ describe('LabShellComponent', () => {
 
     expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeTruthy();
-    expect(fixture.nativeElement.textContent).toContain('Modalità hover');
 
-    const findButton = (label: string) =>
-      [...fixture.nativeElement.querySelectorAll('orbit-button')].find((button: HTMLElement) =>
-        button.textContent?.includes(label),
-      ) as HTMLElement;
+    const touchModeTile = fixture.nativeElement.querySelector(
+      '.lab-shell__touch-mode-tile button',
+    ) as HTMLElement;
+    expect(touchModeTile.getAttribute('aria-pressed')).toBe('true');
 
-    findButton('Modalità hover').querySelector('button')?.click();
+    touchModeTile.click();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
-    expect(fixture.nativeElement.textContent).toContain('Modalità tocco');
+    expect(
+      fixture.nativeElement.querySelector('.lab-shell__touch-mode-tile button')?.getAttribute('aria-pressed'),
+    ).toBe('false');
 
-    findButton('Modalità tocco').querySelector('button')?.click();
+    fixture.nativeElement.querySelector('.lab-shell__touch-mode-tile button')?.click();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
@@ -400,6 +392,26 @@ describe('LabShellComponent', () => {
       '.lab-shell__mobile-nav-container orbit-panel-surface',
     );
     expect(drawer).toBeTruthy();
-    expect(drawer?.textContent).toContain('Sezioni catalogo');
+    expect(drawer?.querySelector('orbit-sidebar[embedded]')).toBeTruthy();
+    expect(drawer?.textContent).toContain('Orbit Lab');
+  });
+
+  it('opens the options offcanvas on mobile viewports', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const optionsButton = fixture.nativeElement.querySelector(
+      '.lab-shell__phone-options-btn button',
+    ) as HTMLButtonElement;
+    expect(optionsButton).toBeTruthy();
+
+    optionsButton.click();
+    fixture.detectChanges();
+
+    const panel = fixture.nativeElement.querySelector(
+      '.lab-shell__mobile-options-container lab-mobile-options-host',
+    );
+    expect(panel).toBeTruthy();
+    expect(panel?.textContent).toContain('Opzioni catalogo');
   });
 });

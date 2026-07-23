@@ -17,6 +17,7 @@ import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
   styleUrl: './modal-header.component.css',
   host: {
     '[class.orbit-modal-header--form]': 'variant() === "form"',
+    '[class.orbit-modal-header--no-subtitle]': '!subtitle()',
   },
 })
 export class OrbitModalHeaderComponent {

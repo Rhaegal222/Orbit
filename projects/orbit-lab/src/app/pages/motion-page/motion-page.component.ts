@@ -1,111 +1,115 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { SharedResizeObserver } from '@angular/cdk/observers/private';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  forwardRef,
+  inject,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { EMPTY, map, switchMap } from 'rxjs';
 import {
   OrbitButtonComponent,
   OrbitDatePickerComponent,
   OrbitFormSectionComponent,
+  OrbitModalBodyComponent,
+  OrbitModalComponent,
+  OrbitModalHeaderComponent,
   OrbitPopoverComponent,
   OrbitSelectableTileComponent,
-  OrbitIconButtonComponent,
-  OrbitModalComponent,
+  OrbitTableComponent,
+  OrbitTableRowDirective,
   ORBIT_DIALOG_DATA,
   OrbitDialogService,
 } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LAB_MOBILE_PREVIEW } from '../../shell/lab-shell.component';
+
+/** Matches the `@container lab-viewport (max-width: 48rem)` breakpoint in the stylesheet. */
+const MOBILE_BREAKPOINT_REM = 48;
+
+interface LabMotionPatternPreviewData {
+  pattern: { area: string; enter: string; exit: string; token: string; preview: string };
+  togglePattern: (area: string) => void;
+  isPatternPlaying: (area: string) => boolean;
+  patternRuns: (area: string) => readonly number[];
+}
 
 @Component({
-  selector: 'lab-motion-pattern-details-dialog',
+  selector: 'lab-motion-pattern-preview-dialog',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitModalComponent, OrbitButtonComponent],
-  template: `<orbit-modal labelledBy="pattern-details-title">
-    <div
-      class="pattern-details-dialog__body"
-      style="padding: var(--orbit-space-5); font-family: var(--orbit-font-sans);"
-    >
-      <h2
-        id="pattern-details-title"
-        style="margin: 0 0 var(--orbit-space-4); color: var(--orbit-text-primary); font-size: var(--orbit-font-size-subtitle); font-weight: var(--orbit-font-weight-emphasis);"
-      >
-        Dettagli: {{ data.pattern.area }}
-      </h2>
-      <div
-        class="pattern-details-dialog__info"
-        style="display: flex; flex-direction: column; gap: var(--orbit-space-3); margin-bottom: var(--orbit-space-5);"
-      >
-        <div>
-          <b
-            style="display: block; text-transform: uppercase; font-size: var(--orbit-font-size-xs); color: var(--orbit-text-label); margin-bottom: var(--orbit-space-1);"
-            >Enter</b
-          >
-          <span
-            style="color: var(--orbit-text-secondary); font-size: var(--orbit-font-size-body);"
-            >{{ data.pattern.enter }}</span
-          >
-        </div>
-        <div>
-          <b
-            style="display: block; text-transform: uppercase; font-size: var(--orbit-font-size-xs); color: var(--orbit-text-label); margin-bottom: var(--orbit-space-1);"
-            >Exit</b
-          >
-          <span
-            style="color: var(--orbit-text-secondary); font-size: var(--orbit-font-size-body);"
-            >{{ data.pattern.exit }}</span
-          >
-        </div>
-        <div>
-          <b
-            style="display: block; text-transform: uppercase; font-size: var(--orbit-font-size-xs); color: var(--orbit-text-label); margin-bottom: var(--orbit-space-1);"
-            >Token</b
-          >
-          <code
-            style="display: inline-block; padding: var(--orbit-space-1) var(--orbit-space-2); background: var(--orbit-surface-subtle); border-radius: var(--orbit-radius-sm); font-size: var(--orbit-font-size-sm); font-family: var(--orbit-font-mono);"
-            >{{ data.pattern.token }}</code
-          >
-        </div>
+  imports: [OrbitModalComponent, OrbitModalHeaderComponent, OrbitModalBodyComponent, OrbitButtonComponent],
+  template: `<orbit-modal size="sm" labelledBy="pattern-preview-title">
+    <orbit-modal-header
+      [title]="data.pattern.area"
+      titleId="pattern-preview-title"
+      (closeClicked)="close()"
+    />
+    <orbit-modal-body>
+      <div style="display: flex; flex-direction: column; gap: var(--orbit-space-3);">
+        <p style="margin: 0; color: var(--orbit-text-secondary);">
+          <b>Enter</b> {{ data.pattern.enter }} · <b>Exit</b> {{ data.pattern.exit }}
+        </p>
+        <code style="align-self: flex-start;">{{ data.pattern.token }}</code>
         <div
-          style="display: flex; align-items: center; gap: var(--orbit-space-3); margin-top: var(--orbit-space-2);"
+          class="motion-page__pattern-preview"
+          aria-hidden="true"
+          style="display: inline-grid; place-items: center; width: var(--orbit-control-height); height: var(--orbit-control-height);"
         >
-          <b
-            style="text-transform: uppercase; font-size: var(--orbit-font-size-xs); color: var(--orbit-text-label);"
-            >Preview:</b
-          >
-          <div
-            class="motion-page__pattern-preview"
-            style="display: inline-grid; place-items: center; width: var(--orbit-control-height); height: var(--orbit-control-height);"
-          >
-            @for (run of data.patternRuns(data.pattern.area); track run) {
-              <span
-                [class]="
-                  'motion-page__pattern-demo motion-page__pattern-demo--' + data.pattern.preview
-                "
-              ></span>
-            }
-          </div>
-          <orbit-button
-            [label]="data.isPatternPlaying(data.pattern.area) ? 'Stop' : 'Riproduci'"
-            variant="outline"
-            tone="neutral"
-            (clicked)="data.togglePattern(data.pattern.area)"
-          />
+          @for (run of data.patternRuns(data.pattern.area); track run) {
+            <span
+              [class]="'motion-page__pattern-demo motion-page__pattern-demo--' + data.pattern.preview"
+            ></span>
+          }
         </div>
+        <orbit-button
+          [label]="data.isPatternPlaying(data.pattern.area) ? 'Stop' : 'Riproduci'"
+          variant="outline"
+          tone="neutral"
+          (clicked)="data.togglePattern(data.pattern.area)"
+        />
       </div>
-    </div>
-    <div
-      class="pattern-details-dialog__actions"
-      style="display: flex; justify-content: flex-end; gap: var(--orbit-space-2); padding: var(--orbit-space-3) var(--orbit-space-5); border-top: 1px solid var(--orbit-border-subtle);"
-    >
-      <orbit-button label="Chiudi" tone="neutral" variant="outline" (clicked)="close()" />
-    </div>
+    </orbit-modal-body>
   </orbit-modal>`,
 })
-class LabMotionPatternDetailsDialogComponent {
-  readonly data = inject(ORBIT_DIALOG_DATA) as any;
-  private readonly dialogService = inject(OrbitDialogService);
+export class LabMotionPatternPreviewDialogComponent {
+  readonly data = inject(ORBIT_DIALOG_DATA) as LabMotionPatternPreviewData;
+  private readonly dialog = inject(OrbitDialogService);
+  /** Emitted on close in addition to `OrbitDialogService.closeAll()`, so a host that embeds
+   *  this dialog outside the service (the mobile preview mockup) can react too. */
+  readonly closed = output<void>();
 
   close(): void {
-    this.dialogService.closeAll();
+    this.closed.emit();
+    this.dialog.closeAll();
   }
+}
+
+/** Provides ORBIT_DIALOG_DATA to an inline `lab-motion-pattern-preview-dialog`, reading it
+ *  straight from the page's own state instead of a component `input()`: a self-referencing
+ *  provider factory runs before Angular finishes setting this component's inputs, so an
+ *  `input.required()` here would throw NG0950 the moment a descendant injects the token. */
+@Component({
+  selector: 'lab-mobile-pattern-preview-host',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [LabMotionPatternPreviewDialogComponent],
+  template: `<lab-motion-pattern-preview-dialog (closed)="closed.emit()" />`,
+  providers: [
+    {
+      provide: ORBIT_DIALOG_DATA,
+      useFactory: (page: MotionPageComponent) => page.currentPatternPreviewData(),
+      deps: [forwardRef(() => MotionPageComponent)],
+    },
+  ],
+})
+export class LabMobilePatternPreviewHostComponent {
+  closed = output<void>();
 }
 
 @Component({
@@ -114,12 +118,14 @@ class LabMotionPatternDetailsDialogComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OrbitButtonComponent,
-    OrbitIconButtonComponent,
     OrbitDatePickerComponent,
     OrbitFormSectionComponent,
     OrbitPopoverComponent,
     OrbitSelectableTileComponent,
+    OrbitTableComponent,
+    OrbitTableRowDirective,
     LabExampleComponent,
+    LabMobilePatternPreviewHostComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './motion-page.component.html',
@@ -223,6 +229,31 @@ export class MotionPageComponent {
 <orbit-popover content="Contenuto contestuale"><orbit-button label="Apri popover" /></orbit-popover>`;
 
   private readonly dialog = inject(OrbitDialogService);
+  private readonly resizeObserver = inject(SharedResizeObserver);
+  private readonly mobilePreview = inject(LAB_MOBILE_PREVIEW, { optional: true });
+
+  /** Set while the pattern-preview dialog renders inline inside the mobile preview mockup
+   *  (kept confined to the phone frame instead of a real CDK overlay). */
+  protected readonly previewDialogPattern = signal<(typeof this.patterns)[number] | null>(null);
+
+  // Measures the table's actual rendered width rather than the browser viewport, since this
+  // page also renders inside Orbit Lab's mobile-preview mockup (a fixed-width div that never
+  // changes the real viewport, so BreakpointObserver would never report it as narrow).
+  private readonly patternsTable = viewChild('patternsTable', { read: ElementRef });
+  protected readonly isMobile = toSignal(
+    toObservable(this.patternsTable).pipe(
+      switchMap((ref: ElementRef<HTMLElement> | undefined) =>
+        ref ? this.resizeObserver.observe(ref.nativeElement) : EMPTY,
+      ),
+      map(([entry]) => entry.contentRect.width < this.mobileBreakpointPx()),
+    ),
+    { initialValue: false },
+  );
+
+  private mobileBreakpointPx(): number {
+    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    return MOBILE_BREAKPOINT_REM * rootFontSize;
+  }
 
   toggleTile(): void {
     this.tileSelected.update((v) => !v);
@@ -246,15 +277,54 @@ export class MotionPageComponent {
     return active?.area === area ? [active.run] : [];
   }
 
-  openDetails(pattern: (typeof this.patterns)[number]): void {
-    this.dialog.open(LabMotionPatternDetailsDialogComponent, {
+  onRowTap(pattern: (typeof this.patterns)[number]): void {
+    if (!this.isMobile()) return;
+
+    if (this.mobilePreview?.()) {
+      // Inside Orbit Lab's own device-frame mockup: a real CDK overlay would attach to
+      // document.body and break out of the phone bezel, so render the same dialog content
+      // inline instead, confined to the mockup.
+      this.previewDialogPattern.set(pattern);
+      return;
+    }
+
+    this.dialog.open(LabMotionPatternPreviewDialogComponent, {
       size: 'sm',
-      data: {
-        pattern,
-        togglePattern: (area: string) => this.togglePattern(area),
-        isPatternPlaying: (area: string) => this.isPatternPlaying(area),
-        patternRuns: (area: string) => this.patternRuns(area),
-      },
+      data: this.buildPatternPreviewData(pattern),
     });
+  }
+
+  closePreviewDialog(): void {
+    this.previewDialogPattern.set(null);
+  }
+
+  /** Closes only when the click lands on the container's own empty padding (the click-outside
+   *  area), not when it bubbles up from the modal card itself. */
+  onPreviewDialogContainerClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closePreviewDialog();
+    }
+  }
+
+  /** Reads `previewDialogPattern` directly rather than accepting a parameter: called from
+   *  `LabMobilePatternPreviewHostComponent`'s provider factory, which only has access to this
+   *  page instance, not the tapped row. */
+  currentPatternPreviewData(): LabMotionPatternPreviewData {
+    const pattern = this.previewDialogPattern();
+    if (!pattern) {
+      throw new Error('currentPatternPreviewData() called with no pattern set');
+    }
+    return this.buildPatternPreviewData(pattern);
+  }
+
+  private buildPatternPreviewData(
+    pattern: (typeof this.patterns)[number],
+  ): LabMotionPatternPreviewData {
+    return {
+      pattern,
+      togglePattern: (area: string) => this.togglePattern(area),
+      isPatternPlaying: (area: string) => this.isPatternPlaying(area),
+      patternRuns: (area: string) => this.patternRuns(area),
+    };
   }
 }

@@ -1,15 +1,10 @@
-.motion-page__tokens,
-.motion-page__patterns--desktop {
+.motion-page__tokens {
   display: grid;
   gap: var(--orbit-layout-gap);
-}
-
-.motion-page__tokens {
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 }
 
-.motion-page__token,
-.motion-page__pattern {
+.motion-page__token {
   display: grid;
   gap: var(--orbit-space-1);
   padding: var(--orbit-space-3);
@@ -27,30 +22,24 @@
   animation: orbit-lab-token-preview var(--motion-token-duration) var(--motion-token-easing);
 }
 
-.motion-page__token span,
-.motion-page__pattern span {
+.motion-page__token span {
   color: var(--orbit-text-secondary);
   font-size: var(--orbit-font-size-sm);
 }
 
-.motion-page__pattern {
-  grid-template-columns: minmax(8rem, 1fr) minmax(9rem, 1.3fr) minmax(9rem, 1.3fr) auto auto;
-  align-items: center;
-}
-
-.motion-page__pattern b {
-  display: block;
-  margin-bottom: var(--orbit-space-1);
-  color: var(--orbit-text-label);
-  font-size: var(--orbit-font-size-xs);
-  text-transform: uppercase;
-}
-
 .motion-page__pattern-action {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: end;
   gap: var(--orbit-space-2);
+}
+
+.motion-page__row--tappable {
+  cursor: pointer;
+}
+
+.motion-page__row--tappable:hover,
+.motion-page__row--tappable:focus-visible {
+  background: var(--orbit-surface-raised);
 }
 
 ::ng-deep .motion-page__pattern-preview {
@@ -173,39 +162,57 @@
   gap: var(--orbit-layout-gap);
 }
 
-.motion-page__patterns--mobile {
-  display: none;
-}
-
-@media (max-width: 48rem) {
-  .motion-page__patterns--desktop {
-    display: none;
-  }
-  .motion-page__patterns--mobile {
-    display: grid;
-    gap: var(--orbit-space-3);
-  }
-  .motion-page__pattern-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--orbit-space-3);
-    border: 1px solid var(--orbit-border-subtle);
-    border-radius: var(--orbit-radius-surface);
-    background: var(--orbit-surface-raised);
-    font-family: var(--orbit-font-sans);
-  }
-  .motion-page__pattern-mobile strong {
-    color: var(--orbit-text-primary);
-    font-size: var(--orbit-font-size-body);
-    font-weight: var(--orbit-font-weight-emphasis);
-  }
-  .motion-page__pattern-mobile-actions {
-    display: flex;
-    align-items: center;
-    gap: var(--orbit-space-2);
-  }
+/*
+ * Uses a container query (named `lab-viewport`, declared on
+ * .lab-shell__phone-viewport) instead of @media: this page also renders
+ * inside Orbit Lab's mobile-preview phone mockup, a fixed-width div that
+ * never changes the browser viewport, so @media (max-width) would never
+ * match there even though the rendered width is phone-sized.
+ */
+@container lab-viewport (max-width: 48rem) {
   .motion-page__floating-preview {
     grid-template-columns: 1fr;
   }
+
+  .motion-page__pattern-action-col {
+    display: none;
+  }
+}
+
+/*
+ * Renders the pattern-preview dialog inline when tapped inside Orbit Lab's mobile-preview
+ * mockup, instead of the real OrbitDialogService overlay (which attaches to document.body and
+ * would break out of the phone bezel). This block lives inside the scrollable
+ * `.lab-shell__phone-viewport`, so `position: absolute` would scroll away with its content
+ * instead of staying centered on screen. `position: fixed` escapes that scrolling — and
+ * `.lab-shell__phone-screen` sets a `transform`, which per spec makes it the containing block
+ * for `position: fixed` descendants, so "fixed" resolves against the phone frame (topbar
+ * included) instead of the real browser viewport.
+ */
+.motion-page__preview-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: var(--orbit-overlay-backdrop);
+  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+
+.motion-page__preview-dialog-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1501;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--orbit-space-4);
+}
+
+.motion-page__preview-dialog-container lab-mobile-pattern-preview-host,
+.motion-page__preview-dialog-container lab-motion-pattern-preview-dialog {
+  display: contents;
+}
+
+.motion-page__preview-dialog-container orbit-modal {
+  width: 100%;
+  animation: orbit-modal-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
 }

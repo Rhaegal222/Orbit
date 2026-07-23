@@ -43,10 +43,19 @@
 
 @media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
   .orbit-form-action-bar {
+    flex-direction: column;
     align-items: stretch;
+    gap: var(--orbit-space-3);
   }
 
-  .orbit-form-action-bar__btn--confirm {
-    flex-basis: 100%;
+  .orbit-form-action-bar__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    width: 100%;
+    gap: var(--orbit-space-2);
+  }
+
+  .orbit-form-action-bar__btn {
+    width: 100%;
   }
 }

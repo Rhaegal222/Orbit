@@ -42,6 +42,12 @@ describe('BannerPageComponent', () => {
   });
 
   it('renders a copyable usage snippet', () => {
+    const showCode = [
+      ...fixture.nativeElement.querySelectorAll('.lab-example__actions button'),
+    ].find((button) => button.textContent?.includes('Mostra codice')) as HTMLButtonElement;
+    showCode.click();
+    fixture.detectChanges();
+
     expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
       '<orbit-banner',
     );

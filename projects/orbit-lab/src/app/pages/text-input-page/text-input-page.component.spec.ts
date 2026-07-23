@@ -25,10 +25,13 @@ describe('TextInputPageComponent', () => {
   it('marks the invalid example as invalid via the host class', () => {
     const el = fixture.nativeElement.querySelector('[data-example="invalid"] orbit-text-input');
     expect(el.classList.contains('orbit-input--invalid')).toBe(true);
-    expect(fixture.nativeElement.querySelector('[data-example="invalid"] .orbit-form-field__error')?.textContent).toContain(
-      'Inserisci un indirizzo email valido',
-    );
-    expect(fixture.nativeElement.querySelectorAll('.orbit-form-field__feedback--reserved').length).toBe(2);
+    expect(
+      fixture.nativeElement.querySelector('[data-example="invalid"] .orbit-form-field__error')
+        ?.textContent,
+    ).toContain('Inserisci un indirizzo email valido');
+    expect(
+      fixture.nativeElement.querySelectorAll('.orbit-form-field__feedback--reserved').length,
+    ).toBe(2);
   });
 
   it('disables the native input in the disabled example via a disabled FormControl', () => {
@@ -45,11 +48,19 @@ describe('TextInputPageComponent', () => {
 
   it.each(['search', 'tel', 'url'])('shows the semantic leading icon for %s', (type) => {
     expect(
-      fixture.nativeElement.querySelector(`[data-type-example="${type}"] .orbit-input__icon--leading`),
+      fixture.nativeElement.querySelector(
+        `[data-type-example="${type}"] .orbit-input__icon--leading`,
+      ),
     ).toBeTruthy();
   });
 
   it('renders a copyable usage snippet', () => {
+    const showCode = [
+      ...fixture.nativeElement.querySelectorAll('.lab-example__actions button'),
+    ].find((button) => button.textContent?.includes('Mostra codice')) as HTMLButtonElement;
+    showCode.click();
+    fixture.detectChanges();
+
     expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
       '<orbit-text-input',
     );

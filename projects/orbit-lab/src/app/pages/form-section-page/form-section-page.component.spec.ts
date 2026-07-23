@@ -47,6 +47,7 @@ describe('FormSectionPageComponent', () => {
     expect(button.getAttribute('aria-expanded')).toBe('false');
     const bodyId = button.getAttribute('aria-controls');
     const body = fixture.nativeElement.querySelector(`#${bodyId}`);
-    expect(body.hidden).toBe(true);
+    expect(body.getAttribute('aria-hidden')).toBe('true');
+    expect(body.classList.contains('orbit-form-section__body--collapsed')).toBe(true);
   });
 });

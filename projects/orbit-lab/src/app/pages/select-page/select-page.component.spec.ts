@@ -18,8 +18,10 @@ describe('SelectPageComponent', () => {
   });
 
   it('renders the base example as readonly (not searchable)', () => {
-    const input = fixture.nativeElement.querySelector('[data-example="base"] input');
-    expect(input.readOnly).toBe(true);
+    const trigger = fixture.nativeElement.querySelector(
+      '[data-example="base"] .orbit-select__input',
+    );
+    expect(trigger.tagName.toLowerCase()).toBe('button');
   });
 
   it('renders the searchable example as editable', () => {
@@ -30,14 +32,19 @@ describe('SelectPageComponent', () => {
   it('marks the invalid example as invalid via the host class', () => {
     const el = fixture.nativeElement.querySelector('[data-example="invalid"] orbit-select');
     expect(el.classList.contains('orbit-select--invalid')).toBe(true);
-    expect(fixture.nativeElement.querySelector('[data-example="invalid"] .orbit-form-field__error')?.textContent).toContain(
-      'Seleziona una periodicità',
-    );
-    expect(fixture.nativeElement.querySelectorAll('.orbit-form-field__feedback--reserved').length).toBe(2);
+    expect(
+      fixture.nativeElement.querySelector('[data-example="invalid"] .orbit-form-field__error')
+        ?.textContent,
+    ).toContain('Seleziona una periodicità');
+    expect(
+      fixture.nativeElement.querySelectorAll('.orbit-form-field__feedback--reserved').length,
+    ).toBe(2);
   });
 
   it('disables the native input in the disabled example via a disabled FormControl', () => {
-    const input = fixture.nativeElement.querySelector('[data-example="disabled"] input');
+    const input = fixture.nativeElement.querySelector(
+      '[data-example="disabled"] .orbit-select__input',
+    );
     expect(input.disabled).toBe(true);
   });
 
@@ -49,13 +56,21 @@ describe('SelectPageComponent', () => {
   });
 
   it('renders a copyable usage snippet', () => {
+    const showCode = [
+      ...fixture.nativeElement.querySelectorAll('.lab-example__actions button'),
+    ].find((button) => button.textContent?.includes('Mostra codice')) as HTMLButtonElement;
+    showCode.click();
+    fixture.detectChanges();
+
     expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
       '<orbit-select',
     );
   });
 
   it('maps selectable tiles with interactive and disabled states', () => {
-    const tiles = fixture.nativeElement.querySelectorAll('[data-example="selectable-tile"] orbit-selectable-tile');
+    const tiles = fixture.nativeElement.querySelectorAll(
+      '[data-example="selectable-tile"] orbit-selectable-tile',
+    );
     expect(tiles.length).toBe(3);
     expect(tiles[2].querySelector('button').disabled).toBe(true);
   });

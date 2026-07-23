@@ -304,6 +304,79 @@ class LabCatalogOptionsPanelComponent {
 }
 
 @Component({
+  selector: 'lab-catalog-navigation-panel',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    OrbitSidebarComponent,
+    OrbitTextInputComponent,
+    OrbitPanelSurfaceComponent,
+    OrbitModalHeaderComponent,
+    OrbitModalBodyComponent,
+    ReactiveFormsModule,
+  ],
+  host: {
+    '[attr.data-orbit-theme]': 'data.theme() === "dark" ? "dark" : null',
+    '[attr.data-orbit-density]': 'data.density()',
+    '[style.--orbit-text-scale]': 'data.textScale()',
+    '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
+    '[style.--orbit-font-sans]': 'fontStack()',
+    '[attr.data-orbit-shadow-intensity]': 'data.shadowIntensity()',
+    '[attr.data-orbit-shape]': 'data.shape()',
+  },
+  template: `<orbit-panel-surface labelledBy="catalog-nav-title">
+    <orbit-modal-header
+      title="Sezioni catalogo"
+      titleId="catalog-nav-title"
+      (closeClicked)="close()"
+    />
+    <orbit-modal-body style="padding: 0; height: 100%; display: flex; flex-direction: column;">
+      <div style="flex: 1 1 auto; min-height: 0; height: 100%;">
+        <orbit-sidebar
+          style="--orbit-sidebar-width: 100%; width: 100%; height: 100%;"
+          brand="Orbit Lab"
+          ariaLabel="Catalogo tecnico"
+          [sections]="data.sidebarSections()"
+          [activeId]="data.activeSidebarId()"
+          [collapsed]="false"
+          [showHeader]="true"
+          [showFooter]="false"
+          (itemSelected)="onItemSelected($event)"
+        >
+          <orbit-text-input
+            orbitSidebarSearch
+            type="search"
+            inputId="lab-catalog-search-mobile"
+            placeholder="Cerca sezione…"
+            showLeadingIcon
+            leadingIconName="search"
+            [formControl]="data.searchControl"
+          />
+        </orbit-sidebar>
+      </div>
+    </orbit-modal-body>
+  </orbit-panel-surface>`,
+})
+class LabCatalogNavigationPanelComponent {
+  readonly data = inject(ORBIT_PANEL_DATA) as any;
+  private readonly panel = inject(OrbitPanelService);
+
+  readonly fontStack = computed(() => fontStack(this.data.font()));
+  readonly optionalIconDisplay = computed(() =>
+    parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
+  );
+
+  onItemSelected(item: OrbitSidebarItem): void {
+    this.data.onSidebarItemSelected(item);
+    this.close();
+  }
+
+  close(): void {
+    this.panel.closeAll();
+  }
+}
+
+@Component({
   selector: 'lab-shell',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -514,6 +587,38 @@ export class LabShellComponent {
 
   onTouchOverlayPointerDown(event: PointerEvent): void {
     const overlay = event.currentTarget as HTMLElement;
+
+    // Check what element is directly under the pointer
+    overlay.style.pointerEvents = 'none';
+    const target =
+      typeof this.document.elementFromPoint === 'function'
+        ? (this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null)
+        : null;
+    overlay.style.pointerEvents = '';
+
+    if (target && (target.matches('input[type="range"]') || target.closest('orbit-slider'))) {
+      overlay.style.pointerEvents = 'none';
+      const downEvent = new PointerEvent('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+        clientX: event.clientX,
+        clientY: event.clientY,
+        pointerId: event.pointerId,
+        pointerType: event.pointerType,
+        isPrimary: event.isPrimary,
+      });
+      target.dispatchEvent(downEvent);
+
+      const restoreOverlay = () => {
+        overlay.style.pointerEvents = '';
+        this.document.removeEventListener('pointerup', restoreOverlay);
+        this.document.removeEventListener('pointercancel', restoreOverlay);
+      };
+      this.document.addEventListener('pointerup', restoreOverlay);
+      this.document.addEventListener('pointercancel', restoreOverlay);
+      return;
+    }
+
     overlay.setPointerCapture(event.pointerId);
     this.spawnTouchRipple(overlay, event.clientX, event.clientY);
 
@@ -544,13 +649,29 @@ export class LabShellComponent {
     // overlay, since the overlay itself intercepts every pointer event to keep :hover from
     // ever reaching the previewed content.
     overlay.style.pointerEvents = 'none';
-    const target = this.document.elementFromPoint(
-      event.clientX,
-      event.clientY,
-    ) as HTMLElement | null;
+    const target = typeof this.document.elementFromPoint === 'function'
+      ? this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null
+      : null;
     overlay.style.pointerEvents = '';
-    if (target && typeof target.click === 'function') {
-      target.click();
+    if (target) {
+      let clickEvent: MouseEvent;
+      try {
+        clickEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          view: this.document.defaultView,
+        });
+      } catch {
+        clickEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          clientX: event.clientX,
+          clientY: event.clientY,
+        });
+      }
+      target.dispatchEvent(clickEvent);
     }
   }
 
@@ -584,6 +705,26 @@ export class LabShellComponent {
     ripple.style.top = `${clientY - rect.top}px`;
     container.appendChild(ripple);
     ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+  }
+
+  openNavigation(): void {
+    this.panel.open(LabCatalogNavigationPanelComponent, {
+      side: 'left',
+      size: 'md',
+      data: {
+        theme: this.theme,
+        density: this.density,
+        textScale: this.textScale,
+        font: this.font,
+        fontOptions: this.fontOptions,
+        shadowIntensity: this.shadowIntensity,
+        shape: this.shape,
+        sidebarSections: this.sidebarSections,
+        activeSidebarId: this.activeSidebarId,
+        searchControl: this.searchControl,
+        onSidebarItemSelected: (item: OrbitSidebarItem) => this.onSidebarItemSelected(item),
+      },
+    });
   }
 
   openOptions(): void {

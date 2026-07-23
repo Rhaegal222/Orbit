@@ -36,7 +36,15 @@
 
   <div class="lab-shell__main">
     <header class="lab-shell__header">
-      <div class="lab-shell__header-start"></div>
+      <div class="lab-shell__header-start">
+        <orbit-button
+          class="lab-shell__nav-toggle"
+          label="Navigazione"
+          variant="outline"
+          tone="neutral"
+          (clicked)="openNavigation()"
+        />
+      </div>
       <div class="lab-shell__header-center">
         @if (mobilePreview()) {
           <orbit-button

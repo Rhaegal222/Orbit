@@ -383,4 +383,21 @@ describe('LabShellComponent', () => {
     expect(phone.style.width).toBe('56rem');
     expect(phone.style.height).toContain('48rem');
   });
+
+  it('opens the navigation drawer on mobile viewports', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const navButton = fixture.nativeElement.querySelector(
+      '.lab-shell__nav-toggle button',
+    ) as HTMLButtonElement;
+    expect(navButton).toBeTruthy();
+
+    navButton.click();
+    fixture.detectChanges();
+
+    const drawer = overlayContainer.getContainerElement().querySelector('orbit-panel-surface');
+    expect(drawer).toBeTruthy();
+    expect(drawer?.textContent).toContain('Sezioni catalogo');
+  });
 });

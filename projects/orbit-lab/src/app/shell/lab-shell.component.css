@@ -270,6 +270,8 @@
   inset: 0;
   overflow-y: auto;
   background: var(--orbit-surface-default);
+  padding: var(--orbit-space-4);
+  box-sizing: border-box;
 }
 
 .lab-shell__body--mobile-preview
@@ -380,4 +382,21 @@
 body[data-orbit-motion='off'] .lab-shell__phone-touch-ripple {
   animation: none;
   opacity: 0;
+}
+
+.lab-shell__nav-toggle {
+  display: none;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__nav-toggle {
+  display: inline-block;
+}
+
+@media (max-width: 48rem) {
+  orbit-sidebar {
+    display: none !important;
+  }
+  .lab-shell__nav-toggle {
+    display: inline-block;
+  }
 }

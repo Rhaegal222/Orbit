@@ -7,6 +7,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: var(--orbit-button-gap);
   min-height: var(--orbit-control-height);
   padding: 0 var(--orbit-control-padding-inline);

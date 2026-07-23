@@ -558,31 +558,82 @@ export class LabShellComponent {
     this.sizeControl.setValue(rem, { emitEvent: false });
   }
 
+  private isInteractiveElement(target: HTMLElement): boolean {
+    if (
+      target.matches('input, textarea, select, button, a, [role="button"], [role="checkbox"], [role="slider"]')
+    ) {
+      return true;
+    }
+    if (
+      target.closest('orbit-slider, orbit-code-block, orbit-button, orbit-icon-button, orbit-select, orbit-checkbox, orbit-switch, orbit-text-input')
+    ) {
+      return true;
+    }
+    if (target.closest('pre')) {
+      return true;
+    }
+    return false;
+  }
+
   onTouchOverlayPointerMove(event: PointerEvent): void {
     const overlay = event.currentTarget as HTMLElement;
     this.moveTouchCursor(overlay, event.clientX, event.clientY);
 
     const drag = this.touchDrag;
-    if (!drag || event.pointerId !== drag.pointerId) {
+    if (drag && event.pointerId === drag.pointerId) {
+      const viewport = this.findPhoneViewport(overlay);
+      if (viewport) {
+        const deltaX = event.clientX - drag.startX;
+        const deltaY = event.clientY - drag.startY;
+        if (!drag.dragged && Math.hypot(deltaX, deltaY) > 4) {
+          drag.dragged = true;
+        }
+        if (drag.dragged) {
+          viewport.scrollLeft = drag.startScrollLeft - deltaX;
+          viewport.scrollTop = drag.startScrollTop - deltaY;
+        }
+      }
       return;
     }
-    const viewport = this.findPhoneViewport(overlay);
-    if (!viewport) {
-      return;
-    }
-    const deltaX = event.clientX - drag.startX;
-    const deltaY = event.clientY - drag.startY;
-    if (!drag.dragged && Math.hypot(deltaX, deltaY) > 4) {
-      drag.dragged = true;
-    }
-    if (drag.dragged) {
-      viewport.scrollLeft = drag.startScrollLeft - deltaX;
-      viewport.scrollTop = drag.startScrollTop - deltaY;
+
+    // Check if the pointer is hovering over an interactive element inside the viewport
+    overlay.style.pointerEvents = 'none';
+    const target = typeof this.document.elementFromPoint === 'function'
+      ? this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null
+      : null;
+    overlay.style.pointerEvents = '';
+
+    if (target && this.isInteractiveElement(target)) {
+      overlay.style.pointerEvents = 'none';
+
+      const restoreOverlay = (e: PointerEvent) => {
+        if (e.relatedTarget && !target.contains(e.relatedTarget as Node)) {
+          overlay.style.pointerEvents = '';
+          target.removeEventListener('pointerleave', restoreOverlay);
+          this.document.removeEventListener('pointerup', restoreOverlayGlobal);
+          this.document.removeEventListener('pointercancel', restoreOverlayGlobal);
+        }
+      };
+
+      const restoreOverlayGlobal = () => {
+        overlay.style.pointerEvents = '';
+        target.removeEventListener('pointerleave', restoreOverlay);
+        this.document.removeEventListener('pointerup', restoreOverlayGlobal);
+        this.document.removeEventListener('pointercancel', restoreOverlayGlobal);
+      };
+
+      target.addEventListener('pointerleave', restoreOverlay);
+      this.document.addEventListener('pointerup', restoreOverlayGlobal);
+      this.document.addEventListener('pointercancel', restoreOverlayGlobal);
     }
   }
 
   onTouchOverlayPointerLeave(event: PointerEvent): void {
     this.hideTouchCursor(event.currentTarget as HTMLElement);
+  }
+
+  private isSlider(target: HTMLElement): boolean {
+    return target.matches('input[type="range"]') || !!target.closest('orbit-slider');
   }
 
   onTouchOverlayPointerDown(event: PointerEvent): void {
@@ -596,7 +647,7 @@ export class LabShellComponent {
         : null;
     overlay.style.pointerEvents = '';
 
-    if (target && (target.matches('input[type="range"]') || target.closest('orbit-slider'))) {
+    if (target && this.isSlider(target)) {
       overlay.style.pointerEvents = 'none';
       const downEvent = new PointerEvent('pointerdown', {
         bubbles: true,

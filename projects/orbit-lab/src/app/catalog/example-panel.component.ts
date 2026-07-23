@@ -1,11 +1,11 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
-import { OrbitButtonComponent, OrbitCodeBlockComponent } from '@galileo/orbit';
+import { OrbitButtonComponent, OrbitCodeBlockComponent, OrbitIconButtonComponent } from '@galileo/orbit';
 
 @Component({
   selector: 'lab-example',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitButtonComponent, OrbitCodeBlockComponent],
+  imports: [OrbitButtonComponent, OrbitCodeBlockComponent, OrbitIconButtonComponent],
   templateUrl: './example-panel.component.html',
   styleUrl: './example-panel.component.css',
   host: {

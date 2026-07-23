@@ -283,14 +283,18 @@
   }
 }
 
-/* A real touchscreen never fires hover: the overlay intercepts every pointer event so the
-   previewed content underneath never receives real mouse input, and :hover can never match.
-   Its z-index clears every Orbit stacking token (--orbit-z-toast is the highest, at 1200),
-   so it stays on top regardless of what the previewed page renders. */
+/* A real touchscreen never fires hover: the overlay intercepts every pointer event so nothing
+   underneath ever receives real mouse input, and :hover can never match. Mounted as a real
+   `document.body` child by LabShellComponent (not in this component's own template) and kept
+   positioned over the mockup's on-screen rect via top/left/width/height, set inline — see the
+   comment on that wiring for why: `.cdk-overlay-container` (which the mockup's panels/dialogs/
+   selects/popovers/etc. render through) is *also* a body-level sibling of <lab-shell>, and a
+   nested element's z-index, however high, can never outrank a true sibling of its own component
+   root; this has to live at the same DOM level to compete with it at all. z-index just needs to
+   clear that sibling's own 1000 (and Orbit's highest semantic token, --orbit-z-toast, at 1200). */
 .lab-shell__phone-touch-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2000;
+  position: fixed;
+  z-index: 1300;
   cursor: none;
   touch-action: none;
 }
@@ -410,88 +414,6 @@ body[data-orbit-motion='off'] .lab-shell__phone-touch-ripple {
   padding-left: 1.75rem;
 }
 
-/* ── Mobile Navigation Drawer inside Canvas Mockup ── */
-/* Mirrors OrbitPanelService's own 'sm' size (320px) so the mockup drawer leaves
-   a visible backdrop over the app behind it, instead of covering the full screen. */
-.lab-shell__mobile-nav-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background: var(--orbit-overlay-backdrop);
-  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
-}
-
-.lab-shell__mobile-nav-backdrop--closing {
-  animation: orbit-backdrop-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
-}
-
-/* ── Mobile Drawers inside Canvas Mockup ── */
-/* Nav (left) and Options (right) share one rule set so they always open with the
-   identical animation/effect — mirrors OrbitPanelService's own .orbit-panel-pane. */
-.lab-shell__mobile-nav-container,
-.lab-shell__mobile-options-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: min(20rem, 85%);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  background: var(--orbit-surface-default);
-  box-shadow: var(--orbit-shadow-floating);
-}
-
-.lab-shell__mobile-nav-container {
-  left: 0;
-}
-
-/* Kept off the container's steady-state rule above: an `animation` property that's always
-   present gets replayed from scratch by the browser whenever any global attribute the CSS
-   cascade reacts to changes (e.g. toggling `data-orbit-motion`), even long after the drawer
-   has finished opening. Only these transient enter/exit classes carry it, added and removed
-   by LabShellComponent around the actual open/close, so a steady-open drawer has nothing to
-   restart. */
-.lab-shell__mobile-nav-container--entering {
-  animation: orbit-panel-enter-from-left var(--orbit-motion-slow) var(--orbit-easing-standard);
-}
-
-.lab-shell__mobile-nav-container--closing {
-  animation: orbit-panel-exit-to-left var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
-}
-
-.lab-shell__mobile-options-container {
-  right: 0;
-}
-
-.lab-shell__mobile-options-container--entering {
-  animation: orbit-panel-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
-}
-
-.lab-shell__mobile-options-container--closing {
-  animation: orbit-panel-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
-}
-
-.lab-shell__mobile-nav-container orbit-panel-surface,
-.lab-shell__mobile-options-container orbit-panel-surface {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.lab-shell__mobile-options-container lab-mobile-options-host,
-.lab-shell__mobile-options-container lab-catalog-options-panel {
-  display: contents;
-}
-
-.lab-shell__mobile-options-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background: var(--orbit-overlay-backdrop);
-  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
-}
-
-.lab-shell__mobile-options-backdrop--closing {
-  animation: orbit-backdrop-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
-}
+/* Panels/dialogs opened while mobile-preview is active render through the real
+   OrbitPanelService/OrbitDialogService — LabScopedOverlayContainer (app.config.ts) redirects
+   their CDK overlay into .lab-shell__phone-screen instead of document.body. */

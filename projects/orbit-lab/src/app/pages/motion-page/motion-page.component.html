@@ -79,13 +79,6 @@
         }
       </tbody>
     </orbit-table>
-
-    @if (previewDialogPattern()) {
-      <div class="motion-page__preview-dialog-backdrop" aria-hidden="true"></div>
-      <div class="motion-page__preview-dialog-container" (click)="onPreviewDialogContainerClick($event)">
-        <lab-mobile-pattern-preview-host (closed)="closePreviewDialog()" />
-      </div>
-    }
   </section>
 
   <section>

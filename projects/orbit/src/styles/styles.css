@@ -2,14 +2,38 @@
 @import './theme.css';
 @import '@angular/cdk/overlay-prebuilt.css';
 
-/* CDK overlay classes are global by design: the overlay is outside component encapsulation. */
+/* CDK overlay classes are global by design: the overlay is outside component encapsulation.
+   container-type here matters beyond containment: `vw`/`vh` always resolve against the real
+   browser viewport no matter what ancestor transform/contain is in play, so inside Orbit
+   Lab's mobile-preview mockup (redirected into .lab-shell__phone-screen, see
+   LabScopedOverlayContainer) a `vw`-based max-width would clamp against the real desktop
+   window, not the simulated phone width — this container establishes a query container so
+   descendants can use `cqw` instead, which resolves against *this* box in both the real
+   (document.body) and mockup-redirected case, since both use this same class. */
+.cdk-overlay-container {
+  container-type: inline-size;
+}
+
 .orbit-dialog-backdrop {
   background: var(--orbit-overlay-backdrop);
+}
+/* `--orbit-mockup-dialog-max-width`/`--orbit-mockup-panel-max-width` are set by
+   LabScopedOverlayContainer (measured via getBoundingClientRect, not left to the container
+   query alone) only when redirecting into Orbit Lab's mobile-preview mockup; unset — and
+   falling back to the cqw calc — for the real (document.body) container. */
+.orbit-dialog-panel {
+  max-width: var(--orbit-mockup-dialog-max-width, calc(100cqw - 2 * var(--orbit-space-3)));
+  outline: 0;
+}
+/* Enter/exit animation lives only on the transient --entering/--closing modifier, never on the
+   steady-state class: toggling data-orbit-motion off→on while the dialog just sits open would
+   otherwise restart this animation from scratch (removing the `[data-orbit-motion='off'] * {
+   animation: none !important }` override makes any element still matching a plain `animation:
+   <name>` declaration replay it), making an already-open dialog look like it closed and reopened. */
+.orbit-dialog-backdrop--entering {
   animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
 }
-.orbit-dialog-panel {
-  max-width: calc(100vw - 2 * var(--orbit-space-3));
-  outline: 0;
+.orbit-dialog-panel--entering {
   animation: orbit-modal-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
 }
 
@@ -19,10 +43,13 @@
 .orbit-panel-pane {
   display: flex;
   height: 100%;
-  /* Caps a narrow real viewport to a visible backdrop margin, instead of the configured
-     px size (sm/md/lg…) running edge-to-edge. */
-  max-width: 85vw;
   outline: 0;
+}
+/* Caps a narrow viewport to a visible backdrop margin, instead of the configured px size
+   (sm/md/lg…) running edge-to-edge. Skipped for fullWidth: true panels, which are meant to
+   cover the whole viewport on purpose (width: 100vw, no maxWidth in OrbitPanelConfig). */
+.orbit-panel-pane:not(.orbit-panel-pane--full-width) {
+  max-width: var(--orbit-mockup-panel-max-width, 85cqw);
 }
 .orbit-panel-pane > * {
   display: block;
@@ -48,16 +75,17 @@
   pointer-events: none;
 }
 
-.orbit-panel-backdrop {
-  background: var(--orbit-overlay-backdrop);
+/* Enter animation lives only on the transient --entering modifier — see the matching comment
+   above .orbit-dialog-backdrop--entering for why it must not sit on the steady-state class. */
+.orbit-panel-backdrop--entering {
   animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
 }
 
-.orbit-panel-pane {
+.orbit-panel-pane--entering {
   animation: orbit-panel-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
 }
 
-.orbit-panel--left {
+.orbit-panel--left.orbit-panel-pane--entering {
   animation-name: orbit-panel-enter-from-left;
 }
 

@@ -20,6 +20,12 @@
       />
       <orbit-button label="Apri da destra" (clicked)="openOffcanvas('right')" />
     </lab-example>
+    <orbit-selectable-tile
+      label="Larghezza piena"
+      description="fullWidth: true — ignora size e copre l'intero viewport (100vw), invece del clamp min(size, 85vw)"
+      [selected]="fullWidthOffcanvas()"
+      (selectedChange)="setFullWidthOffcanvas($event)"
+    />
     @if (lastOpenedSide()) {
       <p>
         Ultimo lato aperto: <strong>{{ lastOpenedSide() }}</strong>

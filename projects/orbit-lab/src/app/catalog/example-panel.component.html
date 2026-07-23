@@ -2,9 +2,17 @@
   @if (code()) {
     <div class="lab-example__actions">
       <orbit-button
+        class="lab-example__toggle-button"
         [label]="isCodeVisible() ? 'Nascondi codice' : 'Mostra codice'"
         tone="neutral"
         variant="translucent"
+        (clicked)="toggleCode()"
+      />
+      <orbit-icon-button
+        class="lab-example__toggle-icon-button"
+        icon="document"
+        [ariaLabel]="isCodeVisible() ? 'Nascondi codice' : 'Mostra codice'"
+        tone="neutral"
         (clicked)="toggleCode()"
       />
     </div>

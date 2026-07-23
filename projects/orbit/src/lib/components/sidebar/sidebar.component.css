@@ -41,7 +41,7 @@
   justify-content: center;
   gap: var(--orbit-space-2);
   min-height: var(--orbit-sidebar-header-height);
-  padding: var(--orbit-space-3);
+  padding: var(--orbit-item-padding-block) var(--orbit-item-padding-inline);
   border-bottom: 1px solid var(--orbit-sidebar-border);
 }
 

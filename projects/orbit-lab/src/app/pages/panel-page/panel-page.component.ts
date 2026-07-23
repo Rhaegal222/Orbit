@@ -128,6 +128,7 @@ class LabSidebarDrawerContentComponent {
 export class PanelPageComponent {
   private readonly panel = inject(OrbitPanelService);
   protected readonly lastOpenedSide = signal<'left' | 'right' | null>(null);
+  protected readonly fullWidthOffcanvas = signal(false);
   protected readonly sections = SIDEBAR_SECTIONS;
   protected readonly stateSections = SIDEBAR_STATE_SECTIONS;
   protected readonly railVariant = signal<'expanded' | 'compact'>('expanded');
@@ -202,7 +203,15 @@ export class PanelPageComponent {
 
   openOffcanvas(side: 'left' | 'right'): void {
     this.lastOpenedSide.set(side);
-    this.panel.open(LabPanelDemoContentComponent, { side });
+    this.panel.open(LabPanelDemoContentComponent, {
+      side,
+      size: 'sm',
+      fullWidth: this.fullWidthOffcanvas(),
+    });
+  }
+
+  setFullWidthOffcanvas(fullWidth: boolean): void {
+    this.fullWidthOffcanvas.set(fullWidth);
   }
 
   openSidebarDrawer(): void {

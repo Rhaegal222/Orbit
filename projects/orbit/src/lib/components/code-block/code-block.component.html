@@ -14,6 +14,12 @@
     </div>
   }
   <div class="orbit-code-block__surface" [hidden]="collapsible() && collapsed()">
+    @if (showCopiedFeedback()) {
+      <div class="orbit-code-block__copied-feedback" aria-hidden="true">
+        <orbit-icon name="check" class="orbit-code-block__copied-icon" />
+        <span class="orbit-code-block__copied-label">Copiato</span>
+      </div>
+    }
     @if (showActions()) {
       <orbit-icon-button
         class="orbit-code-block__copy"

@@ -40,6 +40,10 @@
   gap: var(--orbit-space-1);
 }
 
+.lab-example__toggle-icon-button {
+  display: none;
+}
+
 .lab-example__preview {
   display: flex;
   flex-wrap: wrap;
@@ -89,5 +93,21 @@
 
   .lab-example__source {
     padding: var(--orbit-space-3);
+  }
+}
+
+/*
+ * Container query (named `lab-viewport`, declared on .lab-shell__phone-viewport, the sole
+ * ancestor of every routed catalog page's <router-outlet /> content — see motion-page for the
+ * same pattern): unlike @media, this also matches inside Orbit Lab's mobile-preview mockup, a
+ * fixed-width div that never changes the real browser viewport.
+ */
+@container lab-viewport (max-width: 40rem) {
+  .lab-example__toggle-button {
+    display: none;
+  }
+
+  .lab-example__toggle-icon-button {
+    display: inline-flex;
   }
 }

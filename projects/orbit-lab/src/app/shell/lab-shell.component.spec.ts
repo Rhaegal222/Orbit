@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { OverlayContainer } from '@angular/cdk/overlay';
+import { OVERLAY_DEFAULT_CONFIG, OverlayContainer } from '@angular/cdk/overlay';
 import { provideRouter, Router } from '@angular/router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LabShellComponent } from './lab-shell.component';
+import { LabScopedOverlayContainer } from './lab-mobile-preview-overlay-container';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
 
 describe('LabShellComponent', () => {
@@ -12,7 +13,11 @@ describe('LabShellComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LabShellComponent],
-      providers: [provideRouter([{ path: 'badge', children: [] }])],
+      providers: [
+        provideRouter([{ path: 'badge', children: [] }]),
+        { provide: OverlayContainer, useClass: LabScopedOverlayContainer },
+        { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(LabShellComponent);
     fixture.detectChanges();
@@ -83,8 +88,8 @@ describe('LabShellComponent', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeTruthy();
+    expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+    expect(document.querySelector('.lab-shell__phone-touch-cursor')).toBeTruthy();
 
     const touchModeTile = fixture.nativeElement.querySelector(
       '.lab-shell__touch-mode-tile button',
@@ -94,7 +99,7 @@ describe('LabShellComponent', () => {
     touchModeTile.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
+    expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
     expect(
       fixture.nativeElement.querySelector('.lab-shell__touch-mode-tile button')?.getAttribute('aria-pressed'),
     ).toBe('false');
@@ -102,31 +107,29 @@ describe('LabShellComponent', () => {
     fixture.nativeElement.querySelector('.lab-shell__touch-mode-tile button')?.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+    expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
   });
 
   it('turns touch mode off when leaving mobile preview, so it never blocks the desktop view', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+    expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
 
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
+    expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
 
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+    expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
   });
 
   it('drags the device viewport to scroll instead of forwarding a tap to the content below', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
-    const overlay = fixture.nativeElement.querySelector(
-      '.lab-shell__phone-touch-overlay',
-    ) as HTMLElement;
+    const overlay = document.querySelector('.lab-shell__phone-touch-overlay') as HTMLElement;
     const viewport = fixture.nativeElement.querySelector(
       '.lab-shell__phone-viewport',
     ) as HTMLElement;
@@ -156,9 +159,7 @@ describe('LabShellComponent', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
-    const overlay = fixture.nativeElement.querySelector(
-      '.lab-shell__phone-touch-overlay',
-    ) as HTMLElement;
+    const overlay = document.querySelector('.lab-shell__phone-touch-overlay') as HTMLElement;
     overlay.setPointerCapture = vi.fn();
     overlay.hasPointerCapture = vi.fn().mockReturnValue(true);
     overlay.releasePointerCapture = vi.fn();
@@ -376,7 +377,7 @@ describe('LabShellComponent', () => {
     expect(phone.style.height).toContain('48rem');
   });
 
-  it('opens the navigation drawer on mobile viewports', () => {
+  it('redirects the navigation drawer into the phone mockup on mobile viewports', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
@@ -388,15 +389,17 @@ describe('LabShellComponent', () => {
     navButton.click();
     fixture.detectChanges();
 
-    const drawer = fixture.nativeElement.querySelector(
-      '.lab-shell__mobile-nav-container orbit-panel-surface',
-    );
+    const phoneScreen = fixture.nativeElement.querySelector('.lab-shell__phone-screen') as HTMLElement;
+    const mockupOverlay = overlayContainer.getContainerElement();
+    expect(phoneScreen.contains(mockupOverlay)).toBe(true);
+
+    const drawer = mockupOverlay.querySelector('orbit-panel-surface');
     expect(drawer).toBeTruthy();
-    expect(drawer?.querySelector('orbit-sidebar[embedded]')).toBeTruthy();
+    expect(drawer?.querySelector('orbit-sidebar')).toBeTruthy();
     expect(drawer?.textContent).toContain('Orbit Lab');
   });
 
-  it('opens the options offcanvas on mobile viewports', () => {
+  it('redirects the options panel into the phone mockup on mobile viewports', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
@@ -408,10 +411,20 @@ describe('LabShellComponent', () => {
     optionsButton.click();
     fixture.detectChanges();
 
-    const panel = fixture.nativeElement.querySelector(
-      '.lab-shell__mobile-options-container lab-mobile-options-host',
-    );
-    expect(panel).toBeTruthy();
-    expect(panel?.textContent).toContain('Opzioni catalogo');
+    const phoneScreen = fixture.nativeElement.querySelector('.lab-shell__phone-screen') as HTMLElement;
+    const mockupOverlay = overlayContainer.getContainerElement();
+    expect(phoneScreen.contains(mockupOverlay)).toBe(true);
+    expect(mockupOverlay.textContent).toContain('Opzioni catalogo');
+  });
+
+  it('opens panels through the real document body when not in mobile preview', () => {
+    const optionsButton = fixture.nativeElement.querySelector(
+      '.lab-shell__options-toggle button',
+    ) as HTMLButtonElement;
+    optionsButton.click();
+    fixture.detectChanges();
+
+    expect(overlayContainer.getContainerElement().parentElement).toBe(document.body);
+    expect(overlayContainer.getContainerElement().textContent).toContain('Opzioni catalogo');
   });
 });

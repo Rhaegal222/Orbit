@@ -1,14 +1,5 @@
 import { SharedResizeObserver } from '@angular/cdk/observers/private';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  forwardRef,
-  inject,
-  output,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { EMPTY, map, switchMap } from 'rxjs';
@@ -27,7 +18,6 @@ import {
   OrbitDialogService,
 } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
-import { LAB_MOBILE_PREVIEW } from '../../shell/lab-shell.component';
 
 /** Matches the `@container lab-viewport (max-width: 48rem)` breakpoint in the stylesheet. */
 const MOBILE_BREAKPOINT_REM = 48;
@@ -39,6 +29,11 @@ interface LabMotionPatternPreviewData {
   patternRuns: (area: string) => readonly number[];
 }
 
+/**
+ * Always opened through OrbitDialogService: when Orbit Lab's mobile-preview mockup is active,
+ * LabScopedOverlayContainer transparently redirects the CDK overlay into the phone bezel
+ * instead of document.body, so this needs no preview-aware branching of its own.
+ */
 @Component({
   selector: 'lab-motion-pattern-preview-dialog',
   standalone: true,
@@ -80,36 +75,12 @@ interface LabMotionPatternPreviewData {
 export class LabMotionPatternPreviewDialogComponent {
   readonly data = inject(ORBIT_DIALOG_DATA) as LabMotionPatternPreviewData;
   private readonly dialog = inject(OrbitDialogService);
-  /** Emitted on close in addition to `OrbitDialogService.closeAll()`, so a host that embeds
-   *  this dialog outside the service (the mobile preview mockup) can react too. */
   readonly closed = output<void>();
 
   close(): void {
     this.closed.emit();
     this.dialog.closeAll();
   }
-}
-
-/** Provides ORBIT_DIALOG_DATA to an inline `lab-motion-pattern-preview-dialog`, reading it
- *  straight from the page's own state instead of a component `input()`: a self-referencing
- *  provider factory runs before Angular finishes setting this component's inputs, so an
- *  `input.required()` here would throw NG0950 the moment a descendant injects the token. */
-@Component({
-  selector: 'lab-mobile-pattern-preview-host',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LabMotionPatternPreviewDialogComponent],
-  template: `<lab-motion-pattern-preview-dialog (closed)="closed.emit()" />`,
-  providers: [
-    {
-      provide: ORBIT_DIALOG_DATA,
-      useFactory: (page: MotionPageComponent) => page.currentPatternPreviewData(),
-      deps: [forwardRef(() => MotionPageComponent)],
-    },
-  ],
-})
-export class LabMobilePatternPreviewHostComponent {
-  closed = output<void>();
 }
 
 @Component({
@@ -125,7 +96,6 @@ export class LabMobilePatternPreviewHostComponent {
     OrbitTableComponent,
     OrbitTableRowDirective,
     LabExampleComponent,
-    LabMobilePatternPreviewHostComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './motion-page.component.html',
@@ -230,11 +200,6 @@ export class MotionPageComponent {
 
   private readonly dialog = inject(OrbitDialogService);
   private readonly resizeObserver = inject(SharedResizeObserver);
-  private readonly mobilePreview = inject(LAB_MOBILE_PREVIEW, { optional: true });
-
-  /** Set while the pattern-preview dialog renders inline inside the mobile preview mockup
-   *  (kept confined to the phone frame instead of a real CDK overlay). */
-  protected readonly previewDialogPattern = signal<(typeof this.patterns)[number] | null>(null);
 
   // Measures the table's actual rendered width rather than the browser viewport, since this
   // page also renders inside Orbit Lab's mobile-preview mockup (a fixed-width div that never
@@ -280,41 +245,10 @@ export class MotionPageComponent {
   onRowTap(pattern: (typeof this.patterns)[number]): void {
     if (!this.isMobile()) return;
 
-    if (this.mobilePreview?.()) {
-      // Inside Orbit Lab's own device-frame mockup: a real CDK overlay would attach to
-      // document.body and break out of the phone bezel, so render the same dialog content
-      // inline instead, confined to the mockup.
-      this.previewDialogPattern.set(pattern);
-      return;
-    }
-
     this.dialog.open(LabMotionPatternPreviewDialogComponent, {
       size: 'sm',
       data: this.buildPatternPreviewData(pattern),
     });
-  }
-
-  closePreviewDialog(): void {
-    this.previewDialogPattern.set(null);
-  }
-
-  /** Closes only when the click lands on the container's own empty padding (the click-outside
-   *  area), not when it bubbles up from the modal card itself. */
-  onPreviewDialogContainerClick(event: MouseEvent): void {
-    if (event.target === event.currentTarget) {
-      this.closePreviewDialog();
-    }
-  }
-
-  /** Reads `previewDialogPattern` directly rather than accepting a parameter: called from
-   *  `LabMobilePatternPreviewHostComponent`'s provider factory, which only has access to this
-   *  page instance, not the tapped row. */
-  currentPatternPreviewData(): LabMotionPatternPreviewData {
-    const pattern = this.previewDialogPattern();
-    if (!pattern) {
-      throw new Error('currentPatternPreviewData() called with no pattern set');
-    }
-    return this.buildPatternPreviewData(pattern);
   }
 
   private buildPatternPreviewData(

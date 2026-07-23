@@ -38,6 +38,7 @@ export class OrbitPanelService {
     const size = config.size ?? 'md';
     const side = config.side ?? 'right';
     const panelClasses = ['orbit-panel-pane', `orbit-panel--${side}`];
+    if (config.fullWidth) panelClasses.push('orbit-panel-pane--full-width');
     if (config.panelClass) panelClasses.push(config.panelClass);
 
     const positionStrategy = this.overlay.position().global().top('0');
@@ -70,6 +71,7 @@ export class OrbitPanelService {
     componentRef.changeDetectorRef.detectChanges();
 
     this.openPanels.push(overlayRef);
+    this.playEnterAnimation(overlayRef);
 
     if (!config.disableClose) {
       overlayRef.backdropClick().pipe(take(1)).subscribe(() => this.close(overlayRef));
@@ -118,6 +120,40 @@ export class OrbitPanelService {
     };
     paneEl.addEventListener('animationend', finish, { once: true });
     setTimeout(finish, duration + 50);
+  }
+
+  /**
+   * Enter animation lives only on this transient class, never on the steady-state
+   * `.orbit-panel-pane`/`.orbit-panel-backdrop` classes: toggling `data-orbit-motion` off→on
+   * later, while the panel just sits open, would otherwise restart the animation (removing the
+   * `animation: none !important` override makes any element still matching a plain `animation:
+   * <name>` declaration replay it from scratch), making an open panel look like it closed and
+   * reopened. Removed again once the animation finishes, so there is nothing left to restart.
+   */
+  private playEnterAnimation(ref: OverlayRef): void {
+    const paneEl = ref.overlayElement;
+    const backdropEl = ref.backdropElement;
+    paneEl.classList.add('orbit-panel-pane--entering');
+    backdropEl?.classList.add('orbit-panel-backdrop--entering');
+
+    const duration = this.getAnimationDuration(paneEl);
+    const finish = () => {
+      paneEl.classList.remove('orbit-panel-pane--entering');
+      backdropEl?.classList.remove('orbit-panel-backdrop--entering');
+    };
+    if (duration <= 0) {
+      finish();
+      return;
+    }
+
+    let finished = false;
+    const onAnimationEnd = () => {
+      if (finished) return;
+      finished = true;
+      finish();
+    };
+    paneEl.addEventListener('animationend', onAnimationEnd, { once: true });
+    setTimeout(onAnimationEnd, duration + 50);
   }
 
   /** Longest `animation-duration` currently applied to the element, in milliseconds. */

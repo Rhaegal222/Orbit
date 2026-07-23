@@ -30,6 +30,31 @@
   right: var(--orbit-space-2);
 }
 
+.orbit-code-block__copied-feedback {
+  position: absolute;
+  inset: 0;
+  z-index: var(--orbit-z-popover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--orbit-space-2);
+  /* Mirrors orbit-button's translucent/neutral tone (--btn-translucent-bg / --btn-soft-border
+     for tone="neutral" variant="translucent"): color-mix(in srgb, --orbit-surface-subtle 72%,
+     transparent) / color-mix(in srgb, --orbit-border-strong 72%, transparent). */
+  background: color-mix(in srgb, var(--orbit-surface-subtle) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--orbit-border-strong) 72%, transparent);
+  color: var(--orbit-action-neutral-fg-subtle);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-sm);
+  font-weight: var(--orbit-font-weight-emphasis);
+  animation: orbit-backdrop-enter var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-code-block__copied-icon {
+  font-size: var(--orbit-font-size-lg);
+  color: var(--orbit-status-success);
+}
+
 .orbit-code-block__copy ::ng-deep .orbit-icon-button {
   border-color: var(--orbit-code-block-border);
   background: var(--orbit-code-block-action-bg);

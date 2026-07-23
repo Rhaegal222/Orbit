@@ -56,6 +56,7 @@ export class OrbitDialogService {
     componentRef.changeDetectorRef.detectChanges();
 
     this.openDialogs.push(overlayRef);
+    this.playEnterAnimation(overlayRef);
 
     if (!config.disableClose) {
       overlayRef.backdropClick().pipe(take(1)).subscribe(() => this.close(overlayRef));
@@ -80,6 +81,51 @@ export class OrbitDialogService {
     if (idx > -1) this.openDialogs.splice(idx, 1);
     ref.detach();
     ref.dispose();
+  }
+
+  /**
+   * Enter animation lives only on this transient class, never on the steady-state
+   * `.orbit-dialog-panel`/`.orbit-dialog-backdrop` classes: toggling `data-orbit-motion` off→on
+   * later, while the dialog just sits open, would otherwise restart the animation (removing the
+   * `animation: none !important` override makes any element still matching a plain `animation:
+   * <name>` declaration replay it from scratch), making an open dialog look like it closed and
+   * reopened. Removed again once the animation finishes, so there is nothing left to restart.
+   */
+  private playEnterAnimation(ref: OverlayRef): void {
+    const paneEl = ref.overlayElement;
+    const backdropEl = ref.backdropElement;
+    paneEl.classList.add('orbit-dialog-panel--entering');
+    backdropEl?.classList.add('orbit-dialog-backdrop--entering');
+
+    const duration = this.getAnimationDuration(paneEl);
+    const finish = () => {
+      paneEl.classList.remove('orbit-dialog-panel--entering');
+      backdropEl?.classList.remove('orbit-dialog-backdrop--entering');
+    };
+    if (duration <= 0) {
+      finish();
+      return;
+    }
+
+    let finished = false;
+    const onAnimationEnd = () => {
+      if (finished) return;
+      finished = true;
+      finish();
+    };
+    paneEl.addEventListener('animationend', onAnimationEnd, { once: true });
+    setTimeout(onAnimationEnd, duration + 50);
+  }
+
+  /** Longest `animation-duration` currently applied to the element, in milliseconds. */
+  private getAnimationDuration(el: HTMLElement): number {
+    return getComputedStyle(el)
+      .animationDuration.split(',')
+      .reduce((longest, value) => {
+        const trimmed = value.trim();
+        const ms = trimmed.endsWith('ms') ? parseFloat(trimmed) : parseFloat(trimmed) * 1000;
+        return Number.isFinite(ms) ? Math.max(longest, ms) : longest;
+      }, 0);
   }
 }
 

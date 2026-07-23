@@ -31,6 +31,8 @@ export class OrbitCodeBlockComponent {
 
   protected readonly collapsed = linkedSignal(() => this.collapsible() && this.initiallyCollapsed());
   protected readonly copyLabel = signal('Copia');
+  /** Transient success confirmation shown over the code surface after a successful copy. */
+  protected readonly showCopiedFeedback = signal(false);
   protected readonly panelId = `orbit-code-block-${++codeBlockSequence}`;
   protected readonly lines = computed(() => this.code().split('\n'));
 
@@ -41,6 +43,10 @@ export class OrbitCodeBlockComponent {
   async copy(): Promise<void> {
     const copied = await this.clipboard.copyText(this.code());
     this.copyLabel.set(copied ? 'Copiato' : 'Copia non riuscita');
-    setTimeout(() => this.copyLabel.set('Copia'), 1500);
+    this.showCopiedFeedback.set(copied);
+    setTimeout(() => {
+      this.copyLabel.set('Copia');
+      this.showCopiedFeedback.set(false);
+    }, 1500);
   }
 }

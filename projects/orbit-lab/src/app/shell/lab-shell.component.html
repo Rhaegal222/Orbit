@@ -101,7 +101,7 @@
           [style.width.rem]="phoneWidthRem()"
           [style.height]="phoneHeightCss()"
         >
-          <div class="lab-shell__phone-screen">
+          <div class="lab-shell__phone-screen" #phoneScreen>
             <span class="lab-shell__phone-notch" aria-hidden="true"></span>
             <header class="lab-shell__phone-header">
               <orbit-icon-button
@@ -122,72 +122,6 @@
               <router-outlet />
             </div>
 
-            @if (mobilePreview() && (mobileNavOpen() || mobileNavClosing())) {
-              <div
-                class="lab-shell__mobile-nav-backdrop"
-                [class.lab-shell__mobile-nav-backdrop--closing]="mobileNavClosing()"
-                aria-hidden="true"
-                (click)="closeMobileNavigation()"
-              ></div>
-              <div
-                class="lab-shell__mobile-nav-container"
-                [class.lab-shell__mobile-nav-container--entering]="mobileNavEntering()"
-                [class.lab-shell__mobile-nav-container--closing]="mobileNavClosing()"
-              >
-                <orbit-panel-surface ariaLabel="Navigazione mobile">
-                  <orbit-sidebar
-                    embedded
-                    brand="Orbit Lab"
-                    ariaLabel="Sezioni catalogo"
-                    [sections]="sidebarSections()"
-                    [activeId]="activeSidebarId()"
-                    [showFooter]="false"
-                    (itemSelected)="onMobileSidebarItemSelected($event)"
-                    (closed)="closeMobileNavigation()"
-                  >
-                    <orbit-text-input
-                      orbitSidebarSearch
-                      type="search"
-                      inputId="lab-catalog-search-mobile-screen"
-                      placeholder="Cerca sezione…"
-                      showLeadingIcon
-                      leadingIconName="search"
-                      [formControl]="searchControl"
-                    />
-                  </orbit-sidebar>
-                </orbit-panel-surface>
-              </div>
-            }
-
-            @if (mobilePreview() && (mobileOptionsOpen() || mobileOptionsClosing())) {
-              <div
-                class="lab-shell__mobile-options-backdrop"
-                [class.lab-shell__mobile-options-backdrop--closing]="mobileOptionsClosing()"
-                aria-hidden="true"
-                (click)="closeMobileOptions()"
-              ></div>
-              <div
-                class="lab-shell__mobile-options-container"
-                [class.lab-shell__mobile-options-container--entering]="mobileOptionsEntering()"
-                [class.lab-shell__mobile-options-container--closing]="mobileOptionsClosing()"
-              >
-                <lab-mobile-options-host (closed)="closeMobileOptions()" />
-              </div>
-            }
-
-            @if (mobilePreview() && touchMode()) {
-              <div
-                class="lab-shell__phone-touch-overlay"
-                aria-hidden="true"
-                (pointermove)="onTouchOverlayPointerMove($event)"
-                (pointerdown)="onTouchOverlayPointerDown($event)"
-                (pointerup)="onTouchOverlayPointerUp($event)"
-                (pointercancel)="onTouchOverlayPointerUp($event)"
-                (pointerleave)="onTouchOverlayPointerLeave($event)"
-              >
-                <span class="lab-shell__phone-touch-cursor"></span>
-              </div>
-            }
             <span class="lab-shell__phone-home-indicator" aria-hidden="true"></span>
           </div>
         </div>

@@ -99,6 +99,15 @@
           <div class="lab-shell__phone-screen">
             <span class="lab-shell__phone-notch" aria-hidden="true"></span>
             <span class="lab-shell__phone-camera" aria-hidden="true"></span>
+            <header class="lab-shell__phone-header">
+              <orbit-icon-button
+                class="lab-shell__phone-menu-btn"
+                icon="menu"
+                ariaLabel="Apri menu navigazione"
+                (clicked)="openNavigation()"
+              />
+              <span class="lab-shell__phone-title">{{ activeEntryLabel() }}</span>
+            </header>
             <div class="lab-shell__phone-viewport">
               <router-outlet />
             </div>

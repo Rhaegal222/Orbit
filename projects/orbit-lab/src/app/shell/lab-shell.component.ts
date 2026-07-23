@@ -17,6 +17,7 @@ import { filter, map, startWith } from 'rxjs';
 import {
   OrbitButtonComponent,
   OrbitFormFieldComponent,
+  OrbitIconButtonComponent,
   OrbitModalBodyComponent,
   OrbitModalFooterComponent,
   OrbitModalHeaderComponent,
@@ -382,6 +383,7 @@ class LabCatalogNavigationPanelComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OrbitButtonComponent,
+    OrbitIconButtonComponent,
     OrbitSidebarComponent,
     OrbitSelectComponent,
     OrbitTextInputComponent,
@@ -476,6 +478,13 @@ export class LabShellComponent {
     { initialValue: this.currentSlugFromUrl() },
   );
 
+  protected readonly activeEntryLabel = computed(() => {
+    const slug = this.activeSidebarId();
+    if (!slug) return '';
+    const entry = CATALOG_ENTRIES.find((e) => e.slug === slug);
+    return entry ? entry.label : '';
+  });
+
   constructor() {
     this.sizeControl.valueChanges.subscribe((val) => {
       this.frameWidthRem.set(val);
@@ -560,12 +569,16 @@ export class LabShellComponent {
 
   private isInteractiveElement(target: HTMLElement): boolean {
     if (
-      target.matches('input, textarea, select, button, a, [role="button"], [role="checkbox"], [role="slider"]')
+      target.matches(
+        'input, textarea, select, button, a, [role="button"], [role="checkbox"], [role="slider"]',
+      )
     ) {
       return true;
     }
     if (
-      target.closest('orbit-slider, orbit-code-block, orbit-button, orbit-icon-button, orbit-select, orbit-checkbox, orbit-switch, orbit-text-input')
+      target.closest(
+        'orbit-slider, orbit-code-block, orbit-button, orbit-icon-button, orbit-select, orbit-checkbox, orbit-switch, orbit-text-input',
+      )
     ) {
       return true;
     }
@@ -598,9 +611,10 @@ export class LabShellComponent {
 
     // Check if the pointer is hovering over an interactive element inside the viewport
     overlay.style.pointerEvents = 'none';
-    const target = typeof this.document.elementFromPoint === 'function'
-      ? this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null
-      : null;
+    const target =
+      typeof this.document.elementFromPoint === 'function'
+        ? (this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null)
+        : null;
     overlay.style.pointerEvents = '';
 
     if (target && this.isInteractiveElement(target)) {
@@ -700,9 +714,10 @@ export class LabShellComponent {
     // overlay, since the overlay itself intercepts every pointer event to keep :hover from
     // ever reaching the previewed content.
     overlay.style.pointerEvents = 'none';
-    const target = typeof this.document.elementFromPoint === 'function'
-      ? this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null
-      : null;
+    const target =
+      typeof this.document.elementFromPoint === 'function'
+        ? (this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null)
+        : null;
     overlay.style.pointerEvents = '';
     if (target) {
       let clickEvent: MouseEvent;

@@ -28,7 +28,9 @@ describe('LabShellComponent', () => {
   });
 
   it('renders every catalog entry as a sidebar item', () => {
-    const items = fixture.nativeElement.querySelectorAll('orbit-sidebar button.orbit-sidebar__item');
+    const items = fixture.nativeElement.querySelectorAll(
+      'orbit-sidebar button.orbit-sidebar__item',
+    );
     expect(items.length).toBe(CATALOG_ENTRIES.length);
   });
 
@@ -56,7 +58,9 @@ describe('LabShellComponent', () => {
     fixture.componentInstance.searchControl.setValue('zzz-no-match');
     fixture.detectChanges();
 
-    const items = fixture.nativeElement.querySelectorAll('orbit-sidebar button.orbit-sidebar__item');
+    const items = fixture.nativeElement.querySelectorAll(
+      'orbit-sidebar button.orbit-sidebar__item',
+    );
     expect(items.length).toBe(0);
   });
 
@@ -78,7 +82,16 @@ describe('LabShellComponent', () => {
 
     const overlay = overlayContainer.getContainerElement();
     expect(overlay.querySelector('.orbit-panel--right')).toBeTruthy();
-    expect(overlay.querySelectorAll('.lab-catalog-panel__field')).toHaveLength(6);
+    expect(overlay.querySelectorAll('.lab-catalog-panel__field')).toHaveLength(7);
+  });
+
+  it('opens the Google Fonts dialog from the catalog options', () => {
+    fixture.componentInstance.openGoogleFonts();
+    fixture.detectChanges();
+
+    const overlay = overlayContainer.getContainerElement();
+    expect(overlay.querySelector('lab-google-fonts-dialog')).toBeTruthy();
+    expect(overlay.textContent).toContain('Aggiungi Google Fonts');
   });
 
   it('applies an option selected in the right offcanvas to the Lab surface', () => {
@@ -87,10 +100,12 @@ describe('LabShellComponent', () => {
     ) as HTMLElement;
     optionsButton.querySelector('button')?.click();
 
-    const themeInput = overlayContainer
+    const themeTrigger = overlayContainer
       .getContainerElement()
-      .querySelector('.lab-catalog-panel__field orbit-select input') as HTMLInputElement;
-    themeInput.click();
+      .querySelector(
+        '.lab-catalog-panel__field orbit-select .orbit-select__trigger',
+      ) as HTMLButtonElement;
+    themeTrigger.click();
     fixture.detectChanges();
     const darkOption = [
       ...overlayContainer.getContainerElement().querySelectorAll('.orbit-select__option'),
@@ -106,6 +121,7 @@ describe('LabShellComponent', () => {
     const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
     expect(container.getAttribute('data-orbit-theme')).toBeNull();
     expect(container.getAttribute('data-orbit-density')).toBe('comfortable');
+    expect(fixture.nativeElement.getAttribute('data-orbit-shape')).toBe('soft');
   });
 
   it('applies dark theme attribute when selected', () => {
@@ -121,6 +137,15 @@ describe('LabShellComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.getAttribute('data-orbit-shadow-intensity')).toBe('0');
+  });
+
+  it('applies the selected shape to the shared geometry token scope', () => {
+    fixture.componentInstance.setShape('square');
+    fixture.detectChanges();
+
+    const container = fixture.nativeElement.querySelector('[data-lab-theme-container]');
+    expect(container.getAttribute('data-orbit-shape')).toBe('square');
+    expect(fixture.nativeElement.getAttribute('data-orbit-shape')).toBe('square');
   });
 
   it('applies the motion setting to the document so overlays are covered too', () => {

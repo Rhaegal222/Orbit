@@ -27,7 +27,8 @@ export type OrbitIconName =
   | 'sidebar'
   | 'paperclip'
   | 'square'
-  | 'slider';
+  | 'slider'
+  | 'bar-chart';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],

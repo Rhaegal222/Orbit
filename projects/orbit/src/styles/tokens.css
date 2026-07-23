@@ -217,6 +217,10 @@
   --orbit-badge-padding-inline: var(--orbit-space-2);
   --orbit-badge-gap: var(--orbit-space-1);
   --orbit-switch-track-inset: 1px;
+  --orbit-switch-track-bg: var(--orbit-surface-subtle);
+  --orbit-switch-track-border: var(--orbit-border-strong);
+  --orbit-switch-thumb-bg: var(--orbit-surface-raised);
+  --orbit-switch-thumb-checked-bg: var(--orbit-surface-raised);
   --orbit-space-inline: var(--orbit-space-3);
   --orbit-space-stack: var(--orbit-space-4);
   /* Composition spacing: layout primitives consume semantic spacing, not raw scale values. */
@@ -462,6 +466,14 @@
   --orbit-shadow-chrome-alpha: 6%;
 }
 
+/* Badge dimensions depend on density tokens. Re-declare their recipes on the
+   density scope so inherited custom properties do not retain the root value. */
+[data-orbit-density] {
+  --orbit-badge-height: calc((var(--orbit-control-height) / 2) + var(--orbit-space-1));
+  --orbit-badge-padding-inline: var(--orbit-space-2);
+  --orbit-badge-gap: var(--orbit-space-1);
+}
+
 [data-orbit-density='comfortable'] {
   --orbit-space-1: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
   --orbit-space-2: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
@@ -588,6 +600,40 @@
   --orbit-modal-footer-padding-block: calc(0.28125rem + (0.28125rem * var(--orbit-text-scale)));
   --orbit-dropzone-padding-block: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
   --orbit-dropzone-padding-inline: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+}
+
+/* Geometry presets allow product teams to adapt Orbit's silhouette without
+   changing component CSS or colour semantics. */
+[data-orbit-shape='square'] {
+  --orbit-radius-sm: 0;
+  --orbit-radius-control: 0;
+  --orbit-radius-surface: 0;
+  --orbit-radius-tile: 0;
+  --orbit-radius-icon-surface: 0;
+}
+
+[data-orbit-shape='operational'] {
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.1875rem + (0.25rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-shape='soft'] {
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.5rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.25rem + (0.5rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-shape='rounded'] {
+  --orbit-radius-sm: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.75rem + (1rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.625rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.5rem + (0.625rem * var(--orbit-text-scale)));
 }
 
 /* Accent swatch — curated options only, no free color picker. Default (blue) lives on :root. */
@@ -745,6 +791,10 @@
   --orbit-field-bg: var(--orbit-surface-default);
   --orbit-field-fg: var(--orbit-text-primary);
   --orbit-field-border: var(--orbit-border-subtle);
+  --orbit-switch-track-bg: var(--orbit-surface-subtle);
+  --orbit-switch-track-border: var(--orbit-border-strong);
+  --orbit-switch-thumb-bg: var(--orbit-surface-raised);
+  --orbit-switch-thumb-checked-bg: var(--orbit-surface-raised);
   --orbit-section-divider: var(--orbit-border-subtle);
   --orbit-section-index-bg: color-mix(
     in srgb,

@@ -1,7 +1,12 @@
-:host { display: block; overflow-x: auto; }
+:host {
+  display: block;
+  overflow-x: auto;
+  border-radius: var(--orbit-radius-surface);
+}
 .orbit-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-family: var(--orbit-font-sans);
   font-size: var(--orbit-font-size-body);
   color: var(--orbit-text-primary);
@@ -25,6 +30,8 @@
 }
 .orbit-table--bordered {
   border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  overflow: hidden;
 }
 .orbit-table--bordered ::ng-deep th,
 .orbit-table--bordered ::ng-deep td {

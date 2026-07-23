@@ -4,8 +4,12 @@ All notable changes to Galileo Orbit are documented here.
 
 ## Unreleased
 
+- Added switch thumb tokens with a tonal active thumb so its state remains distinct in every theme.
+- Fixed badge padding, height and icon gap to follow the active density scope.
+
 ### Added
 
+- Added the `data-orbit-shape` geometry contract (`square`, `operational`, `soft`, `rounded`) and the Orbit Lab shape-style switcher.
 - Added the complete semantic surface/elevation and layering token contract, including overlay surfaces and base, sticky, popover, overlay and toast layers. Orbit Lab now includes a light/dark theme matrix for surfaces, actions and status badges.
 - Initial package metadata, publication pipeline and portable design tokens.
 - Added Orbit Lab's pattern and governance guide, plus documented component maturity,

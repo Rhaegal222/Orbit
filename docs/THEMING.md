@@ -129,6 +129,30 @@ The four values are represented by the public `OrbitDensity` type; the local
 overrides of `orbit-form-grid` and `orbit-form-section` accept
 `OrbitDensityOverride` (`'inherit'` plus those values).
 
+## Shape style
+
+Set `data-orbit-shape` on an application shell to choose a coherent geometric
+language. It changes only the shared radius tokens; colour, spacing, density and
+component behaviour are unaffected.
+
+| Preset        | Intended style                                                      |
+| ------------- | ------------------------------------------------------------------- |
+| `square`      | Editorial, architectural or data-first surfaces with sharp corners. |
+| `operational` | Compact enterprise controls with restrained rounding.               |
+| `soft`        | Balanced default for most product platforms.                        |
+| `rounded`     | Friendlier consumer-facing or hospitality interfaces.               |
+
+```html
+<main data-orbit-shape="operational">
+  <!-- Orbit components inherit the same control, tile and surface geometry. -->
+</main>
+```
+
+The preset controls `--orbit-radius-sm`, `--orbit-radius-control`,
+`--orbit-radius-surface`, `--orbit-radius-tile` and
+`--orbit-radius-icon-surface`. `--orbit-radius-full` remains circular for
+badges, avatars and explicitly pill-shaped controls.
+
 ## Composition spacing
 
 ## Layout primitives
@@ -194,13 +218,13 @@ edge toggle, icon sizes for expanded/compact modes and the active indicator.
 
 The semantic colour contract is complete in both the default and dark themes:
 
-| Domain | Tokens |
-| --- | --- |
-| Text | `--orbit-text-primary`, `--orbit-text-secondary`, `--orbit-text-tertiary`, `--orbit-text-inverse`, `--orbit-text-placeholder` |
-| Surfaces | `--orbit-surface-default`, `--orbit-surface-subtle`, `--orbit-surface-raised`, `--orbit-surface-floating`, `--orbit-surface-overlay` |
-| Borders | `--orbit-border-subtle`, `--orbit-border-strong` |
-| Actions | `--orbit-action-{primary,success,danger,neutral}-{bg,bg-hover,fg,fg-subtle}` |
-| Status and focus | `--orbit-status-{success,warning,danger,info}` (with `-fg` and `-subtle` pairings), `--orbit-focus-ring` |
+| Domain           | Tokens                                                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Text             | `--orbit-text-primary`, `--orbit-text-secondary`, `--orbit-text-tertiary`, `--orbit-text-inverse`, `--orbit-text-placeholder`        |
+| Surfaces         | `--orbit-surface-default`, `--orbit-surface-subtle`, `--orbit-surface-raised`, `--orbit-surface-floating`, `--orbit-surface-overlay` |
+| Borders          | `--orbit-border-subtle`, `--orbit-border-strong`                                                                                     |
+| Actions          | `--orbit-action-{primary,success,danger,neutral}-{bg,bg-hover,fg,fg-subtle}`                                                         |
+| Status and focus | `--orbit-status-{success,warning,danger,info}` (with `-fg` and `-subtle` pairings), `--orbit-focus-ring`                             |
 
 Use the explicit foreground paired with each action background. In particular,
 `*-fg-subtle` is the foreground for soft, translucent, outline and flat actions;

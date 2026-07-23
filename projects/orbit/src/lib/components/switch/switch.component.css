@@ -47,6 +47,7 @@
 
 .orbit-switch__thumb {
   width: calc(var(--orbit-control-height) - var(--orbit-space-4));
+  border: 1px solid var(--orbit-border-strong);
   height: calc(var(--orbit-control-height) - var(--orbit-space-4));
   border-radius: var(--orbit-radius-full);
   background: var(--orbit-surface-raised);

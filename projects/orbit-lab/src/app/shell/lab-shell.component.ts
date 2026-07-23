@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DOCUMENT } from '@angular/common';
+import { Dialog } from '@angular/cdk/dialog';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
@@ -28,35 +29,48 @@ import {
   OrbitSwitchComponent,
   OrbitTextInputComponent,
   type OrbitDensity,
+  type OrbitShape,
+  type OrbitSelectOption,
   type OrbitSidebarItem,
   type OrbitSidebarSection,
 } from '@galileo/orbit';
 import { CATALOG_ENTRIES } from '../catalog/catalog';
+import { LabGoogleFontsDialogComponent } from './google-fonts-dialog.component';
+import { LabGoogleFontsService, type LabGoogleFont } from './google-fonts.service';
 
 type LabTheme = 'default' | 'dark';
 type LabDensity = OrbitDensity;
 type LabTextScale = '0.85' | '1' | '1.1' | '1.25' | '1.5';
-type LabFont = 'public-sans' | 'inter' | 'system';
+type LabFont = string;
 type LabShadowIntensity = '0' | '0.25' | '0.5' | '0.75' | '1';
+type LabShape = OrbitShape;
 
-const LAB_FONT_STACKS: Record<LabFont, string> = {
+const LAB_FONT_STACKS: Record<string, string> = {
   'public-sans': "'Public Sans', Inter, ui-sans-serif, system-ui, sans-serif",
   inter: 'Inter, ui-sans-serif, system-ui, sans-serif',
   system: "ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
 };
+
+function fontStack(font: LabFont): string {
+  return LAB_FONT_STACKS[font] ?? `'${font}', ui-sans-serif, system-ui, sans-serif`;
+}
 
 interface LabOptionsPanelData {
   theme: WritableSignal<LabTheme>;
   density: WritableSignal<LabDensity>;
   textScale: WritableSignal<LabTextScale>;
   font: WritableSignal<LabFont>;
+  fontOptions: Signal<OrbitSelectOption[]>;
   shadowIntensity: WritableSignal<LabShadowIntensity>;
+  shape: WritableSignal<LabShape>;
   motionEnabled: WritableSignal<boolean>;
   setTheme: (theme: LabTheme) => void;
   setDensity: (density: LabDensity) => void;
   setTextScale: (textScale: LabTextScale) => void;
   setFont: (font: LabFont) => void;
+  openGoogleFonts: () => void;
   setShadowIntensity: (shadowIntensity: LabShadowIntensity) => void;
+  setShape: (shape: LabShape) => void;
   setMotionEnabled: (motionEnabled: boolean) => void;
 }
 
@@ -82,11 +96,12 @@ interface LabOptionsPanelData {
     '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
     '[style.--orbit-font-sans]': 'fontStack()',
     '[attr.data-orbit-shadow-intensity]': 'data.shadowIntensity()',
+    '[attr.data-orbit-shape]': 'data.shape()',
   },
   template: `<orbit-panel-surface labelledBy="catalog-options-title">
     <orbit-modal-header
       title="Opzioni catalogo"
-      subtitle="Tema, densità, scala, font, ombre e motion"
+      subtitle="Tema, densità, forme, scala, font, ombre e motion"
       titleId="catalog-options-title"
       (closeClicked)="close()"
     />
@@ -106,6 +121,14 @@ interface LabOptionsPanelData {
             [options]="densityOptions"
             [formControl]="densityControl"
             (valueChange)="setDensity($event)"
+          />
+        </orbit-form-field>
+        <orbit-form-field class="lab-catalog-panel__field" label="Stile forme" inputId="lab-shape">
+          <orbit-select
+            inputId="lab-shape"
+            [options]="shapeOptions"
+            [formControl]="shapeControl"
+            (valueChange)="setShape($event)"
           />
         </orbit-form-field>
         <orbit-form-field
@@ -131,7 +154,7 @@ interface LabOptionsPanelData {
         <orbit-form-field class="lab-catalog-panel__field" label="Font" inputId="lab-font">
           <orbit-select
             inputId="lab-font"
-            [options]="fontOptions"
+            [options]="fontOptions()"
             [formControl]="fontControl"
             (valueChange)="setFont($event)"
           />
@@ -175,6 +198,7 @@ class LabCatalogOptionsPanelComponent {
     Number(this.data.shadowIntensity()) * 100,
     { nonNullable: true },
   );
+  readonly shapeControl = new FormControl<LabShape>(this.data.shape(), { nonNullable: true });
   readonly motionEnabledControl = new FormControl<boolean>(this.data.motionEnabled(), {
     nonNullable: true,
   });
@@ -195,12 +219,17 @@ class LabCatalogOptionsPanelComponent {
     { value: '1.25', label: '125%' },
     { value: '1.5', label: '150%' },
   ];
-  readonly fontOptions = [
-    { value: 'public-sans', label: 'Public Sans' },
-    { value: 'inter', label: 'Inter' },
-    { value: 'system', label: 'System UI' },
+  readonly fontOptions = computed(() => [
+    ...this.data.fontOptions(),
+    { value: 'add-google-fonts', label: 'Scarica altri font…' },
+  ]);
+  readonly shapeOptions = [
+    { value: 'square', label: 'Squadrato · editoriale' },
+    { value: 'operational', label: 'Operativo · compatto' },
+    { value: 'soft', label: 'Morbido · bilanciato' },
+    { value: 'rounded', label: 'Arrotondato · accogliente' },
   ];
-  readonly fontStack = computed(() => LAB_FONT_STACKS[this.data.font()]);
+  readonly fontStack = computed(() => fontStack(this.data.font()));
   readonly optionalIconDisplay = computed(() =>
     parseFloat(this.data.textScale()) > 1.2 ? 'none' : 'grid',
   );
@@ -234,13 +263,23 @@ class LabCatalogOptionsPanelComponent {
   }
 
   setFont(value: string | number | null): void {
-    if (value === 'public-sans' || value === 'inter' || value === 'system')
-      this.data.setFont(value);
+    if (value === 'add-google-fonts') {
+      this.fontControl.setValue(this.data.font());
+      this.data.openGoogleFonts();
+      return;
+    }
+    if (typeof value === 'string') this.data.setFont(value);
   }
 
   setShadowIntensity(value: number): void {
     if ([0, 25, 50, 75, 100].includes(value)) {
       this.data.setShadowIntensity(String(value / 100) as LabShadowIntensity);
+    }
+  }
+
+  setShape(value: string | number | null): void {
+    if (value === 'square' || value === 'operational' || value === 'soft' || value === 'rounded') {
+      this.data.setShape(value);
     }
   }
 
@@ -257,7 +296,13 @@ class LabCatalogOptionsPanelComponent {
   selector: 'lab-shell',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitButtonComponent, OrbitSidebarComponent, OrbitTextInputComponent, ReactiveFormsModule, RouterOutlet],
+  imports: [
+    OrbitButtonComponent,
+    OrbitSidebarComponent,
+    OrbitTextInputComponent,
+    ReactiveFormsModule,
+    RouterOutlet,
+  ],
   templateUrl: './lab-shell.component.html',
   styleUrl: './lab-shell.component.css',
   host: {
@@ -268,19 +313,28 @@ class LabCatalogOptionsPanelComponent {
     '[style.--orbit-optional-icon-display]': 'optionalIconDisplay()',
     '[style.--orbit-font-sans]': 'fontStack()',
     '[attr.data-orbit-shadow-intensity]': 'shadowIntensity()',
+    '[attr.data-orbit-shape]': 'shape()',
     '[attr.data-orbit-motion]': 'motionEnabled() ? "on" : "off"',
   },
 })
 export class LabShellComponent {
   private readonly panel = inject(OrbitPanelService);
+  private readonly dialog = inject(Dialog);
+  private readonly googleFonts = inject(LabGoogleFontsService);
   private readonly router = inject(Router);
   protected readonly theme = signal<LabTheme>('default');
   protected readonly density = signal<LabDensity>('comfortable');
   protected readonly textScale = signal<LabTextScale>('1');
   protected readonly font = signal<LabFont>('public-sans');
+  protected readonly fontOptions = signal<OrbitSelectOption[]>([
+    { value: 'public-sans', label: 'Public Sans' },
+    { value: 'inter', label: 'Inter' },
+    { value: 'system', label: 'System UI' },
+  ]);
   protected readonly shadowIntensity = signal<LabShadowIntensity>('1');
+  protected readonly shape = signal<LabShape>('soft');
   protected readonly motionEnabled = signal(true);
-  protected readonly fontStack = computed(() => LAB_FONT_STACKS[this.font()]);
+  protected readonly fontStack = computed(() => fontStack(this.font()));
   protected readonly optionalIconDisplay = computed(() =>
     parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
   );
@@ -333,8 +387,30 @@ export class LabShellComponent {
     this.font.set(font);
   }
 
+  openGoogleFonts(): void {
+    this.dialog.open(LabGoogleFontsDialogComponent, {
+      ariaLabel: 'Aggiungi Google Fonts',
+      autoFocus: 'first-tabbable',
+      data: {
+        installedFonts: this.fontOptions().map((option) => String(option.value)),
+        addFont: (font: LabGoogleFont) => this.addGoogleFont(font),
+        theme: this.theme(),
+        density: this.density(),
+        shape: this.shape(),
+        textScale: this.textScale(),
+      },
+      panelClass: 'lab-google-fonts-dialog-pane',
+      width: 'min(96vw, 73.75rem)',
+      maxWidth: '96vw',
+    });
+  }
+
   setShadowIntensity(shadowIntensity: LabShadowIntensity): void {
     this.shadowIntensity.set(shadowIntensity);
+  }
+
+  setShape(shape: LabShape): void {
+    this.shape.set(shape);
   }
 
   setMotionEnabled(motionEnabled: boolean): void {
@@ -368,14 +444,27 @@ export class LabShellComponent {
       density: this.density,
       textScale: this.textScale,
       font: this.font,
+      fontOptions: this.fontOptions,
       shadowIntensity: this.shadowIntensity,
+      shape: this.shape,
       motionEnabled: this.motionEnabled,
       setTheme: (theme) => this.setTheme(theme),
       setDensity: (density) => this.setDensity(density),
       setTextScale: (textScale) => this.setTextScale(textScale),
       setFont: (font) => this.setFont(font),
+      openGoogleFonts: () => this.openGoogleFonts(),
       setShadowIntensity: (shadowIntensity) => this.setShadowIntensity(shadowIntensity),
+      setShape: (shape) => this.setShape(shape),
       setMotionEnabled: (motionEnabled) => this.setMotionEnabled(motionEnabled),
     } satisfies LabOptionsPanelData;
+  }
+
+  private addGoogleFont(font: LabGoogleFont): void {
+    this.googleFonts.load(font.family);
+    this.fontOptions.update((options) => {
+      if (options.some((option) => option.value === font.family)) return options;
+      return [...options, { value: font.family, label: font.family }];
+    });
+    this.font.set(font.family);
   }
 }

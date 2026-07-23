@@ -72,6 +72,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'spinner',
+    loadComponent: () =>
+      import('./pages/spinner-page/spinner-page.component').then(
+        (m) => m.SpinnerPageComponent,
+      ),
+  },
+  {
     path: 'checkbox',
     loadComponent: () =>
       import('./pages/checkbox-page/checkbox-page.component').then((m) => m.CheckboxPageComponent),

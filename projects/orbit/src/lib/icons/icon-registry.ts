@@ -28,7 +28,10 @@ export type OrbitIconName =
   | 'paperclip'
   | 'square'
   | 'slider'
-  | 'bar-chart';
+  | 'bar-chart'
+  | 'alert-circle'
+  | 'alert-triangle'
+  | 'info';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   close: ['M6 6l12 12', 'M18 6l-12 12'],
@@ -114,5 +117,20 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
     'M4 20V14h4v6H4Z',
     'M10 20V9h4v11h-4Z',
     'M16 20V4h4v16h-4Z',
+  ],
+  'alert-circle': [
+    'M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Z',
+    'M12 8v5',
+    'M12 15.75v.01',
+  ],
+  'alert-triangle': [
+    'M10.6 4.4a1.6 1.6 0 0 1 2.8 0l7.6 13.2a1.6 1.6 0 0 1-1.4 2.4H4.4a1.6 1.6 0 0 1-1.4-2.4L10.6 4.4Z',
+    'M12 9.5v4.5',
+    'M12 17.25v.01',
+  ],
+  info: [
+    'M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Z',
+    'M12 11v5.5',
+    'M12 7.75v.01',
   ],
 };

@@ -101,6 +101,27 @@ describe('OrbitIconComponent', () => {
     expect(fixture.nativeElement.querySelectorAll('path').length).toBe(2);
   });
 
+  it('renders the alert-circle icon with a circle and an exclamation mark', () => {
+    fixture.componentRef.setInput('name', 'alert-circle');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(3);
+  });
+
+  it('renders the alert-triangle icon with a triangle and an exclamation mark', () => {
+    fixture.componentRef.setInput('name', 'alert-triangle');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(3);
+  });
+
+  it('renders the info icon with a circle and an i mark', () => {
+    fixture.componentRef.setInput('name', 'info');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('path').length).toBe(3);
+  });
+
   it('uses a 24x24 viewBox with the shared stroke contract', () => {
     fixture.componentRef.setInput('name', 'chevron-down');
     fixture.detectChanges();

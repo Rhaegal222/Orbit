@@ -38,6 +38,120 @@ describe('LabShellComponent', () => {
     expect(fixture.nativeElement.querySelector('.orbit-sidebar__footer')).toBeNull();
   });
 
+  it('switches to a centered mobile preview without the sidebar, keeping the options action', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('orbit-sidebar')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone')).toBeTruthy();
+    expect(
+      fixture.nativeElement
+        .querySelector('.lab-shell__body')
+        .classList.contains('lab-shell__body--mobile-preview'),
+    ).toBe(true);
+    expect(fixture.nativeElement.textContent).toContain('Vista desktop');
+    expect(fixture.nativeElement.textContent).toContain('Opzioni');
+  });
+
+  it('shows device and orientation toggles only in mobile preview', () => {
+    expect(fixture.nativeElement.textContent).not.toContain('Vista tablet');
+    expect(fixture.nativeElement.textContent).not.toContain('Ruota orizzontale');
+
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Vista tablet');
+    expect(fixture.nativeElement.textContent).toContain('Ruota orizzontale');
+  });
+
+  it('toggles device and orientation state via header buttons', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const findButton = (label: string) =>
+      [...fixture.nativeElement.querySelectorAll('orbit-button')].find((button: HTMLElement) =>
+        button.textContent?.includes(label),
+      ) as HTMLElement;
+
+    findButton('Vista tablet').querySelector('button')?.click();
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelector('.lab-shell__phone').getAttribute('data-lab-device'),
+    ).toBe('tablet');
+    expect(fixture.nativeElement.textContent).toContain('Vista smartphone');
+
+    findButton('Ruota orizzontale').querySelector('button')?.click();
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement
+        .querySelector('.lab-shell__phone')
+        .getAttribute('data-lab-orientation'),
+    ).toBe('landscape');
+    expect(fixture.nativeElement.textContent).toContain('Ruota verticale');
+  });
+
+  it('toggles touch mode without blocking interaction, showing a following cursor instead', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const screen = () => fixture.nativeElement.querySelector('.lab-shell__phone-screen');
+    expect(screen().classList.contains('lab-shell__phone-screen--touch')).toBe(false);
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeNull();
+
+    const findButton = (label: string) =>
+      [...fixture.nativeElement.querySelectorAll('orbit-button')].find((button: HTMLElement) =>
+        button.textContent?.includes(label),
+      ) as HTMLElement;
+
+    findButton('Modalità tocco').querySelector('button')?.click();
+    fixture.detectChanges();
+
+    expect(screen().classList.contains('lab-shell__phone-screen--touch')).toBe(true);
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).toContain('Modalità hover');
+
+    findButton('Modalità hover').querySelector('button')?.click();
+    fixture.detectChanges();
+
+    expect(screen().classList.contains('lab-shell__phone-screen--touch')).toBe(false);
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeNull();
+  });
+
+  it('drags the device viewport to scroll instead of forwarding a click to the content below', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.componentInstance.toggleTouchMode();
+    fixture.detectChanges();
+
+    const viewport = fixture.nativeElement.querySelector(
+      '.lab-shell__phone-viewport',
+    ) as HTMLElement;
+    viewport.setPointerCapture = vi.fn();
+    viewport.hasPointerCapture = vi.fn().mockReturnValue(true);
+    viewport.releasePointerCapture = vi.fn();
+    Object.defineProperty(viewport, 'scrollHeight', { value: 2000, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 500, configurable: true });
+    viewport.scrollTop = 0;
+
+    const button = document.createElement('button');
+    viewport.appendChild(button);
+    const clickSpy = vi.fn();
+    button.addEventListener('click', clickSpy);
+
+    const down = new PointerEvent('pointerdown', { pointerId: 1, clientX: 100, clientY: 300 });
+    viewport.dispatchEvent(down);
+
+    const move = new PointerEvent('pointermove', { pointerId: 1, clientX: 100, clientY: 200 });
+    viewport.dispatchEvent(move);
+
+    expect(viewport.scrollTop).toBe(100);
+
+    const up = new PointerEvent('pointerup', { pointerId: 1, clientX: 100, clientY: 200 });
+    viewport.dispatchEvent(up);
+
+    button.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    expect(clickSpy).not.toHaveBeenCalled();
+  });
+
   it('renders an icon for every sidebar item so the collapsed view is never empty', () => {
     const icons = fixture.nativeElement.querySelectorAll('orbit-sidebar .orbit-sidebar__item-icon');
     expect(icons.length).toBe(CATALOG_ENTRIES.length);

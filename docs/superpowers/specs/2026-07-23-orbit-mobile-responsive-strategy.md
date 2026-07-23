@@ -45,8 +45,10 @@ Four pillars, each independently shippable but ordered because later pillars dep
 the first:
 
 1. **Foundations** — shared breakpoint tokens and a pointer-based touch-target floor.
-2. **Mobile navigation** — a new `orbit-drawer` overlay primitive; `orbit-sidebar` and
-   `orbit-workspace`'s internal sidebar compose it below `sm`/`md`.
+2. **Mobile navigation** — document and demonstrate composing `orbit-sidebar
+   embedded` with the existing `OrbitPanelService` offcanvas overlay as the drawer-nav
+   pattern (no new Core API); `orbit-workspace`'s internal sidebar keeps its existing
+   stack collapse, migrated onto the shared breakpoint.
 3. **Page structure** — `orbit-page-shell` gains responsive padding.
 4. **Verification** — Orbit Lab's device-frame becomes genuinely resizable, and
    component catalog pages gain a "Responsive" section.
@@ -102,38 +104,52 @@ on coarse-pointer devices the floor wins regardless of the active density.
 
 ## 2. Mobile navigation
 
-### `orbit-drawer` (new public primitive)
+### Reuse `OrbitPanelService` / `orbit-panel-surface` — no new overlay primitive
 
-An overlay component built on the same CDK `Overlay` foundation as
-`OrbitDialogService`/`orbit-modal` (backdrop, `cdkTrapFocus`, Escape-to-close, focus
-restore on close) — reusing the existing overlay pattern rather than inventing a new
-one.
+An audit of `projects/orbit/src/lib/services/panel/panel.service.ts` and
+`projects/orbit/src/lib/components/panel-surface/` found that Orbit **already has** an
+offcanvas overlay primitive: `OrbitPanelService.open()` (CDK `Overlay`, backdrop,
+Escape-to-close, `side: 'left' | 'right'`, `size: 'sm' | 'md' | 'lg' | 'xl' | 'wide'`,
+`minWidth`/`maxWidth`/`fullWidth` overrides) paired with `orbit-panel-surface`
+(`role="dialog"`, `aria-modal="true"`, `cdkTrapFocus`). This is exactly what an
+`orbit-drawer` primitive would provide. Building a new component would duplicate this
+pattern — this spec originally proposed `orbit-drawer` before this was found in the
+codebase; that plan is superseded by reusing the existing service.
 
-- Inputs: `open: boolean`, `position: 'start' | 'end'` (logical, RTL-safe), `size`
-  (width, `rem` or `--orbit-*` token, default `18rem`).
-- Output: `openedChange`.
-- ARIA: `role="dialog"`, `aria-modal="true"`.
-- Motion: slide-in from `position`, using `--orbit-motion-base` /
-  `--orbit-easing-standard`; honors `data-orbit-motion="off"`.
-- Not modal-specific: reusable for any future off-canvas need (filters, detail panel),
-  not restricted to navigation.
+Mobile navigation composes the existing primitive rather than adding a new one:
+
+- `side: 'left'` for a navigation drawer (Orbit's default reading direction), `size:
+  'sm'` (320px, already close to the sidebar's own default width).
+- Escape-to-close, backdrop-to-close and focus trap/restore all come for free from
+  `OrbitPanelService` — no new overlay logic to write or test.
 
 ### `orbit-sidebar`
 
-Below `--orbit-breakpoint-sm`, the sidebar's content is composed inside an
-`orbit-drawer` instead of rendering inline. A new output (`menuToggle`, or an
-equivalent projected trigger slot) lets the consumer wire a hamburger button that opens
-it. Above `sm`, behavior is byte-for-byte identical to today — the drawer is simply not
-instantiated/activated, so there is no desktop regression risk from this change.
+`orbit-sidebar` already has everything needed to be hosted inside an overlay: its
+`embedded` input (`sidebar.component.ts:54`, `.orbit-sidebar--embedded` in
+`sidebar.component.css:33-35`) removes the fixed width/border-right so it fills its
+host, which is exactly what a consumer needs to place `<orbit-sidebar embedded>` inside
+a component opened via `OrbitPanelService.open(..., { side: 'left', size: 'sm' })`. No
+change to `orbit-sidebar`'s own code is required — this is a composition pattern, not a
+new feature. This spec adds a documented example (see §5) rather than new component
+API, since the consuming application (which owns its shell/routing) decides when to
+render the sidebar inline (desktop) versus open it through the panel service (mobile),
+matching Orbit's existing division of responsibility between primitive and consumer.
 
 ### `orbit-workspace`
 
-Its existing grid-to-stack collapse (`workspace.component.css:20-27`) moves from its
-current ad hoc `48rem` to the shared `--orbit-breakpoint-md` (see migration table
-below — this is a no-op numerically, `48rem` already equals `md`). Below `md`, instead
-of stacking the internal sidebar above the content, `orbit-workspace` composes it
-inside `orbit-drawer`, consistent with `orbit-sidebar`'s standalone behavior. Above
-`md`, the 2-column grid is unchanged.
+Its internal sidebar is plain content-projection (`orbitWorkspaceSidebar` directive
+applied to a consumer-supplied element via `ng-content`, `workspace.component.ts:1-14`),
+not a dynamically-instantiated component — it cannot be opened through
+`OrbitPanelService.open()` (which requires a `ComponentType`) without changing that
+projection contract, which would break every existing consumer of
+`orbit-workspace`. This spec does **not** convert it to an overlay. Its existing
+grid-to-stack collapse (`workspace.component.css:20-27`) simply moves from its current
+ad hoc `48rem` to the shared `--orbit-breakpoint-md` (a no-op numerically, `48rem`
+already equals `md`) — the stacked layout it already has is kept as-is. Converting its
+internal sidebar to a drawer is out of scope for this spec; the composable
+`orbit-sidebar` + `OrbitPanelService` pattern above is the recommended route for any
+consumer that needs a drawer-style mobile nav.
 
 ## 3. Page structure
 
@@ -161,7 +177,8 @@ Every component with a hardcoded `@media` moves onto the shared scale:
 | `navbar` | 42rem | `md` (48rem) | +6rem |
 | `modal` | 48rem | `md` (48rem) | 0 (no-op) |
 | `workspace` | 48rem | `md` (48rem) | 0 (no-op) |
-| `form-grid` | 36/48/64/80rem | `sm`/`md`/`lg`/`xl` | 0 (no-op) |
+| `form-grid` (1st step) | 36rem | `sm` (40rem) | +4rem |
+| `form-grid` (2nd/3rd/4th step) | 48/64/80rem | `md`/`lg`/`xl` | 0 (no-op) |
 
 Every non-zero delta widens the viewport range in which the component keeps its
 current (wider/desktop) layout — none of them narrows it. This is a deliberately
@@ -179,6 +196,12 @@ switches to its compact layout slightly later than before, never earlier.
   `docs/PATTERNS-AND-GOVERNANCE.md`: "responsive notes" is a required page element) —
   a live preview that crosses the component's relevant breakpoints, its snippet, and a
   short note on what changes and why.
+- The sidebar page adds a working **drawer-nav example**: a small Orbit Lab-local
+  wrapper component rendering `<orbit-sidebar embedded>`, opened via
+  `OrbitPanelService.open(..., { side: 'left', size: 'sm' })` from a menu button, so the
+  composition pattern in §2 is demonstrated end-to-end and is exercisable at the new
+  resizable breakpoints, not just described in prose. This wrapper lives in
+  `projects/orbit-lab/` only — it is not a Core export.
 
 ## Non-regression strategy
 
@@ -190,14 +213,16 @@ switches to its compact layout slightly later than before, never earlier.
   redefinition.
 - Touch-target floor activates only on `pointer: coarse` — zero effect on desktop with
   a mouse, even in a narrow resized window.
-- `orbit-drawer` is a new public export — additive, no existing API changes.
+- No new overlay primitive is introduced; `OrbitPanelService`/`orbit-panel-surface` are
+  reused as-is, so their existing tests and consumer contract are untouched.
 - The breakpoint migration table above changes visual behavior only at intermediate
   viewports, always in the direction of preserving the desktop layout longer.
 
 ## Versioning
 
-- `orbit-drawer` (new component), breakpoint tokens, touch-target token: **minor**
-  version bump (additive).
+- Breakpoint tokens and touch-target token: **minor** version bump (additive).
+- `orbit-sidebar` and `OrbitPanelService` receive no code changes — no version impact
+  from §2; only documentation and an Orbit Lab example are added.
 - Migrated `@media` values on existing components: **minor** version bump with a
   `CHANGELOG.md` entry describing the exact breakpoint shift per component (table
   above) — a behavior change at specific intermediate viewports, not an API or token
@@ -207,8 +232,6 @@ switches to its compact layout slightly later than before, never earlier.
 
 - Exact mobile value for `--orbit-page-padding-inline` under `sm` (needs an Orbit Lab
   visual check, not a spec-time guess).
-- Whether `orbit-drawer`'s default `size` (`18rem`) needs a distinct value for the
-  sidebar-hosting case versus a general-purpose drawer use.
 - Which components beyond the interactive controls named in §1 need the touch-target
   floor (a full inventory of interactive components is implementation-time work, not
   a design-time enumeration).

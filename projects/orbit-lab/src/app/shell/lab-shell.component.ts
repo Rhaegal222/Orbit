@@ -44,6 +44,17 @@ type LabTextScale = '0.85' | '1' | '1.1' | '1.25' | '1.5';
 type LabFont = string;
 type LabShadowIntensity = '0' | '0.25' | '0.5' | '0.75' | '1';
 type LabShape = OrbitShape;
+type LabDevice = 'smartphone' | 'tablet';
+type LabOrientation = 'portrait' | 'landscape';
+
+interface LabTouchDrag {
+  pointerId: number;
+  startX: number;
+  startY: number;
+  startScrollLeft: number;
+  startScrollTop: number;
+  dragged: boolean;
+}
 
 const LAB_FONT_STACKS: Record<string, string> = {
   'public-sans': "'Public Sans', Inter, ui-sans-serif, system-ui, sans-serif",
@@ -339,6 +350,11 @@ export class LabShellComponent {
     parseFloat(this.textScale()) > 1.2 ? 'none' : 'grid',
   );
   readonly searchControl = new FormControl('', { nonNullable: true });
+  protected readonly mobilePreview = signal(false);
+  protected readonly device = signal<LabDevice>('smartphone');
+  protected readonly orientation = signal<LabOrientation>('portrait');
+  protected readonly touchMode = signal(false);
+  private touchDrag: LabTouchDrag | null = null;
   protected readonly sidebarCollapsed = signal(false);
   protected readonly showSidebarHeader = signal(true);
   private readonly document = inject(DOCUMENT);
@@ -415,6 +431,123 @@ export class LabShellComponent {
 
   setMotionEnabled(motionEnabled: boolean): void {
     this.motionEnabled.set(motionEnabled);
+  }
+
+  toggleMobilePreview(): void {
+    this.mobilePreview.update((isMobilePreview) => !isMobilePreview);
+  }
+
+  toggleDevice(): void {
+    this.device.update((device) => (device === 'smartphone' ? 'tablet' : 'smartphone'));
+  }
+
+  toggleOrientation(): void {
+    this.orientation.update((orientation) =>
+      orientation === 'portrait' ? 'landscape' : 'portrait',
+    );
+  }
+
+  toggleTouchMode(): void {
+    this.touchMode.update((touchMode) => !touchMode);
+  }
+
+  onPhoneScreenPointerMove(event: PointerEvent): void {
+    if (!this.touchMode()) {
+      return;
+    }
+    const screen = event.currentTarget as HTMLElement;
+    const cursor = screen.querySelector<HTMLElement>('.lab-shell__phone-touch-cursor');
+    if (!cursor) {
+      return;
+    }
+    const rect = screen.getBoundingClientRect();
+    cursor.style.left = `${event.clientX - rect.left}px`;
+    cursor.style.top = `${event.clientY - rect.top}px`;
+    cursor.style.opacity = '1';
+  }
+
+  onPhoneScreenPointerLeave(event: PointerEvent): void {
+    if (!this.touchMode()) {
+      return;
+    }
+    const cursor = (event.currentTarget as HTMLElement).querySelector<HTMLElement>(
+      '.lab-shell__phone-touch-cursor',
+    );
+    if (cursor) {
+      cursor.style.opacity = '0';
+    }
+  }
+
+  onPhoneScreenPointerDown(event: PointerEvent): void {
+    if (!this.touchMode()) {
+      return;
+    }
+    this.spawnTouchRipple(event.currentTarget as HTMLElement, event.clientX, event.clientY);
+  }
+
+  onPhoneViewportPointerDown(event: PointerEvent): void {
+    if (!this.touchMode()) {
+      return;
+    }
+    const viewport = event.currentTarget as HTMLElement;
+    viewport.setPointerCapture(event.pointerId);
+    this.touchDrag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startScrollLeft: viewport.scrollLeft,
+      startScrollTop: viewport.scrollTop,
+      dragged: false,
+    };
+  }
+
+  onPhoneViewportPointerMove(event: PointerEvent): void {
+    const drag = this.touchDrag;
+    if (!drag || event.pointerId !== drag.pointerId) {
+      return;
+    }
+    const viewport = event.currentTarget as HTMLElement;
+    const deltaX = event.clientX - drag.startX;
+    const deltaY = event.clientY - drag.startY;
+    if (!drag.dragged && Math.hypot(deltaX, deltaY) > 4) {
+      drag.dragged = true;
+    }
+    if (drag.dragged) {
+      viewport.scrollLeft = drag.startScrollLeft - deltaX;
+      viewport.scrollTop = drag.startScrollTop - deltaY;
+    }
+  }
+
+  onPhoneViewportPointerUp(event: PointerEvent): void {
+    const drag = this.touchDrag;
+    if (!drag || event.pointerId !== drag.pointerId) {
+      return;
+    }
+    const viewport = event.currentTarget as HTMLElement;
+    if (viewport.hasPointerCapture(event.pointerId)) {
+      viewport.releasePointerCapture(event.pointerId);
+    }
+    this.touchDrag = null;
+    if (drag.dragged) {
+      viewport.addEventListener(
+        'click',
+        (clickEvent) => {
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
+        },
+        { capture: true, once: true },
+      );
+    }
+  }
+
+  private spawnTouchRipple(container: HTMLElement, clientX: number, clientY: number): void {
+    const rect = container.getBoundingClientRect();
+    const ripple = this.document.createElement('span');
+    ripple.className = 'lab-shell__phone-touch-ripple';
+    ripple.style.left = `${clientX - rect.left}px`;
+    ripple.style.top = `${clientY - rect.top}px`;
+    container.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
   }
 
   openOptions(): void {

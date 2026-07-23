@@ -8,35 +8,108 @@
   [style.--orbit-text-scale]="textScale()"
   [style.--orbit-optional-icon-display]="optionalIconDisplay()"
   [style.--orbit-font-sans]="fontStack()"
+  [class.lab-shell__body--mobile-preview]="mobilePreview()"
 >
-  <orbit-sidebar
-    brand="Orbit Lab"
-    ariaLabel="Catalogo tecnico"
-    [sections]="sidebarSections()"
-    [activeId]="activeSidebarId()"
-    [collapsed]="sidebarCollapsed()"
-    [showHeader]="showSidebarHeader()"
-    [showFooter]="false"
-    (itemSelected)="onSidebarItemSelected($event)"
-    (collapsedChange)="onSidebarCollapsedChange($event)"
-  >
-    <orbit-text-input
-      orbitSidebarSearch
-      type="search"
-      inputId="lab-catalog-search"
-      placeholder="Cerca sezione…"
-      showLeadingIcon
-      leadingIconName="search"
-      [formControl]="searchControl"
-    />
-  </orbit-sidebar>
+  @if (!mobilePreview()) {
+    <orbit-sidebar
+      brand="Orbit Lab"
+      ariaLabel="Catalogo tecnico"
+      [sections]="sidebarSections()"
+      [activeId]="activeSidebarId()"
+      [collapsed]="sidebarCollapsed()"
+      [showHeader]="showSidebarHeader()"
+      [showFooter]="false"
+      (itemSelected)="onSidebarItemSelected($event)"
+      (collapsedChange)="onSidebarCollapsedChange($event)"
+    >
+      <orbit-text-input
+        orbitSidebarSearch
+        type="search"
+        inputId="lab-catalog-search"
+        placeholder="Cerca sezione…"
+        showLeadingIcon
+        leadingIconName="search"
+        [formControl]="searchControl"
+      />
+    </orbit-sidebar>
+  }
 
   <div class="lab-shell__main">
     <header class="lab-shell__header">
-      <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
+      <div class="lab-shell__header-start"></div>
+      <div class="lab-shell__header-center">
+        @if (mobilePreview()) {
+          <orbit-button
+            [label]="device() === 'smartphone' ? 'Vista tablet' : 'Vista smartphone'"
+            variant="outline"
+            tone="neutral"
+            (clicked)="toggleDevice()"
+          />
+          <orbit-button
+            [label]="orientation() === 'portrait' ? 'Ruota orizzontale' : 'Ruota verticale'"
+            variant="outline"
+            tone="neutral"
+            (clicked)="toggleOrientation()"
+          />
+          <orbit-button
+            [label]="touchMode() ? 'Modalità hover' : 'Modalità tocco'"
+            variant="outline"
+            [tone]="touchMode() ? 'primary' : 'neutral'"
+            (clicked)="toggleTouchMode()"
+          />
+        }
+      </div>
+      <div class="lab-shell__header-actions">
+        <orbit-button
+          [label]="mobilePreview() ? 'Vista desktop' : 'Vista cellulare'"
+          variant="outline"
+          tone="neutral"
+          (clicked)="toggleMobilePreview()"
+        />
+        <orbit-button
+          label="Opzioni"
+          variant="outline"
+          tone="neutral"
+          (clicked)="openOptions()"
+        />
+      </div>
     </header>
     <main class="lab-shell__content">
-      <router-outlet />
+      <div class="lab-shell__mobile-stage">
+        <div
+          class="lab-shell__phone"
+          [attr.aria-label]="
+            device() === 'smartphone' ? 'Anteprima smartphone' : 'Anteprima tablet'
+          "
+          [attr.data-lab-device]="device()"
+          [attr.data-lab-orientation]="orientation()"
+        >
+          <div
+            class="lab-shell__phone-screen"
+            [class.lab-shell__phone-screen--touch]="touchMode()"
+            (pointermove)="onPhoneScreenPointerMove($event)"
+            (pointerdown)="onPhoneScreenPointerDown($event)"
+            (pointerleave)="onPhoneScreenPointerLeave($event)"
+          >
+            <span class="lab-shell__phone-notch" aria-hidden="true"></span>
+            <span class="lab-shell__phone-camera" aria-hidden="true"></span>
+            <div
+              class="lab-shell__phone-viewport"
+              [class.lab-shell__phone-viewport--touch]="touchMode()"
+              (pointerdown)="onPhoneViewportPointerDown($event)"
+              (pointermove)="onPhoneViewportPointerMove($event)"
+              (pointerup)="onPhoneViewportPointerUp($event)"
+              (pointercancel)="onPhoneViewportPointerUp($event)"
+            >
+              <router-outlet />
+            </div>
+            @if (touchMode()) {
+              <span class="lab-shell__phone-touch-cursor" aria-hidden="true"></span>
+            }
+            <span class="lab-shell__phone-home-indicator" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 </div>

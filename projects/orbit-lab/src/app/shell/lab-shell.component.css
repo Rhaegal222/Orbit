@@ -31,14 +31,32 @@
 }
 
 .lab-shell__header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   flex: 0 0 auto;
-  justify-content: flex-end;
   align-items: center;
   min-height: calc(var(--orbit-control-height) + var(--orbit-space-3));
   padding: var(--orbit-space-2) var(--orbit-space-4);
   border-bottom: 1px solid var(--orbit-border-subtle);
   background: var(--orbit-surface-default);
+}
+
+.lab-shell__header-start {
+  min-width: 0;
+}
+
+.lab-shell__header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--orbit-space-2);
+}
+
+.lab-shell__header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--orbit-space-2);
 }
 
 .lab-shell__content {
@@ -47,4 +65,305 @@
   min-width: 0;
   min-height: 0;
   overflow-y: auto;
+}
+
+.lab-shell__mobile-stage,
+.lab-shell__phone,
+.lab-shell__phone-screen {
+  display: contents;
+}
+
+.lab-shell__phone-notch,
+.lab-shell__phone-camera,
+.lab-shell__phone-home-indicator {
+  display: none;
+}
+
+.lab-shell__body--mobile-preview {
+  background: var(--orbit-surface-canvas);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__content {
+  display: flex;
+  padding: var(--orbit-space-4);
+  overflow: hidden;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__mobile-stage {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone {
+  position: relative;
+  display: block;
+  width: auto;
+  height: min(56rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 414 / 896;
+  padding: 0.625rem;
+  border-radius: 2.5rem;
+  background: linear-gradient(160deg, #3a3a42, #17171b);
+  box-shadow:
+    var(--orbit-shadow-floating),
+    inset 0 0 0 0.0625rem rgba(255, 255, 255, 0.08);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone::before,
+.lab-shell__body--mobile-preview .lab-shell__phone::after {
+  content: '';
+  position: absolute;
+  border-radius: var(--orbit-radius-full);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone::before {
+  left: -0.09375rem;
+  top: 20%;
+  width: 0.1875rem;
+  height: 7%;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone::after {
+  right: -0.09375rem;
+  top: 24%;
+  width: 0.1875rem;
+  height: 10%;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='smartphone'][data-lab-orientation='landscape'] {
+  /* Same physical screen as portrait (56rem x 25.875rem), rotated: width and height swap exactly. */
+  height: min(25.875rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
+  aspect-ratio: 896 / 414;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='tablet'][data-lab-orientation='portrait'] {
+  height: min(56rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
+  aspect-ratio: 768 / 1024;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='tablet'][data-lab-orientation='landscape'] {
+  /* Same physical screen as portrait (56rem x 42rem), rotated: width and height swap exactly. */
+  height: min(42rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
+  aspect-ratio: 1024 / 768;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone-screen {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 1.875rem;
+  background: var(--orbit-surface-default);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='smartphone'] .lab-shell__phone-notch {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  border-radius: var(--orbit-radius-full);
+  background: #0b0b0d;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='tablet'] .lab-shell__phone-camera {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--orbit-radius-full);
+  background: #0b0b0d;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone-home-indicator {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  border-radius: var(--orbit-radius-full);
+  background: var(--orbit-text-primary);
+  opacity: 0.2;
+}
+
+/* Portrait: notch/camera sit on the top short edge, home indicator on the bottom short edge. */
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-orientation='portrait'] .lab-shell__phone-notch {
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.75rem;
+  height: 0.75rem;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-orientation='portrait'] .lab-shell__phone-camera {
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-orientation='portrait'] .lab-shell__phone-home-indicator {
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 33%;
+  height: 0.3125rem;
+}
+
+/* Landscape: the device body rotated 90°, so the same physical edge that held the
+   notch/camera in portrait is now the left edge, and the opposite edge is on the right. */
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-orientation='landscape'] .lab-shell__phone-notch {
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+  width: 0.75rem;
+  height: 24%;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-orientation='landscape'] .lab-shell__phone-camera {
+  top: 50%;
+  left: 0.5rem;
+  transform: translateY(-50%);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone[data-lab-orientation='landscape'] .lab-shell__phone-home-indicator {
+  top: 50%;
+  right: 0.5rem;
+  left: auto;
+  transform: translateY(-50%);
+  width: 0.3125rem;
+  height: 33%;
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone-viewport {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--orbit-surface-default);
+}
+
+.lab-shell__body--mobile-preview .lab-shell__phone-viewport--touch {
+  overflow: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.lab-shell__body--mobile-preview
+  .lab-shell__phone[data-lab-orientation='portrait']
+  .lab-shell__phone-viewport {
+  padding-bottom: 1.25rem;
+}
+
+.lab-shell__body--mobile-preview
+  .lab-shell__phone[data-lab-device='smartphone'][data-lab-orientation='portrait']
+  .lab-shell__phone-viewport {
+  padding-top: 1.375rem;
+}
+
+.lab-shell__body--mobile-preview
+  .lab-shell__phone[data-lab-device='tablet'][data-lab-orientation='portrait']
+  .lab-shell__phone-viewport {
+  padding-top: 1.25rem;
+}
+
+.lab-shell__body--mobile-preview
+  .lab-shell__phone[data-lab-orientation='landscape']
+  .lab-shell__phone-viewport {
+  padding-right: 1.25rem;
+}
+
+.lab-shell__body--mobile-preview
+  .lab-shell__phone[data-lab-device='smartphone'][data-lab-orientation='landscape']
+  .lab-shell__phone-viewport {
+  padding-left: 1.375rem;
+}
+
+.lab-shell__body--mobile-preview
+  .lab-shell__phone[data-lab-device='tablet'][data-lab-orientation='landscape']
+  .lab-shell__phone-viewport {
+  padding-left: 1.25rem;
+}
+
+@media (max-width: 48rem) {
+  .lab-shell__body--mobile-preview .lab-shell__phone {
+    height: 100%;
+    padding: 0.375rem;
+    border-radius: var(--orbit-radius-control);
+  }
+
+  .lab-shell__body--mobile-preview .lab-shell__phone-screen {
+    border-radius: calc(var(--orbit-radius-control) - 0.125rem);
+  }
+}
+
+.lab-shell__phone-screen--touch {
+  cursor: none;
+}
+
+/* A real touchscreen never fires hover: stop mouse-driven hover transitions/animations
+   from playing inside the previewed content while touch mode simulates that input. */
+.lab-shell__phone-screen--touch .lab-shell__phone-viewport *,
+.lab-shell__phone-screen--touch .lab-shell__phone-viewport *::before,
+.lab-shell__phone-screen--touch .lab-shell__phone-viewport *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+.lab-shell__phone-touch-cursor {
+  position: absolute;
+  z-index: 4;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: -0.75rem;
+  margin-top: -0.75rem;
+  border: 0.125rem solid var(--orbit-action-primary-bg);
+  border-radius: var(--orbit-radius-full);
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 25%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.lab-shell__phone-touch-ripple {
+  position: absolute;
+  z-index: 4;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: -1.25rem;
+  margin-top: -1.25rem;
+  border-radius: var(--orbit-radius-full);
+  background: var(--orbit-action-primary-bg);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: lab-shell-touch-ripple var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+
+@keyframes lab-shell-touch-ripple {
+  from {
+    transform: scale(0.3);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-shell__phone-touch-ripple {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+body[data-orbit-motion='off'] .lab-shell__phone-touch-ripple {
+  animation: none;
+  opacity: 0;
 }

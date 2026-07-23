@@ -11,9 +11,9 @@
 .orbit-popover-panel {
   max-width: 20rem;
   padding: var(--orbit-space-3);
-  border: 1px solid var(--orbit-color-border);
+  border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-surface);
-  background: var(--orbit-color-surface);
+  background: var(--orbit-surface-default);
   box-shadow: var(--orbit-shadow-overlay);
 }
 

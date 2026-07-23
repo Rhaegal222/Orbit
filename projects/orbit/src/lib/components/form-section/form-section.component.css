@@ -49,7 +49,7 @@
 }
 
 .orbit-form-section__rule {
-  height: 1px;
+  height: var(--orbit-space-2xs);
   min-width: var(--orbit-space-3);
   flex: 1 1 auto;
   background: var(--orbit-section-divider);
@@ -91,7 +91,9 @@
   display: grid;
   grid-template-rows: 1fr;
   opacity: 1;
-  transition: grid-template-rows var(--orbit-motion-base) var(--orbit-easing-standard), opacity var(--orbit-motion-base) var(--orbit-easing-standard);
+  transition:
+    grid-template-rows var(--orbit-motion-base) var(--orbit-easing-standard),
+    opacity var(--orbit-motion-base) var(--orbit-easing-standard);
 }
 
 .orbit-form-section__body-content {

@@ -88,7 +88,7 @@
   font-weight: var(--orbit-font-weight-emphasis);
 }
 .orbit-selectable-tile__description {
-  margin-top: 2px;
+  margin-top: var(--orbit-space-2xs);
   color: var(--orbit-text-secondary);
   font-size: var(--orbit-font-size-sm);
 }

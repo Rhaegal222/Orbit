@@ -310,6 +310,7 @@ class LabCatalogOptionsPanelComponent {
   imports: [
     OrbitButtonComponent,
     OrbitSidebarComponent,
+    OrbitSelectComponent,
     OrbitTextInputComponent,
     ReactiveFormsModule,
     RouterOutlet,
@@ -355,6 +356,27 @@ export class LabShellComponent {
   protected readonly orientation = signal<LabOrientation>('portrait');
   protected readonly touchMode = signal(false);
   protected readonly frameWidthRem = signal(23.4375); // 375px, current smartphone default
+  protected readonly sizeOptions: OrbitSelectOption[] = [
+    { value: 23.4375, label: '375px (Cellulare)' },
+    { value: 40, label: 'sm · 640px' },
+    { value: 48, label: 'md · 768px' },
+    { value: 64, label: 'lg · 1024px' },
+  ];
+  readonly sizeControl = new FormControl<number>(23.4375, { nonNullable: true });
+
+  protected readonly phoneWidthRem = computed(() => {
+    if (this.orientation() === 'portrait') {
+      return this.frameWidthRem();
+    } else {
+      return 56;
+    }
+  });
+
+  protected readonly phoneHeightCss = computed(() => {
+    const heightRem = this.orientation() === 'portrait' ? 56 : this.frameWidthRem();
+    return `min(${heightRem}rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)))`;
+  });
+
   private touchDrag: LabTouchDrag | null = null;
   protected readonly sidebarCollapsed = signal(false);
   protected readonly showSidebarHeader = signal(true);
@@ -382,6 +404,10 @@ export class LabShellComponent {
   );
 
   constructor() {
+    this.sizeControl.valueChanges.subscribe((val) => {
+      this.frameWidthRem.set(val);
+    });
+
     effect((onCleanup) => {
       this.document.body.dataset['orbitMotion'] = this.motionEnabled() ? 'on' : 'off';
       onCleanup(() => this.document.body.removeAttribute('data-orbit-motion'));
@@ -456,6 +482,7 @@ export class LabShellComponent {
 
   setFrameWidth(rem: number): void {
     this.frameWidthRem.set(rem);
+    this.sizeControl.setValue(rem, { emitEvent: false });
   }
 
   onTouchOverlayPointerMove(event: PointerEvent): void {
@@ -517,7 +544,10 @@ export class LabShellComponent {
     // overlay, since the overlay itself intercepts every pointer event to keep :hover from
     // ever reaching the previewed content.
     overlay.style.pointerEvents = 'none';
-    const target = this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
+    const target = this.document.elementFromPoint(
+      event.clientX,
+      event.clientY,
+    ) as HTMLElement | null;
     overlay.style.pointerEvents = '';
     if (target && typeof target.click === 'function') {
       target.click();

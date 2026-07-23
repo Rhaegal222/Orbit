@@ -83,9 +83,7 @@ describe('LabShellComponent', () => {
     findButton('Ruota orizzontale').querySelector('button')?.click();
     fixture.detectChanges();
     expect(
-      fixture.nativeElement
-        .querySelector('.lab-shell__phone')
-        .getAttribute('data-lab-orientation'),
+      fixture.nativeElement.querySelector('.lab-shell__phone').getAttribute('data-lab-orientation'),
     ).toBe('landscape');
     expect(fixture.nativeElement.textContent).toContain('Ruota verticale');
   });
@@ -179,8 +177,12 @@ describe('LabShellComponent', () => {
     document.body.appendChild(button);
     document.elementFromPoint = vi.fn().mockReturnValue(button);
 
-    overlay.dispatchEvent(new PointerEvent('pointerdown', { pointerId: 1, clientX: 10, clientY: 10 }));
-    overlay.dispatchEvent(new PointerEvent('pointerup', { pointerId: 1, clientX: 10, clientY: 10 }));
+    overlay.dispatchEvent(
+      new PointerEvent('pointerdown', { pointerId: 1, clientX: 10, clientY: 10 }),
+    );
+    overlay.dispatchEvent(
+      new PointerEvent('pointerup', { pointerId: 1, clientX: 10, clientY: 10 }),
+    );
 
     expect(clickSpy).toHaveBeenCalledTimes(1);
     button.remove();
@@ -352,21 +354,33 @@ describe('LabShellComponent', () => {
     expect(instance.frameWidthRem()).toBe(48);
   });
 
-  it('binds the frame width to the phone element style and offers breakpoint presets', () => {
+  it('binds the frame dimensions dynamically and offers size preset selection via dropdown', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
     const phone = fixture.nativeElement.querySelector('.lab-shell__phone') as HTMLElement;
     expect(phone.style.width).toBe('23.4375rem');
+    expect(phone.style.height).toContain('56rem');
 
-    const findButton = (label: string) =>
-      [...fixture.nativeElement.querySelectorAll('button')].find((button: HTMLElement) =>
-        button.textContent?.includes(label),
-      ) as HTMLElement;
+    const sizeTrigger = fixture.nativeElement.querySelector(
+      '.lab-shell__frame-presets orbit-select .orbit-select__trigger',
+    ) as HTMLButtonElement;
+    sizeTrigger.click();
+    fixture.detectChanges();
 
-    findButton('md · 768px').click();
+    const mdOption = [
+      ...overlayContainer.getContainerElement().querySelectorAll('.orbit-select__option'),
+    ].find((option) => option.textContent?.includes('768px')) as HTMLButtonElement;
+    mdOption.click();
     fixture.detectChanges();
 
     expect(phone.style.width).toBe('48rem');
+    expect(phone.style.height).toContain('56rem');
+
+    fixture.componentInstance.toggleOrientation();
+    fixture.detectChanges();
+
+    expect(phone.style.width).toBe('56rem');
+    expect(phone.style.height).toContain('48rem');
   });
 });

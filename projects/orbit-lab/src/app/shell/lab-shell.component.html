@@ -58,29 +58,10 @@
             (clicked)="toggleTouchMode()"
           />
           <div class="lab-shell__frame-presets">
-            <orbit-button
-              label="375px"
-              variant="outline"
-              tone="neutral"
-              (clicked)="setFrameWidth(23.4375)"
-            />
-            <orbit-button
-              label="sm · 640px"
-              variant="outline"
-              tone="neutral"
-              (clicked)="setFrameWidth(40)"
-            />
-            <orbit-button
-              label="md · 768px"
-              variant="outline"
-              tone="neutral"
-              (clicked)="setFrameWidth(48)"
-            />
-            <orbit-button
-              label="lg · 1024px"
-              variant="outline"
-              tone="neutral"
-              (clicked)="setFrameWidth(64)"
+            <orbit-select
+              ariaLabel="Dimensione anteprima"
+              [options]="sizeOptions"
+              [formControl]="sizeControl"
             />
           </div>
         }
@@ -92,12 +73,7 @@
           tone="neutral"
           (clicked)="toggleMobilePreview()"
         />
-        <orbit-button
-          label="Opzioni"
-          variant="outline"
-          tone="neutral"
-          (clicked)="openOptions()"
-        />
+        <orbit-button label="Opzioni" variant="outline" tone="neutral" (clicked)="openOptions()" />
       </div>
     </header>
     <main class="lab-shell__content">
@@ -109,7 +85,8 @@
           "
           [attr.data-lab-device]="device()"
           [attr.data-lab-orientation]="orientation()"
-          [style.width.rem]="frameWidthRem()"
+          [style.width.rem]="phoneWidthRem()"
+          [style.height]="phoneHeightCss()"
         >
           <div class="lab-shell__phone-screen">
             <span class="lab-shell__phone-notch" aria-hidden="true"></span>

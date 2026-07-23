@@ -57,6 +57,12 @@
             [tone]="touchMode() ? 'primary' : 'neutral'"
             (clicked)="toggleTouchMode()"
           />
+          <div class="lab-shell__frame-presets">
+            <button type="button" (click)="setFrameWidth(23.4375)">375px</button>
+            <button type="button" (click)="setFrameWidth(40)">sm · 640px</button>
+            <button type="button" (click)="setFrameWidth(48)">md · 768px</button>
+            <button type="button" (click)="setFrameWidth(64)">lg · 1024px</button>
+          </div>
         }
       </div>
       <div class="lab-shell__header-actions">
@@ -83,6 +89,7 @@
           "
           [attr.data-lab-device]="device()"
           [attr.data-lab-orientation]="orientation()"
+          [style.width.rem]="frameWidthRem()"
         >
           <div class="lab-shell__phone-screen">
             <span class="lab-shell__phone-notch" aria-hidden="true"></span>

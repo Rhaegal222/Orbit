@@ -59,6 +59,28 @@
   gap: var(--orbit-space-2);
 }
 
+.lab-shell__frame-presets {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-1);
+}
+
+.lab-shell__frame-presets button {
+  font-family: inherit;
+  font-size: var(--orbit-font-size-caption);
+  line-height: 1;
+  padding: var(--orbit-space-1) var(--orbit-space-2);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+  cursor: pointer;
+}
+
+.lab-shell__frame-presets button:hover {
+  background: var(--orbit-surface-subtle);
+}
+
 .lab-shell__content {
   padding: var(--orbit-space-6);
   flex: 1 1 auto;
@@ -102,11 +124,9 @@
 .lab-shell__body--mobile-preview .lab-shell__phone {
   position: relative;
   display: block;
-  width: auto;
   height: min(56rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
   max-width: 100%;
   max-height: 100%;
-  aspect-ratio: 414 / 896;
   padding: 0.625rem;
   border-radius: 2.5rem;
   background: linear-gradient(160deg, #3a3a42, #17171b);
@@ -140,18 +160,15 @@
 .lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='smartphone'][data-lab-orientation='landscape'] {
   /* Same physical screen as portrait (56rem x 25.875rem), rotated: width and height swap exactly. */
   height: min(25.875rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
-  aspect-ratio: 896 / 414;
 }
 
 .lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='tablet'][data-lab-orientation='portrait'] {
   height: min(56rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
-  aspect-ratio: 768 / 1024;
 }
 
 .lab-shell__body--mobile-preview .lab-shell__phone[data-lab-device='tablet'][data-lab-orientation='landscape'] {
   /* Same physical screen as portrait (56rem x 42rem), rotated: width and height swap exactly. */
   height: min(42rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
-  aspect-ratio: 1024 / 768;
 }
 
 .lab-shell__body--mobile-preview .lab-shell__phone-screen {

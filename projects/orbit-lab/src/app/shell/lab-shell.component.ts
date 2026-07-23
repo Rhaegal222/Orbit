@@ -354,6 +354,7 @@ export class LabShellComponent {
   protected readonly device = signal<LabDevice>('smartphone');
   protected readonly orientation = signal<LabOrientation>('portrait');
   protected readonly touchMode = signal(false);
+  protected readonly frameWidthRem = signal(23.4375); // 375px, current smartphone default
   private touchDrag: LabTouchDrag | null = null;
   protected readonly sidebarCollapsed = signal(false);
   protected readonly showSidebarHeader = signal(true);
@@ -451,6 +452,10 @@ export class LabShellComponent {
 
   toggleTouchMode(): void {
     this.touchMode.update((touchMode) => !touchMode);
+  }
+
+  setFrameWidth(rem: number): void {
+    this.frameWidthRem.set(rem);
   }
 
   onTouchOverlayPointerMove(event: PointerEvent): void {

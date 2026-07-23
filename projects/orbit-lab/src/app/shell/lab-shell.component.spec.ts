@@ -342,4 +342,31 @@ describe('LabShellComponent', () => {
     expect(interStack).toContain('Inter');
     expect(interStack).not.toBe(publicSansStack);
   });
+
+  it('setFrameWidth updates the frame width signal to the given rem value', () => {
+    const instance = fixture.componentInstance as unknown as {
+      frameWidthRem: () => number;
+      setFrameWidth: (rem: number) => void;
+    };
+    instance.setFrameWidth(48);
+    expect(instance.frameWidthRem()).toBe(48);
+  });
+
+  it('binds the frame width to the phone element style and offers breakpoint presets', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const phone = fixture.nativeElement.querySelector('.lab-shell__phone') as HTMLElement;
+    expect(phone.style.width).toBe('23.4375rem');
+
+    const findButton = (label: string) =>
+      [...fixture.nativeElement.querySelectorAll('button')].find((button: HTMLElement) =>
+        button.textContent?.includes(label),
+      ) as HTMLElement;
+
+    findButton('md · 768px').click();
+    fixture.detectChanges();
+
+    expect(phone.style.width).toBe('48rem');
+  });
 });

@@ -96,8 +96,39 @@ export class OrbitPanelService {
   private close(ref: OverlayRef): void {
     const idx = this.openPanels.indexOf(ref);
     if (idx > -1) this.openPanels.splice(idx, 1);
-    ref.detach();
-    ref.dispose();
+
+    const paneEl = ref.overlayElement;
+    const backdropEl = ref.backdropElement;
+    paneEl.classList.add('orbit-panel-pane--closing');
+    backdropEl?.classList.add('orbit-panel-backdrop--closing');
+
+    const duration = this.getAnimationDuration(paneEl);
+    if (duration <= 0) {
+      ref.detach();
+      ref.dispose();
+      return;
+    }
+
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      ref.detach();
+      ref.dispose();
+    };
+    paneEl.addEventListener('animationend', finish, { once: true });
+    setTimeout(finish, duration + 50);
+  }
+
+  /** Longest `animation-duration` currently applied to the element, in milliseconds. */
+  private getAnimationDuration(el: HTMLElement): number {
+    return getComputedStyle(el)
+      .animationDuration.split(',')
+      .reduce((longest, value) => {
+        const trimmed = value.trim();
+        const ms = trimmed.endsWith('ms') ? parseFloat(trimmed) : parseFloat(trimmed) * 1000;
+        return Number.isFinite(ms) ? Math.max(longest, ms) : longest;
+      }, 0);
   }
 }
 

@@ -56,6 +56,15 @@
   gap: var(--orbit-space-2);
 }
 
+.orbit-sidebar--embedded .orbit-sidebar__header-brand {
+  justify-content: space-between;
+}
+
+.orbit-sidebar__close {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+}
+
 .orbit-sidebar__header-search {
   width: 100%;
 }

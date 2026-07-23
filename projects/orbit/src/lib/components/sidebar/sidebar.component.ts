@@ -11,6 +11,7 @@ import {
 import { OrbitIconComponent } from '../../icons/icon.component';
 import type { OrbitIconName } from '../../icons/icon-registry';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
+import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
 import { formatOrbitSidebarBadge } from './sidebar-navigation.util';
 
 export interface OrbitSidebarItem {
@@ -30,7 +31,7 @@ export interface OrbitSidebarSection {
 @Component({
   selector: 'orbit-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitIconComponent],
+  imports: [OrbitIconComponent, OrbitIconButtonComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
   host: {
@@ -57,9 +58,15 @@ export class OrbitSidebarComponent {
   readonly toggleTop = signal(50);
   itemSelected = output<OrbitSidebarItem>();
   collapsedChange = output<boolean>();
+  /** Emitted by the header close action, shown only when `embedded` (e.g. a drawer opened via OrbitPanelService). */
+  closed = output<void>();
 
   selectItem(item: OrbitSidebarItem): void {
     if (!item.disabled) this.itemSelected.emit(item);
+  }
+
+  close(): void {
+    this.closed.emit();
   }
 
   toggle(): void {

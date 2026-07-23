@@ -58,6 +58,18 @@
   animation-name: orbit-panel-enter-from-left;
 }
 
+.orbit-panel-pane.orbit-panel-pane--closing {
+  animation: orbit-panel-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
+}
+
+.orbit-panel--left.orbit-panel-pane--closing {
+  animation-name: orbit-panel-exit-to-left;
+}
+
+.orbit-panel-backdrop.orbit-panel-backdrop--closing {
+  animation: orbit-backdrop-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
+}
+
 [data-orbit-motion='off'],
 [data-orbit-motion='off'] *,
 [data-orbit-motion='off'] *::before,
@@ -117,6 +129,37 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes orbit-panel-exit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes orbit-panel-exit-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes orbit-backdrop-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 

@@ -4,7 +4,7 @@
   [attr.aria-label]="ariaLabel() || null"
   (pointermove)="onPointerMove($event)"
 >
-  @if (!embedded() && showHeader()) {
+  @if (showHeader()) {
     <header class="orbit-sidebar__header">
       <div class="orbit-sidebar__header-brand">
         <span class="orbit-sidebar__brand-mark" aria-hidden="true">
@@ -16,6 +16,14 @@
         </span>
         @if (brand()) {
           <span class="orbit-sidebar__brand">{{ brand() }}</span>
+        }
+        @if (embedded()) {
+          <orbit-icon-button
+            class="orbit-sidebar__close"
+            icon="close"
+            [ariaLabel]="i18n.labels.close"
+            (clicked)="close()"
+          />
         }
       </div>
       <div class="orbit-sidebar__header-search">

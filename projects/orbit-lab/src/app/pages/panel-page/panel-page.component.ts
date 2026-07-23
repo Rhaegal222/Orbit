@@ -90,6 +90,7 @@ class LabPanelDemoContentComponent {
       [sections]="sections"
       [activeId]="activeId()"
       (itemSelected)="select($event)"
+      (closed)="close()"
     />
   </orbit-panel-surface>`,
 })
@@ -100,6 +101,10 @@ class LabSidebarDrawerContentComponent {
 
   select(item: OrbitSidebarItem): void {
     this.activeId.set(item.id);
+    this.close();
+  }
+
+  close(): void {
     this.panel.closeAll();
   }
 }
@@ -192,7 +197,7 @@ export class PanelPageComponent {
 <!-- openNav(): this.panel.open(NavContentComponent, { side: 'left', size: 'sm' }) -->
 <!-- NavContentComponent template: -->
 <orbit-panel-surface ariaLabel="Navigazione mobile">
-  <orbit-sidebar embedded [sections]="sections" [activeId]="activeId" (itemSelected)="select($event)" />
+  <orbit-sidebar embedded brand="Orbit" [sections]="sections" [activeId]="activeId" (itemSelected)="select($event)" (closed)="close()" />
 </orbit-panel-surface>`;
 
   openOffcanvas(side: 'left' | 'right'): void {

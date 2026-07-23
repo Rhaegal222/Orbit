@@ -32,9 +32,15 @@ All notable changes to Galileo Orbit are documented here.
 - Added `orbit-panel-surface`/`orbit-panel` (offcanvas + sidebar) via a new `OrbitPanelService`, `orbit-tab`/`orbit-tab-panel`/`orbit-tablist`, and `orbit-table`/`orbit-table-column`/`orbitTableRow`.
 - `orbit-table` gained `bordered` and `striped` boolean inputs.
 - `OrbitPanelService.open()` accepts `fullWidth`, `minWidth` and `maxWidth` to size an offcanvas panel beyond the preset `size` steps.
+- `orbit-sidebar` gained a `closed` output and a header close action, shown next to the
+  brand when `embedded`, so a drawer opened via `OrbitPanelService` has an explicit
+  dismiss control on the same row as the logo.
 
 ### Changed
 
+- `orbit-sidebar`'s `showHeader` input now controls header visibility on its own; an
+  `embedded` sidebar can show its brand header (e.g. inside a drawer opened via
+  `OrbitPanelService`) instead of always hiding it.
 - `orbit-attachment-list-item`, `orbit-form-action-bar`, `orbit-date-range-picker` and
   `orbit-modal-footer` now switch to their compact mobile layout at
   `--orbit-breakpoint-sm` (40rem) instead of their previous ad hoc 32rem/36rem

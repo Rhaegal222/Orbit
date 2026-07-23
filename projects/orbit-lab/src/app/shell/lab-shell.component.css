@@ -162,6 +162,10 @@
   height: min(42rem, calc(100dvh - var(--orbit-control-height) - var(--orbit-space-6)));
 }
 
+.lab-shell__body--mobile-preview .lab-shell__phone-header {
+  display: flex;
+}
+
 .lab-shell__body--mobile-preview .lab-shell__phone-screen {
   position: relative;
   display: flex;
@@ -388,11 +392,14 @@ body[data-orbit-motion='off'] .lab-shell__phone-touch-ripple {
   .lab-shell__nav-toggle {
     display: inline-block;
   }
+  .lab-shell__mobile-preview-toggle {
+    display: none;
+  }
 }
 
 /* ── Simulated Phone Header ── */
 .lab-shell__phone-header {
-  display: flex;
+  display: none;
   align-items: center;
   height: 3.5rem;
   min-height: 3.5rem;
@@ -446,6 +453,9 @@ body[data-orbit-motion='off'] .lab-shell__phone-touch-ripple {
   display: flex;
   flex-direction: column;
   background: var(--orbit-surface-default);
+  /* Mirrors OrbitPanelService's own .orbit-panel-pane / .orbit-panel--left
+     entrance so the device-frame mock nav feels the same as the real overlay. */
+  animation: orbit-panel-enter-from-left var(--orbit-motion-slow) var(--orbit-easing-standard);
 }
 
 .lab-shell__mobile-nav-container orbit-panel-surface {

@@ -32,6 +32,7 @@ export * from './lib/components/popover';
 export * from './lib/components/code-block';
 export * from './lib/components/panel-surface';
 export * from './lib/components/panel';
+export * from './lib/components/progress-bar';
 export * from './lib/components/sidebar';
 export * from './lib/components/navbar';
 export * from './lib/components/tab';

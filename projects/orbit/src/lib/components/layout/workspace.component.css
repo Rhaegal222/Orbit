@@ -17,7 +17,7 @@
   padding: var(--orbit-space-lg);
   background: var(--orbit-surface-default);
 }
-@media (max-width: 48rem) {
+@media (max-width: 48rem) /* --orbit-breakpoint-md */ {
   :host {
     grid-template-columns: 1fr;
   }

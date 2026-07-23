@@ -82,7 +82,7 @@
   gap: var(--orbit-space-2);
 }
 
-@media (max-width: 42rem) {
+@media (max-width: 48rem) /* --orbit-breakpoint-md */ {
   .orbit-navbar {
     align-items: flex-start;
     flex-wrap: wrap;

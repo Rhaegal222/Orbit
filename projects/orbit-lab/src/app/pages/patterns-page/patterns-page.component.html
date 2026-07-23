@@ -1,0 +1,57 @@
+<article>
+  <h1>Pattern e governance</h1>
+  <p>
+    Decisioni riusabili per flussi operativi e regole per evitare varianti locali. Ogni componente
+    pubblico ha un owner e uno stato di maturità: experimental, stable oppure deprecated.
+  </p>
+
+  <section>
+    <h2>Pattern di interazione</h2>
+    <div class="patterns-grid">
+      <div>
+        <strong>Modal</strong><span>Task breve, decisione o form con azioni persistenti.</span>
+      </div>
+      <div>
+        <strong>Offcanvas / sidebar</strong
+        ><span>Navigazione, filtri o dettaglio che conserva il canvas.</span>
+      </div>
+      <div>
+        <strong>Alert inline</strong
+        ><span>Errore o informazione relativa a una sezione o a un campo.</span>
+      </div>
+      <div>
+        <strong>Toast</strong><span>Conferma breve, mai unico canale per un errore bloccante.</span>
+      </div>
+      <div>
+        <strong>Skeleton</strong><span>Conserva struttura e densità del contenuto in arrivo.</span>
+      </div>
+      <div><strong>Empty state</strong><span>Spiega cosa manca e propone una CTA utile.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Decisione focalizzata</h2>
+    <p>Una sola CTA primaria per superficie; le azioni secondarie restano meno enfatiche.</p>
+    <lab-example [code]="modalSnippet">
+      <orbit-button label="Archivia elemento" (clicked)="openConfirmation()" />
+    </lab-example>
+    @if (result()) {
+      <p>
+        Ultimo esito: <strong>{{ result() }}</strong>
+      </p>
+    }
+  </section>
+
+  <section>
+    <h2>Checklist di governance</h2>
+    <ol class="patterns-checklist">
+      <li><strong>Proposta:</strong> problema, utenti, alternativa nativa, API minima e owner.</li>
+      <li>
+        <strong>Spec:</strong> token, a11y, localizzazione, responsive, dark mode e non-obiettivi.
+      </li>
+      <li><strong>Implementazione:</strong> test Core, esempio Lab, theming e changelog.</li>
+      <li><strong>Review:</strong> API, semver, bundle e consumer fixture.</li>
+      <li><strong>Deprecazione:</strong> alternativa, migrazione, versione target e supporto.</li>
+    </ol>
+  </section>
+</article>

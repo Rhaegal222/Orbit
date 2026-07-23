@@ -1,0 +1,33 @@
+<article>
+  <h1>Barra di navigazione</h1>
+  <p>
+    <code>orbit-navbar</code> gestisce la navigazione orizzontale di un prodotto. Usa link nativi
+    con <code>href</code> oppure emette la voce selezionata per lasciare routing e stato al
+    consumer.
+  </p>
+
+  <section>
+    <h2>Esempio</h2>
+    <p>
+      La voce attiva espone <code>aria-current=&quot;page&quot;</code>; su schermi stretti le voci
+      scorrono orizzontalmente.
+    </p>
+    <lab-example [code]="snippet" fullWidth>
+      <orbit-navbar
+        brand="Orbit"
+        [items]="items"
+        [activeId]="activeId()"
+        (itemSelected)="selectItem($event)"
+      >
+        <orbit-button orbitNavbarActions label="Crea elemento" />
+      </orbit-navbar>
+    </lab-example>
+  </section>
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Sotto <code>--orbit-breakpoint-md</code> (48rem) la lista di navigazione va a capo su una
+      seconda riga invece di restare su una sola riga con la barra.
+    </p>
+  </section>
+</article>

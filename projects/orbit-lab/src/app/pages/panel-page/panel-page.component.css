@@ -1,0 +1,95 @@
+.panel-page__sidebar-preview {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  block-size: 42rem;
+  overflow: hidden;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-canvas);
+}
+
+.panel-page__sidebar-preview orbit-sidebar {
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.panel-page__sidebar-variant-panel {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: var(--orbit-space-5);
+  min-width: 0;
+  padding: var(--orbit-space-6);
+  overflow-y: auto;
+  text-align: center;
+}
+
+.panel-page__sidebar-variant-copy {
+  display: grid;
+  gap: var(--orbit-space-1);
+}
+
+.panel-page__sidebar-variant-copy span {
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-label);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.panel-page__sidebar-variant-copy strong {
+  color: var(--orbit-text-primary);
+  font-size: var(--orbit-font-size-title);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.panel-page__sidebar-tile-group {
+  display: grid;
+  width: min(100%, 14rem);
+  gap: var(--orbit-space-2);
+}
+
+.panel-page__sidebar-config-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: center;
+  width: min(100%, calc(42rem + (var(--orbit-space-2) * 2)));
+  gap: var(--orbit-space-2);
+}
+
+.panel-page__sidebar-config-row .panel-page__sidebar-tile-group {
+  width: 100%;
+}
+
+.panel-page__sidebar-toggle-range {
+  display: grid;
+  width: min(100%, 14rem);
+  gap: var(--orbit-space-1);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-label);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-align: start;
+}
+
+.panel-page__sidebar-tile-group orbit-selectable-tile {
+  min-width: 0;
+}
+
+@media (max-width: 42rem) {
+  .panel-page__sidebar-preview {
+    grid-template-columns: 1fr;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .panel-page__sidebar-preview orbit-sidebar {
+    block-size: 30rem;
+  }
+
+  .panel-page__sidebar-variant-panel {
+    padding: var(--orbit-space-4);
+    overflow-y: visible;
+  }
+
+  .panel-page__sidebar-config-row {
+    grid-template-columns: minmax(0, 14rem);
+  }
+}

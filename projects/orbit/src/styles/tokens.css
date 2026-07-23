@@ -1,0 +1,907 @@
+/*
+ * Galileo Orbit token contract
+ *
+ * Consumers should normally override semantic tokens. Reference tokens are
+ * available for building a complete brand theme; component tokens are escape
+ * hatches for deliberate local exceptions.
+ */
+:root,
+[data-orbit-theme='light'] {
+  /* Reference: palette */
+  --orbit-ref-neutral-0: #ffffff;
+  --orbit-ref-neutral-50: #fafbfc;
+  --orbit-ref-neutral-200: #e4e8ee;
+  --orbit-ref-neutral-400: #94a0b1;
+  --orbit-ref-neutral-600: #414958;
+  --orbit-ref-neutral-900: #12151c;
+  --orbit-ref-brand-100: #eaf0ff;
+  --orbit-ref-brand-500: #3457d5;
+  --orbit-ref-brand-600: #24409e;
+  --orbit-ref-success-100: #f3fbf6;
+  --orbit-ref-success-600: #16713d;
+  --orbit-ref-danger-100: #fdf4f5;
+  --orbit-ref-danger-600: #be3434;
+  --orbit-ref-warning-100: #fff3cd;
+  --orbit-ref-warning-500: #ffc107;
+  --orbit-ref-info-100: #cff4fc;
+  --orbit-ref-info-500: #0dcaf0;
+
+  /* Reference: typography, geometry and elevation */
+  --orbit-ref-font-sans: 'Public Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --orbit-ref-font-size-xs: 0.65625rem;
+  --orbit-ref-font-size-sm: 0.71875rem;
+  --orbit-ref-font-size-base: 0.8125rem;
+  --orbit-ref-font-size-lg: 0.875rem;
+  --orbit-ref-font-size-xl: 1.125rem;
+  --orbit-ref-line-height-base: 1.35;
+  --orbit-ref-font-weight-normal: 400;
+  --orbit-ref-font-weight-medium: 500;
+  --orbit-ref-font-weight-semibold: 600;
+  --orbit-ref-space-1: 0.25rem;
+  --orbit-ref-space-2: 0.5rem;
+  --orbit-ref-space-3: 0.75rem;
+  --orbit-ref-space-4: 1rem;
+  --orbit-ref-space-5: 1.5rem;
+  --orbit-ref-space-6: 2rem;
+  --orbit-ref-radius-sm: 0.25rem;
+  --orbit-ref-radius-md: 0.625rem;
+  --orbit-ref-radius-lg: 1.25rem;
+  --orbit-ref-shadow-sm: 0 1px 2px rgb(15 23 42 / 4%), 0 1px 3px rgb(15 23 42 / 6%);
+  --orbit-ref-shadow-md:
+    0 30px 60px -20px rgb(18 21 28 / 35%), 0 10px 28px -10px rgb(18 21 28 / 16%);
+
+  /* Semantic: the supported application theming surface */
+  --orbit-font-sans: var(--orbit-ref-font-sans);
+  /* Single scale source. Consumers set a unitless value (for example 1.15). */
+  --orbit-text-scale: 1;
+  --orbit-font-size-xs: calc(var(--orbit-ref-font-size-xs) * var(--orbit-text-scale));
+  --orbit-font-size-sm: calc(var(--orbit-ref-font-size-sm) * var(--orbit-text-scale));
+  --orbit-font-size-body: calc(var(--orbit-ref-font-size-base) * var(--orbit-text-scale));
+  --orbit-font-size-lg: calc(var(--orbit-ref-font-size-lg) * var(--orbit-text-scale));
+  --orbit-font-size-xl: calc(var(--orbit-ref-font-size-xl) * var(--orbit-text-scale));
+  --orbit-line-height-body: var(--orbit-ref-line-height-base);
+  --orbit-font-weight-body: var(--orbit-ref-font-weight-normal);
+  --orbit-font-weight-emphasis: var(--orbit-ref-font-weight-semibold);
+  --orbit-surface-canvas: var(--orbit-ref-neutral-50);
+  --orbit-surface-default: var(--orbit-ref-neutral-0);
+  --orbit-surface-subtle: var(--orbit-ref-neutral-50);
+  --orbit-surface-raised: var(--orbit-ref-neutral-0);
+  --orbit-surface-floating: var(--orbit-ref-neutral-0);
+  --orbit-surface-overlay: var(--orbit-ref-neutral-0);
+  /* Compatibility alias. New components consume --orbit-surface-overlay. */
+  --orbit-surface-modal: var(--orbit-surface-overlay);
+  --orbit-text-primary: var(--orbit-ref-neutral-900);
+  --orbit-text-secondary: #74808f;
+  --orbit-text-label: var(--orbit-ref-neutral-600);
+  --orbit-text-tertiary: var(--orbit-ref-neutral-400);
+  --orbit-text-placeholder: #a6afbc;
+  --orbit-text-inverse: var(--orbit-ref-neutral-0);
+  --orbit-border-subtle: #eceff4;
+  --orbit-border-strong: #c7cdd6;
+  /* Code blocks use a distinct, opaque surface so source remains scannable in both themes. */
+  --orbit-code-block-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 4%,
+    var(--orbit-surface-default)
+  );
+  --orbit-code-block-fg: var(--orbit-text-primary);
+  --orbit-code-block-border: var(--orbit-border-subtle);
+  --orbit-code-block-gutter-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 2%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-alt-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 3%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-number-fg: var(--orbit-text-tertiary);
+  --orbit-code-block-gutter-border: var(--orbit-border-subtle);
+  --orbit-code-block-action-bg: var(--orbit-surface-raised);
+  --orbit-code-block-action-fg: var(--orbit-text-secondary);
+  --orbit-code-block-action-bg-hover: var(--orbit-surface-default);
+  --orbit-code-block-action-fg-hover: var(--orbit-text-primary);
+  --orbit-action-primary-bg: var(--orbit-ref-brand-500);
+  --orbit-action-primary-bg-hover: var(--orbit-ref-brand-600);
+  --orbit-action-primary-fg: var(--orbit-ref-neutral-0);
+  --orbit-action-primary-fg-subtle: var(--orbit-ref-brand-600);
+  --orbit-action-success-bg: var(--orbit-status-success);
+  --orbit-action-success-bg-hover: color-mix(
+    in srgb,
+    var(--orbit-status-success) 82%,
+    var(--orbit-ref-neutral-900)
+  );
+  --orbit-action-success-fg: var(--orbit-ref-neutral-0);
+  --orbit-action-success-fg-subtle: color-mix(
+    in srgb,
+    var(--orbit-status-success) 85%,
+    var(--orbit-ref-neutral-900)
+  );
+  --orbit-action-danger-bg: var(--orbit-status-danger);
+  --orbit-action-danger-bg-hover: color-mix(
+    in srgb,
+    var(--orbit-status-danger) 82%,
+    var(--orbit-ref-neutral-900)
+  );
+  --orbit-action-danger-fg: var(--orbit-ref-neutral-0);
+  --orbit-action-danger-fg-subtle: color-mix(
+    in srgb,
+    var(--orbit-status-danger) 85%,
+    var(--orbit-ref-neutral-900)
+  );
+  --orbit-action-neutral-bg: var(--orbit-text-primary);
+  --orbit-action-neutral-bg-hover: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 82%,
+    var(--orbit-ref-neutral-900)
+  );
+  --orbit-action-neutral-fg: var(--orbit-text-inverse);
+  --orbit-action-neutral-fg-subtle: var(--orbit-text-primary);
+  --orbit-cta-bg: var(--orbit-action-primary-bg);
+  --orbit-cta-bg-hover: var(--orbit-action-primary-bg-hover);
+  --orbit-status-success: var(--orbit-ref-success-600);
+  --orbit-status-success-fg: var(--orbit-ref-neutral-0);
+  --orbit-status-success-subtle: var(--orbit-ref-success-100);
+  --orbit-status-danger: var(--orbit-ref-danger-600);
+  --orbit-status-danger-fg: var(--orbit-ref-neutral-0);
+  --orbit-status-danger-subtle: var(--orbit-ref-danger-100);
+  --orbit-status-warning: var(--orbit-ref-warning-500);
+  --orbit-status-warning-fg: var(--orbit-ref-neutral-900);
+  --orbit-status-warning-subtle: var(--orbit-ref-warning-100);
+  --orbit-status-info: var(--orbit-ref-info-500);
+  --orbit-status-info-fg: var(--orbit-ref-neutral-900);
+  --orbit-status-info-subtle: var(--orbit-ref-info-100);
+  --orbit-focus-ring: 0 0 0 4px color-mix(in srgb, var(--orbit-action-primary-bg) 12%, transparent);
+  /* Geometry scales with text and becomes progressively tighter with density. */
+  --orbit-radius-none: 0;
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.5rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.25rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-shadow-intensity: 1;
+  --orbit-shadow-raised-alpha-near: 4%;
+  --orbit-shadow-raised-alpha-far: 6%;
+  --orbit-shadow-overlay-alpha-near: 35%;
+  --orbit-shadow-overlay-alpha-far: 16%;
+  --orbit-shadow-action-alpha: 40%;
+  --orbit-shadow-chrome-alpha: 4%;
+  --orbit-shadow-raised:
+    0 1px 2px rgb(15 23 42 / var(--orbit-shadow-raised-alpha-near)),
+    0 1px 3px rgb(15 23 42 / var(--orbit-shadow-raised-alpha-far));
+  --orbit-shadow-overlay:
+    0 30px 60px -20px rgb(18 21 28 / var(--orbit-shadow-overlay-alpha-near)),
+    0 10px 28px -10px rgb(18 21 28 / var(--orbit-shadow-overlay-alpha-far));
+  --orbit-shadow-floating: var(--orbit-shadow-overlay);
+  --orbit-button-primary-shadow: 0 4px 12px -2px
+    color-mix(in srgb, var(--orbit-cta-bg) var(--orbit-shadow-action-alpha), transparent);
+  --orbit-button-success-shadow: 0 4px 12px -2px
+    color-mix(in srgb, var(--orbit-status-success) var(--orbit-shadow-action-alpha), transparent);
+  --orbit-modal-footer-form-shadow:
+    0 -1px 0 var(--orbit-border-subtle),
+    0 -8px 20px
+      color-mix(in srgb, var(--orbit-text-primary) var(--orbit-shadow-chrome-alpha), transparent);
+  --orbit-motion-fast: 120ms;
+  --orbit-motion-base: 180ms;
+  --orbit-motion-slow: 240ms;
+  --orbit-motion-spin: 600ms;
+  --orbit-motion-shimmer: 1200ms;
+  --orbit-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --orbit-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --orbit-easing-shared: cubic-bezier(0.4, 0, 0.2, 1);
+  --orbit-font-size-display: calc(1.5rem * var(--orbit-text-scale));
+  --orbit-font-size-title: var(--orbit-font-size-xl);
+  --orbit-font-size-subtitle: var(--orbit-font-size-lg);
+  --orbit-font-size-label: var(--orbit-font-size-sm);
+  --orbit-font-size-caption: var(--orbit-font-size-xs);
+  --orbit-font-size-code: var(--orbit-font-size-sm);
+  --orbit-space-1: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.75rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-space-2xs: calc(var(--orbit-space-1) / 2);
+  --orbit-space-xs: var(--orbit-space-1);
+  --orbit-space-sm: var(--orbit-space-2);
+  --orbit-space-md: var(--orbit-space-4);
+  --orbit-space-lg: var(--orbit-space-5);
+  --orbit-space-xl: var(--orbit-space-6);
+  --orbit-space-2xl: calc(var(--orbit-space-5) * 2);
+  --orbit-page-padding-inline: var(--orbit-space-lg);
+  --orbit-page-max-width-document: 75rem;
+  --orbit-page-max-width-workspace: 90rem;
+  /* Shared breakpoint scale (mobile-first). Cannot be read from a native @media
+     condition (custom properties aren't resolved there) — component @media rules
+     use the literal value below with a comment referencing the token name. */
+  --orbit-breakpoint-sm: 40rem;
+  --orbit-breakpoint-md: 48rem;
+  --orbit-breakpoint-lg: 64rem;
+  --orbit-breakpoint-xl: 80rem;
+  --orbit-breakpoint-2xl: 96rem;
+  /** WCAG 2.5.5 minimum (44px). Applied only under (pointer: coarse) — see below. */
+  --orbit-control-height-touch-min: 2.75rem;
+  --orbit-button-gap: calc(var(--orbit-space-xs) + var(--orbit-space-2xs));
+  --orbit-badge-height: calc((var(--orbit-control-height) / 2) + var(--orbit-space-1));
+  --orbit-badge-padding-inline: var(--orbit-space-2);
+  --orbit-badge-gap: var(--orbit-space-1);
+  --orbit-switch-track-inset: 1px;
+  --orbit-switch-track-bg: var(--orbit-surface-subtle);
+  --orbit-switch-track-border: var(--orbit-border-strong);
+  --orbit-switch-thumb-bg: var(--orbit-surface-raised);
+  --orbit-switch-thumb-checked-bg: var(--orbit-surface-raised);
+  --orbit-space-inline: var(--orbit-space-3);
+  --orbit-space-stack: var(--orbit-space-4);
+  /* Composition spacing: layout primitives consume semantic spacing, not raw scale values. */
+  --orbit-layout-gap: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-layout-gap-compact: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.8125rem + (0.8125rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-content-padding-block: var(--orbit-modal-padding-block);
+  --orbit-content-padding-inline: var(--orbit-modal-padding-inline);
+  /* Per-row padding for an item inside a scrollable content area (a sidebar nav item, a
+     catalog options field, …) — defaults to the sidebar item's own current values so it's
+     defined once and other consumers can adopt it with no visual change to the sidebar. */
+  --orbit-item-padding-block: var(--orbit-space-2);
+  --orbit-item-padding-inline: var(--orbit-space-3);
+  --orbit-dropzone-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-size-sm: 30rem;
+  --orbit-modal-size-md: 45rem;
+  --orbit-modal-size-lg: 60rem;
+  --orbit-modal-size-xl: 73.75rem;
+  --orbit-modal-size-xxl: 82.5rem;
+  --orbit-modal-size-full: min(96vw, 90rem);
+  --orbit-section-index-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
+  --orbit-section-divider: var(--orbit-border-subtle);
+  --orbit-section-index-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-section-index-fg: var(--orbit-action-primary-bg);
+  --orbit-section-index-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-border-subtle)
+  );
+  --orbit-sidebar-width: 16rem;
+  --orbit-sidebar-width-collapsed: 4.5rem;
+  --orbit-sidebar-header-height: 5rem;
+  --orbit-sidebar-brand-mark-size: var(--orbit-header-icon-surface-size);
+  --orbit-sidebar-toggle-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
+  --orbit-sidebar-toggle-offset: calc(var(--orbit-sidebar-toggle-size) / -2);
+  --orbit-sidebar-icon-size: var(--orbit-font-size-lg);
+  --orbit-sidebar-icon-size-collapsed: var(--orbit-font-size-xl);
+  --orbit-sidebar-active-indicator-width: 0.1875rem;
+  --orbit-sidebar-bg: var(--orbit-surface-default);
+  --orbit-sidebar-fg: var(--orbit-text-primary);
+  --orbit-sidebar-fg-muted: var(--orbit-text-secondary);
+  --orbit-sidebar-border: var(--orbit-border-subtle);
+  --orbit-sidebar-brand-mark-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-sidebar-brand-mark-fg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-sidebar-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-sidebar-item-active-fg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-item-active-border: var(--orbit-border-subtle);
+  --orbit-sidebar-item-active-indicator: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-bg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-fg: var(--orbit-action-primary-fg);
+  --orbit-navbar-height: calc(var(--orbit-control-height) + var(--orbit-space-4));
+  --orbit-navbar-bg: var(--orbit-surface-raised);
+  --orbit-navbar-fg: var(--orbit-text-primary);
+  --orbit-navbar-fg-muted: var(--orbit-text-secondary);
+  --orbit-navbar-border: var(--orbit-border-subtle);
+  --orbit-navbar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-raised)
+  );
+  --orbit-navbar-item-active-fg: var(--orbit-action-primary-bg);
+  --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.55rem + (2.2rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.275rem + (1.1rem * var(--orbit-text-scale)));
+  --orbit-optional-icon-display: grid;
+  --orbit-control-padding-inline: var(--orbit-ref-space-3);
+  --orbit-overlay-backdrop: rgb(18 21 28 / 42%);
+  /* Layer values are intentionally centralized. CDK remains responsible for
+     positioning and the overlay container's stacking context. */
+  --orbit-z-base: 0;
+  --orbit-z-sticky: 10;
+  --orbit-z-popover: 1000;
+  --orbit-z-overlay: 1100;
+  --orbit-z-toast: 1200;
+  /* Deprecated aliases retained for existing consumer overrides. */
+  --orbit-z-modal: var(--orbit-z-overlay);
+  --orbit-z-tooltip: var(--orbit-z-popover);
+
+  /* Component: stable control defaults, derived from semantic tokens */
+  --orbit-button-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-button-primary-bg-hover: var(--orbit-action-primary-bg-hover);
+  --orbit-button-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-button-translucent-bg: color-mix(in srgb, var(--orbit-cta-bg) 14%, transparent);
+  --orbit-button-translucent-bg-hover: color-mix(in srgb, var(--orbit-cta-bg) 22%, transparent);
+  --orbit-button-translucent-border: color-mix(in srgb, var(--orbit-cta-bg) 28%, transparent);
+  --orbit-button-translucent-border-hover: color-mix(in srgb, var(--orbit-cta-bg) 36%, transparent);
+  --orbit-field-bg: var(--orbit-surface-default);
+  --orbit-field-fg: var(--orbit-text-primary);
+  --orbit-field-border: var(--orbit-border-subtle);
+  --orbit-select-option-hover-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-floating)
+  );
+  --orbit-select-option-selected-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-floating)
+  );
+  --orbit-select-option-selected-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-table-stripe-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 7%,
+    var(--orbit-surface-default)
+  );
+
+  /* Aliases: component CSS uses --orbit-color-* which resolve to semantic tokens */
+  --orbit-color-text: var(--orbit-text-primary);
+  --orbit-color-text-muted: var(--orbit-text-secondary);
+  --orbit-color-surface: var(--orbit-surface-default);
+  --orbit-color-surface-muted: var(--orbit-surface-subtle);
+  --orbit-color-border: var(--orbit-border-subtle);
+  --orbit-color-border-strong: var(--orbit-border-strong);
+  --orbit-color-border-focus: var(--orbit-action-primary-bg);
+  --orbit-color-primary: var(--orbit-action-primary-bg);
+  --orbit-color-primary-strong: var(--orbit-action-primary-bg-hover);
+  --orbit-color-primary-subtle: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
+  --orbit-color-danger: var(--orbit-status-danger);
+  --orbit-color-danger-subtle: var(--orbit-status-danger-subtle);
+  --orbit-color-success: var(--orbit-status-success);
+  --orbit-color-success-subtle: var(--orbit-status-success-subtle);
+  --orbit-color-warning: var(--orbit-status-warning);
+  --orbit-color-warning-subtle: var(--orbit-status-warning-subtle);
+  --orbit-color-info: var(--orbit-status-info);
+  --orbit-color-info-subtle: var(--orbit-status-info-subtle);
+  --orbit-color-neutral: var(--orbit-text-secondary);
+  --orbit-color-neutral-subtle: var(--orbit-surface-subtle);
+
+  /* Geometry extras */
+  --orbit-radius-full: 9999px;
+
+  /* Component: solid status badges pair explicit foregrounds with backgrounds. */
+  --orbit-badge-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-badge-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-badge-success-bg: var(--orbit-status-success);
+  --orbit-badge-success-fg: var(--orbit-status-success-fg);
+  --orbit-badge-danger-bg: var(--orbit-status-danger);
+  --orbit-badge-danger-fg: var(--orbit-status-danger-fg);
+  --orbit-badge-warning-bg: var(--orbit-status-warning);
+  --orbit-badge-warning-fg: var(--orbit-status-warning-fg);
+  --orbit-badge-info-bg: var(--orbit-status-info);
+  --orbit-badge-info-fg: var(--orbit-status-info-fg);
+  --orbit-badge-neutral-bg: var(--orbit-action-neutral-bg);
+  --orbit-badge-neutral-fg: var(--orbit-action-neutral-fg);
+}
+
+/* Comfortable is the root default. Density changes the whole operational rhythm —
+   controls, action targets, spacing, sections and modal chrome together. */
+[data-orbit-shadow-intensity],
+[data-orbit-shadow-intensity] [data-orbit-theme] {
+  /* Re-evaluate recipes in the intensity scope. Custom-property values from
+     :root are otherwise inherited already resolved with the default alpha. */
+  --orbit-shadow-raised:
+    0 1px 2px rgb(15 23 42 / var(--orbit-shadow-raised-alpha-near)),
+    0 1px 3px rgb(15 23 42 / var(--orbit-shadow-raised-alpha-far));
+  --orbit-shadow-overlay:
+    0 30px 60px -20px rgb(18 21 28 / var(--orbit-shadow-overlay-alpha-near)),
+    0 10px 28px -10px rgb(18 21 28 / var(--orbit-shadow-overlay-alpha-far));
+  --orbit-shadow-floating: var(--orbit-shadow-overlay);
+  --orbit-button-primary-shadow: 0 4px 12px -2px
+    color-mix(in srgb, var(--orbit-cta-bg) var(--orbit-shadow-action-alpha), transparent);
+  --orbit-button-success-shadow: 0 4px 12px -2px
+    color-mix(in srgb, var(--orbit-status-success) var(--orbit-shadow-action-alpha), transparent);
+  --orbit-modal-footer-form-shadow:
+    0 -1px 0 var(--orbit-border-subtle),
+    0 -8px 20px
+      color-mix(in srgb, var(--orbit-text-primary) var(--orbit-shadow-chrome-alpha), transparent);
+}
+
+[data-orbit-shadow-intensity='0'],
+[data-orbit-shadow-intensity='0'] [data-orbit-theme='light'] {
+  --orbit-shadow-raised-alpha-near: 0%;
+  --orbit-shadow-raised-alpha-far: 0%;
+  --orbit-shadow-overlay-alpha-near: 0%;
+  --orbit-shadow-overlay-alpha-far: 0%;
+  --orbit-shadow-action-alpha: 0%;
+  --orbit-shadow-chrome-alpha: 0%;
+}
+
+[data-orbit-shadow-intensity='0.25'],
+[data-orbit-shadow-intensity='0.25'] [data-orbit-theme='light'] {
+  --orbit-shadow-raised-alpha-near: 1%;
+  --orbit-shadow-raised-alpha-far: 1.5%;
+  --orbit-shadow-overlay-alpha-near: 8.75%;
+  --orbit-shadow-overlay-alpha-far: 4%;
+  --orbit-shadow-action-alpha: 10%;
+  --orbit-shadow-chrome-alpha: 1%;
+}
+
+[data-orbit-shadow-intensity='0.5'],
+[data-orbit-shadow-intensity='0.5'] [data-orbit-theme='light'] {
+  --orbit-shadow-raised-alpha-near: 2%;
+  --orbit-shadow-raised-alpha-far: 3%;
+  --orbit-shadow-overlay-alpha-near: 17.5%;
+  --orbit-shadow-overlay-alpha-far: 8%;
+  --orbit-shadow-action-alpha: 20%;
+  --orbit-shadow-chrome-alpha: 2%;
+}
+
+[data-orbit-shadow-intensity='0.75'],
+[data-orbit-shadow-intensity='0.75'] [data-orbit-theme='light'] {
+  --orbit-shadow-raised-alpha-near: 3%;
+  --orbit-shadow-raised-alpha-far: 4.5%;
+  --orbit-shadow-overlay-alpha-near: 26.25%;
+  --orbit-shadow-overlay-alpha-far: 12%;
+  --orbit-shadow-action-alpha: 30%;
+  --orbit-shadow-chrome-alpha: 3%;
+}
+
+[data-orbit-shadow-intensity='1.25'],
+[data-orbit-shadow-intensity='1.25'] [data-orbit-theme='light'] {
+  --orbit-shadow-raised-alpha-near: 5%;
+  --orbit-shadow-raised-alpha-far: 7.5%;
+  --orbit-shadow-overlay-alpha-near: 43.75%;
+  --orbit-shadow-overlay-alpha-far: 20%;
+  --orbit-shadow-action-alpha: 50%;
+  --orbit-shadow-chrome-alpha: 5%;
+}
+
+[data-orbit-shadow-intensity='1.5'],
+[data-orbit-shadow-intensity='1.5'] [data-orbit-theme='light'] {
+  --orbit-shadow-raised-alpha-near: 6%;
+  --orbit-shadow-raised-alpha-far: 9%;
+  --orbit-shadow-overlay-alpha-near: 52.5%;
+  --orbit-shadow-overlay-alpha-far: 24%;
+  --orbit-shadow-action-alpha: 60%;
+  --orbit-shadow-chrome-alpha: 6%;
+}
+
+/* Badge dimensions depend on density tokens. Re-declare their recipes on the
+   density scope so inherited custom properties do not retain the root value. */
+[data-orbit-density] {
+  --orbit-badge-height: calc((var(--orbit-control-height) / 2) + var(--orbit-space-1));
+  --orbit-badge-padding-inline: var(--orbit-space-2);
+  --orbit-badge-gap: var(--orbit-space-1);
+}
+
+[data-orbit-density='comfortable'] {
+  --orbit-space-1: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.75rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.5rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.25rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.55rem + (2.2rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.275rem + (1.1rem * var(--orbit-text-scale)));
+  --orbit-control-padding-inline: var(--orbit-space-3);
+  --orbit-space-inline: var(--orbit-space-3);
+  --orbit-space-stack: var(--orbit-space-4);
+  --orbit-layout-gap: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.8125rem + (0.8125rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.6875rem + (0.6875rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-density='spacious'] {
+  --orbit-space-1: calc(0.15625rem + (0.15625rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.625rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(1.25rem + (1.25rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.15625rem + (0.15625rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.3125rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.625rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.5rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.3125rem + (0.5625rem * var(--orbit-text-scale)));
+  --orbit-control-height: calc(0.625rem + (2.375rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.5rem + (2rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.475rem + (1.85rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.5rem + (2.5rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.3rem + (1.2rem * var(--orbit-text-scale)));
+  --orbit-control-padding-inline: var(--orbit-space-3);
+  --orbit-space-inline: var(--orbit-space-3);
+  --orbit-space-stack: var(--orbit-space-4);
+  --orbit-layout-gap: calc(0.5625rem + (0.5625rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(1rem + (1rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(1.25rem + (1.25rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.5625rem + (0.5625rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-density='compact'] {
+  --orbit-space-1: calc(0.09375rem + (0.09375rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.625rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(0.875rem + (0.875rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.1125rem + (0.1125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.225rem + (0.3375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.4375rem + (0.625rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.34375rem + (0.46875rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.21875rem + (0.40625rem * var(--orbit-text-scale)));
+  --orbit-control-height: calc(0.475rem + (1.9rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.4rem + (1.6rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.375rem + (1.5rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.5rem + (2rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
+  --orbit-control-padding-inline: var(--orbit-space-2);
+  --orbit-space-inline: var(--orbit-space-2);
+  --orbit-space-stack: var(--orbit-space-3);
+  --orbit-layout-gap: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.15625rem + (0.15625rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.5625rem + (0.5625rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.34375rem + (0.34375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-density='dense'] {
+  --orbit-space-1: calc(0.0625rem + (0.0625rem * var(--orbit-text-scale)));
+  --orbit-space-2: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-space-3: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-space-4: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-space-5: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-space-6: calc(0.75rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-sm: calc(0.1rem + (0.1rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.2rem + (0.3rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.3125rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.1875rem + (0.3125rem * var(--orbit-text-scale)));
+  --orbit-control-height: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
+  --orbit-control-action-size: calc(0.35rem + (1.4rem * var(--orbit-text-scale)));
+  --orbit-control-adornment-size: calc(0.325rem + (1.3rem * var(--orbit-text-scale)));
+  --orbit-header-icon-surface-size: calc(0.375rem + (1.875rem * var(--orbit-text-scale)));
+  --orbit-header-icon-size: calc(0.225rem + (0.9rem * var(--orbit-text-scale)));
+  --orbit-control-padding-inline: var(--orbit-space-2);
+  --orbit-space-inline: var(--orbit-space-2);
+  --orbit-space-stack: var(--orbit-space-3);
+  --orbit-layout-gap: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-field-stack-gap: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-section-gap: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-inline: calc(0.4375rem + (0.4375rem * var(--orbit-text-scale)));
+  --orbit-modal-padding-block: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-start: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-modal-header-padding-block-end: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-modal-footer-padding-block: calc(0.28125rem + (0.28125rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-block: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-dropzone-padding-inline: calc(0.3125rem + (0.3125rem * var(--orbit-text-scale)));
+}
+
+/* Geometry presets allow product teams to adapt Orbit's silhouette without
+   changing component CSS or colour semantics. */
+[data-orbit-shape='square'] {
+  --orbit-radius-sm: 0;
+  --orbit-radius-control: 0;
+  --orbit-radius-surface: 0;
+  --orbit-radius-tile: 0;
+  --orbit-radius-icon-surface: 0;
+}
+
+[data-orbit-shape='operational'] {
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.1875rem + (0.1875rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.375rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.1875rem + (0.25rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-shape='soft'] {
+  --orbit-radius-sm: calc(0.125rem + (0.125rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.25rem + (0.375rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.5rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.375rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.25rem + (0.5rem * var(--orbit-text-scale)));
+}
+
+[data-orbit-shape='rounded'] {
+  --orbit-radius-sm: calc(0.25rem + (0.25rem * var(--orbit-text-scale)));
+  --orbit-radius-control: calc(0.5rem + (0.5rem * var(--orbit-text-scale)));
+  --orbit-radius-surface: calc(0.75rem + (1rem * var(--orbit-text-scale)));
+  --orbit-radius-tile: calc(0.625rem + (0.75rem * var(--orbit-text-scale)));
+  --orbit-radius-icon-surface: calc(0.5rem + (0.625rem * var(--orbit-text-scale)));
+}
+
+/* Accent swatch — curated options only, no free color picker. Default (blue) lives on :root. */
+[data-orbit-accent='violet'] {
+  --orbit-action-primary-bg: #7c3aed;
+  --orbit-action-primary-bg-hover: #6423c8;
+}
+
+[data-orbit-accent='teal'] {
+  --orbit-action-primary-bg: #0f9b8e;
+  --orbit-action-primary-bg-hover: #0c7a70;
+}
+
+[data-orbit-font='inter'] {
+  --orbit-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+[data-orbit-font='system'] {
+  --orbit-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Dark theme — override semantic tokens only. */
+[data-orbit-theme='dark'] {
+  --orbit-surface-canvas: #111318;
+  --orbit-surface-default: #1c1f26;
+  --orbit-surface-subtle: #262a33;
+  --orbit-surface-raised: #20242c;
+  --orbit-surface-floating: #292e38;
+  --orbit-surface-overlay: #20242c;
+  --orbit-surface-modal: var(--orbit-surface-overlay);
+  --orbit-text-primary: #e8eaed;
+  --orbit-text-secondary: #9aa0a9;
+  --orbit-text-label: #c4c9d2;
+  --orbit-text-tertiary: #7e8795;
+  --orbit-text-placeholder: #8e97a5;
+  --orbit-text-inverse: #111318;
+  --orbit-border-subtle: #3a3f4b;
+  --orbit-border-strong: #5f6573;
+  --orbit-action-primary-bg: #2f6fd2;
+  --orbit-action-primary-bg-hover: #285faf;
+  --orbit-action-primary-fg: #ffffff;
+  --orbit-action-primary-fg-subtle: #a9c8ff;
+  --orbit-action-success-bg: #168447;
+  --orbit-action-success-bg-hover: #11723c;
+  --orbit-action-success-fg: #ffffff;
+  --orbit-action-success-fg-subtle: #7be5ab;
+  --orbit-action-danger-bg: #c33e4d;
+  --orbit-action-danger-bg-hover: #a83240;
+  --orbit-action-danger-fg: #ffffff;
+  --orbit-action-danger-fg-subtle: #ffabb1;
+  --orbit-action-neutral-bg: #e8eaed;
+  --orbit-action-neutral-bg-hover: #ffffff;
+  --orbit-action-neutral-fg: #111318;
+  --orbit-action-neutral-fg-subtle: #e8eaed;
+  --orbit-status-success: #34c77b;
+  --orbit-status-success-fg: #111318;
+  --orbit-status-success-subtle: #162e1f;
+  --orbit-status-danger: #f06b74;
+  --orbit-status-danger-fg: #111318;
+  --orbit-status-danger-subtle: #3b1a1d;
+  --orbit-status-warning: #f5c542;
+  --orbit-status-warning-fg: #111318;
+  --orbit-status-warning-subtle: #3b3116;
+  --orbit-status-info: #38cfe8;
+  --orbit-status-info-fg: #111318;
+  --orbit-status-info-subtle: #132e35;
+  --orbit-focus-ring: 0 0 0 3px color-mix(in srgb, var(--orbit-action-primary-bg) 30%, transparent);
+  --orbit-shadow-raised-alpha-near: 24%;
+  --orbit-shadow-raised-alpha-far: 16%;
+  --orbit-shadow-overlay-alpha-near: 58%;
+  --orbit-shadow-overlay-alpha-far: 36%;
+  --orbit-overlay-backdrop: rgb(0 0 0 / 65%);
+  --orbit-cta-bg: var(--orbit-action-primary-bg);
+  --orbit-cta-bg-hover: var(--orbit-action-primary-bg-hover);
+  --orbit-table-stripe-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 14%,
+    var(--orbit-surface-default)
+  );
+  --orbit-code-block-bg: color-mix(
+    in srgb,
+    var(--orbit-surface-canvas) 76%,
+    var(--orbit-surface-default)
+  );
+  --orbit-code-block-fg: var(--orbit-text-primary);
+  --orbit-code-block-border: var(--orbit-border-subtle);
+  --orbit-code-block-gutter-bg: color-mix(
+    in srgb,
+    var(--orbit-surface-subtle) 32%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-alt-bg: color-mix(
+    in srgb,
+    var(--orbit-text-primary) 4%,
+    var(--orbit-code-block-bg)
+  );
+  --orbit-code-block-line-number-fg: var(--orbit-text-tertiary);
+  --orbit-code-block-gutter-border: var(--orbit-border-subtle);
+  --orbit-code-block-action-bg: var(--orbit-surface-floating);
+  --orbit-code-block-action-fg: var(--orbit-text-secondary);
+  --orbit-code-block-action-bg-hover: var(--orbit-surface-subtle);
+  --orbit-code-block-action-fg-hover: var(--orbit-text-primary);
+  /* Component tokens are resolved in this scope so they do not retain the
+     inherited light-theme value when a component sits below a dark ancestor. */
+  --orbit-sidebar-bg: var(--orbit-surface-raised);
+  --orbit-sidebar-fg: var(--orbit-text-primary);
+  --orbit-sidebar-fg-muted: var(--orbit-text-secondary);
+  --orbit-sidebar-border: var(--orbit-border-subtle);
+  --orbit-sidebar-brand-mark-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 16%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-sidebar-brand-mark-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-sidebar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-sidebar-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-sidebar-item-active-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-sidebar-item-active-border: var(--orbit-border-subtle);
+  --orbit-sidebar-item-active-indicator: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-bg: var(--orbit-action-primary-bg);
+  --orbit-sidebar-badge-fg: var(--orbit-action-primary-fg);
+  --orbit-select-option-hover-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 16%,
+    var(--orbit-surface-floating)
+  );
+  --orbit-select-option-selected-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 28%,
+    var(--orbit-surface-floating)
+  );
+  --orbit-select-option-selected-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-navbar-bg: var(--orbit-surface-raised);
+  --orbit-navbar-fg: var(--orbit-text-primary);
+  --orbit-navbar-fg-muted: var(--orbit-text-secondary);
+  --orbit-navbar-border: var(--orbit-border-subtle);
+  --orbit-navbar-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-raised)
+  );
+  --orbit-navbar-item-active-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-button-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-button-primary-bg-hover: var(--orbit-action-primary-bg-hover);
+  --orbit-button-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-button-translucent-bg: color-mix(in srgb, var(--orbit-cta-bg) 14%, transparent);
+  --orbit-button-translucent-bg-hover: color-mix(in srgb, var(--orbit-cta-bg) 22%, transparent);
+  --orbit-button-translucent-border: color-mix(in srgb, var(--orbit-cta-bg) 28%, transparent);
+  --orbit-button-translucent-border-hover: color-mix(in srgb, var(--orbit-cta-bg) 36%, transparent);
+  --orbit-field-bg: var(--orbit-surface-default);
+  --orbit-field-fg: var(--orbit-text-primary);
+  --orbit-field-border: var(--orbit-border-subtle);
+  --orbit-switch-track-bg: var(--orbit-surface-subtle);
+  --orbit-switch-track-border: var(--orbit-border-strong);
+  --orbit-switch-thumb-bg: var(--orbit-surface-raised);
+  --orbit-switch-thumb-checked-bg: var(--orbit-surface-raised);
+  --orbit-section-divider: var(--orbit-border-subtle);
+  --orbit-section-index-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 20%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-section-index-fg: var(--orbit-action-primary-fg-subtle);
+  --orbit-section-index-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 36%,
+    var(--orbit-border-subtle)
+  );
+  --orbit-color-text: var(--orbit-text-primary);
+  --orbit-color-text-muted: var(--orbit-text-secondary);
+  --orbit-color-surface: var(--orbit-surface-default);
+  --orbit-color-surface-muted: var(--orbit-surface-subtle);
+  --orbit-color-border: var(--orbit-border-subtle);
+  --orbit-color-border-strong: var(--orbit-border-strong);
+  --orbit-color-border-focus: var(--orbit-action-primary-bg);
+  --orbit-color-primary: var(--orbit-action-primary-bg);
+  --orbit-color-primary-strong: var(--orbit-action-primary-bg-hover);
+  --orbit-color-primary-subtle: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, transparent);
+  --orbit-color-danger: var(--orbit-status-danger);
+  --orbit-color-danger-subtle: var(--orbit-status-danger-subtle);
+  --orbit-color-success: var(--orbit-status-success);
+  --orbit-color-success-subtle: var(--orbit-status-success-subtle);
+  --orbit-color-warning: var(--orbit-status-warning);
+  --orbit-color-warning-subtle: var(--orbit-status-warning-subtle);
+  --orbit-color-info: var(--orbit-status-info);
+  --orbit-color-info-subtle: var(--orbit-status-info-subtle);
+  --orbit-color-neutral: var(--orbit-text-secondary);
+  --orbit-color-neutral-subtle: var(--orbit-surface-subtle);
+  --orbit-badge-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-badge-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-badge-success-bg: var(--orbit-status-success);
+  --orbit-badge-success-fg: var(--orbit-status-success-fg);
+  --orbit-badge-danger-bg: var(--orbit-status-danger);
+  --orbit-badge-danger-fg: var(--orbit-status-danger-fg);
+  --orbit-badge-warning-bg: var(--orbit-status-warning);
+  --orbit-badge-warning-fg: var(--orbit-status-warning-fg);
+  --orbit-badge-info-bg: var(--orbit-status-info);
+  --orbit-badge-info-fg: var(--orbit-status-info-fg);
+  --orbit-badge-neutral-bg: var(--orbit-action-neutral-bg);
+  --orbit-badge-neutral-fg: var(--orbit-action-neutral-fg);
+}
+
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.5'],
+[data-orbit-shadow-intensity='0.5'] [data-orbit-theme='dark'] {
+  --orbit-shadow-raised-alpha-near: 12%;
+  --orbit-shadow-raised-alpha-far: 8%;
+  --orbit-shadow-overlay-alpha-near: 29%;
+  --orbit-shadow-overlay-alpha-far: 18%;
+}
+
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0'],
+[data-orbit-shadow-intensity='0'] [data-orbit-theme='dark'] {
+  --orbit-shadow-raised-alpha-near: 0%;
+  --orbit-shadow-raised-alpha-far: 0%;
+  --orbit-shadow-overlay-alpha-near: 0%;
+  --orbit-shadow-overlay-alpha-far: 0%;
+}
+
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.25'],
+[data-orbit-shadow-intensity='0.25'] [data-orbit-theme='dark'] {
+  --orbit-shadow-raised-alpha-near: 6%;
+  --orbit-shadow-raised-alpha-far: 4%;
+  --orbit-shadow-overlay-alpha-near: 14.5%;
+  --orbit-shadow-overlay-alpha-far: 9%;
+}
+
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='0.75'],
+[data-orbit-shadow-intensity='0.75'] [data-orbit-theme='dark'] {
+  --orbit-shadow-raised-alpha-near: 18%;
+  --orbit-shadow-raised-alpha-far: 12%;
+  --orbit-shadow-overlay-alpha-near: 43.5%;
+  --orbit-shadow-overlay-alpha-far: 27%;
+}
+
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='1.25'],
+[data-orbit-shadow-intensity='1.25'] [data-orbit-theme='dark'] {
+  --orbit-shadow-raised-alpha-near: 30%;
+  --orbit-shadow-raised-alpha-far: 20%;
+  --orbit-shadow-overlay-alpha-near: 72.5%;
+  --orbit-shadow-overlay-alpha-far: 45%;
+}
+
+[data-orbit-theme='dark'][data-orbit-shadow-intensity='1.5'],
+[data-orbit-shadow-intensity='1.5'] [data-orbit-theme='dark'] {
+  --orbit-shadow-raised-alpha-near: 36%;
+  --orbit-shadow-raised-alpha-far: 24%;
+  --orbit-shadow-overlay-alpha-near: 87%;
+  --orbit-shadow-overlay-alpha-far: 54%;
+}

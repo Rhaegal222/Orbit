@@ -1,0 +1,27 @@
+<article>
+  <h1>Tab</h1>
+  <p>
+    Selezione controllata dal consumer; frecce/Home/End spostano focus e selezione, saltando le
+    tab disabilitate. Ogni tab può proiettare un badge contatore.
+  </p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="snippet">
+      <orbit-tablist ariaLabel="Sezioni" (selectedChange)="active.set($event)">
+        <orbit-tab value="general" label="Generale" [selected]="active() === 'general'" />
+        <orbit-tab value="docs" label="Documenti" [selected]="active() === 'docs'">
+          <orbit-badge orbitTabBadge label="3" tone="neutral" />
+        </orbit-tab>
+        <orbit-tab value="closed" label="Chiuso" [selected]="active() === 'closed'" disabled />
+      </orbit-tablist>
+
+      @if (active() === 'general') {
+        <orbit-tab-panel value="general">Contenuto generale.</orbit-tab-panel>
+      }
+      @if (active() === 'docs') {
+        <orbit-tab-panel value="docs">Elenco documenti.</orbit-tab-panel>
+      }
+    </lab-example>
+  </section>
+</article>

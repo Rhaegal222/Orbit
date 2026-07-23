@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  overflow: hidden;
+  background-color: var(--orbit-surface-subtle);
+  /* Local, component-scoped variable — reuses the existing text-color token
+     via color-mix so the shimmer overlay automatically adapts to light/dark
+     theme without a new semantic token or a duplicated dark-mode override. */
+  --orbit-skeleton-shimmer: color-mix(in srgb, var(--orbit-text-primary) 8%, transparent);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--orbit-skeleton-shimmer) 50%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: orbit-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+:host(.orbit-skeleton--text) {
+  border-radius: var(--orbit-radius-sm);
+}
+
+:host(.orbit-skeleton--circle) {
+  border-radius: 50%;
+}
+
+:host(.orbit-skeleton--rect) {
+  border-radius: var(--orbit-radius-control);
+}
+
+@keyframes orbit-skeleton-shimmer {
+  0% {
+    background-position: 150% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
+}
+
+/*
+ * First component-level `prefers-reduced-motion` rule in Orbit (the only
+ * prior precedent, in styles.css, is a *global* rule that shortens all
+ * animation/transition durations to 0.01ms — it does not remove the
+ * shimmer's background-image, and it only applies where styles.css is
+ * loaded). This component additionally disables its own animation and
+ * flattens to the plain base color, so it is correct standalone too.
+ * Future indeterminate spinners/progress-bars should adopt the same
+ * per-component pattern (out of scope here).
+ */
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+    background-image: none;
+  }
+}

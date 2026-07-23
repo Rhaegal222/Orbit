@@ -1,0 +1,181 @@
+.motion-page__tokens {
+  display: grid;
+  gap: var(--orbit-layout-gap);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.motion-page__token {
+  display: grid;
+  gap: var(--orbit-space-1);
+  padding: var(--orbit-space-3);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-raised);
+}
+
+.motion-page__token strong {
+  color: var(--orbit-text-primary);
+  font-size: var(--orbit-font-size-subtitle);
+}
+
+.motion-page__token:hover {
+  animation: orbit-lab-token-preview var(--motion-token-duration) var(--motion-token-easing);
+}
+
+.motion-page__token span {
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-sm);
+}
+
+.motion-page__pattern-action {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-2);
+}
+
+.motion-page__row--tappable {
+  cursor: pointer;
+}
+
+.motion-page__row--tappable:hover,
+.motion-page__row--tappable:focus-visible {
+  background: var(--orbit-surface-raised);
+}
+
+::ng-deep .motion-page__pattern-preview {
+  display: inline-grid;
+  place-items: center;
+  width: var(--orbit-control-height);
+  height: var(--orbit-control-height);
+}
+
+::ng-deep .motion-page__pattern-demo {
+  display: block;
+  width: var(--orbit-space-4);
+  height: var(--orbit-space-4);
+  border-radius: var(--orbit-radius-sm);
+  background: var(--orbit-action-primary-bg);
+  animation-duration: var(--orbit-motion-base);
+  animation-timing-function: var(--orbit-easing-standard);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+::ng-deep .motion-page__pattern-demo--overlay {
+  animation-name: orbit-lab-overlay-enter;
+  animation-duration: var(--orbit-motion-slow);
+}
+
+::ng-deep .motion-page__pattern-demo--menu {
+  transform-origin: top center;
+  animation-name: orbit-lab-menu-enter;
+}
+
+::ng-deep .motion-page__pattern-demo--tooltip {
+  animation-name: orbit-lab-tooltip-enter;
+  animation-duration: var(--orbit-motion-fast);
+}
+
+::ng-deep .motion-page__pattern-demo--section {
+  animation-name: orbit-lab-section-enter;
+}
+
+::ng-deep .motion-page__pattern-demo--feedback {
+  animation-name: orbit-lab-feedback-enter;
+  animation-duration: var(--orbit-motion-fast);
+}
+
+@keyframes orbit-lab-overlay-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes orbit-lab-token-preview {
+  from {
+    opacity: 0.72;
+    transform: translateY(var(--orbit-space-1)) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes orbit-lab-menu-enter {
+  from {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes orbit-lab-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--orbit-space-1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes orbit-lab-section-enter {
+  from {
+    opacity: 0;
+    transform: scaleY(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes orbit-lab-feedback-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.motion-page__floating-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 18rem) auto;
+  align-items: end;
+  gap: var(--orbit-layout-gap);
+}
+
+/*
+ * Uses a container query (named `lab-viewport`, declared on
+ * .lab-shell__phone-viewport) instead of @media: this page also renders
+ * inside Orbit Lab's mobile-preview phone mockup, a fixed-width div that
+ * never changes the browser viewport, so @media (max-width) would never
+ * match there even though the rendered width is phone-sized.
+ */
+@container lab-viewport (max-width: 48rem) {
+  .motion-page__floating-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .motion-page__pattern-action-col {
+    display: none;
+  }
+}
+

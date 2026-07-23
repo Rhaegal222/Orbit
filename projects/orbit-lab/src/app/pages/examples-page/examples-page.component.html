@@ -1,0 +1,524 @@
+<article>
+  @if (selectedExample() !== 'landing') {
+    <h1>Examples</h1>
+    <p>
+      Composizioni realistiche del dominio Catalogo Prodotti &amp; Listini, costruite con Orbit.
+    </p>
+  }
+
+  <lab-example [fullWidth]="true" [bare]="selectedExample() === 'landing'">
+    @if (selectedExample() !== 'landing') {
+      <orbit-tablist
+        ariaLabel="Esempi del catalogo prodotti"
+        (selectedChange)="selectExample($event)"
+      >
+        <orbit-tab
+          value="portfolio"
+          label="Portafoglio catalogo"
+          [selected]="selectedExample() === 'portfolio'"
+        >
+          <orbit-badge orbitTabBadge tone="primary" label="Tabella" />
+        </orbit-tab>
+        <orbit-tab
+          value="dossier"
+          label="Dossier prodotto"
+          [selected]="selectedExample() === 'dossier'"
+        >
+          <orbit-badge orbitTabBadge tone="info" label="Workspace" />
+        </orbit-tab>
+        <orbit-tab
+          value="quick-action"
+          label="Azione rapida"
+          [selected]="selectedExample() === 'quick-action'"
+        >
+          <orbit-badge orbitTabBadge tone="warning" label="Modale" />
+        </orbit-tab>
+        <orbit-tab
+          value="landing"
+          label="Landing partner"
+          [selected]="selectedExample() === 'landing'"
+        >
+          <orbit-badge orbitTabBadge tone="success" label="Landing" />
+        </orbit-tab>
+      </orbit-tablist>
+    }
+
+    @switch (selectedExample()) {
+      @case ('portfolio') {
+        <orbit-tab-panel value="portfolio">
+          <section class="examples__workspace" aria-labelledby="portfolio-title">
+            <orbit-panel>
+              <div class="examples__header">
+                <div>
+                  <p class="examples__eyebrow">Catalogo Prodotti &amp; Listini / Portafoglio</p>
+                  <h2 id="portfolio-title">Elenco prodotti</h2>
+                  <p>Gestisci qualità della scheda, listini e pubblicazione sui canali B2B.</p>
+                </div>
+                <div class="examples__header-actions">
+                  <orbit-button label="Esporta Schede (PDF)" variant="outline" tone="neutral" />
+                  <orbit-button label="Nuovo Prodotto" />
+                </div>
+              </div>
+              <div class="examples__stats" aria-label="Metriche catalogo">
+                <div><span>Totale SKU</span><strong>1.284</strong></div>
+                <div><span>In attesa di foto</span><strong>42</strong></div>
+                <div><span>Completezza media</span><strong>86%</strong></div>
+              </div>
+            </orbit-panel>
+
+            <orbit-panel>
+              <div class="examples__filter-grid">
+                <orbit-form-field label="Cerca" inputId="catalog-search">
+                  <orbit-text-input
+                    inputId="catalog-search"
+                    placeholder="Cerca per SKU, nome o codice EAN..."
+                    type="search"
+                    [formControl]="search"
+                  />
+                </orbit-form-field>
+                <orbit-form-field label="Famiglia prodotto" inputId="catalog-category">
+                  <orbit-select
+                    inputId="catalog-category"
+                    placeholder="Filtra per famiglia prodotto"
+                    [options]="categoryOptions"
+                    [formControl]="categoryFilter"
+                  />
+                </orbit-form-field>
+                <orbit-form-field label="Canale di vendita" inputId="catalog-channel">
+                  <orbit-select
+                    inputId="catalog-channel"
+                    placeholder="Seleziona canale di vendita"
+                    [options]="channelOptions"
+                    [formControl]="channelFilter"
+                  />
+                </orbit-form-field>
+                <orbit-form-field label="Ultima modifica" inputId="catalog-modified-start">
+                  <orbit-date-range-picker
+                    startInputId="catalog-modified-start"
+                    endInputId="catalog-modified-end"
+                    startLabel="Dal"
+                    endLabel="Al"
+                    [formControl]="modifiedRange"
+                  />
+                </orbit-form-field>
+              </div>
+            </orbit-panel>
+
+            <orbit-table>
+              <thead>
+                <tr>
+                  <th>
+                    <orbit-table-column
+                      sortable
+                      [sortDirection]="skuSort()"
+                      (sortChange)="setSkuSort($event)"
+                      >SKU</orbit-table-column
+                    >
+                  </th>
+                  <th>Prodotto</th>
+                  <th>Categoria</th>
+                  <th>Owner</th>
+                  <th>Prezzo base</th>
+                  <th>Completezza</th>
+                  <th>Stato</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (product of products(); track product.sku) {
+                  <tr orbitTableRow [disabled]="product.status === 'Bozza Scheda'">
+                    <td>{{ product.sku }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.owner }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.completeness }}</td>
+                    <td><orbit-badge [tone]="product.tone" [label]="product.status" /></td>
+                    <td><orbit-button label="Apri" variant="flat" tone="primary" /></td>
+                  </tr>
+                }
+              </tbody>
+            </orbit-table>
+          </section>
+        </orbit-tab-panel>
+      }
+
+      @case ('dossier') {
+        <orbit-tab-panel value="dossier">
+          <section class="examples__workspace" aria-labelledby="dossier-title">
+            <orbit-panel>
+              <div class="examples__header">
+                <div>
+                  <p class="examples__eyebrow">
+                    Catalogo Prodotti &amp; Listini / Illuminazione / Moduli LED Smart
+                  </p>
+                  <h2 id="dossier-title">Modulo Proiettore LED Industrial 150W</h2>
+                  <p>SKU PRD-8012-X · GTIN 08012345678901 · Ultima revisione 18/07/2026</p>
+                </div>
+                <div class="examples__header-actions">
+                  <orbit-badge tone="success" label="Attivo a Catalogo" /><orbit-button
+                    label="Pubblica su Canali B2B"
+                  />
+                </div>
+              </div>
+              <div class="examples__stats" aria-label="Metriche prodotto">
+                <div><span>Prezzo base</span><strong>€ 240,00</strong></div>
+                <div><span>Margine target</span><strong>32%</strong></div>
+                <div><span>Completezza</span><strong>98%</strong></div>
+                <div><span>Modello pricing</span><strong>Tier / Volume</strong></div>
+              </div>
+            </orbit-panel>
+
+            <orbit-tablist
+              ariaLabel="Sezioni del dossier prodotto"
+              (selectedChange)="setProductSection($event)"
+            >
+              <orbit-tab
+                value="overview"
+                label="Panoramica & Attributi"
+                [selected]="selectedProductSection() === 'overview'"
+              />
+              <orbit-tab
+                value="pricing"
+                label="Listini & Pricing"
+                [selected]="selectedProductSection() === 'pricing'"
+              />
+              <orbit-tab
+                value="variants"
+                label="Varianti"
+                [selected]="selectedProductSection() === 'variants'"
+              />
+              <orbit-tab
+                value="media"
+                label="Media & Allegati"
+                [selected]="selectedProductSection() === 'media'"
+              />
+              <orbit-tab
+                value="channels"
+                label="Canali di Vendita"
+                [selected]="selectedProductSection() === 'channels'"
+              />
+            </orbit-tablist>
+
+            @switch (selectedProductSection()) {
+              @case ('overview') {
+                <orbit-tab-panel value="overview">
+                  <div class="examples__dossier-grid">
+                    <orbit-panel>
+                      <orbit-form-section title="Panoramica & Attributi" [contentSpacing]="true">
+                        <orbit-form-grid>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Famiglia prodotto" inputId="product-family"
+                              ><orbit-select inputId="product-family" [options]="categoryOptions"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Product Manager" inputId="product-owner"
+                              ><orbit-text-input inputId="product-owner" placeholder="Marco Rossi"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Data lancio" inputId="product-launch"
+                              ><orbit-text-input inputId="product-launch" placeholder="15/09/2026"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Codice EAN" inputId="product-ean"
+                              ><orbit-text-input inputId="product-ean" placeholder="08012345678901"
+                            /></orbit-form-field>
+                          </div>
+                        </orbit-form-grid>
+                      </orbit-form-section>
+                      <orbit-form-section title="Listini & Pricing" [contentSpacing]="true"
+                        ><orbit-form-grid
+                          ><div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Prezzo base" inputId="product-price"
+                              ><orbit-text-input
+                                inputId="product-price"
+                                type="currency"
+                                [formControl]="listPrice"
+                            /></orbit-form-field>
+                          </div>
+                          <div orbitFormGridItem [span]="6">
+                            <orbit-form-field label="Canale principale" inputId="product-channel"
+                              ><orbit-select inputId="product-channel" [options]="channelOptions"
+                            /></orbit-form-field></div></orbit-form-grid
+                      ></orbit-form-section>
+                    </orbit-panel>
+                    <div class="examples__dossier-side">
+                      <orbit-panel
+                        ><orbit-form-section title="Media & Allegati" [contentSpacing]="true"
+                          ><orbit-attachment-list [entries]="attachments" /><orbit-divider
+                            variant="dashed" /><orbit-attachment-dropzone
+                            accept=".pdf,.png,.jpg"
+                            hint="Trascina qui le schede tecniche e le immagini (.pdf, .png, .jpg) per arricchire il prodotto." /></orbit-form-section
+                      ></orbit-panel>
+                      <orbit-panel
+                        ><orbit-badge tone="warning" label="Completamento richiesto" />
+                        <p class="examples__alert">
+                          La scheda prodotto non raggiunge il 100% di completamento: manca il
+                          manuale d’uso in lingua italiana.
+                        </p>
+                        <orbit-button
+                          label="Associa Documentazione"
+                          variant="outline"
+                          tone="neutral"
+                      /></orbit-panel>
+                    </div>
+                  </div>
+                </orbit-tab-panel>
+              }
+              @case ('pricing') {
+                <orbit-tab-panel value="pricing"
+                  ><orbit-panel
+                    ><orbit-form-section title="Listini & Pricing" [contentSpacing]="true"
+                      ><orbit-form-grid
+                        ><div orbitFormGridItem [span]="6">
+                          <orbit-form-field label="Prezzo base" inputId="pricing-base"
+                            ><orbit-text-input
+                              inputId="pricing-base"
+                              type="currency"
+                              [formControl]="listPrice"
+                          /></orbit-form-field>
+                        </div>
+                        <div orbitFormGridItem [span]="6">
+                          <orbit-form-field label="Canale di vendita" inputId="pricing-channel"
+                            ><orbit-select inputId="pricing-channel" [options]="channelOptions"
+                          /></orbit-form-field></div></orbit-form-grid></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+              @case ('variants') {
+                <orbit-tab-panel value="variants"
+                  ><orbit-panel
+                    ><orbit-form-section title="Varianti disponibili" [contentSpacing]="true"
+                      ><orbit-form-grid
+                        ><div orbitFormGridItem [span]="4">
+                          <orbit-selectable-tile
+                            label="Corpo nero"
+                            description="SKU PRD-8012-X-BK"
+                            [selected]="true"
+                          />
+                        </div>
+                        <div orbitFormGridItem [span]="4">
+                          <orbit-selectable-tile
+                            label="Corpo bianco"
+                            description="SKU PRD-8012-X-WH"
+                          />
+                        </div>
+                        <div orbitFormGridItem [span]="4">
+                          <orbit-selectable-tile
+                            label="Ottica 60°"
+                            description="SKU PRD-8012-X-60"
+                          /></div></orbit-form-grid></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+              @case ('media') {
+                <orbit-tab-panel value="media"
+                  ><orbit-panel
+                    ><orbit-form-section title="Media & Allegati" [contentSpacing]="true"
+                      ><orbit-attachment-list [entries]="attachments" /><orbit-divider
+                        variant="dashed" /><orbit-attachment-dropzone
+                        accept=".pdf,.png,.jpg"
+                        hint="Trascina qui le schede tecniche e le immagini (.pdf, .png, .jpg) per arricchire il prodotto." /></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+              @case ('channels') {
+                <orbit-tab-panel value="channels"
+                  ><orbit-panel
+                    ><orbit-form-section title="Canali di Vendita" [contentSpacing]="true"
+                      ><orbit-form-field label="Canale principale" inputId="channel-primary"
+                        ><orbit-select
+                          inputId="channel-primary"
+                          [options]="channelOptions" /></orbit-form-field
+                      ><orbit-badge
+                        tone="success"
+                        label="B2B Italia pubblicato" /></orbit-form-section></orbit-panel
+                ></orbit-tab-panel>
+              }
+            }
+            <orbit-form-action-bar
+              confirmLabel="Salva modifiche"
+              draftLabel="Salva bozza"
+              statusLabel="Modifiche salvate localmente"
+            />
+          </section>
+        </orbit-tab-panel>
+      }
+
+      @case ('quick-action') {
+        <orbit-tab-panel value="quick-action">
+          <section class="examples__workspace" aria-labelledby="quick-action-title">
+            <div class="examples__modal-intro">
+              <h2 id="quick-action-title">Aggiornamento listino contestuale</h2>
+              <p>
+                Un micro-flusso che applica un’azione puntuale senza interrompere il lavoro sul
+                catalogo.
+              </p>
+            </div>
+            <orbit-modal labelledBy="price-modal-title" size="md">
+              <orbit-modal-header
+                titleId="price-modal-title"
+                title="Applica variazione prezzo di listino"
+                subtitle="6 prodotti selezionati · B2B Italia"
+              />
+              <orbit-modal-body>
+                <orbit-form-section title="Tipo di aggiornamento" [contentSpacing]="true"
+                  ><orbit-form-grid
+                    ><div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile
+                        label="Percentuale"
+                        description="Incremento o sconto"
+                        [selected]="updateType() === 'percent'"
+                        (selectedChange)="setUpdateType('percent')"
+                      />
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile
+                        label="Valore fisso"
+                        description="Nuovo prezzo netto"
+                        [selected]="updateType() === 'fixed'"
+                        (selectedChange)="setUpdateType('fixed')"
+                      />
+                    </div>
+                    <div orbitFormGridItem [span]="4">
+                      <orbit-selectable-tile
+                        label="Listino sorgente"
+                        description="Copia da un canale"
+                        [selected]="updateType() === 'source'"
+                        (selectedChange)="setUpdateType('source')"
+                      /></div></orbit-form-grid
+                ></orbit-form-section>
+                <div class="examples__quick-action-content">
+                  <orbit-form-grid
+                    ><div orbitFormGridItem [span]="6">
+                      <orbit-form-field label="Variazione" inputId="price-change"
+                        ><orbit-text-input
+                          inputId="price-change"
+                          type="currency"
+                          placeholder="10,00"
+                      /></orbit-form-field>
+                    </div>
+                    <div orbitFormGridItem [span]="6">
+                      <orbit-form-field label="Canale di vendita" inputId="price-channel"
+                        ><orbit-select inputId="price-channel" [options]="channelOptions"
+                      /></orbit-form-field></div
+                  ></orbit-form-grid>
+                  <orbit-panel
+                    ><orbit-badge tone="warning" label="Conferma richiesta" />
+                    <p class="examples__alert">
+                      La variazione verrà applicata ai 6 SKU selezionati e registrata nello storico
+                      del listino.
+                    </p></orbit-panel
+                  >
+                </div>
+              </orbit-modal-body>
+              <orbit-modal-footer variant="form"
+                ><orbit-form-action-bar
+                  confirmLabel="Aggiorna Listino"
+                  draftLabel="Annulla"
+                  [showCancel]="false"
+                  statusLabel="Nessuna variazione applicata"
+              /></orbit-modal-footer>
+            </orbit-modal>
+          </section>
+        </orbit-tab-panel>
+      }
+
+      @case ('landing') {
+        <orbit-tab-panel value="landing">
+          <section class="examples__landing" aria-labelledby="landing-title">
+            <orbit-navbar
+              brand="Lumenova"
+              ariaLabel="Navigazione Lumenova"
+              [items]="landingNavItems"
+              [activeId]="selectedLandingNav()"
+              (itemSelected)="selectLandingNav($event)"
+            >
+              <orbit-button
+                orbitNavbarActions
+                label="Area riservata"
+                variant="outline"
+                tone="neutral"
+              />
+              <orbit-button orbitNavbarActions label="Parla con noi" />
+            </orbit-navbar>
+
+            <div class="examples__landing-hero">
+              <div class="examples__landing-copy">
+                <orbit-badge tone="neutral" label="Illuminazione professionale" />
+                <p class="examples__landing-eyebrow">Progetti che restano accesi</p>
+                <h2 id="landing-title">Luce affidabile per ogni spazio che conta.</h2>
+                <p>
+                  Soluzioni LED, controllo intelligente e supporto progettuale per industria, retail
+                  e spazi pubblici.
+                </p>
+                <div class="examples__landing-actions">
+                  <orbit-button label="Esplora le soluzioni" />
+                  <orbit-button label="Scarica il catalogo" variant="outline" tone="neutral" />
+                </div>
+                <div class="examples__landing-trust" aria-label="Indicatori di affidabilità">
+                  <span><strong>25 anni</strong> di progetti realizzati</span>
+                  <span><strong>48 h</strong> per una prima consulenza</span>
+                </div>
+              </div>
+
+              <aside class="examples__landing-highlight" aria-label="Progetto in evidenza">
+                <span>Case study</span>
+                <strong>Hub logistico di Bologna</strong>
+                <p>−42% consumi energetici · −60% manutenzione programmata</p>
+                <div class="examples__landing-highlight-visual" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </aside>
+            </div>
+
+            <div class="examples__landing-metrics" aria-label="Risultati Lumenova">
+              <div><strong>3.600+</strong><span>impianti attivi</span></div>
+              <div><strong>98%</strong><span>consegne puntuali</span></div>
+              <div><strong>24/7</strong><span>monitoraggio remoto</span></div>
+              <div><strong>EU</strong><span>rete di assistenza</span></div>
+            </div>
+
+            <section class="examples__landing-section" aria-labelledby="landing-services-title">
+              <div>
+                <p class="examples__landing-eyebrow">Dalla consulenza al risultato</p>
+                <h3 id="landing-services-title">Una piattaforma luminosa, non solo prodotti.</h3>
+              </div>
+              <div class="examples__landing-features">
+                <orbit-panel>
+                  <orbit-badge tone="primary" label="01" />
+                  <h4>Progettazione</h4>
+                  <p>Analisi illuminotecnica e simulazioni per decidere con dati concreti.</p>
+                </orbit-panel>
+                <orbit-panel>
+                  <orbit-badge tone="primary" label="02" />
+                  <h4>Controllo intelligente</h4>
+                  <p>Scene, sensori e telemetria per rendere ogni kWh misurabile.</p>
+                </orbit-panel>
+                <orbit-panel>
+                  <orbit-badge tone="primary" label="03" />
+                  <h4>Continuità operativa</h4>
+                  <p>Supporto tecnico e ricambi per proteggere l’investimento nel tempo.</p>
+                </orbit-panel>
+              </div>
+            </section>
+
+            <section class="examples__landing-cta" aria-labelledby="landing-cta-title">
+              <div>
+                <p class="examples__landing-eyebrow">Il prossimo progetto può iniziare oggi</p>
+                <h3 id="landing-cta-title">Raccontaci lo spazio che vuoi trasformare.</h3>
+              </div>
+              <orbit-button label="Richiedi una consulenza" />
+            </section>
+
+            <footer class="examples__landing-footer">
+              <span>© 2026 Lumenova</span>
+              <span>Milano · Bologna · Roma</span>
+              <span>Privacy · Cookie · Contatti</span>
+            </footer>
+          </section>
+        </orbit-tab-panel>
+      }
+    }
+  </lab-example>
+</article>

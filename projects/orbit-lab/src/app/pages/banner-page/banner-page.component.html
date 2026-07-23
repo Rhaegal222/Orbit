@@ -1,0 +1,50 @@
+<article>
+  <h1>Banner</h1>
+  <p>Messaggio full-width pensato per la cima di una pagina o sezione principale, non annidato in una card.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet" fullWidth>
+      <div data-example="info">
+        <orbit-banner tone="info">Manutenzione programmata alle 22:00.</orbit-banner>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Tone</h2>
+    <div data-example="success">
+      <orbit-banner tone="success">Operazione completata su tutti gli ambienti.</orbit-banner>
+    </div>
+    <div data-example="danger">
+      <orbit-banner tone="danger">Servizio temporaneamente non disponibile.</orbit-banner>
+    </div>
+    <div data-example="warning">
+      <orbit-banner tone="warning">La sessione scadrà tra 5 minuti.</orbit-banner>
+    </div>
+  </section>
+
+  <section>
+    <h2>Dismissible</h2>
+    <lab-example [code]="dismissibleSnippet" fullWidth>
+      <div data-example="dismissible">
+        @if (dismissibleVisible()) {
+          <orbit-banner tone="danger" dismissible (dismissed)="hideDismissible()">
+            Servizio temporaneamente non disponibile.
+          </orbit-banner>
+        }
+      </div>
+      <div data-example="dismissible-reset">
+        <orbit-button label="Mostra di nuovo" variant="outline" tone="neutral" (clicked)="resetDismissible()" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano <code>role="status"</code>.</li>
+      <li>Come l'alert, il banner non si nasconde da solo: l'output <code>dismissed</code> notifica il parent.</li>
+    </ul>
+  </section>
+</article>

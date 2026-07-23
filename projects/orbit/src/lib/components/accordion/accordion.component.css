@@ -1,0 +1,6 @@
+:host {
+  display: block;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-raised);
+}

@@ -1,0 +1,12 @@
+<span
+  class="orbit-badge"
+  [class.orbit-badge--primary]="tone() === 'primary'"
+  [class.orbit-badge--success]="tone() === 'success'"
+  [class.orbit-badge--danger]="tone() === 'danger'"
+  [class.orbit-badge--warning]="tone() === 'warning'"
+  [class.orbit-badge--info]="tone() === 'info'"
+  [class.orbit-badge--neutral]="tone() === 'neutral'"
+>
+  {{ label() }}
+  <ng-content />
+</span>

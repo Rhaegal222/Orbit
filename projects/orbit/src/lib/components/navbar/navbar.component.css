@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+.orbit-navbar {
+  display: flex;
+  align-items: center;
+  min-height: var(--orbit-navbar-height);
+  gap: var(--orbit-space-3);
+  padding: var(--orbit-space-2) var(--orbit-space-4);
+  border-bottom: 1px solid var(--orbit-navbar-border);
+  background: var(--orbit-navbar-bg);
+  color: var(--orbit-navbar-fg);
+  font-family: var(--orbit-font-sans);
+}
+
+.orbit-navbar__brand {
+  flex: 0 0 auto;
+  color: var(--orbit-navbar-fg);
+  font-size: var(--orbit-font-size-subtitle);
+  font-weight: var(--orbit-font-weight-emphasis);
+  white-space: nowrap;
+}
+
+.orbit-navbar__list {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: var(--orbit-space-1);
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.orbit-navbar__item {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--orbit-control-height);
+  padding: 0 var(--orbit-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--orbit-radius-control);
+  background: transparent;
+  color: var(--orbit-navbar-fg-muted);
+  font: inherit;
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-navbar__item:hover:not(:disabled):not(.orbit-navbar__item--disabled) {
+  background: var(--orbit-navbar-item-hover-bg);
+  color: var(--orbit-navbar-fg);
+}
+
+.orbit-navbar__item--active {
+  background: var(--orbit-navbar-item-active-bg);
+  color: var(--orbit-navbar-item-active-fg);
+}
+
+.orbit-navbar__item:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+  box-shadow: var(--orbit-focus-ring);
+}
+
+.orbit-navbar__item:disabled,
+.orbit-navbar__item--disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.orbit-navbar__actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--orbit-space-2);
+}
+
+@media (max-width: 48rem) /* --orbit-breakpoint-md */ {
+  .orbit-navbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .orbit-navbar__list {
+    order: 3;
+    flex-basis: 100%;
+  }
+}

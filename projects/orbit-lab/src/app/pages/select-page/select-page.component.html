@@ -1,0 +1,100 @@
+<article>
+  <h1>Select</h1>
+  <p>Selezione a singola scelta con menu, navigazione da tastiera e filtro opzionale.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet" fullWidth>
+      <div data-example="base">
+        <orbit-form-field label="Periodicità" inputId="sel-base">
+          <orbit-select inputId="sel-base" [options]="options" [formControl]="baseControl" />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Con ricerca (searchable)</h2>
+    <lab-example [code]="searchableSnippet" fullWidth>
+      <div data-example="searchable">
+        <orbit-select
+          inputId="sel-searchable"
+          [options]="options"
+          [searchable]="true"
+          [formControl]="searchableControl"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Tile selezionabile</h2>
+    <p>Alternativa visiva per una scelta discreta, quando l’opzione beneficia di etichetta, icona o descrizione.</p>
+    <lab-example [code]="tileSnippet" fullWidth>
+      <div data-example="selectable-tile">
+        <orbit-selectable-tile
+          label="Opzione con icona"
+          description="La selezione è controllata dal consumer."
+          [selected]="tileSelected()"
+          (selectedChange)="tileSelected.set($event)"
+        >
+          <svg orbitSelectableTileIcon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 4.5 6v5.6c0 4.6 3 7.6 7.5 9.4 4.5-1.8 7.5-4.8 7.5-9.4V6L12 3Z" />
+            <path d="m8.8 12 2.1 2.1 4.4-4.4" />
+          </svg>
+        </orbit-selectable-tile>
+        <orbit-selectable-tile label="Selezionata" [selected]="true" />
+        <orbit-selectable-tile label="Disabilitata" [selected]="true" disabled />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="statesSnippet" fullWidth>
+      <div class="select-page__state-preview">
+        <div data-example="invalid">
+          <orbit-form-field
+            label="Non valido"
+            inputId="sel-invalid"
+            error="Seleziona una periodicità"
+            reserveMessageSpace
+          >
+            <orbit-select inputId="sel-invalid" [options]="options" [invalid]="true" />
+          </orbit-form-field>
+        </div>
+        <div data-example="disabled">
+          <orbit-form-field label="Disabilitato" inputId="sel-disabled" reserveMessageSpace>
+            <orbit-select inputId="sel-disabled" [options]="options" [formControl]="disabledControl" />
+          </orbit-form-field>
+        </div>
+      </div>
+    </lab-example>
+    <div data-example="option-disabled">
+      <p>L'opzione "Semestrale" nell'esempio base è disabilitata singolarmente via <code>OrbitSelectOption.disabled</code>.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Larghezza al 100% del contenitore; il menu a tendina (<code>role="listbox"</code>) è
+      renderizzato tramite un overlay CDK connesso al campo, quindi non viene mai ritagliato da un
+      antenato con <code>overflow</code> impostato e si riposiziona sopra il campo quando non c'è
+      spazio sotto.
+    </p>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>
+        <code>disabled</code> non è un <code>@Input</code> diretto (stessa asimmetria di
+        <code>orbit-text-input</code>): richiede un <code>[formControl]</code> disabilitato.
+      </li>
+      <li><code>invalid</code> è un input diretto, indipendente dai form.</li>
+      <li>Navigazione con frecce su/giù, Invio per selezionare, Escape per chiudere il menu.</li>
+      <li>Il menu espone <code>role="listbox"</code>; ogni opzione è un <code>&lt;button&gt;</code> nativo, mai un <code>&lt;div&gt;</code> cliccabile.</li>
+    </ul>
+  </section>
+</article>

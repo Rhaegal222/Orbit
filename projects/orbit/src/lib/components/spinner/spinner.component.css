@@ -1,0 +1,33 @@
+:host {
+  display: inline-flex;
+}
+
+.orbit-spinner {
+  display: inline-block;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--orbit-radius-full);
+  color: var(--orbit-action-primary-bg);
+  animation: orbit-spinner-spin var(--orbit-motion-spin) linear infinite;
+}
+
+.orbit-spinner--sm {
+  width: var(--orbit-font-size-sm);
+  height: var(--orbit-font-size-sm);
+}
+
+.orbit-spinner--md {
+  width: var(--orbit-sidebar-icon-size);
+  height: var(--orbit-sidebar-icon-size);
+}
+
+.orbit-spinner--lg {
+  width: var(--orbit-sidebar-icon-size-collapsed);
+  height: var(--orbit-sidebar-icon-size-collapsed);
+}
+
+@keyframes orbit-spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

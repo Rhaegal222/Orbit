@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  overflow-x: auto;
+  border-radius: var(--orbit-radius-surface);
+}
+.orbit-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-body);
+  color: var(--orbit-text-primary);
+}
+.orbit-table ::ng-deep th,
+.orbit-table ::ng-deep td {
+  padding: var(--orbit-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+.orbit-table ::ng-deep thead th {
+  color: var(--orbit-text-secondary);
+  font-weight: var(--orbit-font-weight-emphasis);
+  font-size: var(--orbit-font-size-label);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.orbit-table ::ng-deep .orbit-table-row--disabled {
+  color: var(--orbit-text-secondary);
+  opacity: 0.65;
+}
+.orbit-table--bordered {
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  overflow: hidden;
+}
+.orbit-table--bordered ::ng-deep th,
+.orbit-table--bordered ::ng-deep td {
+  border-right: 1px solid var(--orbit-border-subtle);
+}
+.orbit-table--bordered ::ng-deep th:last-child,
+.orbit-table--bordered ::ng-deep td:last-child {
+  border-right: none;
+}
+.orbit-table--striped ::ng-deep tbody tr:nth-child(even) {
+  background: var(--orbit-table-stripe-bg);
+}

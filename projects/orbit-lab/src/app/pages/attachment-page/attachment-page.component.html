@@ -1,0 +1,64 @@
+<article>
+  <h1>Attachments</h1>
+  <p>Lista, stati e dropzone generici per contenuti forniti dal consumer.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="listSnippet" fullWidth
+      ><orbit-attachment-list [entries]="editable"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Sola lettura</h2>
+    <lab-example [code]="listSnippet" fullWidth
+      ><orbit-attachment-list [entries]="readOnly"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Completato</h2>
+    <lab-example [code]="listSnippet" fullWidth
+      ><orbit-attachment-list [entries]="completed"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Errore con azione</h2>
+    <lab-example [code]="listSnippet" fullWidth
+      ><orbit-attachment-list [entries]="failed"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Lista vuota</h2>
+    <lab-example [code]="emptySnippet" fullWidth
+      ><orbit-attachment-list emptyLabel="Nessun elemento disponibile"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Divider tratteggiato</h2>
+    <lab-example [code]="dividerSnippet" fullWidth><orbit-divider variant="dashed" /></lab-example>
+  </section>
+  <section>
+    <h2>Dropzone pronta</h2>
+    <lab-example [code]="dropzoneSnippet" fullWidth
+      ><orbit-attachment-dropzone hint="PDF, PNG · max 10 MB"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Dropzone con errore</h2>
+    <lab-example [code]="dropzoneErrorSnippet" fullWidth
+      ><orbit-attachment-dropzone error="Il file selezionato non è accettato"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Dropzone disabilitata</h2>
+    <lab-example [code]="disabledSnippet" fullWidth
+      ><orbit-attachment-dropzone [disabled]="true"
+    /></lab-example>
+  </section>
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Sotto <code>--orbit-breakpoint-sm</code> (40rem) l'elemento passa a un layout con wrap:
+      contenuto, stato e azioni si dispongono su più righe invece che su una sola.
+    </p>
+  </section>
+</article>

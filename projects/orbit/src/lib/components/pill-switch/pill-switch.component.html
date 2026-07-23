@@ -1,0 +1,22 @@
+<div
+  class="orbit-pill-switch"
+  role="radiogroup"
+  [attr.aria-label]="ariaLabel() || i18n.labels.segmentedControl"
+  [class.orbit-pill-switch--disabled]="isControlDisabled"
+>
+  @for (option of options(); track option.value; let index = $index) {
+    <button
+      type="button"
+      class="orbit-pill-switch__option"
+      role="radio"
+      [class.orbit-pill-switch__option--selected]="option.value === selectedValue()"
+      [attr.aria-checked]="option.value === selectedValue()"
+      [attr.tabindex]="option.value === selectedValue() || (selectedValue() === null && index === 0) ? 0 : -1"
+      [disabled]="isControlDisabled || option.disabled"
+      (click)="select(option)"
+      (keydown)="onKeydown($event, index)"
+    >
+      {{ option.label }}
+    </button>
+  }
+</div>

@@ -1,0 +1,216 @@
+@import './tokens.css';
+@import './theme.css';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+/* CDK overlay classes are global by design: the overlay is outside component encapsulation.
+   container-type here matters beyond containment: `vw`/`vh` always resolve against the real
+   browser viewport no matter what ancestor transform/contain is in play, so inside Orbit
+   Lab's mobile-preview mockup (redirected into .lab-shell__phone-screen, see
+   LabScopedOverlayContainer) a `vw`-based max-width would clamp against the real desktop
+   window, not the simulated phone width — this container establishes a query container so
+   descendants can use `cqw` instead, which resolves against *this* box in both the real
+   (document.body) and mockup-redirected case, since both use this same class. */
+.cdk-overlay-container {
+  container-type: inline-size;
+}
+
+.orbit-dialog-backdrop {
+  background: var(--orbit-overlay-backdrop);
+}
+/* `--orbit-mockup-dialog-max-width`/`--orbit-mockup-panel-max-width` are set by
+   LabScopedOverlayContainer (measured via getBoundingClientRect, not left to the container
+   query alone) only when redirecting into Orbit Lab's mobile-preview mockup; unset — and
+   falling back to the cqw calc — for the real (document.body) container. */
+.orbit-dialog-panel {
+  max-width: var(--orbit-mockup-dialog-max-width, calc(100cqw - 2 * var(--orbit-space-3)));
+  outline: 0;
+}
+/* Enter/exit animation lives only on the transient --entering/--closing modifier, never on the
+   steady-state class: toggling data-orbit-motion off→on while the dialog just sits open would
+   otherwise restart this animation from scratch (removing the `[data-orbit-motion='off'] * {
+   animation: none !important }` override makes any element still matching a plain `animation:
+   <name>` declaration replay it), making an already-open dialog look like it closed and reopened. */
+.orbit-dialog-backdrop--entering {
+  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+.orbit-dialog-panel--entering {
+  animation: orbit-modal-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
+}
+
+.orbit-panel-backdrop {
+  background: var(--orbit-overlay-backdrop);
+}
+.orbit-panel-pane {
+  display: flex;
+  height: 100%;
+  outline: 0;
+}
+/* Caps a narrow viewport to a visible backdrop margin, instead of the configured px size
+   (sm/md/lg…) running edge-to-edge. Skipped for fullWidth: true panels, which are meant to
+   cover the whole viewport on purpose (width: 100vw, no maxWidth in OrbitPanelConfig). */
+.orbit-panel-pane:not(.orbit-panel-pane--full-width) {
+  max-width: var(--orbit-mockup-panel-max-width, 85cqw);
+}
+.orbit-panel-pane > * {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.orbit-popover-panel {
+  animation: orbit-floating-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+  transform-origin: top center;
+}
+
+.orbit-select-panel,
+.orbit-ac-panel,
+.orbit-tp-panel {
+  outline: 0;
+}
+
+.orbit-tooltip-panel {
+  /* The CDK position strategy owns the pane transform. Animate the tooltip
+     content instead, otherwise the keyframe overwrites its translate3d and
+     makes the overlay jump while it is being positioned. */
+  pointer-events: none;
+}
+
+/* Enter animation lives only on the transient --entering modifier — see the matching comment
+   above .orbit-dialog-backdrop--entering for why it must not sit on the steady-state class. */
+.orbit-panel-backdrop--entering {
+  animation: orbit-backdrop-enter var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+
+.orbit-panel-pane--entering {
+  animation: orbit-panel-enter var(--orbit-motion-slow) var(--orbit-easing-standard);
+}
+
+.orbit-panel--left.orbit-panel-pane--entering {
+  animation-name: orbit-panel-enter-from-left;
+}
+
+/* Inside Orbit Lab's mobile-preview mockup, the pane's `position: fixed` already resolves
+   against a `transform`-established containing block (.lab-shell__phone-screen) — animating a
+   *second* transform on top of that (the slide-in) is a known class of browser compositing
+   quirk that can visibly overshoot mid-animation before snapping to the right place once the
+   animation ends. A plain fade has no transform to conflict with. */
+.cdk-overlay-container--lab-mockup .orbit-panel-pane--entering,
+.cdk-overlay-container--lab-mockup .orbit-dialog-panel--entering {
+  animation-name: orbit-backdrop-enter;
+}
+
+.orbit-panel-pane.orbit-panel-pane--closing {
+  animation: orbit-panel-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
+}
+
+.orbit-panel--left.orbit-panel-pane--closing {
+  animation-name: orbit-panel-exit-to-left;
+}
+
+.orbit-panel-backdrop.orbit-panel-backdrop--closing {
+  animation: orbit-backdrop-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
+}
+
+[data-orbit-motion='off'],
+[data-orbit-motion='off'] *,
+[data-orbit-motion='off'] *::before,
+[data-orbit-motion='off'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+@keyframes orbit-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes orbit-modal-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes orbit-floating-enter {
+  from {
+    opacity: 0;
+    transform: scaleY(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes orbit-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes orbit-panel-enter-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes orbit-panel-exit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes orbit-panel-exit-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes orbit-backdrop-exit {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

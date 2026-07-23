@@ -1,0 +1,57 @@
+<article>
+  <h1>Form section</h1>
+  <p>Raggruppa campi correlati sotto un titolo opzionale, con divisore facoltativo.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="titled">
+        <orbit-form-section title="Informazioni del cliente">
+          <p>Ragione sociale, referente e canale di contatto.</p>
+        </orbit-form-section>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Con divisore</h2>
+    <lab-example [code]="dividedSnippet">
+      <div data-example="divided">
+        <orbit-form-section title="Opzioni avanzate" [divided]="true">
+          <p>Contenuto della sezione.</p>
+        </orbit-form-section>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Con indice numerico</h2>
+    <lab-example [code]="indexedSnippet">
+      <div data-example="indexed">
+        <orbit-form-section title="Dati polizza" [index]="1">
+          <p>Contenuto della sezione.</p>
+        </orbit-form-section>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Collassabile</h2>
+    <lab-example [code]="collapsibleSnippet">
+      <div data-example="collapsible">
+        <orbit-form-section title="Dettagli facoltativi" [collapsible]="true">
+          <p>Contenuto della sezione.</p>
+        </orbit-form-section>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <p>
+      L'header collassabile è un <code>&lt;button&gt;</code> nativo con <code>aria-expanded</code>
+      e <code>aria-controls</code> collegati al corpo della sezione, che espone
+      <code>role="region"</code> quando è collassabile.
+    </p>
+  </section>
+</article>

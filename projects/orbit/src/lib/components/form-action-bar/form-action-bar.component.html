@@ -1,0 +1,39 @@
+<div class="orbit-form-action-bar">
+  @if (statusLabel()) {
+    <span class="orbit-form-action-bar__status" role="status">{{ statusLabel() }}</span>
+  }
+
+  <div class="orbit-form-action-bar__actions">
+  @if (showCancel()) {
+    <orbit-button
+      class="orbit-form-action-bar__btn orbit-form-action-bar__btn--cancel"
+      [label]="cancelLabel() || i18n.labels.cancel"
+      variant="outline"
+      tone="neutral"
+      [disabled]="loading()"
+      (clicked)="cancel.emit()"
+    />
+  }
+
+  @if (showDraft()) {
+    <orbit-button
+      class="orbit-form-action-bar__btn orbit-form-action-bar__btn--draft"
+      [label]="draftLabel() || i18n.labels.saveDraft"
+      variant="soft"
+      tone="neutral"
+      [disabled]="loading()"
+      (clicked)="saveDraft.emit()"
+    />
+  }
+
+  <orbit-button
+    class="orbit-form-action-bar__btn orbit-form-action-bar__btn--confirm"
+    [label]="confirmLabel() || i18n.labels.saveAndContinue"
+    variant="solid"
+    [tone]="confirmTone()"
+    [loading]="loading()"
+    [disabled]="loading() || confirmDisabled()"
+    (clicked)="confirm.emit()"
+  />
+  </div>
+</div>

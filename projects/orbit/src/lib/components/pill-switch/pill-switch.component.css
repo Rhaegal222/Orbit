@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.orbit-pill-switch {
+  display: inline-flex;
+  align-items: center;
+  height: var(--orbit-control-height);
+  max-width: 100%;
+  padding: var(--orbit-space-1);
+  gap: var(--orbit-space-1);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-full);
+  background: var(--orbit-surface-subtle);
+}
+
+.orbit-pill-switch--disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.orbit-pill-switch__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(var(--orbit-control-height) - 2 * var(--orbit-space-1));
+  min-width: 0;
+  border: 1px solid transparent;
+  border-radius: var(--orbit-radius-full);
+  padding: 0 var(--orbit-control-padding-inline);
+  background: transparent;
+  color: var(--orbit-text-secondary);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-sm);
+  font-weight: var(--orbit-font-weight-emphasis);
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard), transform var(--orbit-motion-fast) var(--orbit-easing-shared);
+}
+
+@media (pointer: coarse) {
+  .orbit-pill-switch__option {
+    min-height: var(--orbit-control-height-touch-min);
+  }
+}
+
+.orbit-pill-switch__option:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 8%, transparent);
+  color: var(--orbit-text-primary);
+}
+
+.orbit-pill-switch__option:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 1px;
+}
+
+.orbit-pill-switch__option--selected {
+  background: var(--orbit-surface-default);
+  border-color: var(--orbit-border-subtle);
+  color: var(--orbit-action-primary-bg);
+  box-shadow: var(--orbit-shadow-raised);
+}
+
+.orbit-pill-switch__option--selected:hover:not(:disabled) {
+  background: var(--orbit-surface-default);
+  color: var(--orbit-action-primary-bg);
+}
+
+.orbit-pill-switch__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

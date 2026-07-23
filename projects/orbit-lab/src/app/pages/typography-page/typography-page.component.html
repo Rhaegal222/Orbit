@@ -1,0 +1,51 @@
+<article>
+  <h1>Tipografia</h1>
+  <p>
+    Ruoli tipografici tokenizzati per mantenere gerarchia, leggibilità e scala coerenti in ogni
+    densità e tema.
+  </p>
+
+  <section>
+    <h2>Ruoli</h2>
+    <lab-example [code]="rolesSnippet" fullWidth>
+      <div class="typography-page__roles">
+        @for (role of roles; track role.name) {
+          <div class="typography-page__role">
+            <div class="typography-page__role-meta">
+              <strong>{{ role.name }}</strong>
+              <code>{{ role.token }}</code>
+              <span>{{ role.usage }}</span>
+            </div>
+            <span [class]="role.className">{{ role.sample }}</span>
+          </div>
+        }
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Scala e font</h2>
+    <p>
+      Le opzioni del Lab applicano font e scala sullo shell: tutti i ruoli qui sopra si aggiornano
+      insieme, senza dimensioni locali hard-coded.
+    </p>
+    <lab-example [code]="scaleSnippet" fullWidth>
+      <div class="typography-page__scale-preview">
+        <strong class="typography-page__title">Una gerarchia che resta coerente</strong>
+        <span class="typography-page__body">Body per istruzioni e valori operativi.</span>
+        <span class="typography-page__label">Label per metadata e stato.</span>
+        <span class="typography-page__caption">Caption per informazioni secondarie.</span>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Regole d’uso</h2>
+    <ul>
+      <li>Usa Body per testo che l’utente deve leggere o confrontare durante un’operazione.</li>
+      <li>Usa Label per relazioni brevi con un controllo o un valore; non per dati principali.</li>
+      <li>Usa Caption solo per informazioni secondarie; errori e stati persistenti usano Label.</li>
+      <li>Non impostare dimensioni locali: scegli un ruolo e lascia che font, scala e densità agiscano insieme.</li>
+    </ul>
+  </section>
+</article>

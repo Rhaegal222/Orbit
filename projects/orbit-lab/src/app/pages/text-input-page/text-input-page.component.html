@@ -1,0 +1,121 @@
+<article>
+  <h1>Text input</h1>
+  <p>Campo di testo con <code>ControlValueAccessor</code>, otto tipi supportati e formattazione valuta integrata.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="base">
+        <orbit-form-field label="Ragione sociale" inputId="ti-base">
+          <orbit-text-input inputId="ti-base" [formControl]="baseControl" />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Tipi</h2>
+    <lab-example [code]="typeExamplesSnippet" fullWidth>
+      <div class="text-input-page__type-grid">
+        @for (example of typeExamples; track example.type) {
+          <div [attr.data-type-example]="example.type">
+            <p class="text-input-page__type-label">{{ example.type }}</p>
+            <orbit-text-input
+              [inputId]="'ti-type-' + example.type"
+              [type]="example.type"
+              [showLeadingIcon]="
+                example.type === 'email' ||
+                example.type === 'password' ||
+                example.type === 'search' ||
+                example.type === 'tel' ||
+                example.type === 'url'
+              "
+              [formControl]="example.control"
+              [placeholder]="example.type"
+            />
+          </div>
+        }
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Leading icon</h2>
+    <p>
+      Le icone semantiche per email, password, ricerca, telefono e URL sono opt-in tramite
+      <code>showLeadingIcon</code>. Currency mantiene invece il simbolo locale, con la stessa
+      superficie della leading icon.
+    </p>
+    <lab-example [code]="leadingIconSnippet" fullWidth>
+      <div class="text-input-page__icon-variants">
+        <orbit-form-field label="Email" inputId="ti-leading-email">
+          <orbit-text-input
+            inputId="ti-leading-email"
+            type="email"
+            showLeadingIcon
+            [formControl]="emailWithIconControl"
+          />
+        </orbit-form-field>
+        <orbit-form-field label="Password" inputId="ti-leading-password">
+          <orbit-text-input
+            inputId="ti-leading-password"
+            type="password"
+            showLeadingIcon
+            [formControl]="passwordWithIconControl"
+          />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="statesSnippet" fullWidth>
+      <div class="text-input-page__state-preview">
+        <div data-example="invalid">
+          <orbit-form-field
+            label="Non valido"
+            inputId="ti-invalid"
+            error="Inserisci un indirizzo email valido"
+            reserveMessageSpace
+          >
+            <orbit-text-input inputId="ti-invalid" type="email" [invalid]="true" />
+          </orbit-form-field>
+        </div>
+        <div data-example="disabled">
+          <orbit-form-field label="Disabilitato" inputId="ti-disabled" reserveMessageSpace>
+            <orbit-text-input inputId="ti-disabled" [formControl]="disabledControl" />
+          </orbit-form-field>
+        </div>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Larghezza al 100% del contenitore (<code>width: 100%</code> sul wrapper interno): in layout
+      stretti va inserito dentro <code>orbit-form-field</code> o un contenitore di larghezza
+      controllata, non ha un breakpoint proprio.
+    </p>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>
+        <code>disabled</code> non è un <code>@Input</code> diretto: si applica solo tramite
+        <code>ControlValueAccessor.setDisabledState()</code>, quindi richiede un
+        <code>[formControl]</code>/<code>[ngModel]</code> disabilitato — a differenza di
+        <code>orbit-checkbox</code> e <code>orbit-pill-switch</code>, che espongono
+        <code>disabled</code> come input diretto.
+      </li>
+      <li><code>invalid</code> è invece un input diretto, utilizzabile senza un form control.</li>
+      <li>
+        Il tipo <code>password</code> aggiunge un bottone toggle con
+        <code>aria-label</code> dinamico ("Mostra password"/"Nascondi password").
+      </li>
+      <li><code>inputmode</code> è impostato in automatico in base al <code>type</code>.</li>
+    </ul>
+  </section>
+</article>

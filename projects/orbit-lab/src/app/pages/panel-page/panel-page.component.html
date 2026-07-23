@@ -1,0 +1,188 @@
+<article>
+  <h1>Panel</h1>
+  <p>
+    Due varianti: overlay offcanvas transitorio (via <code>OrbitPanelService</code>) e rail di
+    navigazione persistente (<code>orbit-sidebar</code>).
+  </p>
+
+  <section>
+    <h2>Esempio</h2>
+    <p>
+      Compone gli stessi <code>orbit-modal-header</code>, <code>orbit-modal-body</code> e
+      <code>orbit-modal-footer</code> del modal.
+    </p>
+    <lab-example [code]="offcanvasSnippet">
+      <orbit-button
+        label="Apri da sinistra"
+        tone="neutral"
+        variant="outline"
+        (clicked)="openOffcanvas('left')"
+      />
+      <orbit-button label="Apri da destra" (clicked)="openOffcanvas('right')" />
+    </lab-example>
+    <orbit-selectable-tile
+      label="Larghezza piena"
+      description="fullWidth: true — ignora size e copre l'intero viewport (100vw), invece del clamp min(size, 85vw)"
+      [selected]="fullWidthOffcanvas()"
+      (selectedChange)="setFullWidthOffcanvas($event)"
+    />
+    @if (lastOpenedSide()) {
+      <p>
+        Ultimo lato aperto: <strong>{{ lastOpenedSide() }}</strong>
+      </p>
+    }
+  </section>
+
+  <section>
+    <h2>Sidebar</h2>
+    <lab-example [code]="sidebarSnippet" fullWidth>
+      <div class="panel-page__sidebar-preview">
+        <orbit-sidebar
+          brand="Orbit"
+          [brandIcon]="showBrandIcon() ? 'layers' : null"
+          ariaLabel="Anteprima sidebar"
+          [sections]="currentSections()"
+          [activeId]="activeId()"
+          [collapsed]="collapsed()"
+          [showHeader]="showSidebarHeader()"
+          [showFooter]="showSidebarFooter()"
+          [toggleMargin]="toggleMargin()"
+          (itemSelected)="select($event)"
+          (collapsedChange)="setCollapsed($event)"
+        >
+          <span orbitSidebarFooter>Footer proiettato</span>
+        </orbit-sidebar>
+        <aside class="panel-page__sidebar-variant-panel" aria-label="Selettore variante sidebar">
+          <div class="panel-page__sidebar-variant-copy" aria-live="polite">
+            <span>Variante in anteprima</span>
+            <strong>{{ variantLabel() }}</strong>
+          </div>
+
+          <div class="panel-page__sidebar-tile-group" aria-label="Visualizzazione rail">
+            <orbit-selectable-tile
+              label="Espansa"
+              description="Rail completa"
+              [selected]="railVariant() === 'expanded'"
+              (selectedChange)="selectRailVariant('expanded')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              label="Compatta"
+              description="Solo icone"
+              [selected]="railVariant() === 'compact'"
+              (selectedChange)="selectRailVariant('compact')"
+            >
+              <orbit-icon orbitSelectableTileIcon name="home" aria-hidden="true" />
+            </orbit-selectable-tile>
+          </div>
+
+          <div class="panel-page__sidebar-config-row" aria-label="Stati item">
+            <orbit-selectable-tile
+              label="Attivo"
+              description="Elemento selezionato"
+              [selected]="showActiveItem()"
+              (selectedChange)="setItemState('active', $event)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="check" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              label="Con badge"
+              description="Contatore visibile"
+              [selected]="showBadgeItem()"
+              (selectedChange)="setItemState('badge', $event)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+            </orbit-selectable-tile>
+            <orbit-selectable-tile
+              label="Disabilitato"
+              description="Azione non disponibile"
+              [selected]="showDisabledItem()"
+              (selectedChange)="setItemState('disabled', $event)"
+            >
+              <orbit-icon orbitSelectableTileIcon name="settings" aria-hidden="true" />
+            </orbit-selectable-tile>
+          </div>
+
+          <div class="panel-page__sidebar-toggle-range">
+            <span>Margine del toggle</span>
+            <orbit-slider
+              ariaLabel="Margine del toggle della sidebar"
+              [ariaValueText]="toggleMargin() + '%'"
+              [min]="0"
+              [max]="40"
+              [step]="1"
+              showValue
+              (valueChange)="setToggleMargin($event)"
+            />
+          </div>
+
+          <div class="panel-page__sidebar-config-row">
+            <div class="panel-page__sidebar-tile-group" aria-label="Aspetto brand">
+              <orbit-selectable-tile
+                label="Con logo"
+                description="Icona del brand"
+                [selected]="showBrandIcon()"
+                (selectedChange)="selectBrandIcon(true)"
+              >
+                <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+              </orbit-selectable-tile>
+              <orbit-selectable-tile
+                label="Senza logo"
+                description="Iniziale del brand"
+                [selected]="!showBrandIcon()"
+                (selectedChange)="selectBrandIcon(false)"
+              />
+            </div>
+
+            <div class="panel-page__sidebar-tile-group" aria-label="Header sidebar">
+              <orbit-selectable-tile
+                label="Con header"
+                description="Brand e ricerca"
+                [selected]="showSidebarHeader()"
+                (selectedChange)="setShowSidebarHeader(true)"
+              >
+                <orbit-icon orbitSelectableTileIcon name="window" aria-hidden="true" />
+              </orbit-selectable-tile>
+              <orbit-selectable-tile
+                label="Senza header"
+                description="Solo navigazione"
+                [selected]="!showSidebarHeader()"
+                (selectedChange)="setShowSidebarHeader(false)"
+              />
+            </div>
+
+            <div class="panel-page__sidebar-tile-group" aria-label="Footer sidebar">
+              <orbit-selectable-tile
+                label="Con footer"
+                description="Contenuto proiettato"
+                [selected]="showSidebarFooter()"
+                (selectedChange)="setShowSidebarFooter(true)"
+              >
+                <orbit-icon orbitSelectableTileIcon name="layers" aria-hidden="true" />
+              </orbit-selectable-tile>
+              <orbit-selectable-tile
+                label="Senza footer"
+                description="Navigazione essenziale"
+                [selected]="!showSidebarFooter()"
+                (selectedChange)="setShowSidebarFooter(false)"
+              />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Navigazione mobile (drawer)</h2>
+    <p>
+      Sotto <code>--orbit-breakpoint-sm</code>, componi <code>orbit-sidebar embedded</code>
+      dentro un contenuto aperto da <code>OrbitPanelService</code> invece di un nuovo
+      componente: nessuna nuova primitiva è necessaria.
+    </p>
+    <lab-example [code]="drawerNavSnippet">
+      <orbit-icon-button icon="menu" ariaLabel="Apri navigazione" (clicked)="openSidebarDrawer()" />
+    </lab-example>
+  </section>
+</article>

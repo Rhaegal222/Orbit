@@ -1,0 +1,47 @@
+:host {
+  display: inline-flex;
+}
+
+.orbit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--orbit-badge-gap);
+  height: var(--orbit-badge-height);
+  padding: 0 var(--orbit-badge-padding-inline);
+  border-radius: var(--orbit-radius-full);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-label);
+  font-weight: var(--orbit-font-weight-emphasis);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.orbit-badge--primary {
+  background: var(--orbit-badge-primary-bg);
+  color: var(--orbit-badge-primary-fg);
+}
+
+.orbit-badge--success {
+  background: var(--orbit-badge-success-bg);
+  color: var(--orbit-badge-success-fg);
+}
+
+.orbit-badge--danger {
+  background: var(--orbit-badge-danger-bg);
+  color: var(--orbit-badge-danger-fg);
+}
+
+.orbit-badge--warning {
+  background: var(--orbit-badge-warning-bg);
+  color: var(--orbit-badge-warning-fg);
+}
+
+.orbit-badge--info {
+  background: var(--orbit-badge-info-bg);
+  color: var(--orbit-badge-info-fg);
+}
+
+.orbit-badge--neutral {
+  background: var(--orbit-badge-neutral-bg);
+  color: var(--orbit-badge-neutral-fg);
+}

@@ -1,0 +1,10 @@
+<orbit-icon [name]="icon()" class="orbit-toast__icon" />
+<p class="orbit-toast__message">{{ data.message }}</p>
+@if (data.dismissible) {
+  <orbit-icon-button
+    class="orbit-toast__close"
+    icon="close"
+    [ariaLabel]="i18n.labels.close"
+    (clicked)="dismiss()"
+  />
+}

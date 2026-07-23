@@ -22,6 +22,7 @@ import {
   OrbitModalFooterComponent,
   OrbitModalHeaderComponent,
   ORBIT_PANEL_DATA,
+  OrbitIconComponent,
   OrbitPanelService,
   OrbitPanelSurfaceComponent,
   OrbitSelectComponent,
@@ -309,7 +310,7 @@ class LabCatalogOptionsPanelComponent {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    OrbitSidebarComponent,
+    OrbitIconComponent,
     OrbitTextInputComponent,
     OrbitPanelSurfaceComponent,
     OrbitModalHeaderComponent,
@@ -331,32 +332,82 @@ class LabCatalogOptionsPanelComponent {
       titleId="catalog-nav-title"
       (closeClicked)="close()"
     />
-    <orbit-modal-body style="padding: 0; height: 100%; display: flex; flex-direction: column;">
-      <div style="flex: 1 1 auto; min-height: 0; height: 100%;">
-        <orbit-sidebar
-          style="--orbit-sidebar-width: 100%; width: 100%; height: 100%;"
-          brand="Orbit Lab"
-          ariaLabel="Catalogo tecnico"
-          [sections]="data.sidebarSections()"
-          [activeId]="data.activeSidebarId()"
-          [collapsed]="false"
-          [showHeader]="true"
-          [showFooter]="false"
-          (itemSelected)="onItemSelected($event)"
-        >
-          <orbit-text-input
-            orbitSidebarSearch
-            type="search"
-            inputId="lab-catalog-search-mobile"
-            placeholder="Cerca sezione…"
-            showLeadingIcon
-            leadingIconName="search"
-            [formControl]="data.searchControl"
-          />
-        </orbit-sidebar>
+    <orbit-modal-body style="padding: var(--orbit-space-4); height: 100%; display: flex; flex-direction: column; gap: var(--orbit-space-4);">
+      <div style="flex: 0 0 auto;">
+        <orbit-text-input
+          type="search"
+          inputId="lab-catalog-search-mobile"
+          placeholder="Cerca sezione…"
+          showLeadingIcon
+          leadingIconName="search"
+          [formControl]="data.searchControl"
+        />
+      </div>
+      <div class="lab-mobile-nav__list">
+        @for (item of data.sidebarSections()[0].items; track item.id) {
+          <button
+            type="button"
+            class="lab-mobile-nav__item"
+            [class.lab-mobile-nav__item--active]="item.id === data.activeSidebarId()"
+            (click)="onItemSelected(item)"
+          >
+            @if (item.icon) {
+              <orbit-icon [name]="item.icon" class="lab-mobile-nav__item-icon" />
+            }
+            <span class="lab-mobile-nav__item-label">{{ item.label }}</span>
+          </button>
+        }
       </div>
     </orbit-modal-body>
   </orbit-panel-surface>`,
+  styles: `
+    .lab-mobile-nav__list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--orbit-space-1);
+      overflow-y: auto;
+      flex: 1 1 auto;
+    }
+
+    .lab-mobile-nav__item {
+      display: flex;
+      align-items: center;
+      gap: var(--orbit-space-3);
+      padding: var(--orbit-space-2) var(--orbit-space-3);
+      border: none;
+      border-radius: var(--orbit-radius-surface);
+      background: transparent;
+      color: var(--orbit-text-secondary);
+      font-family: var(--orbit-font-sans);
+      font-size: var(--orbit-font-size-body);
+      font-weight: var(--orbit-font-weight-emphasis);
+      text-align: left;
+      cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: var(--orbit-control-height);
+      transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard);
+    }
+
+    .lab-mobile-nav__item:hover {
+      background: var(--orbit-surface-subtle);
+      color: var(--orbit-text-primary);
+    }
+
+    .lab-mobile-nav__item--active {
+      background: var(--orbit-status-info-subtle);
+      color: var(--orbit-status-info);
+    }
+
+    .lab-mobile-nav__item-icon {
+      flex: none;
+      font-size: var(--orbit-font-size-lg);
+    }
+
+    .lab-mobile-nav__item-label {
+      flex: 1 1 auto;
+    }
+  `,
 })
 class LabCatalogNavigationPanelComponent {
   readonly data = inject(ORBIT_PANEL_DATA) as any;
@@ -387,6 +438,9 @@ class LabCatalogNavigationPanelComponent {
     OrbitSidebarComponent,
     OrbitSelectComponent,
     OrbitTextInputComponent,
+    OrbitPanelSurfaceComponent,
+    OrbitModalHeaderComponent,
+    OrbitModalBodyComponent,
     ReactiveFormsModule,
     RouterOutlet,
   ],
@@ -430,6 +484,7 @@ export class LabShellComponent {
   protected readonly device = signal<LabDevice>('smartphone');
   protected readonly orientation = signal<LabOrientation>('portrait');
   protected readonly touchMode = signal(false);
+  protected readonly mobileNavOpen = signal(false);
   protected readonly frameWidthRem = signal(23.4375); // 375px, current smartphone default
   protected readonly sizeOptions: OrbitSelectOption[] = [
     { value: 23.4375, label: '375px (Cellulare)' },
@@ -546,6 +601,7 @@ export class LabShellComponent {
     const isMobilePreview = !this.mobilePreview();
     this.mobilePreview.set(isMobilePreview);
     this.touchMode.set(isMobilePreview);
+    this.mobileNavOpen.set(false);
   }
 
   toggleDevice(): void {
@@ -774,23 +830,36 @@ export class LabShellComponent {
   }
 
   openNavigation(): void {
-    this.panel.open(LabCatalogNavigationPanelComponent, {
-      side: 'left',
-      size: 'md',
-      data: {
-        theme: this.theme,
-        density: this.density,
-        textScale: this.textScale,
-        font: this.font,
-        fontOptions: this.fontOptions,
-        shadowIntensity: this.shadowIntensity,
-        shape: this.shape,
-        sidebarSections: this.sidebarSections,
-        activeSidebarId: this.activeSidebarId,
-        searchControl: this.searchControl,
-        onSidebarItemSelected: (item: OrbitSidebarItem) => this.onSidebarItemSelected(item),
-      },
-    });
+    if (this.mobilePreview()) {
+      this.mobileNavOpen.set(true);
+    } else {
+      this.panel.open(LabCatalogNavigationPanelComponent, {
+        side: 'left',
+        size: 'md',
+        data: {
+          theme: this.theme,
+          density: this.density,
+          textScale: this.textScale,
+          font: this.font,
+          fontOptions: this.fontOptions,
+          shadowIntensity: this.shadowIntensity,
+          shape: this.shape,
+          sidebarSections: this.sidebarSections,
+          activeSidebarId: this.activeSidebarId,
+          searchControl: this.searchControl,
+          onSidebarItemSelected: (item: OrbitSidebarItem) => this.onSidebarItemSelected(item),
+        },
+      });
+    }
+  }
+
+  closeMobileNavigation(): void {
+    this.mobileNavOpen.set(false);
+  }
+
+  onMobileSidebarItemSelected(item: OrbitSidebarItem): void {
+    this.onSidebarItemSelected(item);
+    this.mobileNavOpen.set(false);
   }
 
   openOptions(): void {

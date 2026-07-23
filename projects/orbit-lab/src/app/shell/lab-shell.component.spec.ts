@@ -389,14 +389,16 @@ describe('LabShellComponent', () => {
     fixture.detectChanges();
 
     const navButton = fixture.nativeElement.querySelector(
-      '.lab-shell__nav-toggle button',
+      '.lab-shell__phone-menu-btn button',
     ) as HTMLButtonElement;
     expect(navButton).toBeTruthy();
 
     navButton.click();
     fixture.detectChanges();
 
-    const drawer = overlayContainer.getContainerElement().querySelector('orbit-panel-surface');
+    const drawer = fixture.nativeElement.querySelector(
+      '.lab-shell__mobile-nav-container orbit-panel-surface',
+    );
     expect(drawer).toBeTruthy();
     expect(drawer?.textContent).toContain('Sezioni catalogo');
   });

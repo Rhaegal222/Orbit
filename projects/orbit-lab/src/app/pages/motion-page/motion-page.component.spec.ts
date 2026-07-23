@@ -31,8 +31,9 @@ describe('MotionPageComponent', () => {
   it('alternates between playing and stopping a requested motion pattern', () => {
     expect(fixture.nativeElement.querySelector('.motion-page__pattern-demo')).toBeNull();
 
-    const patternButton = [...fixture.nativeElement.querySelectorAll('orbit-button')]
-      .find((button: HTMLElement) => button.textContent?.includes('Riproduci')) as HTMLElement;
+    const patternButton = [...fixture.nativeElement.querySelectorAll('orbit-button')].find(
+      (button: HTMLElement) => button.textContent?.includes('Riproduci'),
+    ) as HTMLElement;
     patternButton.querySelector('button')?.click();
     fixture.detectChanges();
 
@@ -54,5 +55,27 @@ describe('MotionPageComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance['tileSelected']()).toBe(true);
+  });
+
+  it('opens a dialog modal with pattern details when clicking the info button', () => {
+    const infoButton = fixture.nativeElement.querySelector(
+      '.motion-page__patterns--mobile orbit-icon-button[icon="info"]',
+    ) as HTMLElement;
+    expect(infoButton).toBeTruthy();
+
+    infoButton.querySelector('button')?.click();
+    fixture.detectChanges();
+
+    const modal = document.querySelector('orbit-modal');
+    expect(modal).toBeTruthy();
+    expect(modal?.textContent).toContain('Dettagli: Overlay');
+
+    const closeBtn = [
+      ...((modal?.querySelectorAll('orbit-button') as unknown as HTMLElement[]) || []),
+    ].find((btn) => btn.textContent?.includes('Chiudi')) as HTMLElement;
+    closeBtn.querySelector('button')?.click();
+    fixture.detectChanges();
+
+    expect(document.querySelector('orbit-modal')).toBeNull();
   });
 });

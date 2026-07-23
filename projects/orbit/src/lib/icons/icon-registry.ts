@@ -19,6 +19,7 @@ export type OrbitIconName =
   | 'retry'
   | 'search'
   | 'menu'
+  | 'play'
   | 'tag'
   | 'window'
   | 'grid'
@@ -80,6 +81,7 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
   retry: ['M20 11a8 8 0 1 0 1.1 4M20 5v6h-6'],
   search: ['M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z', 'm20.5 20.5-4.8-4.8'],
   menu: ['M4 6h16', 'M4 12h16', 'M4 18h16'],
+  play: ['M8 5v14l11-7z'],
   tag: [
     'M11 4h6.5A2.5 2.5 0 0 1 20 6.5V13a2 2 0 0 1-.59 1.41l-7 7a2 2 0 0 1-2.82 0l-6-6a2 2 0 0 1 0-2.82l7-7A2 2 0 0 1 11 4Z',
     'M15.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z',

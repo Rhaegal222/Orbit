@@ -111,6 +111,44 @@
             <div class="lab-shell__phone-viewport">
               <router-outlet />
             </div>
+
+            @if (mobilePreview() && mobileNavOpen()) {
+              <div class="lab-shell__mobile-nav-container">
+                <orbit-panel-surface labelledBy="catalog-nav-title">
+                  <orbit-modal-header
+                    title="Sezioni catalogo"
+                    titleId="catalog-nav-title"
+                    (closeClicked)="closeMobileNavigation()"
+                  />
+                  <orbit-modal-body style="padding: 0; height: 100%; display: flex; flex-direction: column;">
+                    <div style="flex: 1 1 auto; min-height: 0; height: 100%;">
+                      <orbit-sidebar
+                        style="--orbit-sidebar-width: 100%; width: 100%; height: 100%;"
+                        brand="Orbit Lab"
+                        ariaLabel="Catalogo tecnico"
+                        [sections]="sidebarSections()"
+                        [activeId]="activeSidebarId()"
+                        [collapsed]="false"
+                        [showHeader]="true"
+                        [showFooter]="false"
+                        (itemSelected)="onMobileSidebarItemSelected($event)"
+                      >
+                        <orbit-text-input
+                          orbitSidebarSearch
+                          type="search"
+                          inputId="lab-catalog-search-mobile-screen"
+                          placeholder="Cerca sezione…"
+                          showLeadingIcon
+                          leadingIconName="search"
+                          [formControl]="searchControl"
+                        />
+                      </orbit-sidebar>
+                    </div>
+                  </orbit-modal-body>
+                </orbit-panel-surface>
+              </div>
+            }
+
             @if (mobilePreview() && touchMode()) {
               <div
                 class="lab-shell__phone-touch-overlay"

@@ -24,7 +24,12 @@
 
   <section>
     <h2>Mappa dei pattern</h2>
-    <div class="motion-page__patterns" role="table" aria-label="Pattern di animazione Orbit">
+    <!-- Vista desktop: Tabella a griglia con 5 colonne -->
+    <div
+      class="motion-page__patterns motion-page__patterns--desktop"
+      role="table"
+      aria-label="Pattern di animazione Orbit (Desktop)"
+    >
       @for (pattern of patterns; track pattern.area) {
         <article class="motion-page__pattern" role="row">
           <strong role="cell">{{ pattern.area }}</strong>
@@ -35,7 +40,9 @@
             <span class="motion-page__pattern-preview" aria-hidden="true">
               @for (run of patternRuns(pattern.area); track run) {
                 <span
-                  [class]="'motion-page__pattern-demo motion-page__pattern-demo--' + pattern.preview"
+                  [class]="
+                    'motion-page__pattern-demo motion-page__pattern-demo--' + pattern.preview
+                  "
                 ></span>
               }
             </span>
@@ -51,6 +58,39 @@
               (clicked)="togglePattern(pattern.area)"
             />
           </span>
+        </article>
+      }
+    </div>
+
+    <!-- Vista mobile: Lista compatta con icone e modal dettagli -->
+    <div
+      class="motion-page__patterns--mobile"
+      role="table"
+      aria-label="Pattern di animazione Orbit (Mobile)"
+    >
+      @for (pattern of patterns; track pattern.area) {
+        <article class="motion-page__pattern-mobile" role="row">
+          <strong role="cell">{{ pattern.area }}</strong>
+          <div class="motion-page__pattern-mobile-actions">
+            <orbit-icon-button
+              [icon]="isPatternPlaying(pattern.area) ? 'close' : 'play'"
+              [ariaLabel]="
+                (isPatternPlaying(pattern.area) ? 'Ferma' : 'Riproduci') +
+                ' animazione ' +
+                pattern.area
+              "
+              variant="outline"
+              tone="neutral"
+              (clicked)="togglePattern(pattern.area)"
+            />
+            <orbit-icon-button
+              icon="info"
+              [ariaLabel]="'Dettagli animazione ' + pattern.area"
+              variant="outline"
+              tone="neutral"
+              (clicked)="openDetails(pattern)"
+            />
+          </div>
         </article>
       }
     </div>
@@ -71,7 +111,10 @@
 
   <section>
     <h2>Transizione di hover (button)</h2>
-    <p>Usa <code>--orbit-motion-fast</code> e <code>--orbit-easing-standard</code> su sfondo, bordo e ombra.</p>
+    <p>
+      Usa <code>--orbit-motion-fast</code> e <code>--orbit-easing-standard</code> su sfondo, bordo e
+      ombra.
+    </p>
     <lab-example [code]="buttonSnippet">
       <orbit-button variant="solid" label="Passa il mouse" />
     </lab-example>
@@ -80,8 +123,8 @@
   <section>
     <h2>Animazione di selezione (selectable-tile)</h2>
     <p>
-      L'indicatore di selezione entra con un <code>@keyframes</code> (<code>orbit-pop</code>) che usa
-      <code>--orbit-easing-standard</code>; sfondo e bordo usano la stessa durata fast.
+      L'indicatore di selezione entra con un <code>@keyframes</code> (<code>orbit-pop</code>) che
+      usa <code>--orbit-easing-standard</code>; sfondo e bordo usano la stessa durata fast.
     </p>
     <lab-example [code]="tileSnippet">
       <orbit-selectable-tile
@@ -105,8 +148,8 @@
   <section>
     <h2>Accessibilità</h2>
     <p>
-      Con <code>prefers-reduced-motion: reduce</code>, Orbit riduce transizioni e animazioni a
-      una durata impercettibile e interrompe le animazioni continue.
+      Con <code>prefers-reduced-motion: reduce</code>, Orbit riduce transizioni e animazioni a una
+      durata impercettibile e interrompe le animazioni continue.
     </p>
   </section>
 </article>

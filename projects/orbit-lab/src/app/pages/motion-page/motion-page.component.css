@@ -1,5 +1,5 @@
 .motion-page__tokens,
-.motion-page__patterns {
+.motion-page__patterns--desktop {
   display: grid;
   gap: var(--orbit-layout-gap);
 }
@@ -53,14 +53,14 @@
   gap: var(--orbit-space-2);
 }
 
-.motion-page__pattern-preview {
+::ng-deep .motion-page__pattern-preview {
   display: inline-grid;
   place-items: center;
   width: var(--orbit-control-height);
   height: var(--orbit-control-height);
 }
 
-.motion-page__pattern-demo {
+::ng-deep .motion-page__pattern-demo {
   display: block;
   width: var(--orbit-space-4);
   height: var(--orbit-space-4);
@@ -72,33 +72,39 @@
   animation-direction: alternate;
 }
 
-.motion-page__pattern-demo--overlay {
+::ng-deep .motion-page__pattern-demo--overlay {
   animation-name: orbit-lab-overlay-enter;
   animation-duration: var(--orbit-motion-slow);
 }
 
-.motion-page__pattern-demo--menu {
+::ng-deep .motion-page__pattern-demo--menu {
   transform-origin: top center;
   animation-name: orbit-lab-menu-enter;
 }
 
-.motion-page__pattern-demo--tooltip {
+::ng-deep .motion-page__pattern-demo--tooltip {
   animation-name: orbit-lab-tooltip-enter;
   animation-duration: var(--orbit-motion-fast);
 }
 
-.motion-page__pattern-demo--section {
+::ng-deep .motion-page__pattern-demo--section {
   animation-name: orbit-lab-section-enter;
 }
 
-.motion-page__pattern-demo--feedback {
+::ng-deep .motion-page__pattern-demo--feedback {
   animation-name: orbit-lab-feedback-enter;
   animation-duration: var(--orbit-motion-fast);
 }
 
 @keyframes orbit-lab-overlay-enter {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes orbit-lab-token-preview {
@@ -113,24 +119,51 @@
 }
 
 @keyframes orbit-lab-menu-enter {
-  from { opacity: 0; transform: scaleY(0.8); }
-  to { opacity: 1; transform: scaleY(1); }
+  from {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes orbit-lab-tooltip-enter {
-  from { opacity: 0; transform: translateY(var(--orbit-space-1)); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(var(--orbit-space-1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes orbit-lab-section-enter {
-  from { opacity: 0; transform: scaleY(0.3); }
-  to { opacity: 1; transform: scaleY(1); }
+  from {
+    opacity: 0;
+    transform: scaleY(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes orbit-lab-feedback-enter {
-  0% { opacity: 0; transform: scale(0.8); }
-  70% { opacity: 1; transform: scale(1.12); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .motion-page__floating-preview {
@@ -140,8 +173,38 @@
   gap: var(--orbit-layout-gap);
 }
 
-@media (max-width: 42rem) {
-  .motion-page__pattern,
+.motion-page__patterns--mobile {
+  display: none;
+}
+
+@media (max-width: 48rem) {
+  .motion-page__patterns--desktop {
+    display: none;
+  }
+  .motion-page__patterns--mobile {
+    display: grid;
+    gap: var(--orbit-space-3);
+  }
+  .motion-page__pattern-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--orbit-space-3);
+    border: 1px solid var(--orbit-border-subtle);
+    border-radius: var(--orbit-radius-surface);
+    background: var(--orbit-surface-raised);
+    font-family: var(--orbit-font-sans);
+  }
+  .motion-page__pattern-mobile strong {
+    color: var(--orbit-text-primary);
+    font-size: var(--orbit-font-size-body);
+    font-weight: var(--orbit-font-weight-emphasis);
+  }
+  .motion-page__pattern-mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--orbit-space-2);
+  }
   .motion-page__floating-preview {
     grid-template-columns: 1fr;
   }

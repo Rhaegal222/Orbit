@@ -1,0 +1,34 @@
+<article>
+  <h1>Breadcrumb</h1>
+  <p>Traccia di navigazione gerarchica; oltre una certa lunghezza, gli elementi centrali collassano in un menu "…".</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="short">
+        <orbit-breadcrumb [items]="shortItems" (itemSelected)="onItemSelected($event)" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Collasso su percorsi lunghi</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="long">
+        <orbit-breadcrumb [items]="longItems" (itemSelected)="onItemSelected($event)" />
+      </div>
+      @if (lastSelectedLabel) {
+        <p>Ultimo elemento selezionato: <strong>{{ lastSelectedLabel }}</strong></p>
+      }
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>Struttura semantica <code>&lt;nav aria-label="breadcrumb"&gt;&lt;ol&gt;</code>.</li>
+      <li>L'ultimo elemento (pagina corrente) è uno <code>&lt;span aria-current="page"&gt;</code>, non cliccabile.</li>
+      <li>Il pulsante "…" apre un popover CDK Overlay con gli elementi nascosti.</li>
+    </ul>
+  </section>
+</article>

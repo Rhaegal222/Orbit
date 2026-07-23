@@ -17,6 +17,37 @@ export const routes: Routes = [
       import('./pages/badge-page/badge-page.component').then((m) => m.BadgePageComponent),
   },
   {
+    path: 'avatar',
+    loadComponent: () =>
+      import('./pages/avatar-page/avatar-page.component').then((m) => m.AvatarPageComponent),
+  },
+  {
+    path: 'chip',
+    loadComponent: () =>
+      import('./pages/chip-page/chip-page.component').then((m) => m.ChipPageComponent),
+  },
+  {
+    path: 'breadcrumb',
+    loadComponent: () =>
+      import('./pages/breadcrumb-page/breadcrumb-page.component').then(
+        (m) => m.BreadcrumbPageComponent,
+      ),
+  },
+  {
+    path: 'pagination',
+    loadComponent: () =>
+      import('./pages/pagination-page/pagination-page.component').then(
+        (m) => m.PaginationPageComponent,
+      ),
+  },
+  {
+    path: 'accordion',
+    loadComponent: () =>
+      import('./pages/accordion-page/accordion-page.component').then(
+        (m) => m.AccordionPageComponent,
+      ),
+  },
+  {
     path: 'form-grid',
     redirectTo: 'layout',
     pathMatch: 'full',

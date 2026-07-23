@@ -1,0 +1,40 @@
+<article>
+  <h1>Pagination</h1>
+  <p>Navigazione tra pagine numerate, con collasso decorativo delle pagine intermedie non adiacenti.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="base">
+        <orbit-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChange)="onPageChange($event)" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Pagina centrale</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="middle">
+        <orbit-pagination [currentPage]="middlePage" [totalPages]="manyPages" (pageChange)="onMiddlePageChange($event)" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Ultima pagina</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="last">
+        <orbit-pagination [currentPage]="lastPage" [totalPages]="manyPages" (pageChange)="onLastPageChange($event)" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>Struttura semantica <code>&lt;nav aria-label="pagination"&gt;</code>.</li>
+      <li>La pagina corrente porta <code>aria-current="page"</code>.</li>
+      <li>I pulsanti precedente/successivo si disabilitano automaticamente sui bordi dell'intervallo.</li>
+    </ul>
+  </section>
+</article>

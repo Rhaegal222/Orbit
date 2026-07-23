@@ -1,17 +1,22 @@
 import { CatalogEntry } from './catalog-entry.model';
 
 export const CATALOG_ENTRIES: CatalogEntry[] = [
+  { slug: 'accordion', label: 'Accordion', status: 'verified', icon: 'layers' },
   { slug: 'attachments', label: 'Allegati', status: 'verified', icon: 'paperclip' },
   { slug: 'motion', label: 'Animazioni', status: 'verified', icon: 'retry' },
+  { slug: 'avatar', label: 'Avatar', status: 'verified', icon: 'user' },
   { slug: 'progress-bar', label: 'Barra di avanzamento', status: 'verified', icon: 'bar-chart' },
   { slug: 'navbar', label: 'Barra di navigazione', status: 'verified', icon: 'menu' },
   { slug: 'badge', label: 'Badge', status: 'verified', icon: 'tag' },
+  { slug: 'breadcrumb', label: 'Breadcrumb', status: 'verified', icon: 'chevron-down' },
   { slug: 'form-field', label: 'Campi modulo', status: 'verified', icon: 'document' },
   { slug: 'checkbox', label: 'Caselle di controllo', status: 'verified', icon: 'check' },
+  { slug: 'chip', label: 'Chip', status: 'verified', icon: 'tag' },
   { slug: 'dialog', label: 'Dialoghi', status: 'verified', icon: 'window' },
   { slug: 'examples', label: 'Esempi', status: 'verified', icon: 'window' },
   { slug: 'layout', label: 'Layout', status: 'verified', icon: 'grid' },
   { slug: 'text-input', label: 'Input di testo', status: 'verified', icon: 'document' },
+  { slug: 'pagination', label: 'Paginazione', status: 'verified', icon: 'grid' },
   { slug: 'panel', label: 'Panel', status: 'verified', icon: 'window' },
   { slug: 'patterns', label: 'Pattern e governance', status: 'verified', icon: 'layers' },
   { slug: 'popover', label: 'Popover', status: 'verified', icon: 'message-circle' },

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import {
   OrbitButtonComponent,
+  OrbitIconButtonComponent,
   OrbitIconComponent,
   OrbitModalBodyComponent,
   OrbitModalFooterComponent,
@@ -77,12 +78,39 @@ class LabPanelDemoContentComponent {
   }
 }
 
+/** Demonstrates the drawer-nav composition pattern: orbit-sidebar embedded inside the existing OrbitPanelService overlay — no new Core primitive. */
+@Component({
+  selector: 'lab-sidebar-drawer-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [OrbitPanelSurfaceComponent, OrbitSidebarComponent],
+  template: `<orbit-panel-surface ariaLabel="Navigazione mobile">
+    <orbit-sidebar
+      embedded
+      brand="Orbit"
+      [sections]="sections"
+      [activeId]="activeId()"
+      (itemSelected)="select($event)"
+    />
+  </orbit-panel-surface>`,
+})
+class LabSidebarDrawerContentComponent {
+  private readonly panel = inject(OrbitPanelService);
+  readonly sections = SIDEBAR_SECTIONS;
+  readonly activeId = signal('overview');
+
+  select(item: OrbitSidebarItem): void {
+    this.activeId.set(item.id);
+    this.panel.closeAll();
+  }
+}
+
 @Component({
   selector: 'lab-panel-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OrbitButtonComponent,
+    OrbitIconButtonComponent,
     OrbitIconComponent,
     OrbitSelectableTileComponent,
     OrbitSidebarComponent,
@@ -158,9 +186,22 @@ export class PanelPageComponent {
   <span orbitSidebarFooter>Footer proiettato</span>
 </orbit-sidebar>`;
 
+  protected readonly drawerNavSnippet = `<!-- Sotto --orbit-breakpoint-sm: apri via OrbitPanelService -->
+<orbit-icon-button icon="menu" ariaLabel="Apri navigazione" (clicked)="openNav()" />
+
+<!-- openNav(): this.panel.open(NavContentComponent, { side: 'left', size: 'sm' }) -->
+<!-- NavContentComponent template: -->
+<orbit-panel-surface ariaLabel="Navigazione mobile">
+  <orbit-sidebar embedded [sections]="sections" [activeId]="activeId" (itemSelected)="select($event)" />
+</orbit-panel-surface>`;
+
   openOffcanvas(side: 'left' | 'right'): void {
     this.lastOpenedSide.set(side);
     this.panel.open(LabPanelDemoContentComponent, { side });
+  }
+
+  openSidebarDrawer(): void {
+    this.panel.open(LabSidebarDrawerContentComponent, { side: 'left', size: 'sm' });
   }
 
   select(item: OrbitSidebarItem): void {

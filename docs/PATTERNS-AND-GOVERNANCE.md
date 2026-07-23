@@ -9,6 +9,7 @@ guide before introducing a new component, service or local CSS extension.
 | --- | --- | --- | --- |
 | Focused task | Modal | A short decision or form needs focused completion. | The user must keep working with the canvas. |
 | Preserved canvas | Offcanvas/sidebar | Navigation, filters or detail belong beside the current work. | The task is a blocking confirmation. |
+| Mobile navigation | `orbit-sidebar embedded` opened via `OrbitPanelService` | The primary navigation must collapse into an overlay under `--orbit-breakpoint-sm`. | The navigation is already visible in a persistent rail on the current viewport. |
 | Local result | Inline alert | A field or section needs actionable, persistent feedback. | The message is only a brief confirmation. |
 | Transient result | Toast | A completed, non-blocking action needs acknowledgement. | An error blocks progress; show it inline too. |
 | Loading | Skeleton | The incoming content shape is known. Preserve its density. | Progress can be stated more clearly with a native progress control. |

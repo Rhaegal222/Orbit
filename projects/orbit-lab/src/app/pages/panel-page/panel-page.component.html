@@ -167,4 +167,16 @@
       </div>
     </lab-example>
   </section>
+
+  <section>
+    <h2>Navigazione mobile (drawer)</h2>
+    <p>
+      Sotto <code>--orbit-breakpoint-sm</code>, componi <code>orbit-sidebar embedded</code>
+      dentro un contenuto aperto da <code>OrbitPanelService</code> invece di un nuovo
+      componente: nessuna nuova primitiva è necessaria.
+    </p>
+    <lab-example [code]="drawerNavSnippet">
+      <orbit-icon-button icon="menu" ariaLabel="Apri navigazione" (clicked)="openSidebarDrawer()" />
+    </lab-example>
+  </section>
 </article>

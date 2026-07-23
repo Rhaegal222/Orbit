@@ -67,4 +67,15 @@ describe('PanelPageComponent', () => {
     expect(overlayEl.querySelector('orbit-modal-footer')).toBeTruthy();
     expect(overlayEl.textContent).toContain('Dettaglio');
   });
+
+  it('opens the sidebar drawer example through OrbitPanelService', () => {
+    const button = fixture.nativeElement.querySelector(
+      'orbit-icon-button button[aria-label="Apri navigazione"]',
+    ) as HTMLButtonElement;
+    button.click();
+    fixture.detectChanges();
+
+    const overlayEl = overlayContainer.getContainerElement();
+    expect(overlayEl.querySelector('orbit-sidebar[embedded]')).toBeTruthy();
+  });
 });

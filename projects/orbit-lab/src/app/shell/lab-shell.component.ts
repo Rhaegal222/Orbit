@@ -435,6 +435,7 @@ class LabCatalogNavigationPanelComponent {
   imports: [
     OrbitButtonComponent,
     OrbitIconButtonComponent,
+    OrbitIconComponent,
     OrbitSidebarComponent,
     OrbitSelectComponent,
     OrbitTextInputComponent,

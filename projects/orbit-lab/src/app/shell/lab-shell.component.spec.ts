@@ -90,66 +90,100 @@ describe('LabShellComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Ruota verticale');
   });
 
-  it('toggles touch mode without blocking interaction, showing a following cursor instead', () => {
+  it('defaults touch mode to on when entering mobile preview, blocking real hover via an overlay', () => {
     fixture.componentInstance.toggleMobilePreview();
     fixture.detectChanges();
 
-    const screen = () => fixture.nativeElement.querySelector('.lab-shell__phone-screen');
-    expect(screen().classList.contains('lab-shell__phone-screen--touch')).toBe(false);
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).toContain('Modalità hover');
 
     const findButton = (label: string) =>
       [...fixture.nativeElement.querySelectorAll('orbit-button')].find((button: HTMLElement) =>
         button.textContent?.includes(label),
       ) as HTMLElement;
 
-    findButton('Modalità tocco').querySelector('button')?.click();
-    fixture.detectChanges();
-
-    expect(screen().classList.contains('lab-shell__phone-screen--touch')).toBe(true);
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeTruthy();
-    expect(fixture.nativeElement.textContent).toContain('Modalità hover');
-
     findButton('Modalità hover').querySelector('button')?.click();
     fixture.detectChanges();
 
-    expect(screen().classList.contains('lab-shell__phone-screen--touch')).toBe(false);
-    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-cursor')).toBeNull();
-  });
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
+    expect(fixture.nativeElement.textContent).toContain('Modalità tocco');
 
-  it('drags the device viewport to scroll instead of forwarding a click to the content below', () => {
-    fixture.componentInstance.toggleMobilePreview();
-    fixture.componentInstance.toggleTouchMode();
+    findButton('Modalità tocco').querySelector('button')?.click();
     fixture.detectChanges();
 
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+  });
+
+  it('turns touch mode off when leaving mobile preview, so it never blocks the desktop view', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
+
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.lab-shell__phone-touch-overlay')).toBeTruthy();
+  });
+
+  it('drags the device viewport to scroll instead of forwarding a tap to the content below', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const overlay = fixture.nativeElement.querySelector(
+      '.lab-shell__phone-touch-overlay',
+    ) as HTMLElement;
     const viewport = fixture.nativeElement.querySelector(
       '.lab-shell__phone-viewport',
     ) as HTMLElement;
-    viewport.setPointerCapture = vi.fn();
-    viewport.hasPointerCapture = vi.fn().mockReturnValue(true);
-    viewport.releasePointerCapture = vi.fn();
-    Object.defineProperty(viewport, 'scrollHeight', { value: 2000, configurable: true });
-    Object.defineProperty(viewport, 'clientHeight', { value: 500, configurable: true });
+    overlay.setPointerCapture = vi.fn();
+    overlay.hasPointerCapture = vi.fn().mockReturnValue(true);
+    overlay.releasePointerCapture = vi.fn();
     viewport.scrollTop = 0;
 
-    const button = document.createElement('button');
-    viewport.appendChild(button);
-    const clickSpy = vi.fn();
-    button.addEventListener('click', clickSpy);
-
     const down = new PointerEvent('pointerdown', { pointerId: 1, clientX: 100, clientY: 300 });
-    viewport.dispatchEvent(down);
+    overlay.dispatchEvent(down);
 
     const move = new PointerEvent('pointermove', { pointerId: 1, clientX: 100, clientY: 200 });
-    viewport.dispatchEvent(move);
+    overlay.dispatchEvent(move);
 
     expect(viewport.scrollTop).toBe(100);
 
+    const elementFromPointSpy = vi.fn();
+    document.elementFromPoint = elementFromPointSpy;
     const up = new PointerEvent('pointerup', { pointerId: 1, clientX: 100, clientY: 200 });
-    viewport.dispatchEvent(up);
+    overlay.dispatchEvent(up);
 
-    button.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
-    expect(clickSpy).not.toHaveBeenCalled();
+    // A drag beyond the threshold must not forward a synthetic tap once released.
+    expect(elementFromPointSpy).not.toHaveBeenCalled();
+  });
+
+  it('forwards a tap (no drag) through the overlay to the element below it', () => {
+    fixture.componentInstance.toggleMobilePreview();
+    fixture.detectChanges();
+
+    const overlay = fixture.nativeElement.querySelector(
+      '.lab-shell__phone-touch-overlay',
+    ) as HTMLElement;
+    overlay.setPointerCapture = vi.fn();
+    overlay.hasPointerCapture = vi.fn().mockReturnValue(true);
+    overlay.releasePointerCapture = vi.fn();
+
+    const button = document.createElement('button');
+    const clickSpy = vi.fn();
+    button.addEventListener('click', clickSpy);
+    document.body.appendChild(button);
+    document.elementFromPoint = vi.fn().mockReturnValue(button);
+
+    overlay.dispatchEvent(new PointerEvent('pointerdown', { pointerId: 1, clientX: 10, clientY: 10 }));
+    overlay.dispatchEvent(new PointerEvent('pointerup', { pointerId: 1, clientX: 10, clientY: 10 }));
+
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+    button.remove();
   });
 
   it('renders an icon for every sidebar item so the collapsed view is never empty', () => {

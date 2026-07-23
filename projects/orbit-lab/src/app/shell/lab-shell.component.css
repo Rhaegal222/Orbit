@@ -248,13 +248,6 @@
   background: var(--orbit-surface-default);
 }
 
-.lab-shell__body--mobile-preview .lab-shell__phone-viewport--touch {
-  overflow: auto;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
 .lab-shell__body--mobile-preview
   .lab-shell__phone[data-lab-orientation='portrait']
   .lab-shell__phone-viewport {
@@ -303,22 +296,20 @@
   }
 }
 
-.lab-shell__phone-screen--touch {
+/* A real touchscreen never fires hover: the overlay intercepts every pointer event so the
+   previewed content underneath never receives real mouse input, and :hover can never match.
+   Its z-index clears every Orbit stacking token (--orbit-z-toast is the highest, at 1200),
+   so it stays on top regardless of what the previewed page renders. */
+.lab-shell__phone-touch-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2000;
   cursor: none;
-}
-
-/* A real touchscreen never fires hover: stop mouse-driven hover transitions/animations
-   from playing inside the previewed content while touch mode simulates that input. */
-.lab-shell__phone-screen--touch .lab-shell__phone-viewport *,
-.lab-shell__phone-screen--touch .lab-shell__phone-viewport *::before,
-.lab-shell__phone-screen--touch .lab-shell__phone-viewport *::after {
-  transition: none !important;
-  animation: none !important;
+  touch-action: none;
 }
 
 .lab-shell__phone-touch-cursor {
   position: absolute;
-  z-index: 4;
   width: 1.5rem;
   height: 1.5rem;
   margin-left: -0.75rem;
@@ -333,7 +324,6 @@
 
 .lab-shell__phone-touch-ripple {
   position: absolute;
-  z-index: 4;
   width: 2.5rem;
   height: 2.5rem;
   margin-left: -1.25rem;

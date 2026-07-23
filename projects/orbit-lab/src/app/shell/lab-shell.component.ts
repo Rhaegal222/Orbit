@@ -434,7 +434,9 @@ export class LabShellComponent {
   }
 
   toggleMobilePreview(): void {
-    this.mobilePreview.update((isMobilePreview) => !isMobilePreview);
+    const isMobilePreview = !this.mobilePreview();
+    this.mobilePreview.set(isMobilePreview);
+    this.touchMode.set(isMobilePreview);
   }
 
   toggleDevice(): void {
@@ -451,62 +453,18 @@ export class LabShellComponent {
     this.touchMode.update((touchMode) => !touchMode);
   }
 
-  onPhoneScreenPointerMove(event: PointerEvent): void {
-    if (!this.touchMode()) {
-      return;
-    }
-    const screen = event.currentTarget as HTMLElement;
-    const cursor = screen.querySelector<HTMLElement>('.lab-shell__phone-touch-cursor');
-    if (!cursor) {
-      return;
-    }
-    const rect = screen.getBoundingClientRect();
-    cursor.style.left = `${event.clientX - rect.left}px`;
-    cursor.style.top = `${event.clientY - rect.top}px`;
-    cursor.style.opacity = '1';
-  }
+  onTouchOverlayPointerMove(event: PointerEvent): void {
+    const overlay = event.currentTarget as HTMLElement;
+    this.moveTouchCursor(overlay, event.clientX, event.clientY);
 
-  onPhoneScreenPointerLeave(event: PointerEvent): void {
-    if (!this.touchMode()) {
-      return;
-    }
-    const cursor = (event.currentTarget as HTMLElement).querySelector<HTMLElement>(
-      '.lab-shell__phone-touch-cursor',
-    );
-    if (cursor) {
-      cursor.style.opacity = '0';
-    }
-  }
-
-  onPhoneScreenPointerDown(event: PointerEvent): void {
-    if (!this.touchMode()) {
-      return;
-    }
-    this.spawnTouchRipple(event.currentTarget as HTMLElement, event.clientX, event.clientY);
-  }
-
-  onPhoneViewportPointerDown(event: PointerEvent): void {
-    if (!this.touchMode()) {
-      return;
-    }
-    const viewport = event.currentTarget as HTMLElement;
-    viewport.setPointerCapture(event.pointerId);
-    this.touchDrag = {
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-      startScrollLeft: viewport.scrollLeft,
-      startScrollTop: viewport.scrollTop,
-      dragged: false,
-    };
-  }
-
-  onPhoneViewportPointerMove(event: PointerEvent): void {
     const drag = this.touchDrag;
     if (!drag || event.pointerId !== drag.pointerId) {
       return;
     }
-    const viewport = event.currentTarget as HTMLElement;
+    const viewport = this.findPhoneViewport(overlay);
+    if (!viewport) {
+      return;
+    }
     const deltaX = event.clientX - drag.startX;
     const deltaY = event.clientY - drag.startY;
     if (!drag.dragged && Math.hypot(deltaX, deltaY) > 4) {
@@ -518,25 +476,68 @@ export class LabShellComponent {
     }
   }
 
-  onPhoneViewportPointerUp(event: PointerEvent): void {
+  onTouchOverlayPointerLeave(event: PointerEvent): void {
+    this.hideTouchCursor(event.currentTarget as HTMLElement);
+  }
+
+  onTouchOverlayPointerDown(event: PointerEvent): void {
+    const overlay = event.currentTarget as HTMLElement;
+    overlay.setPointerCapture(event.pointerId);
+    this.spawnTouchRipple(overlay, event.clientX, event.clientY);
+
+    const viewport = this.findPhoneViewport(overlay);
+    this.touchDrag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startScrollLeft: viewport?.scrollLeft ?? 0,
+      startScrollTop: viewport?.scrollTop ?? 0,
+      dragged: false,
+    };
+  }
+
+  onTouchOverlayPointerUp(event: PointerEvent): void {
+    const overlay = event.currentTarget as HTMLElement;
+    if (overlay.hasPointerCapture(event.pointerId)) {
+      overlay.releasePointerCapture(event.pointerId);
+    }
+
     const drag = this.touchDrag;
-    if (!drag || event.pointerId !== drag.pointerId) {
+    this.touchDrag = null;
+    if (!drag || drag.pointerId !== event.pointerId || drag.dragged) {
       return;
     }
-    const viewport = event.currentTarget as HTMLElement;
-    if (viewport.hasPointerCapture(event.pointerId)) {
-      viewport.releasePointerCapture(event.pointerId);
+
+    // Tap (no drag beyond the threshold): forward a real click to whatever sits below the
+    // overlay, since the overlay itself intercepts every pointer event to keep :hover from
+    // ever reaching the previewed content.
+    overlay.style.pointerEvents = 'none';
+    const target = this.document.elementFromPoint(event.clientX, event.clientY) as HTMLElement | null;
+    overlay.style.pointerEvents = '';
+    if (target && typeof target.click === 'function') {
+      target.click();
     }
-    this.touchDrag = null;
-    if (drag.dragged) {
-      viewport.addEventListener(
-        'click',
-        (clickEvent) => {
-          clickEvent.preventDefault();
-          clickEvent.stopPropagation();
-        },
-        { capture: true, once: true },
-      );
+  }
+
+  private findPhoneViewport(overlay: HTMLElement): HTMLElement | null {
+    return overlay.parentElement?.querySelector<HTMLElement>('.lab-shell__phone-viewport') ?? null;
+  }
+
+  private moveTouchCursor(overlay: HTMLElement, clientX: number, clientY: number): void {
+    const cursor = overlay.querySelector<HTMLElement>('.lab-shell__phone-touch-cursor');
+    if (!cursor) {
+      return;
+    }
+    const rect = overlay.getBoundingClientRect();
+    cursor.style.left = `${clientX - rect.left}px`;
+    cursor.style.top = `${clientY - rect.top}px`;
+    cursor.style.opacity = '1';
+  }
+
+  private hideTouchCursor(overlay: HTMLElement): void {
+    const cursor = overlay.querySelector<HTMLElement>('.lab-shell__phone-touch-cursor');
+    if (cursor) {
+      cursor.style.opacity = '0';
     }
   }
 

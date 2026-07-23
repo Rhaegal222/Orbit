@@ -84,27 +84,24 @@
           [attr.data-lab-device]="device()"
           [attr.data-lab-orientation]="orientation()"
         >
-          <div
-            class="lab-shell__phone-screen"
-            [class.lab-shell__phone-screen--touch]="touchMode()"
-            (pointermove)="onPhoneScreenPointerMove($event)"
-            (pointerdown)="onPhoneScreenPointerDown($event)"
-            (pointerleave)="onPhoneScreenPointerLeave($event)"
-          >
+          <div class="lab-shell__phone-screen">
             <span class="lab-shell__phone-notch" aria-hidden="true"></span>
             <span class="lab-shell__phone-camera" aria-hidden="true"></span>
-            <div
-              class="lab-shell__phone-viewport"
-              [class.lab-shell__phone-viewport--touch]="touchMode()"
-              (pointerdown)="onPhoneViewportPointerDown($event)"
-              (pointermove)="onPhoneViewportPointerMove($event)"
-              (pointerup)="onPhoneViewportPointerUp($event)"
-              (pointercancel)="onPhoneViewportPointerUp($event)"
-            >
+            <div class="lab-shell__phone-viewport">
               <router-outlet />
             </div>
-            @if (touchMode()) {
-              <span class="lab-shell__phone-touch-cursor" aria-hidden="true"></span>
+            @if (mobilePreview() && touchMode()) {
+              <div
+                class="lab-shell__phone-touch-overlay"
+                aria-hidden="true"
+                (pointermove)="onTouchOverlayPointerMove($event)"
+                (pointerdown)="onTouchOverlayPointerDown($event)"
+                (pointerup)="onTouchOverlayPointerUp($event)"
+                (pointercancel)="onTouchOverlayPointerUp($event)"
+                (pointerleave)="onTouchOverlayPointerLeave($event)"
+              >
+                <span class="lab-shell__phone-touch-cursor"></span>
+              </div>
             }
             <span class="lab-shell__phone-home-indicator" aria-hidden="true"></span>
           </div>

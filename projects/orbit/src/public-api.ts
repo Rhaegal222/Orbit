@@ -12,6 +12,7 @@ export * from './lib/components/form-section';
 export * from './lib/components/pill-switch';
 export * from './lib/components/select';
 export * from './lib/components/slider';
+export * from './lib/components/spinner';
 export * from './lib/components/switch';
 export * from './lib/components/text-input';
 export * from './lib/components/autocomplete';

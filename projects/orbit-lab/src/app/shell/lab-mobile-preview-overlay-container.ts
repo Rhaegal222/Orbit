@@ -27,6 +27,7 @@ export class LabScopedOverlayContainer extends OverlayContainer {
   private readonly mobileHost = inject(LabMobilePreviewOverlayHost);
   private readonly document = inject(DOCUMENT);
   private mockupContainerElement: HTMLElement | null = null;
+  private panePositionObserver: MutationObserver | null = null;
 
   override getContainerElement(): HTMLElement {
     const host = this.mobileHost.element();
@@ -45,6 +46,7 @@ export class LabScopedOverlayContainer extends OverlayContainer {
       // has no transform to conflict with, so it doesn't trigger it.
       this.mockupContainerElement.classList.add('cdk-overlay-container', 'cdk-overlay-container--lab-mockup');
       host.appendChild(this.mockupContainerElement);
+      this.observePanePositioning(this.mockupContainerElement, host);
     }
 
     // Measured directly (rather than left to `85cqw`/`100cqw` in styles.css) so the very first
@@ -59,5 +61,58 @@ export class LabScopedOverlayContainer extends OverlayContainer {
       `${width - 2 * spaceUnit}px`,
     );
     return this.mockupContainerElement;
+  }
+
+  /**
+   * `FlexibleConnectedPositionStrategy` (select, autocomplete, date/time picker, popover,
+   * tooltip) writes `top`/`left` on `.cdk-overlay-pane` as real-viewport-absolute pixels,
+   * computed from the trigger's real `getBoundingClientRect()` — it assumes its container sits
+   * at real screen (0, 0), which is true for the default `document.body`-attached container but
+   * not here: this container's `position: fixed` resolves against `host`'s own containing block,
+   * so its local (0, 0) is actually `host`'s on-screen position. Left uncorrected, every
+   * connected overlay renders offset by that amount (further right/down than the trigger it's
+   * meant to hang off). The global position strategy (dialog/panel centering) isn't affected —
+   * it centers via flex layout, not `getBoundingClientRect()` math, so it has no `top`/`left` to
+   * correct here.
+   */
+  private observePanePositioning(container: HTMLElement, host: HTMLElement): void {
+    this.panePositionObserver?.disconnect();
+
+    // Keyed by pane, the `style` attribute text this correction last wrote — lets the callback
+    // tell "CDK just wrote a new raw position" apart from "this mutation is our own previous
+    // write echoing back through the observer", without disconnecting/reconnecting (which races
+    // against reposition bursts that land more than one record per callback: the whole batch is
+    // still processed against a single `getBoundingClientRect()` read, so re-entrant corrections
+    // within a batch amplify the offset instead of converging on it).
+    const lastWritten = new WeakMap<HTMLElement, string>();
+
+    const observer = new MutationObserver((mutations) => {
+      const hostRect = host.getBoundingClientRect();
+      for (const mutation of mutations) {
+        const pane = mutation.target as HTMLElement;
+        if (!(pane instanceof HTMLElement) || !pane.classList.contains('cdk-overlay-pane')) {
+          continue;
+        }
+        const currentStyle = pane.getAttribute('style') ?? '';
+        if (lastWritten.get(pane) === currentStyle) {
+          continue;
+        }
+        const left = parseFloat(pane.style.left);
+        const top = parseFloat(pane.style.top);
+        if (Number.isNaN(left) && Number.isNaN(top)) {
+          continue;
+        }
+        if (!Number.isNaN(left)) {
+          pane.style.left = `${left - hostRect.left}px`;
+        }
+        if (!Number.isNaN(top)) {
+          pane.style.top = `${top - hostRect.top}px`;
+        }
+        lastWritten.set(pane, pane.getAttribute('style') ?? '');
+      }
+    });
+
+    observer.observe(container, { subtree: true, attributes: true, attributeFilter: ['style'] });
+    this.panePositionObserver = observer;
   }
 }

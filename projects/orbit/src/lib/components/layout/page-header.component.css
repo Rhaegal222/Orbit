@@ -28,3 +28,14 @@ p {
   flex-wrap: wrap;
   gap: var(--orbit-space-sm);
 }
+
+@media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
+  .orbit-page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--orbit-space-md);
+  }
+  .orbit-page-header__actions {
+    width: 100%;
+  }
+}

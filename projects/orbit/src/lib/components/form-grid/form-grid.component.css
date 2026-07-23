@@ -27,12 +27,14 @@
   grid-column: span 12;
 }
 
-:host(.orbit-form-grid--7-5) ::ng-deep [primary] {
-  grid-column: span 7;
-}
+@media (min-width: 40rem) /* --orbit-breakpoint-sm */ {
+  :host(.orbit-form-grid--7-5) ::ng-deep [primary] {
+    grid-column: span 7;
+  }
 
-:host(.orbit-form-grid--7-5) ::ng-deep [secondary] {
-  grid-column: span 5;
+  :host(.orbit-form-grid--7-5) ::ng-deep [secondary] {
+    grid-column: span 5;
+  }
 }
 
 @media (min-width: 40rem) /* --orbit-breakpoint-sm */ {
@@ -43,7 +45,11 @@
 
 @media (min-width: 48rem) /* --orbit-breakpoint-md */ {
   :host ::ng-deep .orbit-form-grid__item {
-    grid-column: span var(--orbit-form-grid-span-md, var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12)));
+    grid-column: span
+      var(
+        --orbit-form-grid-span-md,
+        var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12))
+      );
   }
 }
 
@@ -57,12 +63,29 @@
   }
 
   :host ::ng-deep .orbit-form-grid__item {
-    grid-column: span var(--orbit-form-grid-span-lg, var(--orbit-form-grid-span-md, var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12))));
+    grid-column: span
+      var(
+        --orbit-form-grid-span-lg,
+        var(
+          --orbit-form-grid-span-md,
+          var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12))
+        )
+      );
   }
 }
 
 @media (min-width: 80rem) /* --orbit-breakpoint-xl */ {
   :host ::ng-deep .orbit-form-grid__item {
-    grid-column: span var(--orbit-form-grid-span-xl, var(--orbit-form-grid-span-lg, var(--orbit-form-grid-span-md, var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12)))));
+    grid-column: span
+      var(
+        --orbit-form-grid-span-xl,
+        var(
+          --orbit-form-grid-span-lg,
+          var(
+            --orbit-form-grid-span-md,
+            var(--orbit-form-grid-span-sm, var(--orbit-form-grid-span, 12))
+          )
+        )
+      );
   }
 }

@@ -2,6 +2,7 @@ export * from './lib/components/button';
 export * from './lib/components/icon-button';
 export * from './lib/components/layout';
 export * from './lib/components/divider';
+export * from './lib/components/avatar';
 export * from './lib/components/selectable-tile';
 export * from './lib/components/badge';
 export * from './lib/components/skeleton';

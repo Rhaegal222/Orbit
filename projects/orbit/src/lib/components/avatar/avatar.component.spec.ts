@@ -87,6 +87,23 @@ describe('OrbitAvatarComponent', () => {
     expect(hueA).not.toBe(hueB);
   });
 
+  it('exposes an accessible name via role=img/aria-label when showing initials', () => {
+    fixture.componentRef.setInput('name', 'Mario Rossi');
+    fixture.detectChanges();
+    const host = fixture.nativeElement.querySelector('.orbit-avatar') as HTMLElement;
+    expect(host.getAttribute('role')).toBe('img');
+    expect(host.getAttribute('aria-label')).toBe('Mario Rossi');
+  });
+
+  it('omits role/aria-label from the host when an image is shown, since the <img alt> already carries it', () => {
+    fixture.componentRef.setInput('name', 'Mario Rossi');
+    fixture.componentRef.setInput('src', 'https://example.test/avatar.png');
+    fixture.detectChanges();
+    const host = fixture.nativeElement.querySelector('.orbit-avatar') as HTMLElement;
+    expect(host.hasAttribute('role')).toBe(false);
+    expect(host.hasAttribute('aria-label')).toBe(false);
+  });
+
   it('applies the size class', () => {
     fixture.componentRef.setInput('name', 'Mario Rossi');
     fixture.componentRef.setInput('size', 'lg');

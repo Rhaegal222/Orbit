@@ -3,6 +3,8 @@
   [class.orbit-avatar--sm]="size() === 'sm'"
   [class.orbit-avatar--md]="size() === 'md'"
   [class.orbit-avatar--lg]="size() === 'lg'"
+  [attr.role]="showImage() ? null : 'img'"
+  [attr.aria-label]="showImage() ? null : name()"
 >
   @if (showImage()) {
     <img class="orbit-avatar__image" [src]="src()" [alt]="name()" (error)="onImageError()" />

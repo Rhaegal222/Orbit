@@ -36,7 +36,14 @@ export class LabScopedOverlayContainer extends OverlayContainer {
 
     if (!this.mockupContainerElement || !host.contains(this.mockupContainerElement)) {
       this.mockupContainerElement = this.document.createElement('div');
-      this.mockupContainerElement.classList.add('cdk-overlay-container');
+      // Marks overlays here to skip their transform-based slide/scale entrance (see the
+      // `--lab-mockup` rules in styles.css): this container's `position: fixed` resolves
+      // against .lab-shell__phone-screen's own `transform`-established containing block, and a
+      // *second*, animated transform on the pane itself (its own enter/exit slide) on top of
+      // that combination is a known class of browser compositing quirk — the clip/paint can
+      // visibly overshoot mid-animation before settling once the animation ends. A plain fade
+      // has no transform to conflict with, so it doesn't trigger it.
+      this.mockupContainerElement.classList.add('cdk-overlay-container', 'cdk-overlay-container--lab-mockup');
       host.appendChild(this.mockupContainerElement);
     }
 

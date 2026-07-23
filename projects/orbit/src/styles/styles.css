@@ -89,6 +89,16 @@
   animation-name: orbit-panel-enter-from-left;
 }
 
+/* Inside Orbit Lab's mobile-preview mockup, the pane's `position: fixed` already resolves
+   against a `transform`-established containing block (.lab-shell__phone-screen) — animating a
+   *second* transform on top of that (the slide-in) is a known class of browser compositing
+   quirk that can visibly overshoot mid-animation before snapping to the right place once the
+   animation ends. A plain fade has no transform to conflict with. */
+.cdk-overlay-container--lab-mockup .orbit-panel-pane--entering,
+.cdk-overlay-container--lab-mockup .orbit-dialog-panel--entering {
+  animation-name: orbit-backdrop-enter;
+}
+
 .orbit-panel-pane.orbit-panel-pane--closing {
   animation: orbit-panel-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
 }

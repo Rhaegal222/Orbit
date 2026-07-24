@@ -59,7 +59,7 @@ jobs:
       - name: Build and start service
         run: |
           set -euo pipefail
-          TRAEFIK_ENABLE="$TRAEFIK_ENABLE" docker compose -p "$PROJECT_NAME" -f "$DEPLOY_DIR/docker-compose.yml" up -d --build --force-recreate
+          TRAEFIK_ENABLE="$TRAEFIK_ENABLE" docker compose -p "$PROJECT_NAME" -f "$DEPLOY_DIR/deploy/docker-compose.yml" up -d --build --force-recreate
 
       - name: Verify container health
         run: |

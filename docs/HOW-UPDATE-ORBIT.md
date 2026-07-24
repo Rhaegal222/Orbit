@@ -38,7 +38,7 @@ git merge --ff-only integration/gitlab-develop-YYYYMMDD-HHMMSS
 git push forgejo develop:develop
 ```
 
-Vedi `TROUBLESHOOTING.md` per dettagli su tutti i problemi risolti.
+Vedi `docs/TROUBLESHOOTING.md` per dettagli su tutti i problemi risolti.
 
 ## Nota sulla rete
 

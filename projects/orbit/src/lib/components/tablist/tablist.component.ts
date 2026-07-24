@@ -1,22 +1,236 @@
-import { ChangeDetectionStrategy, Component, contentChildren, input, output } from '@angular/core';
+import {
+  afterRenderEffect,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  contentChildren,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  output,
+  signal,
+} from '@angular/core';
+import { DialogRef } from '@angular/cdk/dialog';
 import { OrbitTabComponent } from '../tab/tab.component';
+import { OrbitBadgeComponent, OrbitBadgeTone } from '../badge/badge.component';
+import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
+import { OrbitModalBodyComponent } from '../modal-body/modal-body.component';
+import { OrbitModalComponent } from '../modal/modal.component';
+import { OrbitModalHeaderComponent } from '../modal-header/modal-header.component';
+import { OrbitDialogService, ORBIT_DIALOG_DATA } from '../../services/dialog/dialog.service';
+
+interface TabPickerData {
+  tabs: Array<{ 
+    value: string; 
+    label: string; 
+    selected: boolean;
+    badge?: { label: string; tone: OrbitBadgeTone };
+  }>;
+  onSelect: (value: string) => void;
+}
+
+/** Internal preview-card modal opened by OrbitTablistComponent when in overflow mode.
+ * Not part of the public API of orbit. */
+@Component({
+  selector: 'orbit-tablist-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [OrbitModalBodyComponent, OrbitModalComponent, OrbitModalHeaderComponent, OrbitBadgeComponent],
+  template: `
+    <orbit-modal labelledBy="orbit-tablist-picker-title" size="md">
+      <orbit-modal-header
+        titleId="orbit-tablist-picker-title"
+        title="Seleziona scheda"
+        subtitle="Scegli la sezione da visualizzare."
+        (closeClicked)="close()"
+      />
+      <orbit-modal-body>
+        <div class="orbit-tablist-picker__grid">
+          @for (tab of data.tabs; track tab.value) {
+            <button
+              class="orbit-tablist-picker__card"
+              [class.orbit-tablist-picker__card--selected]="tab.selected"
+              type="button"
+              [attr.aria-pressed]="tab.selected"
+              (click)="select(tab.value)"
+            >
+              <div class="orbit-tablist-picker__preview" aria-hidden="true">
+                <span class="orbit-tablist-picker__initial">{{ tab.label[0] }}</span>
+              </div>
+              <div class="orbit-tablist-picker__details">
+                <span class="orbit-tablist-picker__label">{{ tab.label }}</span>
+                @if (tab.badge) {
+                  <orbit-badge [label]="tab.badge.label" [tone]="tab.badge.tone" />
+                }
+              </div>
+            </button>
+          }
+        </div>
+      </orbit-modal-body>
+    </orbit-modal>
+  `,
+  styles: `
+    :host {
+      display: block;
+      width: min(100%, var(--orbit-modal-size-md));
+    }
+    .orbit-tablist-picker__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--orbit-space-3);
+    }
+    .orbit-tablist-picker__card {
+      display: grid;
+      grid-template-rows: 7rem minmax(0, 1fr);
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid var(--orbit-border-subtle);
+      border-radius: var(--orbit-radius-tile);
+      background: var(--orbit-surface-raised);
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      transition:
+        border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+        box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
+    }
+    .orbit-tablist-picker__card:hover {
+      border-color: var(--orbit-border-strong);
+      box-shadow: var(--orbit-shadow-sm);
+    }
+    .orbit-tablist-picker__card--selected {
+      border-color: var(--orbit-action-primary-bg);
+      box-shadow: 0 0 0 0.125rem color-mix(in srgb, var(--orbit-action-primary-bg) 25%, transparent);
+    }
+    .orbit-tablist-picker__card:focus-visible {
+      outline: 2px solid var(--orbit-action-primary-bg);
+      outline-offset: 0.125rem;
+    }
+    .orbit-tablist-picker__preview {
+      display: grid;
+      place-items: center;
+      background: var(--orbit-surface-subtle);
+    }
+    .orbit-tablist-picker__card--selected .orbit-tablist-picker__preview {
+      background: color-mix(
+        in srgb,
+        var(--orbit-action-primary-bg) 10%,
+        var(--orbit-surface-subtle)
+      );
+    }
+    .orbit-tablist-picker__initial {
+      font-size: calc(var(--orbit-font-size-display) * 1.5);
+      font-weight: var(--orbit-font-weight-emphasis);
+      line-height: 1;
+      color: var(--orbit-text-secondary);
+    }
+    .orbit-tablist-picker__card--selected .orbit-tablist-picker__initial {
+      color: var(--orbit-action-primary-bg);
+    }
+    .orbit-tablist-picker__details {
+      display: flex;
+      align-items: center;
+      gap: var(--orbit-space-2);
+      padding: var(--orbit-space-2) var(--orbit-space-3);
+      border-top: 1px solid var(--orbit-border-subtle);
+    }
+    .orbit-tablist-picker__label {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: var(--orbit-font-size-sm);
+      font-weight: var(--orbit-font-weight-emphasis);
+      color: var(--orbit-text-primary);
+    }
+  `,
+})
+export class OrbitTablistPickerComponent {
+  private readonly dialogRef = inject(DialogRef<OrbitTablistPickerComponent>);
+  protected readonly data = inject(ORBIT_DIALOG_DATA) as TabPickerData;
+
+  select(value: string): void {
+    this.data.onSelect(value);
+    this.close();
+  }
+
+  close(): void {
+    this.dialogRef.close();
+  }
+}
 
 @Component({
   selector: 'orbit-tablist',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content />`,
+  templateUrl: './tablist.component.html',
+  styleUrl: './tablist.component.css',
+  imports: [OrbitBadgeComponent, OrbitIconButtonComponent],
   host: {
     role: 'tablist',
     '[attr.aria-label]': 'ariaLabel() || null',
-    '(keydown)': 'onKeydown($event)',
-    '(click)': 'onClick($event)',
+    '(keydown)': '!overflowing() && onKeydown($event)',
+    '(click)': '!overflowing() && onClick($event)',
+    '[class.orbit-tablist--overflow]': 'overflowing()',
   },
 })
-export class OrbitTablistComponent {
+export class OrbitTablistComponent implements OnDestroy {
   ariaLabel = input('');
   selectedChange = output<string>();
 
   private readonly tabs = contentChildren(OrbitTabComponent);
+  private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly dialogService = inject(OrbitDialogService);
+
+  protected readonly overflowing = signal(false);
+
+  private observer: ResizeObserver | null = null;
+
+  constructor() {
+    afterRenderEffect(() => {
+      // Observe once tabs are rendered
+      const host = this.el.nativeElement;
+      this.observer?.disconnect();
+      this.observer = new ResizeObserver(() => {
+        const isOverflowing = host.scrollWidth > host.clientWidth;
+        if (isOverflowing !== this.overflowing()) {
+          this.overflowing.set(isOverflowing);
+          this.cdr.markForCheck();
+        }
+      });
+      this.observer.observe(host);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+  }
+
+  protected get currentTab(): OrbitTabComponent | undefined {
+    return this.tabs().find((t) => t.selected());
+  }
+
+  protected openPicker(): void {
+    const tabs = this.tabs()
+      .filter((t) => !t.disabled())
+      .map((t) => {
+        const badgeComponent = t.badge();
+        return { 
+          value: t.value(), 
+          label: t.label(), 
+          selected: t.selected(),
+          badge: badgeComponent ? { label: badgeComponent.label(), tone: badgeComponent.tone() } : undefined
+        };
+      });
+
+    this.dialogService.open(OrbitTablistPickerComponent, {
+      data: {
+        tabs,
+        onSelect: (value: string) => this.selectedChange.emit(value),
+      } satisfies TabPickerData,
+    });
+  }
 
   onClick(event: MouseEvent): void {
     const target = (event.target as HTMLElement).closest('[role="tab"]') as HTMLElement | null;

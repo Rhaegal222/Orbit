@@ -1,0 +1,113 @@
+:host {
+  display: block;
+  margin-bottom: var(--orbit-space-5);
+}
+
+:host(.lab-example-host--bare) {
+  margin-bottom: 0;
+}
+
+:host(.lab-example-host--bare) .lab-example {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+:host(.lab-example-host--bare) .lab-example__preview {
+  min-block-size: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.lab-example {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-subtle);
+  box-shadow: var(--orbit-shadow-raised);
+}
+
+.lab-example__actions {
+  position: absolute;
+  z-index: var(--orbit-z-popover);
+  top: var(--orbit-space-3);
+  right: var(--orbit-space-3);
+  display: flex;
+  gap: var(--orbit-space-1);
+}
+
+.lab-example__toggle-icon-button {
+  display: none;
+}
+
+.lab-example__preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--orbit-space-3);
+  min-block-size: calc(var(--orbit-control-height) + var(--orbit-space-6));
+  padding: var(--orbit-space-5);
+  background: var(--orbit-surface-default);
+}
+
+.lab-example__content {
+  display: contents;
+}
+
+.lab-example__content--full-width {
+  display: block;
+  min-width: 0;
+  flex: 1 1 100%;
+  inline-size: 100%;
+}
+
+.lab-example__source {
+  /* TODO(orbit-motion): animate expanding/collapsing source once the shared
+     layout-motion primitive is available in Orbit. */
+  padding: var(--orbit-space-3) var(--orbit-space-4) var(--orbit-space-4);
+  border-top: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-none) var(--orbit-radius-none) var(--orbit-radius-surface)
+    var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+}
+
+.lab-example__code {
+  display: block;
+  width: 100%;
+}
+
+@media (max-width: 40rem) {
+  .lab-example__actions {
+    position: static;
+    justify-content: flex-end;
+    padding: var(--orbit-space-3) var(--orbit-space-3) 0;
+  }
+
+  .lab-example__preview {
+    padding: var(--orbit-space-4);
+  }
+
+  .lab-example__source {
+    padding: var(--orbit-space-3);
+  }
+}
+
+/*
+ * Container query (named `lab-viewport`, declared on .lab-shell__phone-viewport, the sole
+ * ancestor of every routed catalog page's <router-outlet /> content — see motion-page for the
+ * same pattern): unlike @media, this also matches inside Orbit Lab's mobile-preview mockup, a
+ * fixed-width div that never changes the real browser viewport.
+ */
+@container lab-viewport (max-width: 40rem) {
+  .lab-example__toggle-button {
+    display: none;
+  }
+
+  .lab-example__toggle-icon-button {
+    display: inline-flex;
+  }
+}

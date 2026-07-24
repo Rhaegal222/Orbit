@@ -185,22 +185,4 @@
       <orbit-icon-button icon="menu" ariaLabel="Apri navigazione" (clicked)="openSidebarDrawer()" />
     </lab-example>
   </section>
-
-  <section>
-    <h2>Selettore esempio (offcanvas + modale)</h2>
-    <p>
-      Composizione per pagine con più scenari demo (come examples-page): una topbar con
-      l'esempio corrente e un toggle fra due superfici equivalenti per cambiarlo — un
-      offcanvas (<code>orbit-sidebar embedded</code>) e una modale a card
-      (<code>orbit-selectable-tile</code>) — entrambe costruite da primitive Orbit esistenti,
-      nessuna nuova.
-    </p>
-    <lab-example [code]="exampleSwitcherSnippet">
-      <lab-example-switcher
-        [items]="exampleSwitcherItems"
-        [selected]="exampleSwitcherSelected()"
-        (selectedChange)="selectExampleSwitcherDemo($event)"
-      />
-    </lab-example>
-  </section>
 </article>

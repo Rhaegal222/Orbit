@@ -30,8 +30,6 @@ import {
   OrbitTextInputComponent,
 } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
-import { LabExampleSwitcherComponent } from '../../catalog/example-switcher/example-switcher.component';
-import type { LabExampleSwitcherItem } from '../../catalog/example-switcher/example-switcher.types';
 
 type ExampleId = 'portfolio' | 'dossier' | 'quick-action' | 'landing';
 type ProductSectionId = 'overview' | 'pricing' | 'variants' | 'media' | 'channels';
@@ -87,7 +85,6 @@ const LANDING_NAV_ITEMS: readonly OrbitNavbarItem[] = [
     OrbitTextInputComponent,
     ReactiveFormsModule,
     LabExampleComponent,
-    LabExampleSwitcherComponent,
   ],
   templateUrl: './examples-page.component.html',
   styleUrl: './examples-page.component.css',
@@ -104,13 +101,6 @@ export class ExamplesPageComponent {
   protected readonly updateType = signal('percent');
   protected readonly selectedLandingNav = signal('solutions');
   protected readonly landingNavItems = LANDING_NAV_ITEMS;
-
-  protected readonly exampleSwitcherItems: readonly LabExampleSwitcherItem[] = [
-    { value: 'portfolio', label: 'Portafoglio catalogo', badge: 'Tabella' },
-    { value: 'dossier', label: 'Dossier prodotto', badge: 'Workspace' },
-    { value: 'quick-action', label: 'Azione rapida', badge: 'Modale' },
-    { value: 'landing', label: 'Landing partner', badge: 'Landing' },
-  ];
 
   protected readonly categoryOptions = [
     { value: 'lighting', label: 'Illuminazione' },

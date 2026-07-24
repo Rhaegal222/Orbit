@@ -42,7 +42,45 @@
 }
 
 .lab-shell__header-start {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-3);
   min-width: 0;
+}
+
+.lab-shell__brand-title {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-2);
+  white-space: nowrap;
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.lab-shell__brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--orbit-radius-full);
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, var(--orbit-surface-subtle));
+  color: var(--orbit-action-primary-bg);
+  font-size: var(--orbit-font-size-caption);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.lab-shell__brand-name {
+  font-size: var(--orbit-font-size-body);
+  color: var(--orbit-text-primary);
+}
+
+.lab-shell__title-separator {
+  color: var(--orbit-text-tertiary);
+}
+
+.lab-shell__page-title {
+  color: var(--orbit-text-secondary);
+  font-weight: normal;
 }
 
 .lab-shell__header-center {

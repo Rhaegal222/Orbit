@@ -1,0 +1,19 @@
+@if (overflowing()) {
+  <div class="orbit-tablist__compact">
+    <div class="orbit-tablist__compact-current">
+      <span class="orbit-tablist__compact-label">{{ currentTab?.label() ?? '' }}</span>
+      @if (currentTab?.badge()) {
+        <orbit-badge [label]="currentTab!.badge()!.label()" [tone]="currentTab!.badge()!.tone()" />
+      }
+    </div>
+    <orbit-icon-button
+      icon="grid"
+      ariaLabel="Seleziona scheda"
+      tone="neutral"
+      (clicked)="openPicker()"
+    />
+  </div>
+}
+<div class="orbit-tablist__tabs" [class.orbit-tablist__tabs--hidden]="overflowing()">
+  <ng-content />
+</div>

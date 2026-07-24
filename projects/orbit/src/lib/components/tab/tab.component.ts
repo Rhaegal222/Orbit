@@ -2,10 +2,12 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  contentChild,
   ElementRef,
   inject,
   input,
 } from '@angular/core';
+import { OrbitBadgeComponent } from '../badge/badge.component';
 
 @Component({
   selector: 'orbit-tab',
@@ -30,6 +32,8 @@ export class OrbitTabComponent {
   selected = input(false, { transform: booleanAttribute });
 
   private readonly hostElement = inject(ElementRef<HTMLElement>);
+  
+  badge = contentChild(OrbitBadgeComponent);
 
   focus(): void {
     this.hostElement.nativeElement.focus();

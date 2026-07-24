@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* --- Standard tab bar --- */
+
+.orbit-tablist__tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.orbit-tablist__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* Visually hidden but still in the DOM so ResizeObserver can measure whether tabs overflow */
+.orbit-tablist__tabs--hidden {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* --- Compact overflow switcher --- */
+
+.orbit-tablist__compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--orbit-space-3);
+  padding-block-end: var(--orbit-space-2);
+  border-bottom: 2px solid var(--orbit-border-subtle);
+}
+
+.orbit-tablist__compact-current {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-2);
+  min-width: 0;
+}
+
+.orbit-tablist__compact-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--orbit-font-size-sm);
+  font-weight: var(--orbit-font-weight-emphasis);
+  color: var(--orbit-text-primary);
+}

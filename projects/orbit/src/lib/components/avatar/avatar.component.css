@@ -42,6 +42,11 @@
   object-fit: cover;
 }
 
+.orbit-avatar__image--hidden {
+  opacity: 0;
+  position: absolute;
+}
+
 .orbit-avatar__initials {
   display: block;
 }

@@ -31,6 +31,10 @@ export class TabPageComponent {
     label: `Sezione ${i + 1}`,
   }));
 
+  protected tabLabel(value: string): string {
+    return this.scrollTabs.find((tab) => tab.value === value)?.label ?? value;
+  }
+
   protected readonly snippet = `<orbit-tablist ariaLabel="Sezioni" (selectedChange)="active.set($event)">
   <orbit-tab value="general" label="Generale" [selected]="active() === 'general'" />
   <orbit-tab value="docs" label="Documenti" [selected]="active() === 'docs'">
@@ -38,7 +42,9 @@ export class TabPageComponent {
   </orbit-tab>
   <orbit-tab value="closed" label="Chiuso" [selected]="active() === 'closed'" disabled />
 </orbit-tablist>`;
-  protected readonly scrollSnippet = `<orbit-tablist
+  protected readonly scrollSnippet = `<!-- Nessun pickerMode: usa il default 'modal' -->
+<orbit-tablist
+  style="max-width: 30rem"
   ariaLabel="Molte sezioni"
   (selectedChange)="scrollActive.set($event)"
 >

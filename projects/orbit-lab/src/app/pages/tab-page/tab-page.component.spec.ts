@@ -46,7 +46,7 @@ describe('TabPageComponent', () => {
     const sections = fixture.nativeElement.querySelectorAll('section');
     expect(sections.length).toBe(4);
 
-    expect(sections[1].querySelector('h2')?.textContent).toContain('Scroll orizzontale');
+    expect(sections[1].querySelector('h2')?.textContent).toContain('Overflow');
     expect(sections[1].querySelectorAll('orbit-tab').length).toBe(8);
 
     expect(sections[2].querySelector('h2')?.textContent).toContain('Picker modale');

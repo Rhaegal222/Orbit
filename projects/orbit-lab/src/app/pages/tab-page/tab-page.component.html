@@ -26,13 +26,19 @@
   </section>
 
   <section>
-    <h2>Scroll orizzontale</h2>
+    <h2>Overflow (modalità predefinita)</h2>
     <p>
-      Quando le tab superano la larghezza disponibile, il tablist mostra una riga scrollabile
-      con <code>overflow-x: auto</code> e <code>flex-wrap: nowrap</code>.
+      Quando le tab superano la larghezza disponibile, il tablist non le comprime né le fa andare a
+      capo: passa in modalità <em>compact</em>, mostrando solo la scheda corrente e un pulsante per
+      aprire un selettore. Senza <code>pickerMode</code> esplicito, il selettore è una modale con
+      card di anteprima (comportamento predefinito).
     </p>
     <lab-example [code]="scrollSnippet">
-      <orbit-tablist ariaLabel="Molte sezioni" (selectedChange)="scrollActive.set($event)">
+      <orbit-tablist
+        style="max-width: 30rem"
+        ariaLabel="Molte sezioni"
+        (selectedChange)="scrollActive.set($event)"
+      >
         @for (tab of scrollTabs; track tab.value) {
           <orbit-tab
             [value]="tab.value"
@@ -43,7 +49,7 @@
       </orbit-tablist>
 
       <orbit-tab-panel [value]="scrollActive()">
-        Contenuto della {{ scrollActive() }}.
+        Contenuto della {{ tabLabel(scrollActive()) }}.
       </orbit-tab-panel>
     </lab-example>
   </section>
@@ -51,10 +57,9 @@
   <section>
     <h2>Picker modale</h2>
     <p>
-      In spazi stretti il tablist passa in modalità <em>compact</em>: nasconde le tab, mostra
-      il nome + badge della tab corrente e un pulsante per aprire un selettore a griglia
-      (modale con card di anteprima). Il toggle nella barra compact permette di passare
-      alla modalità offcanvas.
+      In spazi stretti il tablist passa in modalità <em>compact</em>: nasconde le tab, mostra il
+      nome + badge della tab corrente e un pulsante per aprire un selettore a griglia (modale con
+      card di anteprima). Il toggle nella barra compact permette di passare alla modalità offcanvas.
     </p>
     <lab-example [code]="modalSnippet">
       <orbit-tablist
@@ -73,7 +78,7 @@
       </orbit-tablist>
 
       <orbit-tab-panel [value]="modalActive()">
-        Contenuto della {{ modalActive() }}.
+        Contenuto della {{ tabLabel(modalActive()) }}.
       </orbit-tab-panel>
     </lab-example>
   </section>
@@ -82,8 +87,8 @@
     <h2>Picker offcanvas</h2>
     <p>
       La variante offcanvas apre un pannello laterale con una
-      <code>orbit-sidebar embedded</code> che elenca le tab come voci di navigazione.
-      Utile quando si preferisce un'interfaccia a lista invece che una griglia di card.
+      <code>orbit-sidebar embedded</code> che elenca le tab come voci di navigazione. Utile quando
+      si preferisce un'interfaccia a lista invece che una griglia di card.
     </p>
     <lab-example [code]="offcanvasSnippet">
       <orbit-tablist
@@ -102,7 +107,7 @@
       </orbit-tablist>
 
       <orbit-tab-panel [value]="offcanvasActive()">
-        Contenuto della {{ offcanvasActive() }}.
+        Contenuto della {{ tabLabel(offcanvasActive()) }}.
       </orbit-tab-panel>
     </lab-example>
   </section>

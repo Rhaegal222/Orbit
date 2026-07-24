@@ -152,6 +152,15 @@
   transform: rotate(90deg);
 }
 
+/* Must stay numerically identical to --orbit-breakpoint-md — a native media query can't read
+   a custom property. Below md, the floating collapse toggle has no room to sit beside the
+   rail without overlapping content, so it's hidden entirely rather than just de-emphasized. */
+@media (max-width: 48rem) {
+  .orbit-sidebar__toggle {
+    display: none;
+  }
+}
+
 .orbit-sidebar__nav {
   flex: 1 1 auto;
   min-height: 0;

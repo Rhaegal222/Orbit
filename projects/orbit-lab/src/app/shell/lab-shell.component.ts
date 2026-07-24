@@ -544,11 +544,19 @@ export class LabShellComponent {
       cursor.className = 'lab-shell__phone-touch-cursor';
       overlay.appendChild(cursor);
 
-      overlay.addEventListener('pointermove', (e) => this.onTouchOverlayPointerMove(e as PointerEvent));
-      overlay.addEventListener('pointerdown', (e) => this.onTouchOverlayPointerDown(e as PointerEvent));
+      overlay.addEventListener('pointermove', (e) =>
+        this.onTouchOverlayPointerMove(e as PointerEvent),
+      );
+      overlay.addEventListener('pointerdown', (e) =>
+        this.onTouchOverlayPointerDown(e as PointerEvent),
+      );
       overlay.addEventListener('pointerup', (e) => this.onTouchOverlayPointerUp(e as PointerEvent));
-      overlay.addEventListener('pointercancel', (e) => this.onTouchOverlayPointerUp(e as PointerEvent));
-      overlay.addEventListener('pointerleave', (e) => this.onTouchOverlayPointerLeave(e as PointerEvent));
+      overlay.addEventListener('pointercancel', (e) =>
+        this.onTouchOverlayPointerUp(e as PointerEvent),
+      );
+      overlay.addEventListener('pointerleave', (e) =>
+        this.onTouchOverlayPointerLeave(e as PointerEvent),
+      );
 
       this.document.body.appendChild(overlay);
       this.touchOverlayElement = overlay;
@@ -756,14 +764,19 @@ export class LabShellComponent {
     };
   }
 
-  private beginSliderDrag(overlay: HTMLElement, input: HTMLInputElement, event: PointerEvent): void {
+  private beginSliderDrag(
+    overlay: HTMLElement,
+    input: HTMLInputElement,
+    event: PointerEvent,
+  ): void {
     const min = parseFloat(input.min) || 0;
     const max = input.max ? parseFloat(input.max) : 100;
     const step = parseFloat(input.step) || 1;
 
     const applyValueFromClientX = (clientX: number) => {
       const rect = input.getBoundingClientRect();
-      const ratio = rect.width === 0 ? 0 : Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+      const ratio =
+        rect.width === 0 ? 0 : Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
       const stepped = Math.round((min + ratio * (max - min) - min) / step) * step + min;
       const next = String(Math.min(max, Math.max(min, stepped)));
       if (input.value !== next) {

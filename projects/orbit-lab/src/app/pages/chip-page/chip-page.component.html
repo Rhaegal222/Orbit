@@ -1,12 +1,17 @@
 <article>
   <h1>Chip</h1>
-  <p>Etichetta interattiva: selezionabile e/o rimovibile, sempre un elemento cliccabile (non un badge statico).</p>
+  <p>
+    Etichetta interattiva: selezionabile e/o rimovibile, sempre un elemento cliccabile (non un badge
+    statico).
+  </p>
 
   <section>
     <h2>Esempio</h2>
     <lab-example [code]="usageSnippet">
       <div data-example="selectable">
-        <orbit-chip [selected]="selected" (selectedChange)="onSelectedChange($event)">Frontend</orbit-chip>
+        <orbit-chip [selected]="selected" (selectedChange)="onSelectedChange($event)"
+          >Frontend</orbit-chip
+        >
       </div>
     </lab-example>
   </section>
@@ -14,7 +19,7 @@
   <section>
     <h2>Rimovibile</h2>
     <lab-example [code]="removableSnippet">
-      <div data-example="removable" style="display: flex; gap: 0.5rem;">
+      <div data-example="removable" style="display: flex; gap: 0.5rem">
         @for (tag of removableTags; track tag.id) {
           <orbit-chip removable (removed)="removeTag(tag)">{{ tag.label }}</orbit-chip>
         }

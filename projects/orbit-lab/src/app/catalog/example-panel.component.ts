@@ -1,5 +1,9 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
-import { OrbitButtonComponent, OrbitCodeBlockComponent, OrbitIconButtonComponent } from '@galileo/orbit';
+import {
+  OrbitButtonComponent,
+  OrbitCodeBlockComponent,
+  OrbitIconButtonComponent,
+} from '@galileo/orbit';
 
 @Component({
   selector: 'lab-example',

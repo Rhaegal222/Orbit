@@ -18,9 +18,10 @@ export class PillSwitchPageComponent {
   ];
 
   protected readonly baseControl = new FormControl<string | number | null>('day');
-  protected readonly disabledControl = new FormControl<string | number | null>(
-    { value: 'day', disabled: true },
-  );
+  protected readonly disabledControl = new FormControl<string | number | null>({
+    value: 'day',
+    disabled: true,
+  });
 
   protected readonly usageSnippet =
     '<orbit-pill-switch ariaLabel="Intervallo" [options]="options" [formControl]="range" />';

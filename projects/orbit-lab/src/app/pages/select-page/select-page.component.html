@@ -29,7 +29,10 @@
 
   <section>
     <h2>Tile selezionabile</h2>
-    <p>Alternativa visiva per una scelta discreta, quando l’opzione beneficia di etichetta, icona o descrizione.</p>
+    <p>
+      Alternativa visiva per una scelta discreta, quando l’opzione beneficia di etichetta, icona o
+      descrizione.
+    </p>
     <lab-example [code]="tileSnippet" fullWidth>
       <div data-example="selectable-tile">
         <orbit-selectable-tile
@@ -38,7 +41,15 @@
           [selected]="tileSelected()"
           (selectedChange)="tileSelected.set($event)"
         >
-          <svg orbitSelectableTileIcon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            orbitSelectableTileIcon
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M12 3 4.5 6v5.6c0 4.6 3 7.6 7.5 9.4 4.5-1.8 7.5-4.8 7.5-9.4V6L12 3Z" />
             <path d="m8.8 12 2.1 2.1 4.4-4.4" />
           </svg>
@@ -65,13 +76,20 @@
         </div>
         <div data-example="disabled">
           <orbit-form-field label="Disabilitato" inputId="sel-disabled" reserveMessageSpace>
-            <orbit-select inputId="sel-disabled" [options]="options" [formControl]="disabledControl" />
+            <orbit-select
+              inputId="sel-disabled"
+              [options]="options"
+              [formControl]="disabledControl"
+            />
           </orbit-form-field>
         </div>
       </div>
     </lab-example>
     <div data-example="option-disabled">
-      <p>L'opzione "Semestrale" nell'esempio base è disabilitata singolarmente via <code>OrbitSelectOption.disabled</code>.</p>
+      <p>
+        L'opzione "Semestrale" nell'esempio base è disabilitata singolarmente via
+        <code>OrbitSelectOption.disabled</code>.
+      </p>
     </div>
   </section>
 
@@ -94,7 +112,10 @@
       </li>
       <li><code>invalid</code> è un input diretto, indipendente dai form.</li>
       <li>Navigazione con frecce su/giù, Invio per selezionare, Escape per chiudere il menu.</li>
-      <li>Il menu espone <code>role="listbox"</code>; ogni opzione è un <code>&lt;button&gt;</code> nativo, mai un <code>&lt;div&gt;</code> cliccabile.</li>
+      <li>
+        Il menu espone <code>role="listbox"</code>; ogni opzione è un
+        <code>&lt;button&gt;</code> nativo, mai un <code>&lt;div&gt;</code> cliccabile.
+      </li>
     </ul>
   </section>
 </article>

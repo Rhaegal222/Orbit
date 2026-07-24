@@ -12,18 +12,18 @@
 }
 
 .orbit-spinner--sm {
-  width: var(--orbit-font-size-sm);
-  height: var(--orbit-font-size-sm);
+  width: var(--orbit-spinner-size-sm);
+  height: var(--orbit-spinner-size-sm);
 }
 
 .orbit-spinner--md {
-  width: var(--orbit-sidebar-icon-size);
-  height: var(--orbit-sidebar-icon-size);
+  width: var(--orbit-spinner-size-md);
+  height: var(--orbit-spinner-size-md);
 }
 
 .orbit-spinner--lg {
-  width: var(--orbit-sidebar-icon-size-collapsed);
-  height: var(--orbit-sidebar-icon-size-collapsed);
+  width: var(--orbit-spinner-size-lg);
+  height: var(--orbit-spinner-size-lg);
 }
 
 @keyframes orbit-spinner-spin {

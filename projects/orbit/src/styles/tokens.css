@@ -279,6 +279,9 @@
   --orbit-sidebar-toggle-offset: calc(var(--orbit-sidebar-toggle-size) / -2);
   --orbit-sidebar-icon-size: var(--orbit-font-size-lg);
   --orbit-sidebar-icon-size-collapsed: var(--orbit-font-size-xl);
+  --orbit-spinner-size-sm: calc(1rem * var(--orbit-text-scale));
+  --orbit-spinner-size-md: calc(1.5rem * var(--orbit-text-scale));
+  --orbit-spinner-size-lg: calc(2.25rem * var(--orbit-text-scale));
   --orbit-sidebar-active-indicator-width: 0.1875rem;
   --orbit-sidebar-bg: var(--orbit-surface-default);
   --orbit-sidebar-fg: var(--orbit-text-primary);

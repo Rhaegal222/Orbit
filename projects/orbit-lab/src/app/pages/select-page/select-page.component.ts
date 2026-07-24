@@ -32,9 +32,10 @@ export class SelectPageComponent {
 
   protected readonly baseControl = new FormControl<string | number | null>(null);
   protected readonly searchableControl = new FormControl<string | number | null>(null);
-  protected readonly disabledControl = new FormControl<string | number | null>(
-    { value: 'monthly', disabled: true },
-  );
+  protected readonly disabledControl = new FormControl<string | number | null>({
+    value: 'monthly',
+    disabled: true,
+  });
   protected readonly tileSelected = signal(true);
 
   protected readonly usageSnippet =

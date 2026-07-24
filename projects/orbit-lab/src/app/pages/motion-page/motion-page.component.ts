@@ -1,5 +1,13 @@
 import { SharedResizeObserver } from '@angular/cdk/observers/private';
-import { ChangeDetectionStrategy, Component, ElementRef, inject, output, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { EMPTY, map, switchMap } from 'rxjs';
@@ -38,7 +46,12 @@ interface LabMotionPatternPreviewData {
   selector: 'lab-motion-pattern-preview-dialog',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitModalComponent, OrbitModalHeaderComponent, OrbitModalBodyComponent, OrbitButtonComponent],
+  imports: [
+    OrbitModalComponent,
+    OrbitModalHeaderComponent,
+    OrbitModalBodyComponent,
+    OrbitButtonComponent,
+  ],
   template: `<orbit-modal size="sm" labelledBy="pattern-preview-title">
     <orbit-modal-header
       [title]="data.pattern.area"
@@ -58,7 +71,9 @@ interface LabMotionPatternPreviewData {
         >
           @for (run of data.patternRuns(data.pattern.area); track run) {
             <span
-              [class]="'motion-page__pattern-demo motion-page__pattern-demo--' + data.pattern.preview"
+              [class]="
+                'motion-page__pattern-demo motion-page__pattern-demo--' + data.pattern.preview
+              "
             ></span>
           }
         </div>

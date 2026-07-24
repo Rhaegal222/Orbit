@@ -50,8 +50,8 @@
 }
 
 .orbit-modal-header__spinner {
-  width: var(--orbit-font-size-lg);
-  height: var(--orbit-font-size-lg);
+  width: var(--orbit-spinner-size-sm);
+  height: var(--orbit-spinner-size-sm);
   border: 2px solid var(--orbit-border-subtle);
   border-top-color: var(--orbit-action-primary-bg);
   border-radius: var(--orbit-radius-full);

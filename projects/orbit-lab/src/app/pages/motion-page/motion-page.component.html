@@ -25,8 +25,8 @@
   <section>
     <h2>Mappa dei pattern</h2>
     <p>
-      La tabella usa <code>orbit-table</code>: su viewport strette scorre orizzontalmente invece
-      di sfondare il layout, senza bisogno di un layout alternativo hardcoded per il mobile. Sotto
+      La tabella usa <code>orbit-table</code>: su viewport strette scorre orizzontalmente invece di
+      sfondare il layout, senza bisogno di un layout alternativo hardcoded per il mobile. Sotto
       48rem la colonna azioni si nasconde e la riga diventa tappabile: l'anteprima compare in
       overlay tramite <code>OrbitDialogService</code> (CDK Overlay).
     </p>
@@ -52,7 +52,9 @@
             <td>{{ pattern.area }}</td>
             <td>{{ pattern.enter }}</td>
             <td>{{ pattern.exit }}</td>
-            <td><code>{{ pattern.token }}</code></td>
+            <td>
+              <code>{{ pattern.token }}</code>
+            </td>
             <td class="motion-page__pattern-action motion-page__pattern-action-col">
               <span class="motion-page__pattern-preview" aria-hidden="true">
                 @for (run of patternRuns(pattern.area); track run) {

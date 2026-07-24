@@ -157,10 +157,11 @@ export class PanelPageComponent {
     return [
       {
         ...stateSection,
-        items: stateSection.items.filter((item) =>
-          (item.id === 'active' && this.showActiveItem()) ||
-          (item.id === 'badge' && this.showBadgeItem()) ||
-          (item.id === 'disabled' && this.showDisabledItem()),
+        items: stateSection.items.filter(
+          (item) =>
+            (item.id === 'active' && this.showActiveItem()) ||
+            (item.id === 'badge' && this.showBadgeItem()) ||
+            (item.id === 'disabled' && this.showDisabledItem()),
         ),
       },
     ];
@@ -240,9 +241,7 @@ export class PanelPageComponent {
 
     const visibleItems = this.currentSections()[0]?.items ?? [];
     const firstAvailableItem = visibleItems.find((item) => !item.disabled) ?? visibleItems[0];
-    this.activeId.set(
-      firstAvailableItem?.id ?? (this.collapsed() ? 'collections' : 'overview'),
-    );
+    this.activeId.set(firstAvailableItem?.id ?? (this.collapsed() ? 'collections' : 'overview'));
   }
 
   selectBrandIcon(showIcon: boolean): void {

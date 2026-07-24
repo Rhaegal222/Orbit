@@ -1,13 +1,22 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { OrbitFormFieldComponent, OrbitTextInputComponent, OrbitTextInputType } from '@galileo/orbit';
+import {
+  OrbitFormFieldComponent,
+  OrbitTextInputComponent,
+  OrbitTextInputType,
+} from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
 
 @Component({
   selector: 'lab-text-input-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitFormFieldComponent, OrbitTextInputComponent, ReactiveFormsModule, LabExampleComponent],
+  imports: [
+    OrbitFormFieldComponent,
+    OrbitTextInputComponent,
+    ReactiveFormsModule,
+    LabExampleComponent,
+  ],
   templateUrl: './text-input-page.component.html',
   styleUrl: './text-input-page.component.css',
 })
@@ -31,7 +40,10 @@ export class TextInputPageComponent {
   protected readonly baseControl = new FormControl('');
   protected readonly emailWithIconControl = new FormControl('nome@azienda.it');
   protected readonly passwordWithIconControl = new FormControl('password-segreta');
-  protected readonly disabledControl = new FormControl({ value: 'Valore bloccato', disabled: true });
+  protected readonly disabledControl = new FormControl({
+    value: 'Valore bloccato',
+    disabled: true,
+  });
 
   protected readonly usageSnippet =
     '<orbit-text-input inputId="company-name" [formControl]="companyName" />';

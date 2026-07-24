@@ -65,7 +65,10 @@ export class LabScopedOverlayContainer extends OverlayContainer {
       // that combination is a known class of browser compositing quirk — the clip/paint can
       // visibly overshoot mid-animation before settling once the animation ends. A plain fade
       // has no transform to conflict with, so it doesn't trigger it.
-      this.mockupContainerElement.classList.add('cdk-overlay-container', 'cdk-overlay-container--lab-mockup');
+      this.mockupContainerElement.classList.add(
+        'cdk-overlay-container',
+        'cdk-overlay-container--lab-mockup',
+      );
       host.appendChild(this.mockupContainerElement);
       this.observePanePositioning(this.mockupContainerElement, host);
     }
@@ -76,7 +79,10 @@ export class LabScopedOverlayContainer extends OverlayContainer {
     // can lag a tick behind, showing a brief "too wide, then snaps to size" flash.
     const width = host.getBoundingClientRect().width;
     const spaceUnit = parseFloat(getComputedStyle(host).getPropertyValue('--orbit-space-3')) || 0;
-    this.mockupContainerElement.style.setProperty('--orbit-mockup-panel-max-width', `${width * 0.85}px`);
+    this.mockupContainerElement.style.setProperty(
+      '--orbit-mockup-panel-max-width',
+      `${width * 0.85}px`,
+    );
     this.mockupContainerElement.style.setProperty(
       '--orbit-mockup-dialog-max-width',
       `${width - 2 * spaceUnit}px`,

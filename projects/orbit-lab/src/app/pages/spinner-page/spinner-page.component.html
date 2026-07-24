@@ -1,14 +1,14 @@
 <article>
   <h1>Spinner</h1>
   <p>
-    Indicatore rotante di caricamento, riutilizzabile fuori da <code>orbit-button</code> (es. in
-    un panel, una card o una pagina intera in attesa di dati).
+    Indicatore rotante di caricamento, riutilizzabile fuori da <code>orbit-button</code> (es. in un
+    panel, una card o una pagina intera in attesa di dati).
   </p>
 
   <section>
     <h2>Dimensioni</h2>
     <lab-example [code]="sizesSnippet">
-      <div style="display: flex; align-items: center; gap: 1rem;">
+      <div style="display: flex; align-items: center; gap: 1rem">
         <div data-example="sm">
           <orbit-spinner size="sm" />
         </div>
@@ -34,8 +34,14 @@
   <section>
     <h2>Accessibilità</h2>
     <ul>
-      <li><code>role="status"</code> con <code>aria-label</code> di default "Operazione in corso" (localizzabile via <code>provideOrbitI18n</code>, chiave <code>labels.loading</code>).</li>
-      <li><code>ariaLabel</code> sovrascrive l'etichetta di default quando lo spinner descrive un'operazione specifica.</li>
+      <li>
+        <code>role="status"</code> con <code>aria-label</code> di default "Operazione in corso"
+        (localizzabile via <code>provideOrbitI18n</code>, chiave <code>labels.loading</code>).
+      </li>
+      <li>
+        <code>ariaLabel</code> sovrascrive l'etichetta di default quando lo spinner descrive
+        un'operazione specifica.
+      </li>
     </ul>
   </section>
 </article>

@@ -1,6 +1,9 @@
 <article>
   <h1>Alert</h1>
-  <p>Messaggio inline dentro form e card, nel flusso del DOM del chiamante: nessun overlay, nessun servizio.</p>
+  <p>
+    Messaggio inline dentro form e card, nel flusso del DOM del chiamante: nessun overlay, nessun
+    servizio.
+  </p>
 
   <section>
     <h2>Esempio</h2>
@@ -35,7 +38,12 @@
         }
       </div>
       <div data-example="dismissible-reset">
-        <orbit-button label="Mostra di nuovo" variant="outline" tone="neutral" (clicked)="resetDismissible()" />
+        <orbit-button
+          label="Mostra di nuovo"
+          variant="outline"
+          tone="neutral"
+          (clicked)="resetDismissible()"
+        />
       </div>
     </lab-example>
   </section>
@@ -43,8 +51,14 @@
   <section>
     <h2>Accessibilità</h2>
     <ul>
-      <li>Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano <code>role="status"</code>.</li>
-      <li>L'alert non si nasconde da solo: l'output <code>dismissed</code> notifica il parent, che rimuove il componente dal template (pattern "controlled component").</li>
+      <li>
+        Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano
+        <code>role="status"</code>.
+      </li>
+      <li>
+        L'alert non si nasconde da solo: l'output <code>dismissed</code> notifica il parent, che
+        rimuove il componente dal template (pattern "controlled component").
+      </li>
     </ul>
   </section>
 </article>

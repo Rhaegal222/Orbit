@@ -2,6 +2,22 @@
   display: block;
 }
 
+.examples__tablist {
+  margin-block-end: var(--orbit-space-4);
+}
+
+/* The landing example renders `lab-example` in `bare` mode (no panel chrome/padding) so the
+   tablist above it needs its own inset to avoid sitting flush against the viewport edge. */
+:host-context(.lab-example-host--bare) .examples__tablist {
+  padding: var(--orbit-space-4) var(--orbit-space-5) 0;
+}
+
+@media (max-width: 40rem) {
+  :host-context(.lab-example-host--bare) .examples__tablist {
+    padding: var(--orbit-space-3) var(--orbit-space-4) 0;
+  }
+}
+
 .examples__workspace {
   display: grid;
   gap: var(--orbit-layout-gap);

@@ -91,9 +91,7 @@ export const routes: Routes = [
   {
     path: 'skeleton',
     loadComponent: () =>
-      import('./pages/skeleton-page/skeleton-page.component').then(
-        (m) => m.SkeletonPageComponent,
-      ),
+      import('./pages/skeleton-page/skeleton-page.component').then((m) => m.SkeletonPageComponent),
   },
   {
     path: 'slider',
@@ -110,9 +108,7 @@ export const routes: Routes = [
   {
     path: 'spinner',
     loadComponent: () =>
-      import('./pages/spinner-page/spinner-page.component').then(
-        (m) => m.SpinnerPageComponent,
-      ),
+      import('./pages/spinner-page/spinner-page.component').then((m) => m.SpinnerPageComponent),
   },
   {
     path: 'checkbox',

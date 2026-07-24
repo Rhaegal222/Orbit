@@ -25,7 +25,8 @@ export class ChipPageComponent {
   protected readonly usageSnippet =
     '<orbit-chip [selected]="selected" (selectedChange)="selected = $event">Frontend</orbit-chip>';
 
-  protected readonly removableSnippet = '<orbit-chip removable (removed)="removeTag(tag)">{{ tag.label }}</orbit-chip>';
+  protected readonly removableSnippet =
+    '<orbit-chip removable (removed)="removeTag(tag)">{{ tag.label }}</orbit-chip>';
 
   protected readonly disabledSnippet = '<orbit-chip disabled removable>Archiviato</orbit-chip>';
 

@@ -1,6 +1,9 @@
 <article>
   <h1>Banner</h1>
-  <p>Messaggio full-width pensato per la cima di una pagina o sezione principale, non annidato in una card.</p>
+  <p>
+    Messaggio full-width pensato per la cima di una pagina o sezione principale, non annidato in una
+    card.
+  </p>
 
   <section>
     <h2>Esempio</h2>
@@ -35,7 +38,12 @@
         }
       </div>
       <div data-example="dismissible-reset">
-        <orbit-button label="Mostra di nuovo" variant="outline" tone="neutral" (clicked)="resetDismissible()" />
+        <orbit-button
+          label="Mostra di nuovo"
+          variant="outline"
+          tone="neutral"
+          (clicked)="resetDismissible()"
+        />
       </div>
     </lab-example>
   </section>
@@ -43,8 +51,14 @@
   <section>
     <h2>Accessibilità</h2>
     <ul>
-      <li>Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano <code>role="status"</code>.</li>
-      <li>Come l'alert, il banner non si nasconde da solo: l'output <code>dismissed</code> notifica il parent.</li>
+      <li>
+        Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano
+        <code>role="status"</code>.
+      </li>
+      <li>
+        Come l'alert, il banner non si nasconde da solo: l'output <code>dismissed</code> notifica il
+        parent.
+      </li>
     </ul>
   </section>
 </article>

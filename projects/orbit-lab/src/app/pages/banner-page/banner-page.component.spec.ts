@@ -33,12 +33,20 @@ describe('BannerPageComponent', () => {
     dismissButton.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-banner')).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-banner'),
+    ).toBeNull();
 
-    (fixture.nativeElement.querySelector('[data-example="dismissible-reset"] button') as HTMLButtonElement).click();
+    (
+      fixture.nativeElement.querySelector(
+        '[data-example="dismissible-reset"] button',
+      ) as HTMLButtonElement
+    ).click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-banner')).toBeTruthy();
+    expect(
+      fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-banner'),
+    ).toBeTruthy();
   });
 
   it('renders a copyable usage snippet', () => {

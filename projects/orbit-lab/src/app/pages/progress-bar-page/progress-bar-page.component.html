@@ -32,13 +32,19 @@
   <section>
     <h2>Accessibilità</h2>
     <ul>
-      <li><code>role="progressbar"</code> con <code>aria-valuemin="0"</code> e <code>aria-valuemax="100"</code> sempre presenti.</li>
+      <li>
+        <code>role="progressbar"</code> con <code>aria-valuemin="0"</code> e
+        <code>aria-valuemax="100"</code> sempre presenti.
+      </li>
       <li>
         <code>aria-valuenow</code> è presente solo quando <code>value</code> è un numero finito
         (viene omesso in stato indeterminato, per non annunciare una percentuale inesistente).
       </li>
       <li><code>ariaLabel</code> imposta <code>aria-label</code> sul contenitore.</li>
-      <li>Un <code>value</code> fuori range (&lt;0 o &gt;100) viene clampato silenziosamente; <code>NaN</code> è trattato come indeterminato.</li>
+      <li>
+        Un <code>value</code> fuori range (&lt;0 o &gt;100) viene clampato silenziosamente;
+        <code>NaN</code> è trattato come indeterminato.
+      </li>
     </ul>
   </section>
 </article>

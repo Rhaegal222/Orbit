@@ -469,7 +469,14 @@ export class LabShellComponent {
         (e) => slugs.includes(e.slug) && e.label.toLowerCase().includes(query),
       ).map((e) => ({ id: e.slug, label: e.label, icon: e.icon }));
 
-    const foundations = filterItems(['themes', 'typography', 'motion', 'patterns', 'examples']);
+    const foundations = filterItems([
+      'themes',
+      'typography',
+      'motion',
+      'patterns',
+      'examples',
+      'layout',
+    ]);
     const components = filterItems(['button', 'avatar', 'tags-badges', 'accordion', 'table']);
     const formAndInputs = filterItems([
       'form-field',
@@ -483,7 +490,7 @@ export class LabShellComponent {
     const feedback = filterItems(['alert', 'banner', 'toast']);
     const loading = filterItems(['skeleton', 'spinner', 'progress-bar']);
     const overlays = filterItems(['dialog', 'panel', 'popover', 'tooltip']);
-    const layoutAndNav = filterItems(['layout', 'navbar', 'breadcrumb', 'pagination', 'tab']);
+    const layoutAndNav = filterItems(['navbar', 'breadcrumb', 'pagination', 'tab']);
 
     const sections: OrbitSidebarSection[] = [];
     if (foundations.length)
@@ -497,7 +504,7 @@ export class LabShellComponent {
     if (loading.length) sections.push({ id: 'loading', label: 'Caricamento', items: loading });
     if (overlays.length) sections.push({ id: 'overlays', label: 'Overlay', items: overlays });
     if (layoutAndNav.length)
-      sections.push({ id: 'layout-nav', label: 'Layout & Navigazione', items: layoutAndNav });
+      sections.push({ id: 'layout-nav', label: 'Navigazione', items: layoutAndNav });
 
     return sections.length
       ? sections

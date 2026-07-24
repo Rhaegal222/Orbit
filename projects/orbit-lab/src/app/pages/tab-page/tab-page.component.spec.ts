@@ -40,4 +40,15 @@ describe('TabPageComponent', () => {
     ) as HTMLElement;
     expect(docsTab.querySelector('orbit-badge')).toBeTruthy();
   });
+
+  it('documents lab-example-switcher as the responsive alternative to a wrapping tablist', () => {
+    expect(fixture.nativeElement.textContent).toContain('Note responsive');
+    const switcherHost = fixture.nativeElement.querySelector('lab-example-switcher');
+    expect(switcherHost.textContent).toContain('Generale');
+
+    fixture.componentInstance.selectResponsiveExample('docs');
+    fixture.detectChanges();
+
+    expect(switcherHost.textContent).toContain('Documenti');
+  });
 });

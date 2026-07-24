@@ -24,4 +24,23 @@
       }
     </lab-example>
   </section>
+
+  <section>
+    <h2>Note responsive</h2>
+    <p>
+      Sotto <code>--orbit-breakpoint-sm</code>, un <code>orbit-tablist</code> con più di 3-4 tab
+      può andare a capo su più righe invece di adattarsi. In quel caso, sostituiscilo con
+      <code>lab-example-switcher</code> (vedi anche la pagina Panel, sezione "Selettore
+      esempio"): una topbar con la scheda corrente e un toggle fra un offcanvas
+      (<code>orbit-sidebar embedded</code>) e una modale a card
+      (<code>orbit-selectable-tile</code>), entrambe costruite da primitive Orbit esistenti.
+    </p>
+    <lab-example [code]="responsiveSnippet">
+      <lab-example-switcher
+        [items]="responsiveSwitcherItems"
+        [selected]="responsiveActive()"
+        (selectedChange)="selectResponsiveExample($event)"
+      />
+    </lab-example>
+  </section>
 </article>

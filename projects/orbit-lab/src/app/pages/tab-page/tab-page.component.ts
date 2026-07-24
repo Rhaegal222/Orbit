@@ -42,8 +42,8 @@ export class TabPageComponent {
   </orbit-tab>
   <orbit-tab value="closed" label="Chiuso" [selected]="active() === 'closed'" disabled />
 </orbit-tablist>`;
-  protected readonly scrollSnippet = `<!-- Nessun pickerMode: usa il default 'modal' -->
-<orbit-tablist
+  protected readonly scrollSnippet = `<orbit-tablist
+  pickerMode="scroll"
   style="max-width: 30rem"
   ariaLabel="Molte sezioni"
   (selectedChange)="scrollActive.set($event)"

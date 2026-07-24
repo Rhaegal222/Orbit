@@ -81,7 +81,7 @@ export class OrbitTablistPickerSidebarComponent {
   }
 }
 
-export type OrbitTablistPickerMode = 'modal' | 'offcanvas';
+export type OrbitTablistPickerMode = 'modal' | 'offcanvas' | 'scroll';
 
 /** Internal preview-card modal opened by OrbitTablistComponent when in overflow mode.
  * Not part of the public API of orbit. */
@@ -227,9 +227,9 @@ export class OrbitTablistPickerComponent {
   host: {
     role: 'tablist',
     '[attr.aria-label]': 'ariaLabel() || null',
-    '(keydown)': '!overflowing() && onKeydown($event)',
-    '(click)': '!overflowing() && onClick($event)',
-    '[class.orbit-tablist--overflow]': 'overflowing()',
+    '(keydown)': '!(overflowing() && pickerMode() !== "scroll") && onKeydown($event)',
+    '(click)': '!(overflowing() && pickerMode() !== "scroll") && onClick($event)',
+    '[class.orbit-tablist--overflow]': 'overflowing() && pickerMode() !== "scroll"',
   },
 })
 export class OrbitTablistComponent implements OnDestroy {

@@ -143,24 +143,86 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'pickers',
-    loadComponent: () =>
-      import('./pages/pickers-page/pickers-page.component').then((m) => m.PickersPageComponent),
-  },
-  {
     path: 'motion',
     loadComponent: () =>
       import('./pages/motion-page/motion-page.component').then((m) => m.MotionPageComponent),
   },
   {
-    path: 'dialog',
+    path: 'date-picker',
     loadComponent: () =>
-      import('./pages/dialog-page/dialog-page.component').then((m) => m.DialogPageComponent),
+      import('./pages/pickers-page/pickers-page.component').then((m) => m.DatePickerPageComponent),
+  },
+  {
+    path: 'time-picker',
+    loadComponent: () =>
+      import('./pages/time-picker-page/time-picker-page.component').then(
+        (m) => m.TimePickerPageComponent,
+      ),
+  },
+  {
+    path: 'pickers',
+    redirectTo: 'date-picker',
+    pathMatch: 'full',
+  },
+  {
+    path: 'tags-badges',
+    loadComponent: () =>
+      import('./pages/badge-page/badge-page.component').then((m) => m.BadgePageComponent),
+  },
+  {
+    path: 'badge',
+    redirectTo: 'tags-badges',
+    pathMatch: 'full',
+  },
+  {
+    path: 'chip',
+    redirectTo: 'tags-badges',
+    pathMatch: 'full',
+  },
+  {
+    path: 'feedback',
+    loadComponent: () =>
+      import('./pages/banner-page/banner-page.component').then((m) => m.BannerPageComponent),
+  },
+  {
+    path: 'alert',
+    redirectTo: 'feedback',
+    pathMatch: 'full',
   },
   {
     path: 'banner',
+    redirectTo: 'feedback',
+    pathMatch: 'full',
+  },
+  {
+    path: 'loading',
     loadComponent: () =>
-      import('./pages/banner-page/banner-page.component').then((m) => m.BannerPageComponent),
+      import('./pages/spinner-page/spinner-page.component').then((m) => m.SpinnerPageComponent),
+  },
+  {
+    path: 'spinner',
+    redirectTo: 'loading',
+    pathMatch: 'full',
+  },
+  {
+    path: 'skeleton',
+    redirectTo: 'loading',
+    pathMatch: 'full',
+  },
+  {
+    path: 'progress-bar',
+    redirectTo: 'loading',
+    pathMatch: 'full',
+  },
+  {
+    path: 'text-input',
+    redirectTo: 'form-field',
+    pathMatch: 'full',
+  },
+  {
+    path: 'form-section',
+    redirectTo: 'form-field',
+    pathMatch: 'full',
   },
   {
     path: 'popover',

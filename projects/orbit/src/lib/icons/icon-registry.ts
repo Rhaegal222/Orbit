@@ -32,9 +32,11 @@ export type OrbitIconName =
   | 'bar-chart'
   | 'alert-circle'
   | 'alert-triangle'
-  | 'info';
+  | 'info'
+  | 'clock';
 
 export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
+  clock: ['M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Z', 'M12 7v5.5l3.5 2'],
   close: ['M6 6l12 12', 'M18 6l-12 12'],
   calendar: [
     'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-13Z',

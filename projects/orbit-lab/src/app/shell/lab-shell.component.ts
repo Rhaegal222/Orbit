@@ -473,27 +473,21 @@ export class LabShellComponent {
     const components = filterItems([
       'button',
       'avatar',
-      'badge',
-      'chip',
+      'tags-badges',
       'accordion',
-      'alert',
-      'banner',
-      'skeleton',
-      'spinner',
       'table',
     ]);
     const formAndInputs = filterItems([
-      'text-input',
       'form-field',
-      'form-section',
       'checkbox',
       'select',
       'pill-switch',
-      'pickers',
       'slider',
       'attachments',
     ]);
-    const feedbackAndOverlays = filterItems(['dialog', 'panel', 'popover', 'tooltip', 'toast']);
+    const pickers = filterItems(['date-picker', 'time-picker']);
+    const feedbackAndLoading = filterItems(['feedback', 'loading', 'toast']);
+    const overlays = filterItems(['dialog', 'panel', 'popover', 'tooltip']);
     const layoutAndNav = filterItems(['layout', 'navbar', 'breadcrumb', 'pagination', 'tab']);
 
     const sections: OrbitSidebarSection[] = [];
@@ -502,13 +496,13 @@ export class LabShellComponent {
     if (components.length)
       sections.push({ id: 'components', label: 'Componenti', items: components });
     if (formAndInputs.length)
-      sections.push({ id: 'form-inputs', label: 'Form & Selettori', items: formAndInputs });
-    if (feedbackAndOverlays.length)
-      sections.push({
-        id: 'feedback-overlays',
-        label: 'Feedback & Overlay',
-        items: feedbackAndOverlays,
-      });
+      sections.push({ id: 'form-inputs', label: 'Form & Input', items: formAndInputs });
+    if (pickers.length)
+      sections.push({ id: 'pickers', label: 'Selettori', items: pickers });
+    if (feedbackAndLoading.length)
+      sections.push({ id: 'feedback-loading', label: 'Feedback & Caricamento', items: feedbackAndLoading });
+    if (overlays.length)
+      sections.push({ id: 'overlays', label: 'Overlay', items: overlays });
     if (layoutAndNav.length)
       sections.push({ id: 'layout-nav', label: 'Layout & Navigazione', items: layoutAndNav });
 

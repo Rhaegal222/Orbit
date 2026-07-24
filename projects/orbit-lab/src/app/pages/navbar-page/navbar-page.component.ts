@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
-  OrbitBadgeComponent,
   OrbitButtonComponent,
-  OrbitIconButtonComponent,
   OrbitNavbarComponent,
   type OrbitNavbarItem,
 } from '@galileo/orbit';
@@ -31,9 +29,7 @@ const CENTER_RIGHT_ITEMS: readonly OrbitNavbarItem[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     LabExampleComponent,
-    OrbitBadgeComponent,
     OrbitButtonComponent,
-    OrbitIconButtonComponent,
     OrbitNavbarComponent,
   ],
   templateUrl: './navbar-page.component.html',
@@ -50,6 +46,9 @@ const CENTER_RIGHT_ITEMS: readonly OrbitNavbarItem[] = [
 export class NavbarPageComponent {
   protected readonly items = NAV_ITEMS;
   protected readonly activeId = signal('overview');
+  protected readonly announcementText = signal(
+    'Spedizione gratuita per ordini oltre 49 € — Nuova collezione disponibile',
+  );
 
   protected readonly centerLeftItems = CENTER_LEFT_ITEMS;
   protected readonly centerRightItems = CENTER_RIGHT_ITEMS;

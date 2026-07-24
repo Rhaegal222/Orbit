@@ -59,9 +59,9 @@
         [rightItems]="centerRightItems"
         [activeId]="activeId()"
         (itemSelected)="selectItem($event)"
-        announcement="Spedizione gratuita per ordini oltre 49 € — Nuova collezione disponibile"
+        [announcement]="announcementText()"
         [announcementCloseable]="true"
-        (announcementClosed)="announcementVisible.set(false)"
+        (announcementClosed)="announcementText.set('')"
       >
         <orbit-button orbitNavbarActions tone="neutral" label="Carrello (0)" />
       </orbit-navbar>

@@ -26,6 +26,18 @@
   height: var(--orbit-spinner-size-lg);
 }
 
+.orbit-spinner--xl {
+  width: var(--orbit-spinner-size-xl);
+  height: var(--orbit-spinner-size-xl);
+  border-width: 3px;
+}
+
+.orbit-spinner--xxl {
+  width: var(--orbit-spinner-size-xxl);
+  height: var(--orbit-spinner-size-xxl);
+  border-width: 4px;
+}
+
 @keyframes orbit-spinner-spin {
   to {
     transform: rotate(360deg);

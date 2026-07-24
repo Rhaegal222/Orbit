@@ -40,6 +40,22 @@ describe('OrbitSpinnerComponent', () => {
     expect(spinner().classList.contains('orbit-spinner--md')).toBe(false);
   });
 
+  it('applies the xl size class', () => {
+    fixture.componentRef.setInput('size', 'xl');
+    fixture.detectChanges();
+
+    expect(spinner().classList.contains('orbit-spinner--xl')).toBe(true);
+    expect(spinner().classList.contains('orbit-spinner--md')).toBe(false);
+  });
+
+  it('applies the xxl size class', () => {
+    fixture.componentRef.setInput('size', 'xxl');
+    fixture.detectChanges();
+
+    expect(spinner().classList.contains('orbit-spinner--xxl')).toBe(true);
+    expect(spinner().classList.contains('orbit-spinner--md')).toBe(false);
+  });
+
   it('overrides the default aria-label when one is provided', () => {
     fixture.componentRef.setInput('ariaLabel', 'Caricamento allegato in corso');
     fixture.detectChanges();

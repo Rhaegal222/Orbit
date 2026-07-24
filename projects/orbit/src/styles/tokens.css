@@ -282,6 +282,8 @@
   --orbit-spinner-size-sm: calc(1rem * var(--orbit-text-scale));
   --orbit-spinner-size-md: calc(1.5rem * var(--orbit-text-scale));
   --orbit-spinner-size-lg: calc(2.25rem * var(--orbit-text-scale));
+  --orbit-spinner-size-xl: calc(3rem * var(--orbit-text-scale));
+  --orbit-spinner-size-xxl: calc(4rem * var(--orbit-text-scale));
   --orbit-sidebar-active-indicator-width: 0.1875rem;
   --orbit-sidebar-bg: var(--orbit-surface-default);
   --orbit-sidebar-fg: var(--orbit-text-primary);

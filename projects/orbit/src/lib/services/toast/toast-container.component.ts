@@ -10,6 +10,15 @@ import { ChangeDetectionStrategy, Component, ViewContainerRef, viewChild } from 
   selector: 'orbit-toast-container',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-container #outlet></ng-container>`,
+  styles: [
+    `
+      :host {
+        display: flex;
+        flex-direction: column;
+        gap: var(--orbit-space-1);
+      }
+    `,
+  ],
 })
 export class OrbitToastContainerComponent {
   readonly outlet = viewChild.required('outlet', { read: ViewContainerRef });

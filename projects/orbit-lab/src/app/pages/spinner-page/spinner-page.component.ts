@@ -11,7 +11,7 @@ import { LabExampleComponent } from '../../catalog/example-panel.component';
 })
 export class SpinnerPageComponent {
   protected readonly sizesSnippet =
-    '<orbit-spinner size="sm" />\n<orbit-spinner size="md" />\n<orbit-spinner size="lg" />';
+    '<orbit-spinner size="sm" />\n<orbit-spinner size="md" />\n<orbit-spinner size="lg" />\n<orbit-spinner size="xl" />\n<orbit-spinner size="xxl" />';
 
   protected readonly customLabelSnippet =
     '<orbit-spinner ariaLabel="Caricamento allegato in corso" />';

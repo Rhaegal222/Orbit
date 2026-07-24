@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
-export type OrbitSpinnerSize = 'sm' | 'md' | 'lg';
+export type OrbitSpinnerSize = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 @Component({
   selector: 'orbit-spinner',

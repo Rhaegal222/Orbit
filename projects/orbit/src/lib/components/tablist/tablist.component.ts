@@ -18,24 +18,79 @@ import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
 import { OrbitModalBodyComponent } from '../modal-body/modal-body.component';
 import { OrbitModalComponent } from '../modal/modal.component';
 import { OrbitModalHeaderComponent } from '../modal-header/modal-header.component';
+import { OrbitPanelSurfaceComponent } from '../panel-surface/panel-surface.component';
+import {
+  OrbitSidebarComponent,
+  type OrbitSidebarItem,
+  type OrbitSidebarSection,
+} from '../sidebar/sidebar.component';
 import { OrbitDialogService, ORBIT_DIALOG_DATA } from '../../services/dialog/dialog.service';
+import { OrbitPanelService, ORBIT_PANEL_DATA } from '../../services/panel/panel.service';
 
 interface TabPickerData {
-  tabs: Array<{ 
-    value: string; 
-    label: string; 
+  tabs: Array<{
+    value: string;
+    label: string;
     selected: boolean;
     badge?: { label: string; tone: OrbitBadgeTone };
   }>;
   onSelect: (value: string) => void;
 }
 
+/** Internal offcanvas sidebar content opened by OrbitTablistComponent when in overflow +
+ * offcanvas mode. Not part of the public API of orbit. */
+@Component({
+  selector: 'orbit-tablist-picker-sidebar',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [OrbitPanelSurfaceComponent, OrbitSidebarComponent],
+  template: `<orbit-panel-surface ariaLabel="Seleziona scheda">
+    <orbit-sidebar
+      embedded
+      brand="Schede"
+      [sections]="sections"
+      [activeId]="data.selected"
+      (itemSelected)="select($event)"
+      (closed)="close()"
+    />
+  </orbit-panel-surface>`,
+})
+export class OrbitTablistPickerSidebarComponent {
+  private readonly panel = inject(OrbitPanelService);
+  protected readonly data = inject(ORBIT_PANEL_DATA) as TabPickerData;
+
+  protected readonly sections: readonly OrbitSidebarSection[] = [
+    {
+      id: 'tabs',
+      items: this.data.tabs.map((tab) => ({
+        id: tab.value,
+        label: tab.label,
+      })),
+    },
+  ];
+
+  select(item: OrbitSidebarItem): void {
+    this.data.onSelect(item.id);
+    this.close();
+  }
+
+  close(): void {
+    this.panel.closeAll();
+  }
+}
+
+export type OrbitTablistPickerMode = 'modal' | 'offcanvas';
+
 /** Internal preview-card modal opened by OrbitTablistComponent when in overflow mode.
  * Not part of the public API of orbit. */
 @Component({
   selector: 'orbit-tablist-picker',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitModalBodyComponent, OrbitModalComponent, OrbitModalHeaderComponent, OrbitBadgeComponent],
+  imports: [
+    OrbitModalBodyComponent,
+    OrbitModalComponent,
+    OrbitModalHeaderComponent,
+    OrbitBadgeComponent,
+  ],
   template: `
     <orbit-modal labelledBy="orbit-tablist-picker-title" size="md">
       <orbit-modal-header
@@ -182,8 +237,10 @@ export class OrbitTablistComponent implements OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly dialogService = inject(OrbitDialogService);
+  private readonly panelService = inject(OrbitPanelService);
 
   protected readonly overflowing = signal(false);
+  protected readonly pickerMode = signal<OrbitTablistPickerMode>('modal');
 
   private observer: ResizeObserver | null = null;
 
@@ -211,25 +268,38 @@ export class OrbitTablistComponent implements OnDestroy {
     return this.tabs().find((t) => t.selected());
   }
 
+  protected setPickerMode(mode: OrbitTablistPickerMode): void {
+    this.pickerMode.set(mode);
+  }
+
   protected openPicker(): void {
     const tabs = this.tabs()
       .filter((t) => !t.disabled())
       .map((t) => {
         const badgeComponent = t.badge();
-        return { 
-          value: t.value(), 
-          label: t.label(), 
+        return {
+          value: t.value(),
+          label: t.label(),
           selected: t.selected(),
-          badge: badgeComponent ? { label: badgeComponent.label(), tone: badgeComponent.tone() } : undefined
+          badge: badgeComponent
+            ? { label: badgeComponent.label(), tone: badgeComponent.tone() }
+            : undefined,
         };
       });
 
-    this.dialogService.open(OrbitTablistPickerComponent, {
-      data: {
-        tabs,
-        onSelect: (value: string) => this.selectedChange.emit(value),
-      } satisfies TabPickerData,
-    });
+    const onSelect = (value: string) => this.selectedChange.emit(value);
+
+    if (this.pickerMode() === 'offcanvas') {
+      this.panelService.open(OrbitTablistPickerSidebarComponent, {
+        side: 'left',
+        size: 'sm',
+        data: { tabs, onSelect },
+      });
+    } else {
+      this.dialogService.open(OrbitTablistPickerComponent, {
+        data: { tabs, onSelect },
+      });
+    }
   }
 
   onClick(event: MouseEvent): void {

@@ -53,3 +53,16 @@
   font-weight: var(--orbit-font-weight-emphasis);
   color: var(--orbit-text-primary);
 }
+
+.orbit-tablist__compact-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-2);
+}
+
+.orbit-tablist__mode-toggle {
+  display: flex;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  overflow: hidden;
+}

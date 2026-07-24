@@ -6,7 +6,7 @@
     </p>
   }
 
-  <lab-example [fullWidth]="true" [bare]="selectedExample() === 'landing'">
+  <lab-example [fullWidth]="true">
     <orbit-tablist
       class="examples__tablist"
       ariaLabel="Esempi del catalogo prodotti"
@@ -439,7 +439,12 @@
                 (itemSelected)="selectLandingNav($event)"
                 (announcementClosed)="landingAnnouncement.set('')"
               >
-                <orbit-button orbitNavbarActions label="Area riservata" variant="outline" tone="neutral" />
+                <orbit-button
+                  orbitNavbarActions
+                  label="Area riservata"
+                  variant="outline"
+                  tone="neutral"
+                />
                 <orbit-button orbitNavbarActions label="Parla con noi" />
               </orbit-navbar>
 
@@ -455,17 +460,27 @@
 
             @if (offcanvasOpen()) {
               <div class="examples__landing-offcanvas-backdrop" (click)="closeOffcanvas()"></div>
-              <aside class="examples__landing-offcanvas" role="dialog" aria-label="Menu di navigazione">
+              <aside
+                class="examples__landing-offcanvas"
+                role="dialog"
+                aria-label="Menu di navigazione"
+              >
                 <header class="examples__landing-offcanvas-header">
                   <span class="examples__landing-offcanvas-brand">Lumenova</span>
-                  <orbit-icon-button icon="close" ariaLabel="Chiudi menu" (clicked)="closeOffcanvas()" />
+                  <orbit-icon-button
+                    icon="close"
+                    ariaLabel="Chiudi menu"
+                    (clicked)="closeOffcanvas()"
+                  />
                 </header>
                 <nav class="examples__landing-offcanvas-nav" aria-label="Menu mobile">
                   @for (item of landingNavItems; track item.id) {
                     <button
                       type="button"
                       class="examples__landing-offcanvas-item"
-                      [class.examples__landing-offcanvas-item--active]="item.id === selectedLandingNav()"
+                      [class.examples__landing-offcanvas-item--active]="
+                        item.id === selectedLandingNav()
+                      "
                       (click)="selectLandingNav(item); closeOffcanvas()"
                     >
                       {{ item.label }}
@@ -475,7 +490,9 @@
                     <button
                       type="button"
                       class="examples__landing-offcanvas-item"
-                      [class.examples__landing-offcanvas-item--active]="item.id === selectedLandingNav()"
+                      [class.examples__landing-offcanvas-item--active]="
+                        item.id === selectedLandingNav()
+                      "
                       (click)="selectLandingNav(item); closeOffcanvas()"
                     >
                       {{ item.label }}
@@ -483,7 +500,12 @@
                   }
                 </nav>
                 <footer class="examples__landing-offcanvas-footer">
-                  <orbit-button label="Area riservata" variant="outline" tone="neutral" class="examples__landing-offcanvas-btn" />
+                  <orbit-button
+                    label="Area riservata"
+                    variant="outline"
+                    tone="neutral"
+                    class="examples__landing-offcanvas-btn"
+                  />
                   <orbit-button label="Parla con noi" class="examples__landing-offcanvas-btn" />
                 </footer>
               </aside>

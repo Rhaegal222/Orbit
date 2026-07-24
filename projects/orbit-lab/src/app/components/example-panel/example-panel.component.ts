@@ -19,6 +19,8 @@ import {
 export class LabExampleComponent {
   /** Optional source snippet rendered below the interactive preview. */
   code = input('');
+  /** Prism language used to highlight the source snippet. */
+  language = input('html');
   /** Lets a projected block component use the full preview width. */
   fullWidth = input(false, { transform: booleanAttribute });
   /** Removes catalog chrome when a preview is itself a complete page. */

@@ -9,7 +9,7 @@ import {
   OrbitModalFooterComponent,
   ORBIT_DIALOG_DATA,
 } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 @Component({
   selector: 'lab-custom-dialog-example',

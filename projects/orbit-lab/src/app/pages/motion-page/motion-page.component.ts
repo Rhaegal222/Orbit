@@ -25,7 +25,7 @@ import {
   ORBIT_DIALOG_DATA,
   OrbitDialogService,
 } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 /** Matches the `@container lab-viewport (max-width: 48rem)` breakpoint in the stylesheet. */
 const MOBILE_BREAKPOINT_REM = 48;

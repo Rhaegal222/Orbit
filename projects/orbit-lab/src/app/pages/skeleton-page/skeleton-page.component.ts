@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { OrbitSkeletonComponent } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 interface SkeletonDemoCard {
   id: number;

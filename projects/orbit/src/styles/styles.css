@@ -239,3 +239,71 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* orbit-code-block renders Prism.js output via [innerHTML], so these tokens live in a global
+   stylesheet rather than the component's own CSS: Angular's emulated encapsulation stamps an
+   attribute only onto elements it compiles from a template, and innerHTML-injected markup
+   never gets that attribute, so a component-scoped rule could never match it. */
+.orbit-code-block__code .token.comment,
+.orbit-code-block__code .token.prolog,
+.orbit-code-block__code .token.doctype,
+.orbit-code-block__code .token.cdata {
+  color: var(--orbit-code-block-token-comment);
+}
+
+.orbit-code-block__code .token.punctuation {
+  color: var(--orbit-code-block-token-punctuation);
+}
+
+.orbit-code-block__code .token.property,
+.orbit-code-block__code .token.tag,
+.orbit-code-block__code .token.boolean,
+.orbit-code-block__code .token.number,
+.orbit-code-block__code .token.constant,
+.orbit-code-block__code .token.symbol {
+  color: var(--orbit-code-block-token-property);
+}
+
+.orbit-code-block__code .token.selector,
+.orbit-code-block__code .token.attr-name,
+.orbit-code-block__code .token.string,
+.orbit-code-block__code .token.char,
+.orbit-code-block__code .token.builtin,
+.orbit-code-block__code .token.inserted {
+  color: var(--orbit-code-block-token-string);
+}
+
+.orbit-code-block__code .token.operator,
+.orbit-code-block__code .token.entity,
+.orbit-code-block__code .token.url,
+.orbit-code-block__code .token.atrule,
+.orbit-code-block__code .token.attr-value {
+  color: var(--orbit-code-block-token-operator);
+}
+
+.orbit-code-block__code .token.keyword {
+  color: var(--orbit-code-block-token-keyword);
+}
+
+.orbit-code-block__code .token.function,
+.orbit-code-block__code .token.class-name {
+  color: var(--orbit-code-block-token-function);
+}
+
+.orbit-code-block__code .token.regex,
+.orbit-code-block__code .token.variable,
+.orbit-code-block__code .token.important {
+  color: var(--orbit-code-block-token-regex);
+}
+
+.orbit-code-block__code .token.deleted {
+  color: var(--orbit-code-block-token-deleted);
+}
+
+.orbit-code-block__code .token.bold {
+  font-weight: var(--orbit-code-block-token-bold);
+}
+
+.orbit-code-block__code .token.italic {
+  font-style: var(--orbit-code-block-token-italic);
+}

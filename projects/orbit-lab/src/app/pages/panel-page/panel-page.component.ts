@@ -14,7 +14,7 @@ import {
   type OrbitSidebarItem,
   type OrbitSidebarSection,
 } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 const SIDEBAR_SECTIONS: readonly OrbitSidebarSection[] = [
   {

@@ -12,7 +12,10 @@
   padding: var(--orbit-space-4) var(--orbit-space-5) 0;
 }
 
-@media (max-width: 40rem) {
+/* Container (not viewport) query: in the Lab's mobile-preview mockup the phone box is far
+   narrower than the desktop browser window, so `@media` would never match. See
+   `.lab-shell__phone-viewport` in lab-shell.component.css for the `lab-viewport` container. */
+@container lab-viewport (max-width: 40rem) {
   :host-context(.lab-example-host--bare) .examples__tablist {
     padding: var(--orbit-space-3) var(--orbit-space-4) 0;
   }
@@ -362,8 +365,12 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  width: min(20rem, 85vw);
-  height: 100dvh;
+  /* `%` here (not `vw`/`dvh`) resolves against this element's actual containing block: on a real
+     device that's the viewport (same result as vw/dvh), but inside the Lab's mobile-preview
+     mockup .lab-shell__phone-screen's own transform makes *it* the containing block instead —
+     vw/dvh would ignore that and size against the real desktop window, escaping the phone bezel. */
+  width: min(20rem, 85%);
+  height: 100%;
   background: var(--orbit-surface-default);
   box-shadow: var(--orbit-shadow-modal);
   animation: examples-slide-in var(--orbit-motion-base) var(--orbit-easing-standard);
@@ -405,7 +412,8 @@
   font-weight: var(--orbit-font-weight-emphasis);
   text-align: left;
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
     color var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
@@ -437,16 +445,24 @@
 }
 
 @keyframes examples-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes examples-slide-in {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-@media (max-width: 64rem) {
+@container lab-viewport (max-width: 64rem) {
   .examples__filter-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -460,7 +476,7 @@
     grid-template-columns: 1fr;
   }
 }
-@media (max-width: 48rem) {
+@container lab-viewport (max-width: 48rem) {
   .examples__header {
     grid-template-columns: 1fr;
   }

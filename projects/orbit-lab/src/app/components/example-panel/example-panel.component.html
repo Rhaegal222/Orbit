@@ -24,7 +24,12 @@
   </div>
   @if (code() && isCodeVisible()) {
     <div class="lab-example__source">
-      <orbit-code-block class="lab-example__code" [code]="code()" [collapsible]="false" />
+      <orbit-code-block
+        class="lab-example__code"
+        [code]="code()"
+        [language]="language()"
+        [collapsible]="false"
+      />
     </div>
   }
 </div>

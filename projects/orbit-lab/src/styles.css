@@ -86,3 +86,16 @@ body {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: var(--orbit-font-size-code);
 }
+
+/* examples-page's landing demo swaps orbit-navbar's inline lists for a hamburger + offcanvas
+   below the `lab-viewport` container breakpoint. orbit-navbar renders `.orbit-navbar__list`
+   through its own component template, so it carries OrbitNavbarComponent's emulated-encapsulation
+   attribute, not ExamplesPageComponent's — a rule scoped to that component's styleUrl could never
+   match it. This lives here, global, for the same reason as the other overrides in this file.
+   `!important` is needed because orbit-navbar's own `[_ngcontent-*] .orbit-navbar__list` base rule
+   matches this same breakpoint with equal specificity, so plain cascade order can't be relied on. */
+@container lab-viewport (max-width: 48rem) {
+  .examples__landing-nav .orbit-navbar__list {
+    display: none !important;
+  }
+}

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { OrbitButtonComponent, OrbitNavbarComponent, type OrbitNavbarItem } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 const NAV_ITEMS: readonly OrbitNavbarItem[] = [
   { id: 'overview', label: 'Panoramica' },

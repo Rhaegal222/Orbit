@@ -65,15 +65,14 @@
   color: var(--orbit-status-success);
 }
 
-.orbit-code-block__copy ::ng-deep .orbit-icon-button {
-  border-color: var(--orbit-code-block-border);
-  background: var(--orbit-code-block-action-bg);
-  color: var(--orbit-code-block-action-fg);
-}
-
-.orbit-code-block__copy ::ng-deep .orbit-icon-button:hover:not(:disabled) {
-  background: var(--orbit-code-block-action-bg-hover);
-  color: var(--orbit-code-block-action-fg-hover);
+.orbit-code-block__copy {
+  /* orbit-icon-button reads these tokens for its own border/background/color, so
+     overriding them here restyles the child without piercing its encapsulation. */
+  --orbit-border-subtle: var(--orbit-code-block-border);
+  --orbit-surface-default: var(--orbit-code-block-action-bg);
+  --orbit-text-secondary: var(--orbit-code-block-action-fg);
+  --orbit-surface-subtle: var(--orbit-code-block-action-bg-hover);
+  --orbit-text-primary: var(--orbit-code-block-action-fg-hover);
 }
 
 .orbit-code-block__action {
@@ -172,69 +171,5 @@
   user-select: none;
 }
 
-/* Prism.js tokens are injected via [innerHTML] and Angular's emulated
-   encapsulation cannot scope them. ::ng-deep is needed to reach them,
-   matching the same pattern already used for the copy button override. */
-:host ::ng-deep .token.comment,
-:host ::ng-deep .token.prolog,
-:host ::ng-deep .token.doctype,
-:host ::ng-deep .token.cdata {
-  color: var(--orbit-code-block-token-comment);
-}
-
-:host ::ng-deep .token.punctuation {
-  color: var(--orbit-code-block-token-punctuation);
-}
-
-:host ::ng-deep .token.property,
-:host ::ng-deep .token.tag,
-:host ::ng-deep .token.boolean,
-:host ::ng-deep .token.number,
-:host ::ng-deep .token.constant,
-:host ::ng-deep .token.symbol {
-  color: var(--orbit-code-block-token-property);
-}
-
-:host ::ng-deep .token.selector,
-:host ::ng-deep .token.attr-name,
-:host ::ng-deep .token.string,
-:host ::ng-deep .token.char,
-:host ::ng-deep .token.builtin,
-:host ::ng-deep .token.inserted {
-  color: var(--orbit-code-block-token-string);
-}
-
-:host ::ng-deep .token.operator,
-:host ::ng-deep .token.entity,
-:host ::ng-deep .token.url,
-:host ::ng-deep .token.atrule,
-:host ::ng-deep .token.attr-value {
-  color: var(--orbit-code-block-token-operator);
-}
-
-:host ::ng-deep .token.keyword {
-  color: var(--orbit-code-block-token-keyword);
-}
-
-:host ::ng-deep .token.function,
-:host ::ng-deep .token.class-name {
-  color: var(--orbit-code-block-token-function);
-}
-
-:host ::ng-deep .token.regex,
-:host ::ng-deep .token.variable,
-:host ::ng-deep .token.important {
-  color: var(--orbit-code-block-token-regex);
-}
-
-:host ::ng-deep .token.deleted {
-  color: var(--orbit-code-block-token-deleted);
-}
-
-:host ::ng-deep .token.bold {
-  font-weight: var(--orbit-code-block-token-bold);
-}
-
-:host ::ng-deep .token.italic {
-  font-style: var(--orbit-code-block-token-italic);
-}
+/* Prism.js token colors live in styles.css: [innerHTML]-injected markup never receives
+   Angular's emulated-encapsulation attribute, so a scoped rule here could never match it. */

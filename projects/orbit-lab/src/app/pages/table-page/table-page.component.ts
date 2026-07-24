@@ -4,7 +4,7 @@ import {
   OrbitTableComponent,
   OrbitTableRowDirective,
 } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 interface Row {
   name: string;

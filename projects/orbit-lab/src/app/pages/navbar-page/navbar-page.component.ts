@@ -14,13 +14,15 @@ const NAV_ITEMS: readonly OrbitNavbarItem[] = [
 ];
 
 const CENTER_LEFT_ITEMS: readonly OrbitNavbarItem[] = [
-  { id: 'prodotti', label: 'Prodotti' },
-  { id: 'storia', label: 'La nostra storia' },
-  { id: 'ricette', label: 'Ricette' },
+  { id: 'home', label: 'Home' },
+  { id: 'catalog', label: 'Catalogo' },
+  { id: 'about', label: 'Chi siamo' },
 ];
 
 const CENTER_RIGHT_ITEMS: readonly OrbitNavbarItem[] = [
-  { id: 'contatti', label: 'Contatti' },
+  { id: 'blog', label: 'Blog' },
+  { id: 'support', label: 'Supporto' },
+  { id: 'contacts', label: 'Contatti' },
 ];
 
 @Component({

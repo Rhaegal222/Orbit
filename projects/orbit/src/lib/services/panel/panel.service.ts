@@ -74,7 +74,10 @@ export class OrbitPanelService {
     this.playEnterAnimation(overlayRef);
 
     if (!config.disableClose) {
-      overlayRef.backdropClick().pipe(take(1)).subscribe(() => this.close(overlayRef));
+      overlayRef
+        .backdropClick()
+        .pipe(take(1))
+        .subscribe(() => this.close(overlayRef));
       overlayRef
         .keydownEvents()
         .pipe(

@@ -7,23 +7,35 @@
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: var(--orbit-radius-full);
-  color: var(--orbit-action-primary-bg);
+  color: inherit;
   animation: orbit-spinner-spin var(--orbit-motion-spin) linear infinite;
 }
 
 .orbit-spinner--sm {
-  width: var(--orbit-font-size-sm);
-  height: var(--orbit-font-size-sm);
+  width: var(--orbit-spinner-size-sm);
+  height: var(--orbit-spinner-size-sm);
 }
 
 .orbit-spinner--md {
-  width: var(--orbit-sidebar-icon-size);
-  height: var(--orbit-sidebar-icon-size);
+  width: var(--orbit-spinner-size-md);
+  height: var(--orbit-spinner-size-md);
 }
 
 .orbit-spinner--lg {
-  width: var(--orbit-sidebar-icon-size-collapsed);
-  height: var(--orbit-sidebar-icon-size-collapsed);
+  width: var(--orbit-spinner-size-lg);
+  height: var(--orbit-spinner-size-lg);
+}
+
+.orbit-spinner--xl {
+  width: var(--orbit-spinner-size-xl);
+  height: var(--orbit-spinner-size-xl);
+  border-width: 3px;
+}
+
+.orbit-spinner--xxl {
+  width: var(--orbit-spinner-size-xxl);
+  height: var(--orbit-spinner-size-xxl);
+  border-width: 4px;
 }
 
 @keyframes orbit-spinner-spin {

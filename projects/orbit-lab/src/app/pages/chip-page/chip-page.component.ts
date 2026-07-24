@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { OrbitChipComponent } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 interface ChipDemoTag {
   id: string;
@@ -25,7 +25,8 @@ export class ChipPageComponent {
   protected readonly usageSnippet =
     '<orbit-chip [selected]="selected" (selectedChange)="selected = $event">Frontend</orbit-chip>';
 
-  protected readonly removableSnippet = '<orbit-chip removable (removed)="removeTag(tag)">{{ tag.label }}</orbit-chip>';
+  protected readonly removableSnippet =
+    '<orbit-chip removable (removed)="removeTag(tag)">{{ tag.label }}</orbit-chip>';
 
   protected readonly disabledSnippet = '<orbit-chip disabled removable>Archiviato</orbit-chip>';
 

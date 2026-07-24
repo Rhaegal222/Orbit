@@ -101,7 +101,9 @@ describe('LabShellComponent', () => {
 
     expect(document.querySelector('.lab-shell__phone-touch-overlay')).toBeNull();
     expect(
-      fixture.nativeElement.querySelector('.lab-shell__touch-mode-tile button')?.getAttribute('aria-pressed'),
+      fixture.nativeElement
+        .querySelector('.lab-shell__touch-mode-tile button')
+        ?.getAttribute('aria-pressed'),
     ).toBe('false');
 
     fixture.nativeElement.querySelector('.lab-shell__touch-mode-tile button')?.click();
@@ -389,7 +391,9 @@ describe('LabShellComponent', () => {
     navButton.click();
     fixture.detectChanges();
 
-    const phoneScreen = fixture.nativeElement.querySelector('.lab-shell__phone-screen') as HTMLElement;
+    const phoneScreen = fixture.nativeElement.querySelector(
+      '.lab-shell__phone-screen',
+    ) as HTMLElement;
     const mockupOverlay = overlayContainer.getContainerElement();
     expect(phoneScreen.contains(mockupOverlay)).toBe(true);
 
@@ -411,7 +415,9 @@ describe('LabShellComponent', () => {
     optionsButton.click();
     fixture.detectChanges();
 
-    const phoneScreen = fixture.nativeElement.querySelector('.lab-shell__phone-screen') as HTMLElement;
+    const phoneScreen = fixture.nativeElement.querySelector(
+      '.lab-shell__phone-screen',
+    ) as HTMLElement;
     const mockupOverlay = overlayContainer.getContainerElement();
     expect(phoneScreen.contains(mockupOverlay)).toBe(true);
     expect(mockupOverlay.textContent).toContain('Opzioni catalogo');

@@ -10,7 +10,5 @@
   "angularCompilerOptions": {
     "compilationMode": "partial"
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }

@@ -15,8 +15,9 @@ describe('TabPageComponent', () => {
     expect(fixture.nativeElement.querySelector('[data-blocked-banner]')).toBeNull();
   });
 
-  it('renders three real orbit-tab elements including one disabled', () => {
-    const tabs = fixture.nativeElement.querySelectorAll('orbit-tab');
+  it('renders three real orbit-tab elements including one disabled in the base example', () => {
+    const firstSection = fixture.nativeElement.querySelector('section');
+    const tabs = firstSection.querySelectorAll('orbit-tab');
     expect(tabs.length).toBe(3);
     expect(tabs[2].getAttribute('aria-disabled')).toBe('true');
   });
@@ -39,5 +40,19 @@ describe('TabPageComponent', () => {
       (el as HTMLElement).textContent?.includes('Documenti'),
     ) as HTMLElement;
     expect(docsTab.querySelector('orbit-badge')).toBeTruthy();
+  });
+
+  it('documents scroll, modal and offcanvas variants', () => {
+    const sections = fixture.nativeElement.querySelectorAll('section');
+    expect(sections.length).toBe(4);
+
+    expect(sections[1].querySelector('h2')?.textContent).toContain('Overflow');
+    expect(sections[1].querySelectorAll('orbit-tab').length).toBe(8);
+
+    expect(sections[2].querySelector('h2')?.textContent).toContain('Picker modale');
+    expect(sections[2].querySelector('orbit-tablist')).toBeTruthy();
+
+    expect(sections[3].querySelector('h2')?.textContent).toContain('Picker offcanvas');
+    expect(sections[3].querySelector('orbit-tablist')).toBeTruthy();
   });
 });

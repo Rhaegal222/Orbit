@@ -6,7 +6,9 @@ import { OrbitPanelSurfaceComponent } from './panel-surface.component';
 @Component({
   selector: 'test-host',
   imports: [OrbitPanelSurfaceComponent],
-  template: `<orbit-panel-surface labelledBy="t" describedBy="d"><p>Contenuto</p></orbit-panel-surface>`,
+  template: `<orbit-panel-surface labelledBy="t" describedBy="d"
+    ><p>Contenuto</p></orbit-panel-surface
+  >`,
 })
 class TestHostComponent {}
 

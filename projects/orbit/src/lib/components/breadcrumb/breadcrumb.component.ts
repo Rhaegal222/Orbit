@@ -62,7 +62,10 @@ export class OrbitBreadcrumbComponent implements OnDestroy {
     this.itemSelected.emit(item);
   }
 
-  toggleHiddenItemsPopover(hiddenItems: readonly OrbitBreadcrumbItem[], trigger: HTMLElement): void {
+  toggleHiddenItemsPopover(
+    hiddenItems: readonly OrbitBreadcrumbItem[],
+    trigger: HTMLElement,
+  ): void {
     if (this.isPopoverOpen()) {
       this.closeHiddenItemsPopover();
       return;

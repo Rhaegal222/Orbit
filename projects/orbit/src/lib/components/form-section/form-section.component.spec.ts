@@ -49,7 +49,9 @@ describe('OrbitFormSectionComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('button')).toBeNull();
-    expect(fixture.nativeElement.querySelector('.orbit-form-section__body').getAttribute('aria-hidden')).toBe('false');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-form-section__body').getAttribute('aria-hidden'),
+    ).toBe('false');
   });
 
   it('renders an optional workflow index and labels the collapsible region', () => {

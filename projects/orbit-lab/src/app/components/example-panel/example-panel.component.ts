@@ -1,5 +1,9 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
-import { OrbitButtonComponent, OrbitCodeBlockComponent, OrbitIconButtonComponent } from '@galileo/orbit';
+import {
+  OrbitButtonComponent,
+  OrbitCodeBlockComponent,
+  OrbitIconButtonComponent,
+} from '@galileo/orbit';
 
 @Component({
   selector: 'lab-example',
@@ -15,6 +19,8 @@ import { OrbitButtonComponent, OrbitCodeBlockComponent, OrbitIconButtonComponent
 export class LabExampleComponent {
   /** Optional source snippet rendered below the interactive preview. */
   code = input('');
+  /** Prism language used to highlight the source snippet. */
+  language = input('html');
   /** Lets a projected block component use the full preview width. */
   fullWidth = input(false, { transform: booleanAttribute });
   /** Removes catalog chrome when a preview is itself a complete page. */

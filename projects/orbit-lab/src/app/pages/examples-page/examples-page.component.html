@@ -6,42 +6,41 @@
     </p>
   }
 
-  <lab-example [fullWidth]="true" [bare]="selectedExample() === 'landing'">
-    @if (selectedExample() !== 'landing') {
-      <orbit-tablist
-        ariaLabel="Esempi del catalogo prodotti"
-        (selectedChange)="selectExample($event)"
+  <lab-example [fullWidth]="true">
+    <orbit-tablist
+      class="examples__tablist"
+      ariaLabel="Esempi del catalogo prodotti"
+      (selectedChange)="selectExample($event)"
+    >
+      <orbit-tab
+        value="portfolio"
+        label="Portafoglio catalogo"
+        [selected]="selectedExample() === 'portfolio'"
       >
-        <orbit-tab
-          value="portfolio"
-          label="Portafoglio catalogo"
-          [selected]="selectedExample() === 'portfolio'"
-        >
-          <orbit-badge orbitTabBadge tone="primary" label="Tabella" />
-        </orbit-tab>
-        <orbit-tab
-          value="dossier"
-          label="Dossier prodotto"
-          [selected]="selectedExample() === 'dossier'"
-        >
-          <orbit-badge orbitTabBadge tone="info" label="Workspace" />
-        </orbit-tab>
-        <orbit-tab
-          value="quick-action"
-          label="Azione rapida"
-          [selected]="selectedExample() === 'quick-action'"
-        >
-          <orbit-badge orbitTabBadge tone="warning" label="Modale" />
-        </orbit-tab>
-        <orbit-tab
-          value="landing"
-          label="Landing partner"
-          [selected]="selectedExample() === 'landing'"
-        >
-          <orbit-badge orbitTabBadge tone="success" label="Landing" />
-        </orbit-tab>
-      </orbit-tablist>
-    }
+        <orbit-badge orbitTabBadge tone="primary" label="Tabella" />
+      </orbit-tab>
+      <orbit-tab
+        value="dossier"
+        label="Dossier prodotto"
+        [selected]="selectedExample() === 'dossier'"
+      >
+        <orbit-badge orbitTabBadge tone="info" label="Workspace" />
+      </orbit-tab>
+      <orbit-tab
+        value="quick-action"
+        label="Azione rapida"
+        [selected]="selectedExample() === 'quick-action'"
+      >
+        <orbit-badge orbitTabBadge tone="warning" label="Modale" />
+      </orbit-tab>
+      <orbit-tab
+        value="landing"
+        label="Landing partner"
+        [selected]="selectedExample() === 'landing'"
+      >
+        <orbit-badge orbitTabBadge tone="success" label="Landing" />
+      </orbit-tab>
+    </orbit-tablist>
 
     @switch (selectedExample()) {
       @case ('portfolio') {
@@ -207,22 +206,22 @@
                     <orbit-panel>
                       <orbit-form-section title="Panoramica & Attributi" [contentSpacing]="true">
                         <orbit-form-grid>
-                          <div orbitFormGridItem [span]="6">
+                          <div orbitFormGridItem [span]="12" [spanMd]="6">
                             <orbit-form-field label="Famiglia prodotto" inputId="product-family"
                               ><orbit-select inputId="product-family" [options]="categoryOptions"
                             /></orbit-form-field>
                           </div>
-                          <div orbitFormGridItem [span]="6">
+                          <div orbitFormGridItem [span]="12" [spanMd]="6">
                             <orbit-form-field label="Product Manager" inputId="product-owner"
                               ><orbit-text-input inputId="product-owner" placeholder="Marco Rossi"
                             /></orbit-form-field>
                           </div>
-                          <div orbitFormGridItem [span]="6">
+                          <div orbitFormGridItem [span]="12" [spanMd]="6">
                             <orbit-form-field label="Data lancio" inputId="product-launch"
                               ><orbit-text-input inputId="product-launch" placeholder="15/09/2026"
                             /></orbit-form-field>
                           </div>
-                          <div orbitFormGridItem [span]="6">
+                          <div orbitFormGridItem [span]="12" [spanMd]="6">
                             <orbit-form-field label="Codice EAN" inputId="product-ean"
                               ><orbit-text-input inputId="product-ean" placeholder="08012345678901"
                             /></orbit-form-field>
@@ -231,7 +230,7 @@
                       </orbit-form-section>
                       <orbit-form-section title="Listini & Pricing" [contentSpacing]="true"
                         ><orbit-form-grid
-                          ><div orbitFormGridItem [span]="6">
+                          ><div orbitFormGridItem [span]="12" [spanMd]="6">
                             <orbit-form-field label="Prezzo base" inputId="product-price"
                               ><orbit-text-input
                                 inputId="product-price"
@@ -239,7 +238,7 @@
                                 [formControl]="listPrice"
                             /></orbit-form-field>
                           </div>
-                          <div orbitFormGridItem [span]="6">
+                          <div orbitFormGridItem [span]="12" [spanMd]="6">
                             <orbit-form-field label="Canale principale" inputId="product-channel"
                               ><orbit-select inputId="product-channel" [options]="channelOptions"
                             /></orbit-form-field></div></orbit-form-grid
@@ -273,7 +272,7 @@
                   ><orbit-panel
                     ><orbit-form-section title="Listini & Pricing" [contentSpacing]="true"
                       ><orbit-form-grid
-                        ><div orbitFormGridItem [span]="6">
+                        ><div orbitFormGridItem [span]="12" [spanMd]="6">
                           <orbit-form-field label="Prezzo base" inputId="pricing-base"
                             ><orbit-text-input
                               inputId="pricing-base"
@@ -281,7 +280,7 @@
                               [formControl]="listPrice"
                           /></orbit-form-field>
                         </div>
-                        <div orbitFormGridItem [span]="6">
+                        <div orbitFormGridItem [span]="12" [spanMd]="6">
                           <orbit-form-field label="Canale di vendita" inputId="pricing-channel"
                             ><orbit-select inputId="pricing-channel" [options]="channelOptions"
                           /></orbit-form-field></div></orbit-form-grid></orbit-form-section></orbit-panel
@@ -292,20 +291,20 @@
                   ><orbit-panel
                     ><orbit-form-section title="Varianti disponibili" [contentSpacing]="true"
                       ><orbit-form-grid
-                        ><div orbitFormGridItem [span]="4">
+                        ><div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
                           <orbit-selectable-tile
                             label="Corpo nero"
                             description="SKU PRD-8012-X-BK"
                             [selected]="true"
                           />
                         </div>
-                        <div orbitFormGridItem [span]="4">
+                        <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
                           <orbit-selectable-tile
                             label="Corpo bianco"
                             description="SKU PRD-8012-X-WH"
                           />
                         </div>
-                        <div orbitFormGridItem [span]="4">
+                        <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
                           <orbit-selectable-tile
                             label="Ottica 60°"
                             description="SKU PRD-8012-X-60"
@@ -364,7 +363,7 @@
               <orbit-modal-body>
                 <orbit-form-section title="Tipo di aggiornamento" [contentSpacing]="true"
                   ><orbit-form-grid
-                    ><div orbitFormGridItem [span]="4">
+                    ><div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
                       <orbit-selectable-tile
                         label="Percentuale"
                         description="Incremento o sconto"
@@ -372,7 +371,7 @@
                         (selectedChange)="setUpdateType('percent')"
                       />
                     </div>
-                    <div orbitFormGridItem [span]="4">
+                    <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
                       <orbit-selectable-tile
                         label="Valore fisso"
                         description="Nuovo prezzo netto"
@@ -380,7 +379,7 @@
                         (selectedChange)="setUpdateType('fixed')"
                       />
                     </div>
-                    <div orbitFormGridItem [span]="4">
+                    <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
                       <orbit-selectable-tile
                         label="Listino sorgente"
                         description="Copia da un canale"
@@ -390,7 +389,7 @@
                 ></orbit-form-section>
                 <div class="examples__quick-action-content">
                   <orbit-form-grid
-                    ><div orbitFormGridItem [span]="6">
+                    ><div orbitFormGridItem [span]="12" [spanMd]="6">
                       <orbit-form-field label="Variazione" inputId="price-change"
                         ><orbit-text-input
                           inputId="price-change"
@@ -398,7 +397,7 @@
                           placeholder="10,00"
                       /></orbit-form-field>
                     </div>
-                    <div orbitFormGridItem [span]="6">
+                    <div orbitFormGridItem [span]="12" [spanMd]="6">
                       <orbit-form-field label="Canale di vendita" inputId="price-channel"
                         ><orbit-select inputId="price-channel" [options]="channelOptions"
                       /></orbit-form-field></div
@@ -427,21 +426,98 @@
       @case ('landing') {
         <orbit-tab-panel value="landing">
           <section class="examples__landing" aria-labelledby="landing-title">
-            <orbit-navbar
-              brand="Lumenova"
-              ariaLabel="Navigazione Lumenova"
-              [items]="landingNavItems"
-              [activeId]="selectedLandingNav()"
-              (itemSelected)="selectLandingNav($event)"
+            @if (offcanvasOpen()) {
+              <div class="examples__landing-offcanvas-backdrop" (click)="closeOffcanvas()"></div>
+              <aside
+                class="examples__landing-offcanvas"
+                role="dialog"
+                aria-label="Menu di navigazione"
+              >
+                <header class="examples__landing-offcanvas-header">
+                  <span class="examples__landing-offcanvas-brand">Lumenova</span>
+                  <orbit-icon-button
+                    icon="close"
+                    ariaLabel="Chiudi menu"
+                    (clicked)="closeOffcanvas()"
+                  />
+                </header>
+                <nav class="examples__landing-offcanvas-nav" aria-label="Menu mobile">
+                  @for (item of landingNavItems; track item.id) {
+                    <button
+                      type="button"
+                      class="examples__landing-offcanvas-item"
+                      [class.examples__landing-offcanvas-item--active]="
+                        item.id === selectedLandingNav()
+                      "
+                      (click)="selectLandingNav(item); closeOffcanvas()"
+                    >
+                      {{ item.label }}
+                    </button>
+                  }
+                  @for (item of landingRightItems; track item.id) {
+                    <button
+                      type="button"
+                      class="examples__landing-offcanvas-item"
+                      [class.examples__landing-offcanvas-item--active]="
+                        item.id === selectedLandingNav()
+                      "
+                      (click)="selectLandingNav(item); closeOffcanvas()"
+                    >
+                      {{ item.label }}
+                    </button>
+                  }
+                </nav>
+                <footer class="examples__landing-offcanvas-footer">
+                  <orbit-button
+                    label="Area riservata"
+                    variant="outline"
+                    tone="neutral"
+                    class="examples__landing-offcanvas-btn"
+                  />
+                  <orbit-button label="Parla con noi" class="examples__landing-offcanvas-btn" />
+                </footer>
+              </aside>
+            }
+            <div
+              class="examples__landing-scroll"
+              [class.examples__landing-scroll--locked]="offcanvasOpen()"
             >
-              <orbit-button
-                orbitNavbarActions
-                label="Area riservata"
-                variant="outline"
-                tone="neutral"
-              />
-              <orbit-button orbitNavbarActions label="Parla con noi" />
-            </orbit-navbar>
+              <div class="examples__landing-nav">
+              <orbit-navbar
+                layout="center"
+                brand="Lumenova"
+                ariaLabel="Navigazione Lumenova"
+                [items]="landingNavItems"
+                [rightItems]="landingRightItems"
+                [activeId]="selectedLandingNav()"
+                [announcement]="landingAnnouncement()"
+                [announcementCloseable]="true"
+                (itemSelected)="selectLandingNav($event)"
+                (announcementClosed)="landingAnnouncement.set('')"
+              >
+                <orbit-button
+                  orbitNavbarActions
+                  class="examples__landing-nav-cta"
+                  label="Area riservata"
+                  variant="outline"
+                  tone="neutral"
+                />
+                <orbit-button
+                  orbitNavbarActions
+                  class="examples__landing-nav-cta"
+                  label="Parla con noi"
+                />
+                <button
+                  orbitNavbarActions
+                  type="button"
+                  class="examples__landing-hamburger"
+                  aria-label="Apri menu"
+                  (click)="toggleOffcanvas()"
+                >
+                  <orbit-icon name="menu" />
+                </button>
+              </orbit-navbar>
+            </div>
 
             <div class="examples__landing-hero">
               <div class="examples__landing-copy">
@@ -512,10 +588,19 @@
             </section>
 
             <footer class="examples__landing-footer">
-              <span>© 2026 Lumenova</span>
-              <span>Milano · Bologna · Roma</span>
-              <span>Privacy · Cookie · Contatti</span>
+              <ul class="examples__landing-footer-list">
+                <li>Milano</li>
+                <li>Bologna</li>
+                <li>Roma</li>
+              </ul>
+              <ul class="examples__landing-footer-list">
+                <li>Privacy</li>
+                <li>Cookie</li>
+                <li>Contatti</li>
+              </ul>
+              <span class="examples__landing-footer-copyright">© 2026 Lumenova</span>
             </footer>
+            </div>
           </section>
         </orbit-tab-panel>
       }

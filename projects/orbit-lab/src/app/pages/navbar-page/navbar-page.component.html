@@ -1,16 +1,15 @@
 <article>
   <h1>Barra di navigazione</h1>
   <p>
-    <code>orbit-navbar</code> gestisce la navigazione orizzontale di un prodotto. Usa link nativi
-    con <code>href</code> oppure emette la voce selezionata per lasciare routing e stato al
-    consumer.
+    <code>orbit-navbar</code> gestisce la navigazione orizzontale di un prodotto. Supporta layout
+    standard e centrato con menu diviso, announcement bar, e molteplici varianti visive.
   </p>
 
   <section>
-    <h2>Esempio</h2>
+    <h2>Esempio base</h2>
     <p>
-      La voce attiva espone <code>aria-current=&quot;page&quot;</code>; su schermi stretti le voci
-      scorrono orizzontalmente.
+      La voce attiva espone <code>aria-current=&quot;page&quot;</code>. Brand a sinistra, voci di
+      navigazione al centro, azioni a destra.
     </p>
     <lab-example [code]="snippet" fullWidth>
       <orbit-navbar
@@ -23,11 +22,176 @@
       </orbit-navbar>
     </lab-example>
   </section>
+
+  <section>
+    <h2>Layout centrato (split menu)</h2>
+    <p>
+      Con <code>layout=&quot;center&quot;</code> il brand è centrato e le voci di navigazione si
+      dividono su entrambi i lati. Le voci di sinistra usano <code>items</code>, quelle di destra
+      <code>rightItems</code>.
+    </p>
+    <lab-example [code]="centerSnippet" fullWidth>
+      <orbit-navbar
+        layout="center"
+        brand="Galileo"
+        [items]="centerLeftItems"
+        [rightItems]="centerRightItems"
+        [activeId]="activeId()"
+        (itemSelected)="selectItem($event)"
+      >
+        <orbit-button orbitNavbarActions tone="neutral" label="Carrello (0)" />
+      </orbit-navbar>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Announcement bar</h2>
+    <p>
+      L'input <code>announcement</code> mostra una barra informativa sopra la navbar. Con
+      <code>announcementCloseable</code> appare un pulsante chiudi che emette
+      <code>announcementClosed</code>.
+    </p>
+    <lab-example [code]="announcementSnippet" fullWidth>
+      <orbit-navbar
+        layout="center"
+        brand="Galileo"
+        [items]="centerLeftItems"
+        [rightItems]="centerRightItems"
+        [activeId]="activeId()"
+        (itemSelected)="selectItem($event)"
+        [announcement]="announcementText()"
+        [announcementCloseable]="true"
+        (announcementClosed)="announcementText.set('')"
+      >
+        <orbit-button orbitNavbarActions tone="neutral" label="Carrello (0)" />
+      </orbit-navbar>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Tone</h2>
+    <p>L'input <code>tone</code> controlla lo schema colori della navbar.</p>
+    <lab-example [code]="toneSnippet" fullWidth>
+      <div class="navbar-tone-demo">
+        <orbit-navbar
+          tone="dark"
+          brand="Orbit Dark"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          tone="primary"
+          brand="Orbit Primary"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          tone="transparent"
+          brand="Orbit Transparent"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Size</h2>
+    <p>L'input <code>size</code> regola l'altezza, il padding e la dimensione del font.</p>
+    <lab-example [code]="sizeSnippet" fullWidth>
+      <div class="navbar-size-demo">
+        <orbit-navbar
+          size="sm"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          size="md"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          size="lg"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Variant</h2>
+    <p>
+      L'input <code>variant</code> controlla lo stile degli item: filled (background), underline
+      (bordo inferiore) e pills (border-radius pieno).
+    </p>
+    <lab-example [code]="variantSnippet" fullWidth>
+      <div class="navbar-variant-demo">
+        <orbit-navbar
+          variant="filled"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          variant="underline"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          variant="pills"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Combinazioni</h2>
+    <p>Le input sono indipendenti e si combinano liberamente.</p>
+    <lab-example fullWidth>
+      <div class="navbar-combo-demo">
+        <orbit-navbar
+          tone="dark"
+          variant="underline"
+          size="sm"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          tone="primary"
+          variant="pills"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
   <section>
     <h2>Comportamento responsive</h2>
     <p>
       Sotto <code>--orbit-breakpoint-md</code> (48rem) la lista di navigazione va a capo su una
-      seconda riga invece di restare su una sola riga con la barra.
+      seconda riga. Nel layout centrato, brand e liste si riallineano verticalmente.
     </p>
   </section>
 </article>

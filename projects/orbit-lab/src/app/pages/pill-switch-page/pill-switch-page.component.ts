@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { OrbitPillSwitchComponent, OrbitPillSwitchOption } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 @Component({
   selector: 'lab-pill-switch-page',
@@ -18,9 +18,10 @@ export class PillSwitchPageComponent {
   ];
 
   protected readonly baseControl = new FormControl<string | number | null>('day');
-  protected readonly disabledControl = new FormControl<string | number | null>(
-    { value: 'day', disabled: true },
-  );
+  protected readonly disabledControl = new FormControl<string | number | null>({
+    value: 'day',
+    disabled: true,
+  });
 
   protected readonly usageSnippet =
     '<orbit-pill-switch ariaLabel="Intervallo" [options]="options" [formControl]="range" />';

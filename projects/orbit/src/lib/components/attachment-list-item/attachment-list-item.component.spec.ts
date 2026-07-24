@@ -6,7 +6,9 @@ describe('OrbitAttachmentListItemComponent', () => {
   let component: OrbitAttachmentListItemComponent;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [OrbitAttachmentListItemComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [OrbitAttachmentListItemComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(OrbitAttachmentListItemComponent);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('name', 'elemento.txt');
@@ -17,8 +19,14 @@ describe('OrbitAttachmentListItemComponent', () => {
     fixture.componentRef.setInput('metadata', '24 KB');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.orbit-attachment-list-item__name').textContent.trim()).toBe('elemento.txt');
-    expect(fixture.nativeElement.querySelector('.orbit-attachment-list-item__metadata').textContent.trim()).toBe('24 KB');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-attachment-list-item__name').textContent.trim(),
+    ).toBe('elemento.txt');
+    expect(
+      fixture.nativeElement
+        .querySelector('.orbit-attachment-list-item__metadata')
+        .textContent.trim(),
+    ).toBe('24 KB');
   });
 
   it('does not render a status without a label', () => {
@@ -30,7 +38,9 @@ describe('OrbitAttachmentListItemComponent', () => {
     fixture.componentRef.setInput('statusLabel', 'Sola lettura');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.classList.contains('orbit-attachment-list-item--readonly')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('orbit-attachment-list-item--readonly')).toBe(
+      true,
+    );
   });
 
   it('emits the selected action', () => {

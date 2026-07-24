@@ -15,7 +15,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     [attr.aria-labelledby]="labelledBy() || null"
     [attr.aria-label]="labelledBy() ? null : ariaLabel() || null"
     [attr.aria-describedby]="describedBy() || null"
-  ><ng-content /></section>`,
+  >
+    <ng-content />
+  </section>`,
   styleUrl: './panel-surface.component.css',
 })
 export class OrbitPanelSurfaceComponent {

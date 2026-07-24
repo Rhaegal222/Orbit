@@ -1,4 +1,11 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { OrbitIconComponent } from '../../icons/icon.component';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 

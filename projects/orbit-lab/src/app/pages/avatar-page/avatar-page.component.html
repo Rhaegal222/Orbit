@@ -1,6 +1,9 @@
 <article>
   <h1>Avatar</h1>
-  <p>Cerchio identificativo di un utente: immagine se disponibile, iniziali derivate dal nome altrimenti.</p>
+  <p>
+    Cerchio identificativo di un utente: immagine se disponibile, iniziali derivate dal nome
+    altrimenti.
+  </p>
 
   <section>
     <h2>Esempio</h2>
@@ -23,7 +26,7 @@
   <section>
     <h2>Dimensioni</h2>
     <lab-example [code]="sizesSnippet">
-      <div data-example="sizes" style="display: flex; align-items: center; gap: 1rem;">
+      <div data-example="sizes" style="display: flex; align-items: center; gap: 1rem">
         <orbit-avatar name="Mario Rossi" size="sm" />
         <orbit-avatar name="Mario Rossi" size="md" />
         <orbit-avatar name="Mario Rossi" size="lg" />
@@ -32,11 +35,28 @@
   </section>
 
   <section>
+    <h2>Stato di Caricamento (Spinner)</h2>
+    <lab-example [code]="loadingSnippet">
+      <div data-example="loading" style="display: flex; align-items: center; gap: 1rem">
+        <orbit-avatar name="Mario Rossi" [loading]="true" size="sm" />
+        <orbit-avatar name="Mario Rossi" [loading]="true" size="md" />
+        <orbit-avatar name="Mario Rossi" [loading]="true" size="lg" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
     <h2>Accessibilità</h2>
     <ul>
       <li><code>name</code> imposta l'<code>alt</code> dell'immagine quando presente.</li>
-      <li>Se l'immagine non carica (URL rotto o errore di rete), il componente mostra automaticamente le iniziali.</li>
-      <li>Lo stesso <code>name</code> produce sempre lo stesso colore di sfondo per le iniziali, utile per riconoscere lo stesso utente in liste diverse.</li>
+      <li>
+        Se l'immagine non carica (URL rotto o errore di rete), il componente mostra automaticamente
+        le iniziali.
+      </li>
+      <li>
+        Lo stesso <code>name</code> produce sempre lo stesso colore di sfondo per le iniziali, utile
+        per riconoscere lo stesso utente in liste diverse.
+      </li>
     </ul>
   </section>
 </article>

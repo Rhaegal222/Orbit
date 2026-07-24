@@ -8,6 +8,15 @@
   gap: var(--orbit-space-3);
 }
 
+/* Wraps the search input and hint for `orbitAutoHideOnScroll` (needs a real box to apply its
+   transform/opacity to — `display: contents` would remove the box and silently no-op the
+   directive). Repeats the parent grid's own gap so the search input and hint keep the same
+   spacing they had as direct grid children before this wrapper existed. */
+.lab-google-fonts__toolbar {
+  display: grid;
+  gap: var(--orbit-space-3);
+}
+
 .lab-google-fonts__hint,
 .lab-google-fonts__empty {
   margin: 0;

@@ -98,9 +98,7 @@ export class OrbitSelectComponent implements ControlValueAccessor, OnDestroy {
 
   get filteredOptions(): OrbitSelectOption[] {
     const q = this.queryText().toLocaleLowerCase(this.i18n.locale);
-    return this.options().filter((o) =>
-      o.label.toLocaleLowerCase(this.i18n.locale).includes(q),
-    );
+    return this.options().filter((o) => o.label.toLocaleLowerCase(this.i18n.locale).includes(q));
   }
 
   onInputChange(text: string): void {

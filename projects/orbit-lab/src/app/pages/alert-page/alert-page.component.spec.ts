@@ -33,12 +33,20 @@ describe('AlertPageComponent', () => {
     dismissButton.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-alert')).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-alert'),
+    ).toBeNull();
 
-    (fixture.nativeElement.querySelector('[data-example="dismissible-reset"] button') as HTMLButtonElement).click();
+    (
+      fixture.nativeElement.querySelector(
+        '[data-example="dismissible-reset"] button',
+      ) as HTMLButtonElement
+    ).click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-alert')).toBeTruthy();
+    expect(
+      fixture.nativeElement.querySelector('[data-example="dismissible"] orbit-alert'),
+    ).toBeTruthy();
   });
 
   it('renders a copyable usage snippet', () => {

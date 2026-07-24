@@ -22,7 +22,9 @@ describe('AvatarPageComponent', () => {
   });
 
   it('renders an initials fallback in the initials example', () => {
-    const initials = fixture.nativeElement.querySelector('[data-example="initials"] .orbit-avatar__initials');
+    const initials = fixture.nativeElement.querySelector(
+      '[data-example="initials"] .orbit-avatar__initials',
+    );
     expect(initials?.textContent?.trim()).toBe('MR');
   });
 
@@ -38,6 +40,8 @@ describe('AvatarPageComponent', () => {
     showCode.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain('<orbit-avatar');
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-avatar',
+    );
   });
 });

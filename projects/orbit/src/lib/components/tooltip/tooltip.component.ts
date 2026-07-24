@@ -6,7 +6,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   template: `<span [attr.id]="id" class="orbit-tooltip">{{ text }}</span>`,
   styles: [
     `
-      :host { display: block; }
+      :host {
+        display: block;
+      }
       .orbit-tooltip {
         display: block;
         padding: var(--orbit-space-2) var(--orbit-space-3);

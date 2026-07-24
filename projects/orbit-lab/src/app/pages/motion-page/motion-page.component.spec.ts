@@ -86,7 +86,9 @@ describe('MotionPageComponent', () => {
 
   it('does not open the preview overlay on row tap when the table renders wide (desktop)', () => {
     const desktopFixture = configure(1024);
-    const row = desktopFixture.nativeElement.querySelector('tbody tr[orbitTableRow]') as HTMLElement;
+    const row = desktopFixture.nativeElement.querySelector(
+      'tbody tr[orbitTableRow]',
+    ) as HTMLElement;
     expect(row.classList).not.toContain('motion-page__row--tappable');
 
     row.click();

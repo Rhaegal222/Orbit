@@ -48,6 +48,8 @@ describe('AccordionPageComponent', () => {
     showCode.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain('<orbit-accordion');
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-accordion',
+    );
   });
 });

@@ -1,9 +1,6 @@
 <div class="orbit-form-field">
   @if (label()) {
-    <label
-      class="orbit-form-field__label"
-      [for]="inputId() || null"
-    >
+    <label class="orbit-form-field__label" [for]="inputId() || null">
       {{ label() }}
       @if (required()) {
         <span class="orbit-form-field__required" aria-hidden="true">*</span>

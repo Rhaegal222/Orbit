@@ -91,9 +91,7 @@ export const routes: Routes = [
   {
     path: 'skeleton',
     loadComponent: () =>
-      import('./pages/skeleton-page/skeleton-page.component').then(
-        (m) => m.SkeletonPageComponent,
-      ),
+      import('./pages/skeleton-page/skeleton-page.component').then((m) => m.SkeletonPageComponent),
   },
   {
     path: 'slider',
@@ -110,9 +108,7 @@ export const routes: Routes = [
   {
     path: 'spinner',
     loadComponent: () =>
-      import('./pages/spinner-page/spinner-page.component').then(
-        (m) => m.SpinnerPageComponent,
-      ),
+      import('./pages/spinner-page/spinner-page.component').then((m) => m.SpinnerPageComponent),
   },
   {
     path: 'checkbox',
@@ -147,24 +143,86 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'pickers',
-    loadComponent: () =>
-      import('./pages/pickers-page/pickers-page.component').then((m) => m.PickersPageComponent),
-  },
-  {
     path: 'motion',
     loadComponent: () =>
       import('./pages/motion-page/motion-page.component').then((m) => m.MotionPageComponent),
   },
   {
-    path: 'dialog',
+    path: 'date-picker',
     loadComponent: () =>
-      import('./pages/dialog-page/dialog-page.component').then((m) => m.DialogPageComponent),
+      import('./pages/pickers-page/pickers-page.component').then((m) => m.DatePickerPageComponent),
+  },
+  {
+    path: 'time-picker',
+    loadComponent: () =>
+      import('./pages/time-picker-page/time-picker-page.component').then(
+        (m) => m.TimePickerPageComponent,
+      ),
+  },
+  {
+    path: 'pickers',
+    redirectTo: 'date-picker',
+    pathMatch: 'full',
+  },
+  {
+    path: 'tags-badges',
+    loadComponent: () =>
+      import('./pages/badge-page/badge-page.component').then((m) => m.BadgePageComponent),
+  },
+  {
+    path: 'badge',
+    redirectTo: 'tags-badges',
+    pathMatch: 'full',
+  },
+  {
+    path: 'chip',
+    redirectTo: 'tags-badges',
+    pathMatch: 'full',
+  },
+  {
+    path: 'alert',
+    loadComponent: () =>
+      import('./pages/alert-page/alert-page.component').then((m) => m.AlertPageComponent),
   },
   {
     path: 'banner',
     loadComponent: () =>
       import('./pages/banner-page/banner-page.component').then((m) => m.BannerPageComponent),
+  },
+  {
+    path: 'spinner',
+    loadComponent: () =>
+      import('./pages/spinner-page/spinner-page.component').then((m) => m.SpinnerPageComponent),
+  },
+  {
+    path: 'skeleton',
+    loadComponent: () =>
+      import('./pages/skeleton-page/skeleton-page.component').then((m) => m.SkeletonPageComponent),
+  },
+  {
+    path: 'loading',
+    redirectTo: 'spinner',
+    pathMatch: 'full',
+  },
+  {
+    path: 'progress-bar',
+    redirectTo: 'loading',
+    pathMatch: 'full',
+  },
+  {
+    path: 'text-input',
+    redirectTo: 'form-field',
+    pathMatch: 'full',
+  },
+  {
+    path: 'form-section',
+    redirectTo: 'form-field',
+    pathMatch: 'full',
+  },
+  {
+    path: 'dialog',
+    loadComponent: () =>
+      import('./pages/dialog-page/dialog-page.component').then((m) => m.DialogPageComponent),
   },
   {
     path: 'popover',

@@ -19,7 +19,8 @@ describe('BreadcrumbPageComponent', () => {
 
   it('renders the short example without collapsing', () => {
     expect(
-      fixture.nativeElement.querySelectorAll('[data-example="short"] .orbit-breadcrumb__item').length,
+      fixture.nativeElement.querySelectorAll('[data-example="short"] .orbit-breadcrumb__item')
+        .length,
     ).toBe(3);
   });
 
@@ -36,6 +37,8 @@ describe('BreadcrumbPageComponent', () => {
     showCode.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain('<orbit-breadcrumb');
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-breadcrumb',
+    );
   });
 });

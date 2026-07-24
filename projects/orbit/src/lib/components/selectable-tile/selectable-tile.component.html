@@ -6,7 +6,9 @@
   [attr.aria-pressed]="selected()"
   (click)="toggle()"
 >
-  <span class="orbit-selectable-tile__icon" aria-hidden="true"><ng-content select="[orbitSelectableTileIcon]" /></span>
+  <span class="orbit-selectable-tile__icon" aria-hidden="true"
+    ><ng-content select="[orbitSelectableTileIcon]"
+  /></span>
   <span class="orbit-selectable-tile__content"
     ><span class="orbit-selectable-tile__label">{{ label() }}</span>
     @if (description()) {

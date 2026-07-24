@@ -1,4 +1,5 @@
 import {
+  ApplicationRef,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -453,6 +454,7 @@ export class LabShellComponent {
   protected readonly showSidebarHeader = signal(true);
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
+  private readonly appRef = inject(ApplicationRef);
   private readonly mobilePreviewOverlayHost = inject(LabMobilePreviewOverlayHost);
   private readonly phoneScreen = viewChild('phoneScreen', { read: ElementRef });
 
@@ -462,10 +464,59 @@ export class LabShellComponent {
 
   protected readonly sidebarSections: Signal<readonly OrbitSidebarSection[]> = computed(() => {
     const query = this.searchQuery().trim().toLowerCase();
-    const items: OrbitSidebarItem[] = CATALOG_ENTRIES.filter((entry) =>
-      entry.label.toLowerCase().includes(query),
-    ).map((entry) => ({ id: entry.slug, label: entry.label, icon: entry.icon }));
-    return [{ id: 'catalog', items }];
+    const filterItems = (slugs: string[]) =>
+      CATALOG_ENTRIES.filter(
+        (e) => slugs.includes(e.slug) && e.label.toLowerCase().includes(query),
+      ).map((e) => ({ id: e.slug, label: e.label, icon: e.icon }));
+
+    const foundations = filterItems([
+      'themes',
+      'typography',
+      'motion',
+      'patterns',
+      'examples',
+      'layout',
+    ]);
+    const components = filterItems(['button', 'avatar', 'tags-badges', 'accordion', 'table']);
+    const formAndInputs = filterItems([
+      'form-field',
+      'checkbox',
+      'select',
+      'pill-switch',
+      'slider',
+      'attachments',
+    ]);
+    const pickers = filterItems(['date-picker', 'time-picker']);
+    const feedback = filterItems(['alert', 'banner', 'toast']);
+    const loading = filterItems(['skeleton', 'spinner', 'progress-bar']);
+    const overlays = filterItems(['dialog', 'panel', 'popover', 'tooltip']);
+    const layoutAndNav = filterItems(['navbar', 'breadcrumb', 'pagination', 'tab']);
+
+    const sections: OrbitSidebarSection[] = [];
+    if (foundations.length)
+      sections.push({ id: 'foundations', label: 'Fondamenta', items: foundations });
+    if (components.length)
+      sections.push({ id: 'components', label: 'Componenti', items: components });
+    if (formAndInputs.length)
+      sections.push({ id: 'form-inputs', label: 'Form & Input', items: formAndInputs });
+    if (pickers.length) sections.push({ id: 'pickers', label: 'Selettori', items: pickers });
+    if (feedback.length) sections.push({ id: 'feedback', label: 'Feedback', items: feedback });
+    if (loading.length) sections.push({ id: 'loading', label: 'Caricamento', items: loading });
+    if (overlays.length) sections.push({ id: 'overlays', label: 'Overlay', items: overlays });
+    if (layoutAndNav.length)
+      sections.push({ id: 'layout-nav', label: 'Navigazione', items: layoutAndNav });
+
+    return sections.length
+      ? sections
+      : [
+          {
+            id: 'all',
+            label: 'Risultati',
+            items: CATALOG_ENTRIES.filter((e) => e.label.toLowerCase().includes(query)).map(
+              (e) => ({ id: e.slug, label: e.label, icon: e.icon }),
+            ),
+          },
+        ];
   });
 
   protected readonly activeSidebarId: Signal<string | null> = toSignal(
@@ -542,11 +593,19 @@ export class LabShellComponent {
       cursor.className = 'lab-shell__phone-touch-cursor';
       overlay.appendChild(cursor);
 
-      overlay.addEventListener('pointermove', (e) => this.onTouchOverlayPointerMove(e as PointerEvent));
-      overlay.addEventListener('pointerdown', (e) => this.onTouchOverlayPointerDown(e as PointerEvent));
+      overlay.addEventListener('pointermove', (e) =>
+        this.onTouchOverlayPointerMove(e as PointerEvent),
+      );
+      overlay.addEventListener('pointerdown', (e) =>
+        this.onTouchOverlayPointerDown(e as PointerEvent),
+      );
       overlay.addEventListener('pointerup', (e) => this.onTouchOverlayPointerUp(e as PointerEvent));
-      overlay.addEventListener('pointercancel', (e) => this.onTouchOverlayPointerUp(e as PointerEvent));
-      overlay.addEventListener('pointerleave', (e) => this.onTouchOverlayPointerLeave(e as PointerEvent));
+      overlay.addEventListener('pointercancel', (e) =>
+        this.onTouchOverlayPointerUp(e as PointerEvent),
+      );
+      overlay.addEventListener('pointerleave', (e) =>
+        this.onTouchOverlayPointerLeave(e as PointerEvent),
+      );
 
       this.document.body.appendChild(overlay);
       this.touchOverlayElement = overlay;
@@ -609,8 +668,8 @@ export class LabShellComponent {
         textScale: this.textScale(),
       },
       panelClass: 'lab-google-fonts-dialog-pane',
-      width: 'min(96vw, 73.75rem)',
-      maxWidth: '96vw',
+      width: '100%',
+      maxWidth: '100%',
     });
   }
 
@@ -679,6 +738,21 @@ export class LabShellComponent {
   onTouchOverlayPointerDown(event: PointerEvent): void {
     const overlay = event.currentTarget as HTMLElement;
 
+    // The real, trusted pointerdown always targets the overlay itself and would otherwise keep
+    // bubbling to `document` with that same (wrong) target after this handler returns — reaching
+    // every open select/autocomplete/popover's own `document:pointerdown` outside-click listener
+    // a *second* time, this time with a target that is never "inside" anything, closing it right
+    // back after the synthetic, correctly-targeted pointerdown dispatched below already told it
+    // to stay open. Stopping the real event here means only the synthetic one reaches `document`.
+    event.stopPropagation();
+
+    // A fast second tap can otherwise land before the previous tap's own state change (e.g. an
+    // opened dropdown pushing later fields down) has actually painted, so `elementFromPoint`
+    // below would still read the stale, pre-update layout — hitting whatever used to be at that
+    // position instead of the newly-rendered content. Flushing pending change detection
+    // synchronously first guarantees the DOM already reflects the latest state before we read it.
+    this.appRef.tick();
+
     // Check what element is directly under the pointer
     overlay.style.pointerEvents = 'none';
     const target =
@@ -739,14 +813,19 @@ export class LabShellComponent {
     };
   }
 
-  private beginSliderDrag(overlay: HTMLElement, input: HTMLInputElement, event: PointerEvent): void {
+  private beginSliderDrag(
+    overlay: HTMLElement,
+    input: HTMLInputElement,
+    event: PointerEvent,
+  ): void {
     const min = parseFloat(input.min) || 0;
     const max = input.max ? parseFloat(input.max) : 100;
     const step = parseFloat(input.step) || 1;
 
     const applyValueFromClientX = (clientX: number) => {
       const rect = input.getBoundingClientRect();
-      const ratio = rect.width === 0 ? 0 : Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+      const ratio =
+        rect.width === 0 ? 0 : Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
       const stepped = Math.round((min + ratio * (max - min) - min) / step) * step + min;
       const next = String(Math.min(max, Math.max(min, stepped)));
       if (input.value !== next) {
@@ -790,6 +869,11 @@ export class LabShellComponent {
     // event only reaches JS listeners; `.click()` also runs the element's real default action
     // (toggling a checkbox/switch, opening a native <select>), which orbit's own checkbox and
     // switch controls rely on (they wrap a real `<input type="checkbox">`).
+    // Flushed for the same reason as in onTouchOverlayPointerDown: the pointerdown-time
+    // synthetic pointerdown dispatched to the real target (see below) can itself have opened or
+    // closed something synchronously-pending, so re-reading a stale layout here would again risk
+    // tapping whatever used to be at this position.
+    this.appRef.tick();
     overlay.style.pointerEvents = 'none';
     const target =
       typeof this.document.elementFromPoint === 'function'

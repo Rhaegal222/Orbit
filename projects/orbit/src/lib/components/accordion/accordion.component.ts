@@ -1,4 +1,11 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, contentChildren, forwardRef, input } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  contentChildren,
+  forwardRef,
+  input,
+} from '@angular/core';
 import { OrbitAccordionItemComponent } from './accordion-item.component';
 import {
   ORBIT_ACCORDION_CONTROLLER,

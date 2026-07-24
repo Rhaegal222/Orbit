@@ -1,8 +1,8 @@
 <article>
   <h1>Table</h1>
   <p>
-    Componente presentazionale: il consumer possiede l'iterazione riga e la logica di
-    ordinamento. <code>orbit-table-column</code> emette solo la direzione richiesta;
+    Componente presentazionale: il consumer possiede l'iterazione riga e la logica di ordinamento.
+    <code>orbit-table-column</code> emette solo la direzione richiesta;
     <code>orbitTableRow</code> marca lo stato disabilitato/muted.
   </p>
 
@@ -13,7 +13,10 @@
         <thead>
           <tr>
             <th>
-              <orbit-table-column sortable [sortDirection]="sortDirection()" (sortChange)="onSortChange($event)"
+              <orbit-table-column
+                sortable
+                [sortDirection]="sortDirection()"
+                (sortChange)="onSortChange($event)"
                 >Nome</orbit-table-column
               >
             </th>

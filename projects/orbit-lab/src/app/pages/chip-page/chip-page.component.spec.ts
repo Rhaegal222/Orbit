@@ -18,7 +18,9 @@ describe('ChipPageComponent', () => {
   });
 
   it('toggles selected in the selectable example', () => {
-    const chipBody = fixture.nativeElement.querySelector('[data-example="selectable"] .orbit-chip__body');
+    const chipBody = fixture.nativeElement.querySelector(
+      '[data-example="selectable"] .orbit-chip__body',
+    );
     expect(fixture.componentInstance.selected).toBe(false);
     chipBody.click();
     fixture.detectChanges();
@@ -26,7 +28,9 @@ describe('ChipPageComponent', () => {
   });
 
   it('removes an item from the removable example without toggling selection', () => {
-    const initialCount = fixture.nativeElement.querySelectorAll('[data-example="removable"] orbit-chip').length;
+    const initialCount = fixture.nativeElement.querySelectorAll(
+      '[data-example="removable"] orbit-chip',
+    ).length;
     fixture.nativeElement.querySelector('[data-example="removable"] .orbit-chip__remove').click();
     fixture.detectChanges();
     expect(
@@ -41,6 +45,8 @@ describe('ChipPageComponent', () => {
     showCode.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain('<orbit-chip');
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-chip',
+    );
   });
 });

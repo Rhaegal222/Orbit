@@ -11,7 +11,9 @@
       role="radio"
       [class.orbit-pill-switch__option--selected]="option.value === selectedValue()"
       [attr.aria-checked]="option.value === selectedValue()"
-      [attr.tabindex]="option.value === selectedValue() || (selectedValue() === null && index === 0) ? 0 : -1"
+      [attr.tabindex]="
+        option.value === selectedValue() || (selectedValue() === null && index === 0) ? 0 : -1
+      "
       [disabled]="isControlDisabled || option.disabled"
       (click)="select(option)"
       (keydown)="onKeydown($event, index)"

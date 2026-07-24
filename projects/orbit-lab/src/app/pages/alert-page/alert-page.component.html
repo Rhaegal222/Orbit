@@ -1,26 +1,100 @@
 <article>
   <h1>Alert</h1>
-  <p>Messaggio inline dentro form e card, nel flusso del DOM del chiamante: nessun overlay, nessun servizio.</p>
+  <p>
+    Messaggio inline dentro form e card, nel flusso del DOM del chiamante: nessun overlay, nessun
+    servizio.
+  </p>
 
   <section>
-    <h2>Esempio</h2>
+    <h2>Contesto d'uso (Inline Form)</h2>
+    <p>
+      Gli Alert compaiono direttamente all'interno del flusso visivo del modulo per informare
+      l'utente di uno stato relativo ai dati.
+    </p>
     <lab-example [code]="usageSnippet">
-      <div data-example="success">
-        <orbit-alert tone="success">Modifiche salvate con successo.</orbit-alert>
+      <div
+        style="
+          max-width: 520px;
+          padding: 1rem;
+          border: 1px solid var(--orbit-border-subtle);
+          border-radius: var(--orbit-radius-surface);
+          background: var(--orbit-surface-default);
+        "
+      >
+        <orbit-form-section title="Modifica Profilo Utente">
+          @if (alertWarningVisible()) {
+            <orbit-alert tone="warning" dismissible (dismissed)="toggleTone('warning')">
+              La tua email aziendale non è ancora stata verificata.
+            </orbit-alert>
+          }
+
+          <orbit-form-field label="Email aziendale" required>
+            <orbit-text-input type="email" value="mario.rossi@azienda.it" />
+          </orbit-form-field>
+        </orbit-form-section>
       </div>
     </lab-example>
   </section>
 
   <section>
     <h2>Tone</h2>
-    <div data-example="danger">
-      <orbit-alert tone="danger">Impossibile completare l'operazione.</orbit-alert>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem">
+      <orbit-button
+        label="Success"
+        variant="outline"
+        tone="success"
+        (clicked)="toggleTone('success')"
+      />
+      <orbit-button
+        label="Danger"
+        variant="outline"
+        tone="danger"
+        (clicked)="toggleTone('danger')"
+      />
+      <orbit-button
+        label="Warning"
+        variant="outline"
+        tone="neutral"
+        (clicked)="toggleTone('warning')"
+      />
+      <orbit-button label="Info" variant="outline" tone="neutral" (clicked)="toggleTone('info')" />
+      <orbit-button
+        label="Mostra tutti"
+        variant="solid"
+        tone="primary"
+        (clicked)="resetAllTones()"
+      />
     </div>
-    <div data-example="warning">
-      <orbit-alert tone="warning">Controlla i campi obbligatori.</orbit-alert>
-    </div>
-    <div data-example="info">
-      <orbit-alert tone="info">Sincronizzazione in corso.</orbit-alert>
+
+    <div style="display: flex; flex-direction: column; gap: var(--orbit-space-3)">
+      @if (alertSuccessVisible()) {
+        <div data-example="success">
+          <orbit-alert tone="success" dismissible (dismissed)="toggleTone('success')"
+            >Modifiche salvate con successo.</orbit-alert
+          >
+        </div>
+      }
+      @if (alertDangerVisible()) {
+        <div data-example="danger">
+          <orbit-alert tone="danger" dismissible (dismissed)="toggleTone('danger')"
+            >Impossibile completare l'operazione.</orbit-alert
+          >
+        </div>
+      }
+      @if (alertWarningVisible()) {
+        <div data-example="warning">
+          <orbit-alert tone="warning" dismissible (dismissed)="toggleTone('warning')"
+            >Controlla i campi obbligatori.</orbit-alert
+          >
+        </div>
+      }
+      @if (alertInfoVisible()) {
+        <div data-example="info">
+          <orbit-alert tone="info" dismissible (dismissed)="toggleTone('info')"
+            >Sincronizzazione in corso.</orbit-alert
+          >
+        </div>
+      }
     </div>
   </section>
 
@@ -35,7 +109,12 @@
         }
       </div>
       <div data-example="dismissible-reset">
-        <orbit-button label="Mostra di nuovo" variant="outline" tone="neutral" (clicked)="resetDismissible()" />
+        <orbit-button
+          label="Mostra di nuovo"
+          variant="outline"
+          tone="neutral"
+          (clicked)="resetDismissible()"
+        />
       </div>
     </lab-example>
   </section>
@@ -43,8 +122,14 @@
   <section>
     <h2>Accessibilità</h2>
     <ul>
-      <li>Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano <code>role="status"</code>.</li>
-      <li>L'alert non si nasconde da solo: l'output <code>dismissed</code> notifica il parent, che rimuove il componente dal template (pattern "controlled component").</li>
+      <li>
+        Tone <code>danger</code> usa <code>role="alert"</code>; gli altri tone usano
+        <code>role="status"</code>.
+      </li>
+      <li>
+        L'alert non si nasconde da solo: l'output <code>dismissed</code> notifica il parent, che
+        rimuove il componente dal template (pattern "controlled component").
+      </li>
     </ul>
   </section>
 </article>

@@ -59,14 +59,18 @@ describe('OrbitSkeletonComponent', () => {
 
   it('defaults height to a text-row height derived from typography tokens when shape is text', () => {
     const host = fixture.nativeElement as HTMLElement;
-    expect(host.style.height).toBe('calc(var(--orbit-font-size-body) * var(--orbit-line-height-body))');
+    expect(host.style.height).toBe(
+      'calc(var(--orbit-font-size-body) * var(--orbit-line-height-body))',
+    );
   });
 
   it('defaults height to a text-row height derived from typography tokens when shape is rect', () => {
     fixture.componentRef.setInput('shape', 'rect');
     fixture.detectChanges();
     const host = fixture.nativeElement as HTMLElement;
-    expect(host.style.height).toBe('calc(var(--orbit-font-size-body) * var(--orbit-line-height-body))');
+    expect(host.style.height).toBe(
+      'calc(var(--orbit-font-size-body) * var(--orbit-line-height-body))',
+    );
   });
 
   it('defaults height to the width when shape is circle, so a bare width produces a true circle', () => {

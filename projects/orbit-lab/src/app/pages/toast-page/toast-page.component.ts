@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { OrbitButtonComponent, OrbitToastService } from '@galileo/orbit';
 import type { OrbitToastTone } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 @Component({
   selector: 'lab-toast-page',
@@ -39,6 +39,18 @@ this.toast.show({
 
   showTone(tone: OrbitToastTone): void {
     this.toast.show({ message: this.toneMessages[tone], tone, position: 'bottom-end' });
+  }
+
+  showMultipleBottomStart(): void {
+    const tones: OrbitToastTone[] = ['success', 'danger', 'warning', 'info'];
+    tones.forEach((tone) => {
+      this.toast.show({
+        message: this.toneMessages[tone],
+        tone,
+        position: 'bottom-start',
+        duration: 0,
+      });
+    });
   }
 
   showManual(): void {

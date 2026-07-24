@@ -7,8 +7,16 @@ import { OrbitTableComponent } from './table.component';
   selector: 'test-host',
   imports: [OrbitTableComponent],
   template: `<orbit-table>
-    <thead><tr><th>Nome</th></tr></thead>
-    <tbody><tr><td>Mario Rossi</td></tr></tbody>
+    <thead>
+      <tr>
+        <th>Nome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mario Rossi</td>
+      </tr>
+    </tbody>
   </orbit-table>`,
 })
 class TestHostComponent {}
@@ -17,8 +25,16 @@ class TestHostComponent {}
   selector: 'test-host-variants',
   imports: [OrbitTableComponent],
   template: `<orbit-table [bordered]="bordered" [striped]="striped">
-    <thead><tr><th>Nome</th></tr></thead>
-    <tbody><tr><td>Mario Rossi</td></tr></tbody>
+    <thead>
+      <tr>
+        <th>Nome</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mario Rossi</td>
+      </tr>
+    </tbody>
   </orbit-table>`,
 })
 class TestHostVariantsComponent {
@@ -53,7 +69,9 @@ describe('OrbitTableComponent variants', () => {
   let fixture: ComponentFixture<TestHostVariantsComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [TestHostVariantsComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [TestHostVariantsComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(TestHostVariantsComponent);
   });
 

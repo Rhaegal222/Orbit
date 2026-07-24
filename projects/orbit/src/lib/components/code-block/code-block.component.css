@@ -24,10 +24,20 @@
   background: var(--orbit-code-block-bg);
 }
 
+.orbit-code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-1) var(--orbit-space-2);
+  border-bottom: 1px solid var(--orbit-code-block-border);
+  background: var(--orbit-code-block-gutter-bg);
+}
+
 .orbit-code-block__copy {
-  position: absolute;
-  top: var(--orbit-space-2);
-  right: var(--orbit-space-2);
+  position: relative;
+  top: auto;
+  right: auto;
 }
 
 .orbit-code-block__copied-feedback {
@@ -55,15 +65,14 @@
   color: var(--orbit-status-success);
 }
 
-.orbit-code-block__copy ::ng-deep .orbit-icon-button {
-  border-color: var(--orbit-code-block-border);
-  background: var(--orbit-code-block-action-bg);
-  color: var(--orbit-code-block-action-fg);
-}
-
-.orbit-code-block__copy ::ng-deep .orbit-icon-button:hover:not(:disabled) {
-  background: var(--orbit-code-block-action-bg-hover);
-  color: var(--orbit-code-block-action-fg-hover);
+.orbit-code-block__copy {
+  /* orbit-icon-button reads these tokens for its own border/background/color, so
+     overriding them here restyles the child without piercing its encapsulation. */
+  --orbit-border-subtle: var(--orbit-code-block-border);
+  --orbit-surface-default: var(--orbit-code-block-action-bg);
+  --orbit-text-secondary: var(--orbit-code-block-action-fg);
+  --orbit-surface-subtle: var(--orbit-code-block-action-bg-hover);
+  --orbit-text-primary: var(--orbit-code-block-action-fg-hover);
 }
 
 .orbit-code-block__action {
@@ -136,3 +145,31 @@
   padding: 0 var(--orbit-space-3);
   white-space: pre;
 }
+
+.orbit-code-block__line--highlighted {
+  background: var(--orbit-code-block-highlight-bg);
+  border-left: 2px solid var(--orbit-code-block-highlight-border);
+}
+
+.orbit-code-block__line--highlighted .orbit-code-block__line-number {
+  background: var(--orbit-code-block-highlight-bg);
+}
+
+.orbit-code-block__language-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--orbit-space-2);
+  height: 1.25rem;
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-code-block-action-bg);
+  color: var(--orbit-code-block-action-fg);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* Prism.js token colors live in styles.css: [innerHTML]-injected markup never receives
+   Angular's emulated-encapsulation attribute, so a scoped rule here could never match it. */

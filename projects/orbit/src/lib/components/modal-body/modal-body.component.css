@@ -34,8 +34,8 @@
 }
 
 .orbit-modal-body__spinner {
-  width: var(--orbit-space-5);
-  height: var(--orbit-space-5);
+  width: var(--orbit-spinner-size-md);
+  height: var(--orbit-spinner-size-md);
   border: 2px solid var(--orbit-border-subtle);
   border-top-color: var(--orbit-action-primary-bg);
   border-radius: var(--orbit-radius-full);
@@ -43,8 +43,8 @@
 }
 
 .orbit-modal-body__loader--small .orbit-modal-body__spinner {
-  width: var(--orbit-font-size-lg);
-  height: var(--orbit-font-size-lg);
+  width: var(--orbit-spinner-size-sm);
+  height: var(--orbit-spinner-size-sm);
 }
 
 .orbit-modal-body__loader-text {

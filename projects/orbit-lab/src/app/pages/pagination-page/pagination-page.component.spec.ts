@@ -31,6 +31,8 @@ describe('PaginationPageComponent', () => {
     showCode.click();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain('<orbit-pagination');
+    expect(fixture.nativeElement.querySelector('[data-code-block]').textContent).toContain(
+      '<orbit-pagination',
+    );
   });
 });

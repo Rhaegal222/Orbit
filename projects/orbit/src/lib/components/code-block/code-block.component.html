@@ -20,19 +20,36 @@
         <span class="orbit-code-block__copied-label">Copiato</span>
       </div>
     }
-    @if (showActions()) {
-      <orbit-icon-button
-        class="orbit-code-block__copy"
-        data-copy-code
-        [ariaLabel]="copyLabel() === 'Copiato' ? 'Codice copiato' : 'Copia codice'"
-        tone="neutral"
-        (clicked)="copy()"
-      >
-        <orbit-icon name="copy" />
-      </orbit-icon-button>
+    @if (showActions() || showLanguageLabel()) {
+      <div class="orbit-code-block__toolbar">
+        @if (showLanguageLabel() && language() !== 'text') {
+          <span class="orbit-code-block__language-label" aria-hidden="true">{{
+            languageLabel()
+          }}</span>
+        }
+        @if (showActions()) {
+          <orbit-icon-button
+            class="orbit-code-block__copy"
+            data-copy-code
+            [ariaLabel]="copyLabel() === 'Copiato' ? 'Codice copiato' : 'Copia codice'"
+            tone="neutral"
+            (clicked)="copy()"
+          >
+            <orbit-icon name="copy" />
+          </orbit-icon-button>
+        }
+      </div>
     }
-    <pre #codeSurface class="orbit-code-block__pre" data-code-block [id]="panelId"><code class="orbit-code-block__code">@for (line of lines(); track $index) {<span
+    <pre
+      #codeSurface
+      class="orbit-code-block__pre"
+      data-code-block
+      [id]="panelId"
+    ><code class="orbit-code-block__code">@for (line of lines(); track $index) {<span
       class="orbit-code-block__line"
-    ><span class="orbit-code-block__line-number" aria-hidden="true">{{ $index + 1 }}</span><span class="orbit-code-block__line-content">{{ line || ' ' }}</span></span>}</code></pre>
+      [class.orbit-code-block__line--highlighted]="isHighlighted($index)"
+    ><span class="orbit-code-block__line-number" aria-hidden="true">{{ $index + 1 }}</span><span
+      class="orbit-code-block__line-content"
+    >@if (highlightedLines()) {<span [innerHTML]="highlightedLines()![$index]"></span>}@else {{{ line || ' ' }}}</span></span>}</code></pre>
   </div>
 </div>

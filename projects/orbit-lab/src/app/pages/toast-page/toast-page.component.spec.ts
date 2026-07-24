@@ -25,15 +25,23 @@ describe('ToastPageComponent', () => {
   });
 
   it('shows a success toast when the success example button is clicked', () => {
-    (fixture.nativeElement.querySelector('[data-example="success"] button') as HTMLButtonElement).click();
+    (
+      fixture.nativeElement.querySelector('[data-example="success"] button') as HTMLButtonElement
+    ).click();
 
-    expect(overlayContainer.getContainerElement().textContent).toContain('Modifiche salvate con successo');
+    expect(overlayContainer.getContainerElement().textContent).toContain(
+      'Modifiche salvate con successo',
+    );
   });
 
   it('shows a danger toast when the danger example button is clicked', () => {
-    (fixture.nativeElement.querySelector('[data-example="danger"] button') as HTMLButtonElement).click();
+    (
+      fixture.nativeElement.querySelector('[data-example="danger"] button') as HTMLButtonElement
+    ).click();
 
-    expect(overlayContainer.getContainerElement().textContent).toContain("Impossibile completare l'operazione");
+    expect(overlayContainer.getContainerElement().textContent).toContain(
+      "Impossibile completare l'operazione",
+    );
   });
 
   it('renders a copyable usage snippet', () => {

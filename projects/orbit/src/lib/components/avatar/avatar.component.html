@@ -6,9 +6,20 @@
   [attr.role]="showImage() ? null : 'img'"
   [attr.aria-label]="showImage() ? null : name()"
 >
+  @if (isImageLoading()) {
+    <orbit-spinner class="orbit-avatar__spinner" [size]="size() === 'lg' ? 'md' : 'sm'" />
+  }
+
   @if (showImage()) {
-    <img class="orbit-avatar__image" [src]="src()" [alt]="name()" (error)="onImageError()" />
-  } @else {
+    <img
+      class="orbit-avatar__image"
+      [class.orbit-avatar__image--hidden]="isImageLoading()"
+      [src]="src()"
+      [alt]="name()"
+      (load)="onImageLoad()"
+      (error)="onImageError()"
+    />
+  } @else if (!src() || imageFailed()) {
     <span class="orbit-avatar__initials" aria-hidden="true">{{ initials() }}</span>
   }
 </span>

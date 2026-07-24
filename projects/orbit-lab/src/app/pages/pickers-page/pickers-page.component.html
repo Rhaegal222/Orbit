@@ -1,6 +1,6 @@
 <article>
-  <h1>Pickers</h1>
-  <p>Campi editabili con popup aperto esclusivamente dal trigger laterale.</p>
+  <h1>Selettore Data</h1>
+  <p>Campo data con calendario popover e supporto per intervalli, selezione mese e anno.</p>
 
   <section>
     <h2>Esempio</h2>
@@ -25,17 +25,6 @@
         startInputId="lab-range-start"
         endInputId="lab-range-end"
         [formControl]="range"
-      />
-    </lab-example>
-  </section>
-
-  <section>
-    <h2>Time picker</h2>
-    <lab-example [code]="timeSnippet">
-      <orbit-time-picker
-        inputId="lab-time-picker"
-        [formControl]="time"
-        [quickOptions]="quickOptions"
       />
     </lab-example>
   </section>

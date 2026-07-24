@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { OrbitTableColumnComponent, OrbitTableComponent, OrbitTableRowDirective } from '@galileo/orbit';
-import { LabExampleComponent } from '../../catalog/example-panel.component';
+import {
+  OrbitTableColumnComponent,
+  OrbitTableComponent,
+  OrbitTableRowDirective,
+} from '@galileo/orbit';
+import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 interface Row {
   name: string;
@@ -12,7 +16,12 @@ interface Row {
   selector: 'lab-table-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitTableComponent, OrbitTableColumnComponent, OrbitTableRowDirective, LabExampleComponent],
+  imports: [
+    OrbitTableComponent,
+    OrbitTableColumnComponent,
+    OrbitTableRowDirective,
+    LabExampleComponent,
+  ],
   templateUrl: './table-page.component.html',
 })
 export class TablePageComponent {

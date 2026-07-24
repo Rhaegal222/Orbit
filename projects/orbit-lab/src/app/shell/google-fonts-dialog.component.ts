@@ -4,6 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { startWith } from 'rxjs';
 import {
+  OrbitAutoHideOnScrollDirective,
   OrbitButtonComponent,
   OrbitIconButtonComponent,
   OrbitModalBodyComponent,
@@ -31,6 +32,7 @@ export interface LabGoogleFontsDialogData {
   selector: 'lab-google-fonts-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    OrbitAutoHideOnScrollDirective,
     OrbitButtonComponent,
     OrbitIconButtonComponent,
     OrbitModalBodyComponent,
@@ -55,19 +57,21 @@ export interface LabGoogleFontsDialogData {
     />
     <orbit-modal-body>
       <div class="lab-google-fonts__content">
-        <orbit-text-input
-          inputId="google-font-search"
-          type="search"
-          placeholder="Cerca un font"
-          ariaLabel="Cerca nella libreria Google Fonts"
-          [formControl]="searchControl"
-        />
-        <p class="lab-google-fonts__hint">
-          Se non trovi la famiglia desiderata, esplora il
-          <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer"
-            >catalogo Google Fonts</a
-          >.
-        </p>
+        <div class="lab-google-fonts__toolbar" orbitAutoHideOnScroll>
+          <orbit-text-input
+            inputId="google-font-search"
+            type="search"
+            placeholder="Cerca un font"
+            ariaLabel="Cerca nella libreria Google Fonts"
+            [formControl]="searchControl"
+          />
+          <p class="lab-google-fonts__hint">
+            Se non trovi la famiglia desiderata, esplora il
+            <a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer"
+              >catalogo Google Fonts</a
+            >.
+          </p>
+        </div>
         <div class="lab-google-fonts__list">
           @for (font of filteredFonts(); track font.family) {
             <article class="lab-google-fonts__item" [style.font-family]="fontStack(font.family)">

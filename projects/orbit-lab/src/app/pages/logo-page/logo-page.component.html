@@ -1,0 +1,95 @@
+<article>
+  <h1>Logo</h1>
+  <p>
+    Il logo Orbit è un wordmark tipografico: <strong>ORBIT</strong> seguito dal punto fermo
+    primario. Non è un'immagine — è testo con un peso font elevato e un colore accent.
+  </p>
+
+  <section>
+    <h2>Varianti</h2>
+
+    <div class="lab-logo-demos">
+      <div class="lab-logo-card lab-logo-card--light">
+        <p class="lab-logo-card__label">Su superficie chiara</p>
+        <a class="lab-logo-wordmark lab-logo-wordmark--lg" href="/" aria-label="Orbit, home"
+          >ORBIT<span>·</span></a
+        >
+      </div>
+
+      <div class="lab-logo-card lab-logo-card--dark">
+        <p class="lab-logo-card__label">Su superficie scura</p>
+        <a class="lab-logo-wordmark lab-logo-wordmark--lg" href="/" aria-label="Orbit, home"
+          >ORBIT<span>·</span></a
+        >
+      </div>
+
+      <div class="lab-logo-card lab-logo-card--primary">
+        <p class="lab-logo-card__label">Su primary</p>
+        <a class="lab-logo-wordmark lab-logo-wordmark--lg" href="/" aria-label="Orbit, home"
+          >ORBIT<span>·</span></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Dimensioni</h2>
+    <div class="lab-logo-sizes">
+      <a class="lab-logo-wordmark lab-logo-wordmark--sm" href="/" aria-label="Orbit, home"
+        >ORBIT<span>·</span></a
+      >
+      <a class="lab-logo-wordmark lab-logo-wordmark--md" href="/" aria-label="Orbit, home"
+        >ORBIT<span>·</span></a
+      >
+      <a class="lab-logo-wordmark lab-logo-wordmark--lg" href="/" aria-label="Orbit, home"
+        >ORBIT<span>·</span></a
+      >
+      <a class="lab-logo-wordmark lab-logo-wordmark--xl" href="/" aria-label="Orbit, home"
+        >ORBIT<span>·</span></a
+      >
+    </div>
+  </section>
+
+  <section>
+    <h2>In contesto header</h2>
+    <div class="lab-logo-header-demo">
+      <header class="lab-logo-site-header">
+        <a class="lab-logo-wordmark" href="/" aria-label="Orbit, home">ORBIT<span>·</span></a>
+        <nav aria-label="Esempio navigazione">
+          <a href="/lab/">Lab</a>
+          <a href="/studio/">Studio</a>
+        </nav>
+      </header>
+    </div>
+  </section>
+
+  <section>
+    <h2>Come usarlo</h2>
+    <p>
+      Il logo è semplice HTML + CSS. Non servono immagini, SVG o font esterni. Basta il wordmark
+      con <code>font-weight: 800</code> e il punto <code>span</code> colorato con il token
+      primario.
+    </p>
+    <pre class="lab-logo-code"><code>&lt;a class="wordmark" href="/" aria-label="Orbit, home"&gt;
+  ORBIT&lt;span&gt;·&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+    <pre class="lab-logo-code"><code>.wordmark &#123;
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: inherit;
+&#125;
+
+.wordmark span &#123;
+  color: var(--orbit-color-primary);
+&#125;</code></pre>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <p>
+      Il link del logo deve avere un <code>aria-label</code> descrittivo. Il
+      <code>&lt;span&gt;</code> con il punto è decorativo e non ha bisogno di testo alternativo.
+    </p>
+  </section>
+</article>

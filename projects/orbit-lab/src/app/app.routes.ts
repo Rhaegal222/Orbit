@@ -3,8 +3,13 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'button',
+    redirectTo: 'logo',
     pathMatch: 'full',
+  },
+  {
+    path: 'logo',
+    loadComponent: () =>
+      import('./pages/logo-page/logo-page.component').then((m) => m.LogoPageComponent),
   },
   {
     path: 'button',

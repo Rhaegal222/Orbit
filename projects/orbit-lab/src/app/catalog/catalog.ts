@@ -1,6 +1,7 @@
 import { CatalogEntry } from './catalog-entry.model';
 
 export const CATALOG_ENTRIES: CatalogEntry[] = [
+  { slug: 'logo', label: 'Logo', status: 'verified', icon: 'info' },
   { slug: 'accordion', label: 'Accordion', status: 'verified', icon: 'layers' },
   { slug: 'alert', label: 'Alert', status: 'verified', icon: 'alert-triangle' },
   { slug: 'attachments', label: 'Allegati', status: 'verified', icon: 'paperclip' },

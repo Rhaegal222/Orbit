@@ -470,6 +470,7 @@ export class LabShellComponent {
       ).map((e) => ({ id: e.slug, label: e.label, icon: e.icon }));
 
     const foundations = filterItems([
+      'logo',
       'themes',
       'typography',
       'motion',

@@ -1,6 +1,8 @@
 services:
   orbit:
-    build: .
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
     read_only: true
     tmpfs:
       - /tmp

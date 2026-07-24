@@ -53,25 +53,17 @@
   align-items: center;
   gap: var(--orbit-space-2);
   white-space: nowrap;
-  font-weight: var(--orbit-font-weight-emphasis);
 }
 
-.lab-shell__brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--orbit-radius-full);
-  background: color-mix(in srgb, var(--orbit-action-primary-bg) 15%, var(--orbit-surface-subtle));
+.lab-shell__wordmark {
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lab-shell__wordmark span {
   color: var(--orbit-action-primary-bg);
-  font-size: var(--orbit-font-size-caption);
-  font-weight: var(--orbit-font-weight-emphasis);
-}
-
-.lab-shell__brand-name {
-  font-size: var(--orbit-font-size-body);
-  color: var(--orbit-text-primary);
 }
 
 .lab-shell__title-separator {

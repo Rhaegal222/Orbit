@@ -12,7 +12,6 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { DialogRef } from '@angular/cdk/dialog';
 import { OrbitTabComponent } from '../tab/tab.component';
 import { OrbitBadgeComponent, OrbitBadgeTone } from '../badge/badge.component';
 import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
@@ -48,6 +47,7 @@ interface TabPickerData {
   template: `<orbit-panel-surface ariaLabel="Seleziona scheda">
     <orbit-sidebar
       embedded
+      [collapsible]="false"
       brand="Schede"
       [sections]="sections"
       [activeId]="data.selected"
@@ -205,7 +205,7 @@ export type OrbitTablistPickerMode = 'modal' | 'offcanvas';
   `,
 })
 export class OrbitTablistPickerComponent {
-  private readonly dialogRef = inject(DialogRef<OrbitTablistPickerComponent>);
+  private readonly dialogService = inject(OrbitDialogService);
   protected readonly data = inject(ORBIT_DIALOG_DATA) as TabPickerData;
 
   select(value: string): void {
@@ -214,7 +214,7 @@ export class OrbitTablistPickerComponent {
   }
 
   close(): void {
-    this.dialogRef.close();
+    this.dialogService.closeAll();
   }
 }
 

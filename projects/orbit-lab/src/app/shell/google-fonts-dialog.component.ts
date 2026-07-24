@@ -57,7 +57,7 @@ export interface LabGoogleFontsDialogData {
     />
     <orbit-modal-body>
       <div class="lab-google-fonts__content">
-        <div orbitAutoHideOnScroll>
+        <div class="lab-google-fonts__toolbar" orbitAutoHideOnScroll>
           <orbit-text-input
             inputId="google-font-search"
             type="search"

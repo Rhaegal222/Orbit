@@ -99,6 +99,17 @@
   animation-name: orbit-backdrop-enter;
 }
 
+/* Orbit Lab's touch-simulation overlay (`.lab-shell__phone-touch-overlay`, z-index 1300) sits
+   above every previewed element on purpose, so a real mouse never triggers `:hover` or native
+   drag on the content underneath. A dialog/panel/select/popover open *inside* the mockup is the
+   one exception: raising its z-index above the touch overlay lets its own content receive real
+   pointer events directly, so Core's own outside-click detection (`document:pointerdown`
+   listeners) sees the actual trigger/menu element instead of the touch overlay as the event
+   target. Scoped to `--lab-mockup` only — the real (non-preview) overlay container is unaffected. */
+.cdk-overlay-container--lab-mockup {
+  z-index: 1400;
+}
+
 .orbit-panel-pane.orbit-panel-pane--closing {
   animation: orbit-panel-exit var(--orbit-motion-slow) var(--orbit-easing-accelerate) forwards;
 }

@@ -45,7 +45,7 @@
           (clicked)="openNavigation()"
         />
       </div>
-      <div class="lab-shell__header-center">
+      <div class="lab-shell__header-center" data-lab-overlay-exempt>
         @if (mobilePreview()) {
           <orbit-button
             [label]="orientation() === 'portrait' ? 'Ruota orizzontale' : 'Ruota verticale'"

@@ -1,4 +1,5 @@
 import {
+  ApplicationRef,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -453,6 +454,7 @@ export class LabShellComponent {
   protected readonly showSidebarHeader = signal(true);
   private readonly document = inject(DOCUMENT);
   private readonly renderer = inject(Renderer2);
+  private readonly appRef = inject(ApplicationRef);
   private readonly mobilePreviewOverlayHost = inject(LabMobilePreviewOverlayHost);
   private readonly phoneScreen = viewChild('phoneScreen', { read: ElementRef });
 
@@ -679,6 +681,21 @@ export class LabShellComponent {
   onTouchOverlayPointerDown(event: PointerEvent): void {
     const overlay = event.currentTarget as HTMLElement;
 
+    // The real, trusted pointerdown always targets the overlay itself and would otherwise keep
+    // bubbling to `document` with that same (wrong) target after this handler returns — reaching
+    // every open select/autocomplete/popover's own `document:pointerdown` outside-click listener
+    // a *second* time, this time with a target that is never "inside" anything, closing it right
+    // back after the synthetic, correctly-targeted pointerdown dispatched below already told it
+    // to stay open. Stopping the real event here means only the synthetic one reaches `document`.
+    event.stopPropagation();
+
+    // A fast second tap can otherwise land before the previous tap's own state change (e.g. an
+    // opened dropdown pushing later fields down) has actually painted, so `elementFromPoint`
+    // below would still read the stale, pre-update layout — hitting whatever used to be at that
+    // position instead of the newly-rendered content. Flushing pending change detection
+    // synchronously first guarantees the DOM already reflects the latest state before we read it.
+    this.appRef.tick();
+
     // Check what element is directly under the pointer
     overlay.style.pointerEvents = 'none';
     const target =
@@ -790,6 +807,11 @@ export class LabShellComponent {
     // event only reaches JS listeners; `.click()` also runs the element's real default action
     // (toggling a checkbox/switch, opening a native <select>), which orbit's own checkbox and
     // switch controls rely on (they wrap a real `<input type="checkbox">`).
+    // Flushed for the same reason as in onTouchOverlayPointerDown: the pointerdown-time
+    // synthetic pointerdown dispatched to the real target (see below) can itself have opened or
+    // closed something synchronously-pending, so re-reading a stale layout here would again risk
+    // tapping whatever used to be at this position.
+    this.appRef.tick();
     overlay.style.pointerEvents = 'none';
     const target =
       typeof this.document.elementFromPoint === 'function'

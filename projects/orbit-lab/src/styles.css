@@ -18,6 +18,15 @@ body {
   background: var(--orbit-surface-canvas);
 }
 
+/* An overlay exempted from the mobile-preview mockup redirect (LabScopedOverlayContainer) still
+   uses the real, default CDK overlay container — but its trigger sits right above the phone
+   bezel, so its own dropdown can drop down into the touch-mode simulation overlay's covered area
+   (z-index 1300). Without clearing that, the part of the menu over the bezel would render but
+   stay unusable and cursor-less, shadowed by the touch overlay sitting above it. */
+.cdk-overlay-container--lab-exempt {
+  z-index: 1400;
+}
+
 .lab-shell__content article > h1 {
   margin: 0 0 var(--orbit-space-2);
   font-size: var(--orbit-font-size-display);

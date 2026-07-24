@@ -105,11 +105,11 @@ export class OrbitCodeBlockComponent {
     if (lang === 'text') {
       return null;
     }
-    const grammar = Prism.languages[lang];
-    if (!grammar) {
+    const prismLang = this.resolvePrismLanguage(lang);
+    if (!prismLang) {
       return null;
     }
-    const highlighted = Prism.highlight(this.code(), grammar, lang);
+    const highlighted = Prism.highlight(this.code(), prismLang.grammar, prismLang.name);
     return splitHighlightedLines(highlighted);
   });
   protected readonly hasSyntaxHighlighting = computed(() => this.highlightedLines() !== null);
@@ -137,6 +137,24 @@ export class OrbitCodeBlockComponent {
 
   constructor() {
     afterNextRender(() => this.setupSelectionContainment());
+  }
+
+  private resolvePrismLanguage(lang: string): { grammar: Prism.Grammar; name: string } | null {
+    const langAlias: Record<string, string> = {
+      ng: 'angular',
+      angular: 'markup',
+      ts: 'typescript',
+      js: 'javascript',
+      py: 'python',
+      shell: 'bash',
+      sh: 'bash',
+    };
+    const resolved = langAlias[lang] || lang;
+    const grammar = Prism.languages[resolved];
+    if (grammar) {
+      return { grammar, name: resolved };
+    }
+    return null;
   }
 
   toggle(): void {

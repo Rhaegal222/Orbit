@@ -366,7 +366,7 @@
   );
   --orbit-navbar-item-active-fg: var(--orbit-action-primary-bg);
   /* Navbar – announcement bar */
-  --orbit-navbar-announcement-bg: #6b1d2a;
+  --orbit-navbar-announcement-bg: var(--orbit-ref-brand-500);
   --orbit-navbar-announcement-fg: var(--orbit-ref-neutral-0);
   /* Navbar – dark tone */
   --orbit-navbar-dark-bg: #1a1d26;
@@ -935,7 +935,7 @@
   );
   --orbit-navbar-item-active-fg: var(--orbit-action-primary-fg-subtle);
   /* Navbar – announcement bar (dark) */
-  --orbit-navbar-announcement-bg: #6b1d2a;
+  --orbit-navbar-announcement-bg: var(--orbit-ref-brand-500);
   --orbit-navbar-announcement-fg: var(--orbit-ref-neutral-0);
   /* Navbar – dark tone (dark-on-dark) */
   --orbit-navbar-dark-bg: #1a1d26;

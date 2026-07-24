@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import {
-  OrbitButtonComponent,
-  OrbitNavbarComponent,
-  type OrbitNavbarItem,
-} from '@galileo/orbit';
+import { OrbitButtonComponent, OrbitNavbarComponent, type OrbitNavbarItem } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
 
 const NAV_ITEMS: readonly OrbitNavbarItem[] = [
@@ -29,11 +25,7 @@ const CENTER_RIGHT_ITEMS: readonly OrbitNavbarItem[] = [
   selector: 'lab-navbar-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    LabExampleComponent,
-    OrbitButtonComponent,
-    OrbitNavbarComponent,
-  ],
+  imports: [LabExampleComponent, OrbitButtonComponent, OrbitNavbarComponent],
   templateUrl: './navbar-page.component.html',
   styles: `
     .navbar-tone-demo,
@@ -49,7 +41,7 @@ export class NavbarPageComponent {
   protected readonly items = NAV_ITEMS;
   protected readonly activeId = signal('overview');
   protected readonly announcementText = signal(
-    'Spedizione gratuita per ordini oltre 49 € — Nuova collezione disponibile',
+    'Benvenuti nel nostro catalogo — Scopri le ultime novità',
   );
 
   protected readonly centerLeftItems = CENTER_LEFT_ITEMS;

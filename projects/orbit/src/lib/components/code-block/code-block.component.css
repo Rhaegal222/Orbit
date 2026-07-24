@@ -172,66 +172,69 @@
   user-select: none;
 }
 
-.orbit-code-block__token.comment,
-.orbit-code-block__token.prolog,
-.orbit-code-block__token.doctype,
-.orbit-code-block__token.cdata {
+/* Prism.js tokens are injected via [innerHTML] and Angular's emulated
+   encapsulation cannot scope them. ::ng-deep is needed to reach them,
+   matching the same pattern already used for the copy button override. */
+:host ::ng-deep .token.comment,
+:host ::ng-deep .token.prolog,
+:host ::ng-deep .token.doctype,
+:host ::ng-deep .token.cdata {
   color: var(--orbit-code-block-token-comment);
 }
 
-.orbit-code-block__token.punctuation {
+:host ::ng-deep .token.punctuation {
   color: var(--orbit-code-block-token-punctuation);
 }
 
-.orbit-code-block__token.property,
-.orbit-code-block__token.tag,
-.orbit-code-block__token.boolean,
-.orbit-code-block__token.number,
-.orbit-code-block__token.constant,
-.orbit-code-block__token.symbol {
+:host ::ng-deep .token.property,
+:host ::ng-deep .token.tag,
+:host ::ng-deep .token.boolean,
+:host ::ng-deep .token.number,
+:host ::ng-deep .token.constant,
+:host ::ng-deep .token.symbol {
   color: var(--orbit-code-block-token-property);
 }
 
-.orbit-code-block__token.selector,
-.orbit-code-block__token.attr-name,
-.orbit-code-block__token.string,
-.orbit-code-block__token.char,
-.orbit-code-block__token.builtin,
-.orbit-code-block__token.inserted {
+:host ::ng-deep .token.selector,
+:host ::ng-deep .token.attr-name,
+:host ::ng-deep .token.string,
+:host ::ng-deep .token.char,
+:host ::ng-deep .token.builtin,
+:host ::ng-deep .token.inserted {
   color: var(--orbit-code-block-token-string);
 }
 
-.orbit-code-block__token.operator,
-.orbit-code-block__token.entity,
-.orbit-code-block__token.url,
-.orbit-code-block__token.atrule,
-.orbit-code-block__token.attr-value {
+:host ::ng-deep .token.operator,
+:host ::ng-deep .token.entity,
+:host ::ng-deep .token.url,
+:host ::ng-deep .token.atrule,
+:host ::ng-deep .token.attr-value {
   color: var(--orbit-code-block-token-operator);
 }
 
-.orbit-code-block__token.keyword {
+:host ::ng-deep .token.keyword {
   color: var(--orbit-code-block-token-keyword);
 }
 
-.orbit-code-block__token.function,
-.orbit-code-block__token.class-name {
+:host ::ng-deep .token.function,
+:host ::ng-deep .token.class-name {
   color: var(--orbit-code-block-token-function);
 }
 
-.orbit-code-block__token.regex,
-.orbit-code-block__token.variable,
-.orbit-code-block__token.important {
+:host ::ng-deep .token.regex,
+:host ::ng-deep .token.variable,
+:host ::ng-deep .token.important {
   color: var(--orbit-code-block-token-regex);
 }
 
-.orbit-code-block__token.deleted {
+:host ::ng-deep .token.deleted {
   color: var(--orbit-code-block-token-deleted);
 }
 
-.orbit-code-block__token.bold {
+:host ::ng-deep .token.bold {
   font-weight: var(--orbit-code-block-token-bold);
 }
 
-.orbit-code-block__token.italic {
+:host ::ng-deep .token.italic {
   font-style: var(--orbit-code-block-token-italic);
 }

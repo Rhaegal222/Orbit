@@ -76,9 +76,7 @@ describe('OrbitNavbarComponent', () => {
 
   it('applies no modifier classes for default tone, md size, filled variant', () => {
     const nav = fixture.nativeElement.querySelector('nav') as HTMLElement;
-    const modifierClasses = Array.from(nav.classList).filter((c) =>
-      c.startsWith('orbit-navbar--'),
-    );
+    const modifierClasses = Array.from(nav.classList).filter((c) => c.startsWith('orbit-navbar--'));
     expect(modifierClasses).toEqual([]);
   });
 
@@ -98,7 +96,9 @@ describe('OrbitNavbarComponent', () => {
 
     const leftList = fixture.nativeElement.querySelector('.orbit-navbar__list--left');
     const rightList = fixture.nativeElement.querySelector('.orbit-navbar__list--right');
-    const defaultList = fixture.nativeElement.querySelector('.orbit-navbar__list:not([class*="--left"]):not([class*="--right"])');
+    const defaultList = fixture.nativeElement.querySelector(
+      '.orbit-navbar__list:not([class*="--left"]):not([class*="--right"])',
+    );
 
     expect(leftList).toBeTruthy();
     expect(rightList).toBeTruthy();

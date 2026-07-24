@@ -79,6 +79,49 @@ describe('OrbitCodeBlockComponent', () => {
     expect(copyText).toHaveBeenCalledWith('<orbit-button label="Salva" />');
   });
 
+  it('shows the language label when language is not text', () => {
+    fixture.componentRef.setInput('language', 'typescript');
+    fixture.detectChanges();
+    const label = fixture.nativeElement.querySelector('.orbit-code-block__language-label');
+    expect(label).not.toBeNull();
+    expect(label.textContent.trim()).toBe('TypeScript');
+  });
+
+  it('hides the language label when language is text', () => {
+    fixture.componentRef.setInput('language', 'text');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__language-label')).toBeNull();
+  });
+
+  it('hides the language label when showLanguageLabel is false', () => {
+    fixture.componentRef.setInput('language', 'typescript');
+    fixture.componentRef.setInput('showLanguageLabel', false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.orbit-code-block__language-label')).toBeNull();
+  });
+
+  it('applies highlight class to specified lines', () => {
+    fixture.componentRef.setInput('code', 'line1\nline2\nline3');
+    fixture.componentRef.setInput('highlightLines', [1, 3]);
+    fixture.componentRef.setInput('collapsible', false);
+    fixture.detectChanges();
+
+    const lines = fixture.nativeElement.querySelectorAll('.orbit-code-block__line');
+    expect(lines[0].classList.contains('orbit-code-block__line--highlighted')).toBe(true);
+    expect(lines[1].classList.contains('orbit-code-block__line--highlighted')).toBe(false);
+    expect(lines[2].classList.contains('orbit-code-block__line--highlighted')).toBe(true);
+  });
+
+  it('renders syntax-highlighted code when language is set', () => {
+    fixture.componentRef.setInput('code', 'const x = 42;');
+    fixture.componentRef.setInput('language', 'javascript');
+    fixture.componentRef.setInput('collapsible', false);
+    fixture.detectChanges();
+
+    const codeEl = fixture.nativeElement.querySelector('.orbit-code-block__code');
+    expect(codeEl.innerHTML).toContain('token');
+  });
+
   describe('selection containment', () => {
     let outside: HTMLParagraphElement;
 

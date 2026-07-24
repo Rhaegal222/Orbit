@@ -89,7 +89,6 @@
   pointer-events: none;
 }
 
-
 /* Enter animation lives only on the transient --entering modifier — see the matching comment
    above .orbit-dialog-backdrop--entering for why it must not sit on the steady-state class. */
 .orbit-panel-backdrop--entering {

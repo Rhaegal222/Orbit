@@ -32,7 +32,7 @@ export class OrbitTabComponent {
   selected = input(false, { transform: booleanAttribute });
 
   private readonly hostElement = inject(ElementRef<HTMLElement>);
-  
+
   badge = contentChild(OrbitBadgeComponent);
 
   focus(): void {

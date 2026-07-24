@@ -87,15 +87,49 @@ body {
   font-size: var(--orbit-font-size-code);
 }
 
-/* examples-page's landing demo swaps orbit-navbar's inline lists for a hamburger + offcanvas
-   below the `lab-viewport` container breakpoint. orbit-navbar renders `.orbit-navbar__list`
-   through its own component template, so it carries OrbitNavbarComponent's emulated-encapsulation
-   attribute, not ExamplesPageComponent's — a rule scoped to that component's styleUrl could never
-   match it. This lives here, global, for the same reason as the other overrides in this file.
+/* examples-page's landing demo collapses orbit-navbar down to a plain topbar (brand + hamburger)
+   below the `lab-viewport` container breakpoint, moving the nav links into the offcanvas menu
+   instead. orbit-navbar renders `.orbit-navbar__list` through its own component template, so it
+   carries OrbitNavbarComponent's emulated-encapsulation attribute, not ExamplesPageComponent's —
+   a rule scoped to that component's styleUrl could never match it. This lives here, global, for
+   the same reason as the other overrides in this file. The CTA buttons and the hamburger button
+   projected into `[orbitNavbarActions]` are examples-page's own template content though (content
+   projection keeps the *projecting* component's encapsulation attribute), so hiding/showing those
+   is handled in examples-page.component.css instead.
    `!important` is needed because orbit-navbar's own `[_ngcontent-*] .orbit-navbar__list` base rule
    matches this same breakpoint with equal specificity, so plain cascade order can't be relied on. */
 @container lab-viewport (max-width: 48rem) {
   .examples__landing-nav .orbit-navbar__list {
     display: none !important;
+  }
+
+  /* Only the brand and actions remain once the list above is hidden — `justify-content: center`
+     (orbit-navbar's own center-layout rule) would otherwise center that group instead of spacing
+     brand and actions to the row's opposite edges like a real topbar. `align-items: flex-start`
+     is also part of orbit-navbar's own small-screen rule (meant to let a wrapped nav list sit
+     below the brand row); with nothing left to wrap here it just top-aligns the brand instead of
+     centering it against the hamburger's height. */
+  .examples__landing-nav .orbit-navbar {
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* orbit-navbar ships its own small-screen layout, gated by a real `@media (max-width: 48rem)`
+     (not this container query) — it reorders the center-layout brand to `order: 2` and centers
+     it, leaving `.orbit-navbar__actions` (our hamburger's slot) at the default `order: 0`. Real
+     viewport width and this container's width rarely cross their own 48rem thresholds at the same
+     moment (the container is squeezed further by the Lab sidebar), so there's a window where both
+     rules are simultaneously active and orbit-navbar's own ordering wins, putting the hamburger
+     before the brand instead of after it. Resetting both back to source order here closes that gap. */
+  .examples__landing-nav .orbit-navbar__brand {
+    order: 0 !important;
+    flex: 0 0 auto !important;
+    justify-content: flex-start !important;
+    padding-inline: 0 !important;
+  }
+
+  .examples__landing-nav .orbit-navbar__actions {
+    order: 0 !important;
   }
 }

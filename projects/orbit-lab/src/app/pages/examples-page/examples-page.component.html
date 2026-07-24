@@ -426,38 +426,6 @@
       @case ('landing') {
         <orbit-tab-panel value="landing">
           <section class="examples__landing" aria-labelledby="landing-title">
-            <div class="examples__landing-nav">
-              <orbit-navbar
-                layout="center"
-                brand="Lumenova"
-                ariaLabel="Navigazione Lumenova"
-                [items]="landingNavItems"
-                [rightItems]="landingRightItems"
-                [activeId]="selectedLandingNav()"
-                [announcement]="landingAnnouncement()"
-                [announcementCloseable]="true"
-                (itemSelected)="selectLandingNav($event)"
-                (announcementClosed)="landingAnnouncement.set('')"
-              >
-                <orbit-button
-                  orbitNavbarActions
-                  label="Area riservata"
-                  variant="outline"
-                  tone="neutral"
-                />
-                <orbit-button orbitNavbarActions label="Parla con noi" />
-              </orbit-navbar>
-
-              <button
-                type="button"
-                class="examples__landing-hamburger"
-                aria-label="Apri menu"
-                (click)="toggleOffcanvas()"
-              >
-                <orbit-icon name="menu" />
-              </button>
-            </div>
-
             @if (offcanvasOpen()) {
               <div class="examples__landing-offcanvas-backdrop" (click)="closeOffcanvas()"></div>
               <aside
@@ -510,6 +478,46 @@
                 </footer>
               </aside>
             }
+            <div
+              class="examples__landing-scroll"
+              [class.examples__landing-scroll--locked]="offcanvasOpen()"
+            >
+              <div class="examples__landing-nav">
+              <orbit-navbar
+                layout="center"
+                brand="Lumenova"
+                ariaLabel="Navigazione Lumenova"
+                [items]="landingNavItems"
+                [rightItems]="landingRightItems"
+                [activeId]="selectedLandingNav()"
+                [announcement]="landingAnnouncement()"
+                [announcementCloseable]="true"
+                (itemSelected)="selectLandingNav($event)"
+                (announcementClosed)="landingAnnouncement.set('')"
+              >
+                <orbit-button
+                  orbitNavbarActions
+                  class="examples__landing-nav-cta"
+                  label="Area riservata"
+                  variant="outline"
+                  tone="neutral"
+                />
+                <orbit-button
+                  orbitNavbarActions
+                  class="examples__landing-nav-cta"
+                  label="Parla con noi"
+                />
+                <button
+                  orbitNavbarActions
+                  type="button"
+                  class="examples__landing-hamburger"
+                  aria-label="Apri menu"
+                  (click)="toggleOffcanvas()"
+                >
+                  <orbit-icon name="menu" />
+                </button>
+              </orbit-navbar>
+            </div>
 
             <div class="examples__landing-hero">
               <div class="examples__landing-copy">
@@ -580,10 +588,19 @@
             </section>
 
             <footer class="examples__landing-footer">
-              <span>© 2026 Lumenova</span>
-              <span>Milano · Bologna · Roma</span>
-              <span>Privacy · Cookie · Contatti</span>
+              <ul class="examples__landing-footer-list">
+                <li>Milano</li>
+                <li>Bologna</li>
+                <li>Roma</li>
+              </ul>
+              <ul class="examples__landing-footer-list">
+                <li>Privacy</li>
+                <li>Cookie</li>
+                <li>Contatti</li>
+              </ul>
+              <span class="examples__landing-footer-copyright">© 2026 Lumenova</span>
             </footer>
+            </div>
           </section>
         </orbit-tab-panel>
       }

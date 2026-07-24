@@ -106,13 +106,45 @@
 }
 
 .examples__landing {
-  display: grid;
+  position: relative;
   --landing-gutter: calc(var(--orbit-space-6) * 2);
   --landing-section-gap: calc(var(--orbit-space-6) * 1.5);
+  /* A fixed (not max-) height: `.examples__landing-scroll` below needs a definite `height: 100%`
+     to resolve against — percentage heights resolve to `auto` when the containing block's own
+     height isn't itself a definite value, which `max-height` alone never provides. */
+  height: 38rem;
   overflow: hidden;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-surface);
   background: var(--orbit-surface-default);
+  /* Bounds the demo to a fixed "device viewport" and — since `transform` (even a no-op one)
+     establishes a containing block for `position: fixed` descendants — makes *this* box, not the
+     real page, what the landing offcanvas anchors and clips to. Without it, the offcanvas would
+     size/position itself against the real browser viewport and escape this preview card whenever
+     the surrounding Lab page scrolls.
+     The actual scrolling happens one level down, in `.examples__landing-scroll`: a `position: fixed`
+     element anchors to its containing block's padding box but still moves with *that same box's*
+     own scroll offset if the box scrolls itself — so if this element were both the fixed-position
+     containing block *and* the scroll container, the offcanvas would drift away with the content
+     instead of staying pinned once the user scrolled the preview. Splitting the two roles across
+     parent/child keeps the offcanvas pinned to the non-scrolling outer frame regardless of how far
+     the inner content has scrolled. */
+  transform: translateZ(0);
+}
+
+.examples__landing-scroll {
+  display: grid;
+  align-content: start;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Locks the preview's own scroll while the offcanvas menu is open, so dragging/scrolling over the
+   dimmed background can't move content behind the drawer — the usual expectation for any modal
+   drawer, and doubly so here since this scroll container (not the real page) is what the user
+   actually sees move. */
+.examples__landing-scroll--locked {
+  overflow-y: hidden;
 }
 
 .examples__landing-hero {
@@ -313,18 +345,34 @@
   border-top: 1px solid var(--orbit-border-subtle);
 }
 
+.examples__landing-footer-copyright {
+  order: -1;
+}
+
+.examples__landing-footer-list {
+  display: flex;
+  gap: var(--orbit-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.examples__landing-footer-list li:not(:last-child)::after {
+  content: '\00B7';
+  margin-inline-start: var(--orbit-space-2);
+}
+
 /* --- Landing navbar wrapper + hamburger --- */
 
 .examples__landing-nav {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .examples__landing-hamburger {
   display: none;
-  position: absolute;
-  top: var(--orbit-space-2);
-  end: var(--orbit-space-3);
-  z-index: 10;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   width: var(--orbit-control-height);
@@ -361,7 +409,7 @@
 .examples__landing-offcanvas {
   position: fixed;
   top: 0;
-  end: 0;
+  start: 0;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -455,7 +503,7 @@
 
 @keyframes examples-slide-in {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);
@@ -493,13 +541,33 @@
     padding: var(--orbit-space-5);
   }
   .examples__landing-actions,
-  .examples__landing-trust,
-  .examples__landing-footer {
+  .examples__landing-trust {
     grid-auto-flow: row;
     justify-content: stretch;
   }
+  .examples__landing-footer {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+  .examples__landing-footer-copyright {
+    order: 1;
+    grid-column: 1 / -1;
+    justify-self: center;
+    text-align: center;
+  }
+  .examples__landing-footer-list {
+    flex-direction: column;
+    gap: var(--orbit-space-2);
+  }
+  .examples__landing-footer-list li:not(:last-child)::after {
+    content: none;
+  }
   .examples__landing-hamburger {
     display: inline-flex;
+  }
+  .examples__landing-nav-cta {
+    display: none;
   }
   .examples__landing-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -131,11 +131,24 @@ export type OrbitTablistPickerMode = 'modal' | 'offcanvas' | 'scroll';
     :host {
       display: block;
       width: min(100%, var(--orbit-modal-size-md));
+      container-type: inline-size;
+      container-name: orbit-tablist-picker;
     }
     .orbit-tablist-picker__grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--orbit-space-3);
+    }
+    /* Below this width the 2-column grid squeezes each card enough that the badge (which
+       doesn't shrink or wrap) gets clipped by the card's overflow: hidden — collapse to a
+       single column instead of letting content get cut off. */
+    @container orbit-tablist-picker (max-width: 28rem) {
+      .orbit-tablist-picker__grid {
+        grid-template-columns: 1fr;
+      }
+      .orbit-tablist-picker__card {
+        grid-template-rows: 5rem minmax(0, 1fr);
+      }
     }
     .orbit-tablist-picker__card {
       display: grid;

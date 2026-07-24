@@ -31,7 +31,6 @@ import {
 } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
 
-
 type ExampleId = 'portfolio' | 'dossier' | 'quick-action' | 'landing';
 type ProductSectionId = 'overview' | 'pricing' | 'variants' | 'media' | 'channels';
 

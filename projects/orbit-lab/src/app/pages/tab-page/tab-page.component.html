@@ -24,4 +24,86 @@
       }
     </lab-example>
   </section>
+
+  <section>
+    <h2>Scroll orizzontale</h2>
+    <p>
+      Quando le tab superano la larghezza disponibile, il tablist mostra una riga scrollabile
+      con <code>overflow-x: auto</code> e <code>flex-wrap: nowrap</code>.
+    </p>
+    <lab-example [code]="scrollSnippet">
+      <orbit-tablist ariaLabel="Molte sezioni" (selectedChange)="scrollActive.set($event)">
+        @for (tab of scrollTabs; track tab.value) {
+          <orbit-tab
+            [value]="tab.value"
+            [label]="tab.label"
+            [selected]="scrollActive() === tab.value"
+          />
+        }
+      </orbit-tablist>
+
+      <orbit-tab-panel [value]="scrollActive()">
+        Contenuto della {{ scrollActive() }}.
+      </orbit-tab-panel>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Picker modale</h2>
+    <p>
+      In spazi stretti il tablist passa in modalità <em>compact</em>: nasconde le tab, mostra
+      il nome + badge della tab corrente e un pulsante per aprire un selettore a griglia
+      (modale con card di anteprima). Il toggle nella barra compact permette di passare
+      alla modalità offcanvas.
+    </p>
+    <lab-example [code]="modalSnippet">
+      <orbit-tablist
+        pickerMode="modal"
+        style="max-width: 30rem"
+        ariaLabel="Sezioni"
+        (selectedChange)="modalActive.set($event)"
+      >
+        @for (tab of scrollTabs; track tab.value) {
+          <orbit-tab
+            [value]="tab.value"
+            [label]="tab.label"
+            [selected]="modalActive() === tab.value"
+          />
+        }
+      </orbit-tablist>
+
+      <orbit-tab-panel [value]="modalActive()">
+        Contenuto della {{ modalActive() }}.
+      </orbit-tab-panel>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Picker offcanvas</h2>
+    <p>
+      La variante offcanvas apre un pannello laterale con una
+      <code>orbit-sidebar embedded</code> che elenca le tab come voci di navigazione.
+      Utile quando si preferisce un'interfaccia a lista invece che una griglia di card.
+    </p>
+    <lab-example [code]="offcanvasSnippet">
+      <orbit-tablist
+        pickerMode="offcanvas"
+        style="max-width: 30rem"
+        ariaLabel="Sezioni"
+        (selectedChange)="offcanvasActive.set($event)"
+      >
+        @for (tab of scrollTabs; track tab.value) {
+          <orbit-tab
+            [value]="tab.value"
+            [label]="tab.label"
+            [selected]="offcanvasActive() === tab.value"
+          />
+        }
+      </orbit-tablist>
+
+      <orbit-tab-panel [value]="offcanvasActive()">
+        Contenuto della {{ offcanvasActive() }}.
+      </orbit-tab-panel>
+    </lab-example>
+  </section>
 </article>

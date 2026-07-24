@@ -20,9 +20,15 @@
   display: none;
 }
 
-/* Visually hidden but still in the DOM so ResizeObserver can measure whether tabs overflow */
+/* Visually collapsed but still normal-flow width, not `position: absolute`: this same element is
+   what the ResizeObserver measures, and `position: absolute` would make it shrink-to-fit its own
+   content instead of stretching to the host's width — the two states would then measure
+   differently, causing overflow detection to flip-flop against itself. `max-height: 0` +
+   `overflow: hidden` collapses it visually while keeping its horizontal layout (and therefore
+   scrollWidth/clientWidth) identical to the visible state. */
 .orbit-tablist__tabs--hidden {
-  position: absolute;
+  max-height: 0;
+  overflow: hidden;
   visibility: hidden;
   pointer-events: none;
 }
@@ -58,11 +64,4 @@
   display: flex;
   align-items: center;
   gap: var(--orbit-space-2);
-}
-
-.orbit-tablist__mode-toggle {
-  display: flex;
-  border: 1px solid var(--orbit-border-subtle);
-  border-radius: var(--orbit-radius-control);
-  overflow: hidden;
 }

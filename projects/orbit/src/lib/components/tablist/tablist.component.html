@@ -7,24 +7,8 @@
       }
     </div>
     <div class="orbit-tablist__compact-actions">
-      <div class="orbit-tablist__mode-toggle" role="radiogroup" ariaLabel="Modalità di selezione">
-        <orbit-icon-button
-          icon="menu"
-          ariaLabel="Menu laterale"
-          [attr.aria-checked]="pickerMode() === 'offcanvas'"
-          [tone]="pickerMode() === 'offcanvas' ? 'primary' : 'neutral'"
-          (clicked)="setPickerMode('offcanvas')"
-        />
-        <orbit-icon-button
-          icon="grid"
-          ariaLabel="Griglia di anteprima"
-          [attr.aria-checked]="pickerMode() === 'modal'"
-          [tone]="pickerMode() === 'modal' ? 'primary' : 'neutral'"
-          (clicked)="setPickerMode('modal')"
-        />
-      </div>
       <orbit-icon-button
-        icon="grid"
+        [icon]="pickerMode() === 'offcanvas' ? 'menu' : 'grid'"
         ariaLabel="Seleziona scheda"
         tone="neutral"
         (clicked)="openPicker()"
@@ -32,6 +16,6 @@
     </div>
   </div>
 }
-<div class="orbit-tablist__tabs" [class.orbit-tablist__tabs--hidden]="overflowing()">
+<div #tabsWrapper class="orbit-tablist__tabs" [class.orbit-tablist__tabs--hidden]="overflowing()">
   <ng-content />
 </div>

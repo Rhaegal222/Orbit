@@ -10,6 +10,7 @@ import {
   OnDestroy,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
 import { OrbitTabComponent } from '../tab/tab.component';
@@ -34,6 +35,7 @@ interface TabPickerData {
     selected: boolean;
     badge?: { label: string; tone: OrbitBadgeTone };
   }>;
+  selected: string;
   onSelect: (value: string) => void;
 }
 
@@ -64,6 +66,7 @@ export class OrbitTablistPickerSidebarComponent {
       items: this.data.tabs.map((tab) => ({
         id: tab.value,
         label: tab.label,
+        badge: tab.badge?.label,
       })),
     },
   ];
@@ -231,32 +234,38 @@ export class OrbitTablistPickerComponent {
 })
 export class OrbitTablistComponent implements OnDestroy {
   ariaLabel = input('');
+  /** Fixed per instance — the surface opened by the overflow trigger when tabs don't fit. Not
+   * runtime-switchable: offcanvas, modal and horizontal scroll are alternative strategies for
+   * the same problem, never combined. */
+  pickerMode = input<OrbitTablistPickerMode>('modal');
   selectedChange = output<string>();
 
   private readonly tabs = contentChildren(OrbitTabComponent);
-  private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly tabsWrapper = viewChild('tabsWrapper', { read: ElementRef<HTMLElement> });
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly dialogService = inject(OrbitDialogService);
   private readonly panelService = inject(OrbitPanelService);
 
   protected readonly overflowing = signal(false);
-  protected readonly pickerMode = signal<OrbitTablistPickerMode>('modal');
 
   private observer: ResizeObserver | null = null;
 
   constructor() {
     afterRenderEffect(() => {
-      // Observe once tabs are rendered
-      const host = this.el.nativeElement;
+      // Observe once tabs are rendered. Must measure the inner `.orbit-tablist__tabs` wrapper,
+      // not the host: the host has `overflow: hidden`, so its own scrollWidth/clientWidth are
+      // always equal — the actual horizontal overflow happens one level down, in the wrapper.
+      const wrapper = this.tabsWrapper()?.nativeElement;
+      if (!wrapper) return;
       this.observer?.disconnect();
       this.observer = new ResizeObserver(() => {
-        const isOverflowing = host.scrollWidth > host.clientWidth;
+        const isOverflowing = wrapper.scrollWidth > wrapper.clientWidth;
         if (isOverflowing !== this.overflowing()) {
           this.overflowing.set(isOverflowing);
           this.cdr.markForCheck();
         }
       });
-      this.observer.observe(host);
+      this.observer.observe(wrapper);
     });
   }
 
@@ -266,10 +275,6 @@ export class OrbitTablistComponent implements OnDestroy {
 
   protected get currentTab(): OrbitTabComponent | undefined {
     return this.tabs().find((t) => t.selected());
-  }
-
-  protected setPickerMode(mode: OrbitTablistPickerMode): void {
-    this.pickerMode.set(mode);
   }
 
   protected openPicker(): void {
@@ -288,16 +293,17 @@ export class OrbitTablistComponent implements OnDestroy {
       });
 
     const onSelect = (value: string) => this.selectedChange.emit(value);
+    const selected = this.currentTab?.value() ?? '';
 
     if (this.pickerMode() === 'offcanvas') {
       this.panelService.open(OrbitTablistPickerSidebarComponent, {
         side: 'left',
         size: 'sm',
-        data: { tabs, onSelect },
+        data: { tabs, selected, onSelect },
       });
     } else {
       this.dialogService.open(OrbitTablistPickerComponent, {
-        data: { tabs, onSelect },
+        data: { tabs, selected, onSelect },
       });
     }
   }

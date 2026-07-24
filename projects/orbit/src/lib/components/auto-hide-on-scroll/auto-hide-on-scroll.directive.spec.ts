@@ -85,6 +85,7 @@ describe('OrbitAutoHideOnScrollDirective', () => {
     setup({ belowBreakpoint: true, scrollable: false });
     expect(toolbar.style.transform).toBe('translateY(0)');
     expect(toolbar.getAttribute('aria-hidden')).toBeNull();
+    expect(toolbar.hasAttribute('inert')).toBe(false);
   });
 
   it('does not attach a scroll listener above the md breakpoint', () => {
@@ -118,6 +119,7 @@ describe('OrbitAutoHideOnScrollDirective', () => {
 
     expect(toolbar.getAttribute('aria-hidden')).toBe('true');
     expect(toolbar.style.transform).toBe('translateY(-100%)');
+    expect(toolbar.hasAttribute('inert')).toBe(true);
   });
 
   it('does not hide for a downward scroll at or under the 8px threshold', async () => {
@@ -139,6 +141,7 @@ describe('OrbitAutoHideOnScrollDirective', () => {
     await new Promise((resolve) => requestAnimationFrame(resolve));
     fixture.detectChanges();
     expect(toolbar.getAttribute('aria-hidden')).toBe('true');
+    expect(toolbar.hasAttribute('inert')).toBe(true);
 
     container.scrollTop = 49;
     container.dispatchEvent(new Event('scroll'));
@@ -147,6 +150,7 @@ describe('OrbitAutoHideOnScrollDirective', () => {
 
     expect(toolbar.getAttribute('aria-hidden')).toBeNull();
     expect(toolbar.style.transform).toBe('translateY(0)');
+    expect(toolbar.hasAttribute('inert')).toBe(false);
   });
 
   it('is always visible when scrollTop returns to 0', async () => {

@@ -1,5 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { Directive, DestroyRef, ElementRef, afterNextRender, computed, inject, signal } from '@angular/core';
+import {
+  Directive,
+  DestroyRef,
+  ElementRef,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 
 /** Must match `--orbit-breakpoint-md` (48rem / 768px) — a native `@media` query cannot read a
  * CSS custom property, so this literal is the documented source of truth for that token. */
@@ -9,6 +17,13 @@ const HIDE_BREAKPOINT_QUERY = '(max-width: 48rem)';
  * movement of any size shows it again immediately — see the class doc comment below. */
 const HIDE_THRESHOLD_PX = 8;
 
+/**
+ * @experimental Promotion to stable requires a live-browser verification pass (animation
+ * smoothness, touch-target feel, a real breakpoint resize) and a second real consumer beyond
+ * `LabGoogleFontsDialogComponent`, per the component lifecycle in
+ * `docs/PATTERNS-AND-GOVERNANCE.md`. The directive's own logic is fully unit-tested; only that
+ * live pass and a second consumer are outstanding.
+ */
 @Directive({
   selector: '[orbitAutoHideOnScroll]',
   host: {
@@ -122,7 +137,10 @@ export class OrbitAutoHideOnScrollDirective {
     let node: HTMLElement | null = from.parentElement;
     while (node) {
       const overflowY = view?.getComputedStyle(node).overflowY;
-      if ((overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight) {
+      if (
+        (overflowY === 'auto' || overflowY === 'scroll') &&
+        node.scrollHeight > node.clientHeight
+      ) {
         return node;
       }
       node = node.parentElement;

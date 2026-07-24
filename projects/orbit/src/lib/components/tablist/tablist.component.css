@@ -20,6 +20,25 @@
   display: none;
 }
 
+.orbit-tablist__tabs--scroll::-webkit-scrollbar {
+  display: block;
+  height: 0.25rem;
+}
+
+.orbit-tablist__tabs--scroll::-webkit-scrollbar-thumb {
+  background: var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-full);
+}
+
+.orbit-tablist__tabs--scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.orbit-tablist__tabs--scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--orbit-border-subtle) transparent;
+}
+
 /* Visually collapsed but still normal-flow width, not `position: absolute`: this same element is
    what the ResizeObserver measures, and `position: absolute` would make it shrink-to-fit its own
    content instead of stretching to the host's width — the two states would then measure

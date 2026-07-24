@@ -16,6 +16,6 @@
     </div>
   </div>
 }
-<div #tabsWrapper class="orbit-tablist__tabs" [class.orbit-tablist__tabs--hidden]="overflowing() && pickerMode() !== 'scroll'">
+<div #tabsWrapper class="orbit-tablist__tabs" [class.orbit-tablist__tabs--scroll]="pickerMode() === 'scroll'" [class.orbit-tablist__tabs--hidden]="overflowing() && pickerMode() !== 'scroll'">
   <ng-content />
 </div>

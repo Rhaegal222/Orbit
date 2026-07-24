@@ -15,6 +15,8 @@ import {
   type OrbitSidebarSection,
 } from '@galileo/orbit';
 import { LabExampleComponent } from '../../catalog/example-panel.component';
+import { LabExampleSwitcherComponent } from '../../catalog/example-switcher/example-switcher.component';
+import type { LabExampleSwitcherItem } from '../../catalog/example-switcher/example-switcher.types';
 
 const SIDEBAR_SECTIONS: readonly OrbitSidebarSection[] = [
   {
@@ -121,6 +123,7 @@ class LabSidebarDrawerContentComponent {
     OrbitSidebarComponent,
     OrbitSliderComponent,
     LabExampleComponent,
+    LabExampleSwitcherComponent,
   ],
   templateUrl: './panel-page.component.html',
   styleUrl: './panel-page.component.css',
@@ -141,6 +144,19 @@ export class PanelPageComponent {
   protected readonly toggleMargin = signal(0);
   protected readonly activeId = signal('overview');
   protected readonly collapsed = signal(false);
+  protected readonly exampleSwitcherItems: readonly LabExampleSwitcherItem[] = [
+    { value: 'portfolio', label: 'Portafoglio catalogo', badge: 'Tabella' },
+    { value: 'dossier', label: 'Dossier prodotto', badge: 'Workspace' },
+    { value: 'quick-action', label: 'Azione rapida', badge: 'Modale' },
+  ];
+  protected readonly exampleSwitcherSelected = signal('portfolio');
+
+  protected readonly exampleSwitcherSnippet = `<!-- Pagine con più scenari demo: topbar + due superfici di cambio intercambiabili -->
+<lab-example-switcher
+  [items]="items"
+  [selected]="selected"
+  (selectedChange)="selected = $event"
+/>`;
   protected readonly showItemStates = computed(
     () => this.showActiveItem() || this.showBadgeItem() || this.showDisabledItem(),
   );
@@ -221,6 +237,10 @@ export class PanelPageComponent {
 
   select(item: OrbitSidebarItem): void {
     this.activeId.set(item.id);
+  }
+
+  selectExampleSwitcherDemo(value: string): void {
+    this.exampleSwitcherSelected.set(value);
   }
 
   selectRailVariant(variant: 'expanded' | 'compact'): void {

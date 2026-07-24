@@ -32,4 +32,17 @@ describe('ExamplesPageComponent', () => {
       fixture.nativeElement.querySelectorAll('.examples__landing-features orbit-panel').length,
     ).toBe(3);
   });
+
+  it('switches the example through the mobile switcher, keeping it in sync with the tablist', () => {
+    const switcherHost = fixture.nativeElement.querySelector('lab-example-switcher');
+    expect(switcherHost.textContent).toContain('Portafoglio catalogo');
+
+    fixture.componentInstance.selectExample('quick-action');
+    fixture.detectChanges();
+
+    expect(
+      fixture.nativeElement.querySelector('#orbit-tab-quick-action')?.getAttribute('aria-selected'),
+    ).toBe('true');
+    expect(switcherHost.textContent).toContain('Azione rapida');
+  });
 });

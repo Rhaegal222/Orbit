@@ -15,6 +15,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular apps
+        run: |
+          npx ng build orbit-lab --configuration=production
+          npx ng build orbit-studio --configuration=production
+
+      - name: Copy build outputs to site/
+        run: |
+          mkdir -p site/lab site/studio
+          cp -r dist/orbit-lab/browser/* site/lab/
+          cp -r dist/orbit-studio/browser/* site/studio/
+
       - name: Select target
         run: |
           set -euo pipefail

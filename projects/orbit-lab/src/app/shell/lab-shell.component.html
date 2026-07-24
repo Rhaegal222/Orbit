@@ -19,9 +19,11 @@
       [collapsed]="sidebarCollapsed()"
       [showHeader]="showSidebarHeader()"
       [showFooter]="false"
+      [customBrand]="true"
       (itemSelected)="onSidebarItemSelected($event)"
       (collapsedChange)="onSidebarCollapsedChange($event)"
     >
+      <a class="lab-shell__sidebar-wordmark" orbitSidebarBrand href="/" aria-label="Orbit Lab, home">ORBIT<span>·</span>Lab</a>
       <orbit-text-input
         orbitSidebarSearch
         type="search"
@@ -45,7 +47,7 @@
           (clicked)="openNavigation()"
         />
         <div class="lab-shell__brand-title">
-          <a class="lab-shell__wordmark" href="/" aria-label="Orbit, home">ORBIT<span>·</span></a>
+          <a class="lab-shell__wordmark" href="/" aria-label="Orbit Lab, home">ORBIT<span>·</span>Lab</a>
           <span class="lab-shell__title-separator">/</span>
           <span class="lab-shell__page-title">{{ activeEntryLabel() }}</span>
         </div>

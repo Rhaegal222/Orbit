@@ -43,6 +43,8 @@ export class OrbitSidebarComponent {
   brand = input('');
   brandShort = input('');
   brandIcon = input<OrbitIconName | null>(null);
+  /** When true, hides the default brand mark and text, allowing projected brand content. */
+  customBrand = input(false, { transform: booleanAttribute });
   ariaLabel = input('');
   sections = input<readonly OrbitSidebarSection[]>([]);
   activeId = input<string | null>(null);

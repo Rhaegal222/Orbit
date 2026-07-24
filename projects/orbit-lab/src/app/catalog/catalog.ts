@@ -1,7 +1,6 @@
 import { CatalogEntry } from './catalog-entry.model';
 
 export const CATALOG_ENTRIES: CatalogEntry[] = [
-  { slug: 'logo', label: 'Logo', status: 'verified', icon: 'info' },
   { slug: 'accordion', label: 'Accordion', status: 'verified', icon: 'layers' },
   { slug: 'alert', label: 'Alert', status: 'verified', icon: 'alert-triangle' },
   { slug: 'attachments', label: 'Allegati', status: 'verified', icon: 'paperclip' },
@@ -15,6 +14,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   { slug: 'checkbox', label: 'Caselle di controllo', status: 'verified', icon: 'check' },
   { slug: 'examples', label: 'Esempi', status: 'verified', icon: 'view' },
   { slug: 'layout', label: 'Layout', status: 'verified', icon: 'sidebar' },
+  { slug: 'logo', label: 'Logo', status: 'verified', icon: 'info' },
   { slug: 'dialog', label: 'Modal & Dialoghi', status: 'verified', icon: 'window' },
   { slug: 'pagination', label: 'Paginazione', status: 'verified', icon: 'bar-chart' },
   { slug: 'panel', label: 'Panel', status: 'verified', icon: 'sidebar' },

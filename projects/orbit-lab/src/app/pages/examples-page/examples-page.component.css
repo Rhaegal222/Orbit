@@ -310,6 +310,142 @@
   border-top: 1px solid var(--orbit-border-subtle);
 }
 
+/* --- Landing navbar wrapper + hamburger --- */
+
+.examples__landing-nav {
+  position: relative;
+}
+
+.examples__landing-hamburger {
+  display: none;
+  position: absolute;
+  top: var(--orbit-space-2);
+  end: var(--orbit-space-3);
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  width: var(--orbit-control-height);
+  height: var(--orbit-control-height);
+  padding: 0;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+  cursor: pointer;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.examples__landing-hamburger:hover {
+  background: var(--orbit-surface-subtle);
+}
+
+.examples__landing-hamburger:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+  box-shadow: var(--orbit-focus-ring);
+}
+
+/* --- Offcanvas overlay --- */
+
+.examples__landing-offcanvas-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgb(0 0 0 / 40%);
+  animation: examples-fade-in var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.examples__landing-offcanvas {
+  position: fixed;
+  top: 0;
+  end: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  width: min(20rem, 85vw);
+  height: 100dvh;
+  background: var(--orbit-surface-default);
+  box-shadow: var(--orbit-shadow-modal);
+  animation: examples-slide-in var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+
+.examples__landing-offcanvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--orbit-space-3);
+  padding: var(--orbit-space-3) var(--orbit-space-4);
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-offcanvas-brand {
+  font-size: var(--orbit-font-size-subtitle);
+  font-weight: var(--orbit-font-weight-emphasis);
+  color: var(--orbit-text-primary);
+}
+
+.examples__landing-offcanvas-nav {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: var(--orbit-space-3) var(--orbit-space-4);
+}
+
+.examples__landing-offcanvas-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--orbit-control-height);
+  padding: 0 var(--orbit-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--orbit-radius-control);
+  background: transparent;
+  color: var(--orbit-text-secondary);
+  font: inherit;
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.examples__landing-offcanvas-item:hover {
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-primary);
+}
+
+.examples__landing-offcanvas-item--active {
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-default));
+  color: var(--orbit-action-primary-bg);
+}
+
+.examples__landing-offcanvas-item:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.examples__landing-offcanvas-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-3) var(--orbit-space-4);
+  border-top: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-offcanvas-btn {
+  width: 100%;
+}
+
+@keyframes examples-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes examples-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
 @media (max-width: 64rem) {
   .examples__filter-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -345,6 +481,9 @@
   .examples__landing-footer {
     grid-auto-flow: row;
     justify-content: stretch;
+  }
+  .examples__landing-hamburger {
+    display: inline-flex;
   }
   .examples__landing-metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));

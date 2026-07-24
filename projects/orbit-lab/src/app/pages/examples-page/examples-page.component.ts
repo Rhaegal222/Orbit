@@ -12,6 +12,8 @@ import {
   OrbitFormGridComponent,
   OrbitFormGridItemDirective,
   OrbitFormSectionComponent,
+  OrbitIconButtonComponent,
+  OrbitIconComponent,
   OrbitModalBodyComponent,
   OrbitModalComponent,
   OrbitModalFooterComponent,
@@ -45,10 +47,15 @@ interface ProductRow {
   tone: 'success' | 'warning' | 'neutral' | 'danger';
 }
 
-const LANDING_NAV_ITEMS: readonly OrbitNavbarItem[] = [
+const CENTER_LEFT_ITEMS: readonly OrbitNavbarItem[] = [
   { id: 'solutions', label: 'Soluzioni' },
   { id: 'catalog', label: 'Catalogo' },
+  { id: 'about', label: 'Chi siamo' },
+];
+
+const CENTER_RIGHT_ITEMS: readonly OrbitNavbarItem[] = [
   { id: 'services', label: 'Servizi' },
+  { id: 'blog', label: 'Blog' },
   { id: 'contacts', label: 'Contatti' },
 ];
 
@@ -68,6 +75,8 @@ const LANDING_NAV_ITEMS: readonly OrbitNavbarItem[] = [
     OrbitFormGridComponent,
     OrbitFormGridItemDirective,
     OrbitFormSectionComponent,
+    OrbitIconButtonComponent,
+    OrbitIconComponent,
     OrbitModalBodyComponent,
     OrbitModalComponent,
     OrbitModalFooterComponent,
@@ -100,7 +109,12 @@ export class ExamplesPageComponent {
   protected readonly listPrice = new FormControl('240,00', { nonNullable: true });
   protected readonly updateType = signal('percent');
   protected readonly selectedLandingNav = signal('solutions');
-  protected readonly landingNavItems = LANDING_NAV_ITEMS;
+  protected readonly landingNavItems = CENTER_LEFT_ITEMS;
+  protected readonly landingRightItems = CENTER_RIGHT_ITEMS;
+  protected readonly offcanvasOpen = signal(false);
+  protected readonly landingAnnouncement = signal(
+    'Benvenuti nel nostro catalogo — Scopri le ultime novità',
+  );
 
   protected readonly categoryOptions = [
     { value: 'lighting', label: 'Illuminazione' },
@@ -229,6 +243,14 @@ export class ExamplesPageComponent {
 
   protected selectLandingNav(item: OrbitNavbarItem): void {
     this.selectedLandingNav.set(item.id);
+  }
+
+  protected toggleOffcanvas(): void {
+    this.offcanvasOpen.update((v) => !v);
+  }
+
+  protected closeOffcanvas(): void {
+    this.offcanvasOpen.set(false);
   }
 
   protected setSkuSort(direction: 'asc' | 'desc'): void {

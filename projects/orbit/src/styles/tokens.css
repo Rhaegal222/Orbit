@@ -102,6 +102,39 @@
   --orbit-code-block-action-fg: var(--orbit-text-secondary);
   --orbit-code-block-action-bg-hover: var(--orbit-surface-default);
   --orbit-code-block-action-fg-hover: var(--orbit-text-primary);
+  --orbit-code-block-highlight-bg: color-mix(in srgb, var(--orbit-ref-brand-500) 12%, transparent);
+  --orbit-code-block-highlight-border: var(--orbit-ref-brand-500);
+  --orbit-code-block-token-comment: #6a737d;
+  --orbit-code-block-token-prolog: #6a737d;
+  --orbit-code-block-token-doctype: #6a737d;
+  --orbit-code-block-token-cdata: #6a737d;
+  --orbit-code-block-token-punctuation: #5a6270;
+  --orbit-code-block-token-property: #005cc5;
+  --orbit-code-block-token-tag: #22863a;
+  --orbit-code-block-token-boolean: #005cc5;
+  --orbit-code-block-token-number: #005cc5;
+  --orbit-code-block-token-constant: #005cc5;
+  --orbit-code-block-token-symbol: #005cc5;
+  --orbit-code-block-token-deleted: #b31d28;
+  --orbit-code-block-token-selector: #6f42c1;
+  --orbit-code-block-token-attr-name: #6f42c1;
+  --orbit-code-block-token-string: #032f62;
+  --orbit-code-block-token-char: #032f62;
+  --orbit-code-block-token-builtin: #e36209;
+  --orbit-code-block-token-inserted: #22863a;
+  --orbit-code-block-token-operator: #d73a49;
+  --orbit-code-block-token-entity: #d73a49;
+  --orbit-code-block-token-url: #d73a49;
+  --orbit-code-block-token-atrule: #d73a49;
+  --orbit-code-block-token-attr-value: #032f62;
+  --orbit-code-block-token-keyword: #d73a49;
+  --orbit-code-block-token-function: #6f42c1;
+  --orbit-code-block-token-class-name: #6f42c1;
+  --orbit-code-block-token-regex: #032f62;
+  --orbit-code-block-token-variable: #e36209;
+  --orbit-code-block-token-important: #e36209;
+  --orbit-code-block-token-bold: bold;
+  --orbit-code-block-token-italic: italic;
   --orbit-action-primary-bg: var(--orbit-ref-brand-500);
   --orbit-action-primary-bg-hover: var(--orbit-ref-brand-600);
   --orbit-action-primary-fg: var(--orbit-ref-neutral-0);
@@ -332,6 +365,54 @@
     var(--orbit-surface-raised)
   );
   --orbit-navbar-item-active-fg: var(--orbit-action-primary-bg);
+  /* Navbar – dark tone */
+  --orbit-navbar-dark-bg: #1a1d26;
+  --orbit-navbar-dark-fg: var(--orbit-text-inverse);
+  --orbit-navbar-dark-fg-muted: var(--orbit-ref-neutral-400);
+  --orbit-navbar-dark-border: color-mix(in srgb, var(--orbit-text-inverse) 12%, transparent);
+  --orbit-navbar-dark-item-hover-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 10%,
+    transparent
+  );
+  --orbit-navbar-dark-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 15%,
+    transparent
+  );
+  --orbit-navbar-dark-item-active-fg: var(--orbit-text-inverse);
+  /* Navbar – primary tone */
+  --orbit-navbar-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-navbar-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-navbar-primary-fg-muted: color-mix(
+    in srgb,
+    var(--orbit-action-primary-fg) 70%,
+    transparent
+  );
+  --orbit-navbar-primary-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-fg) 20%,
+    transparent
+  );
+  --orbit-navbar-primary-item-hover-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 12%,
+    transparent
+  );
+  --orbit-navbar-primary-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 20%,
+    transparent
+  );
+  --orbit-navbar-primary-item-active-fg: var(--orbit-action-primary-fg);
+  /* Navbar – transparent tone */
+  --orbit-navbar-transparent-bg: transparent;
+  --orbit-navbar-transparent-fg: var(--orbit-text-primary);
+  --orbit-navbar-transparent-fg-muted: var(--orbit-text-secondary);
+  --orbit-navbar-transparent-border: transparent;
+  --orbit-navbar-transparent-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-transparent-item-active-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-transparent-item-active-fg: var(--orbit-text-primary);
   --orbit-control-height: calc(0.525rem + (2.1rem * var(--orbit-text-scale)));
   --orbit-control-action-size: calc(0.45rem + (1.8rem * var(--orbit-text-scale)));
   --orbit-control-adornment-size: calc(0.425rem + (1.7rem * var(--orbit-text-scale)));
@@ -772,6 +853,39 @@
   --orbit-code-block-action-fg: var(--orbit-text-secondary);
   --orbit-code-block-action-bg-hover: var(--orbit-surface-subtle);
   --orbit-code-block-action-fg-hover: var(--orbit-text-primary);
+  --orbit-code-block-highlight-bg: color-mix(in srgb, var(--orbit-ref-brand-500) 16%, transparent);
+  --orbit-code-block-highlight-border: var(--orbit-ref-brand-400);
+  --orbit-code-block-token-comment: #8b949e;
+  --orbit-code-block-token-prolog: #8b949e;
+  --orbit-code-block-token-doctype: #8b949e;
+  --orbit-code-block-token-cdata: #8b949e;
+  --orbit-code-block-token-punctuation: #8b949e;
+  --orbit-code-block-token-property: #79c0ff;
+  --orbit-code-block-token-tag: #7ee787;
+  --orbit-code-block-token-boolean: #79c0ff;
+  --orbit-code-block-token-number: #79c0ff;
+  --orbit-code-block-token-constant: #79c0ff;
+  --orbit-code-block-token-symbol: #79c0ff;
+  --orbit-code-block-token-deleted: #ffa198;
+  --orbit-code-block-token-selector: #d2a8ff;
+  --orbit-code-block-token-attr-name: #d2a8ff;
+  --orbit-code-block-token-string: #a5d6ff;
+  --orbit-code-block-token-char: #a5d6ff;
+  --orbit-code-block-token-builtin: #ffa657;
+  --orbit-code-block-token-inserted: #7ee787;
+  --orbit-code-block-token-operator: #ff7b72;
+  --orbit-code-block-token-entity: #ff7b72;
+  --orbit-code-block-token-url: #ff7b72;
+  --orbit-code-block-token-atrule: #ff7b72;
+  --orbit-code-block-token-attr-value: #a5d6ff;
+  --orbit-code-block-token-keyword: #ff7b72;
+  --orbit-code-block-token-function: #d2a8ff;
+  --orbit-code-block-token-class-name: #d2a8ff;
+  --orbit-code-block-token-regex: #a5d6ff;
+  --orbit-code-block-token-variable: #ffa657;
+  --orbit-code-block-token-important: #ffa657;
+  --orbit-code-block-token-bold: bold;
+  --orbit-code-block-token-italic: italic;
   /* Component tokens are resolved in this scope so they do not retain the
      inherited light-theme value when a component sits below a dark ancestor. */
   --orbit-sidebar-bg: var(--orbit-surface-raised);
@@ -817,6 +931,50 @@
     var(--orbit-surface-raised)
   );
   --orbit-navbar-item-active-fg: var(--orbit-action-primary-fg-subtle);
+  /* Navbar – dark tone (dark-on-dark) */
+  --orbit-navbar-dark-bg: #1a1d26;
+  --orbit-navbar-dark-fg: var(--orbit-ref-neutral-0);
+  --orbit-navbar-dark-fg-muted: var(--orbit-ref-neutral-400);
+  --orbit-navbar-dark-border: color-mix(in srgb, var(--orbit-ref-neutral-0) 10%, transparent);
+  --orbit-navbar-dark-item-hover-bg: color-mix(in srgb, var(--orbit-ref-neutral-0) 8%, transparent);
+  --orbit-navbar-dark-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 12%,
+    transparent
+  );
+  --orbit-navbar-dark-item-active-fg: var(--orbit-text-inverse);
+  /* Navbar – primary tone (dark) */
+  --orbit-navbar-primary-bg: var(--orbit-action-primary-bg);
+  --orbit-navbar-primary-fg: var(--orbit-action-primary-fg);
+  --orbit-navbar-primary-fg-muted: color-mix(
+    in srgb,
+    var(--orbit-action-primary-fg) 65%,
+    transparent
+  );
+  --orbit-navbar-primary-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-fg) 18%,
+    transparent
+  );
+  --orbit-navbar-primary-item-hover-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 10%,
+    transparent
+  );
+  --orbit-navbar-primary-item-active-bg: color-mix(
+    in srgb,
+    var(--orbit-ref-neutral-0) 18%,
+    transparent
+  );
+  --orbit-navbar-primary-item-active-fg: var(--orbit-action-primary-fg);
+  /* Navbar – transparent tone (dark) */
+  --orbit-navbar-transparent-bg: transparent;
+  --orbit-navbar-transparent-fg: var(--orbit-text-primary);
+  --orbit-navbar-transparent-fg-muted: var(--orbit-text-secondary);
+  --orbit-navbar-transparent-border: transparent;
+  --orbit-navbar-transparent-item-hover-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-transparent-item-active-bg: var(--orbit-surface-subtle);
+  --orbit-navbar-transparent-item-active-fg: var(--orbit-text-primary);
   --orbit-button-primary-bg: var(--orbit-action-primary-bg);
   --orbit-button-primary-bg-hover: var(--orbit-action-primary-bg-hover);
   --orbit-button-primary-fg: var(--orbit-action-primary-fg);

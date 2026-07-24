@@ -23,6 +23,137 @@
       </orbit-navbar>
     </lab-example>
   </section>
+
+  <section>
+    <h2>Tone</h2>
+    <p>
+      L'input <code>tone</code> controlla lo schema colori della navbar. <code>default</code> usa la
+      superficie raised, <code>dark</code> uno sfondo scuro con testo invertito,
+      <code>primary</code> il colore brand e <code>transparent</code> rimuove sfondo e bordo.
+    </p>
+    <lab-example [code]="toneSnippet" fullWidth>
+      <div class="navbar-tone-demo">
+        <orbit-navbar
+          tone="dark"
+          brand="Orbit Dark"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          tone="primary"
+          brand="Orbit Primary"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          tone="transparent"
+          brand="Orbit Transparent"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Size</h2>
+    <p>
+      L'input <code>size</code> regola l'altezza, il padding e la dimensione del font. Tre valori:
+      <code>sm</code>, <code>md</code> (predefinito) e <code>lg</code>.
+    </p>
+    <lab-example [code]="sizeSnippet" fullWidth>
+      <div class="navbar-size-demo">
+        <orbit-navbar
+          size="sm"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          size="md"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          size="lg"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Variant</h2>
+    <p>
+      L'input <code>variant</code> controlla lo stile degli item. <code>filled</code> (predefinito)
+      usa un background per lo stato attivo, <code>underline</code> mostra un bordo inferiore e
+      <code>pills</code> usa un border-radius pieno.
+    </p>
+    <lab-example [code]="variantSnippet" fullWidth>
+      <div class="navbar-variant-demo">
+        <orbit-navbar
+          variant="filled"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          variant="underline"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          variant="pills"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Combinazioni</h2>
+    <p>
+      Le tre input sono indipendenti e si combinano liberamente. Ad esempio una navbar dark con
+      variante underline e dimensione small.
+    </p>
+    <lab-example fullWidth>
+      <div class="navbar-combo-demo">
+        <orbit-navbar
+          tone="dark"
+          variant="underline"
+          size="sm"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+        <orbit-navbar
+          tone="primary"
+          variant="pills"
+          brand="Orbit"
+          [items]="items"
+          [activeId]="activeId()"
+          (itemSelected)="selectItem($event)"
+        />
+      </div>
+    </lab-example>
+  </section>
+
   <section>
     <h2>Comportamento responsive</h2>
     <p>

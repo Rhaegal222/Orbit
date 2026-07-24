@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 export interface OrbitNavbarItem {
   id: string;
@@ -6,6 +6,10 @@ export interface OrbitNavbarItem {
   href?: string;
   disabled?: boolean;
 }
+
+export type OrbitNavbarTone = 'default' | 'dark' | 'primary' | 'transparent';
+export type OrbitNavbarSize = 'sm' | 'md' | 'lg';
+export type OrbitNavbarVariant = 'filled' | 'underline' | 'pills';
 
 @Component({
   selector: 'orbit-navbar',
@@ -18,8 +22,23 @@ export class OrbitNavbarComponent {
   ariaLabel = input('Navigazione principale');
   items = input<readonly OrbitNavbarItem[]>([]);
   activeId = input<string | null>(null);
+  tone = input<OrbitNavbarTone>('default');
+  size = input<OrbitNavbarSize>('md');
+  variant = input<OrbitNavbarVariant>('filled');
 
   itemSelected = output<OrbitNavbarItem>();
+
+  protected readonly hostClasses = computed(() => {
+    const classes = ['orbit-navbar'];
+    if (this.tone() === 'dark') classes.push('orbit-navbar--dark');
+    if (this.tone() === 'primary') classes.push('orbit-navbar--primary');
+    if (this.tone() === 'transparent') classes.push('orbit-navbar--transparent');
+    if (this.size() === 'sm') classes.push('orbit-navbar--sm');
+    if (this.size() === 'lg') classes.push('orbit-navbar--lg');
+    if (this.variant() === 'underline') classes.push('orbit-navbar--underline');
+    if (this.variant() === 'pills') classes.push('orbit-navbar--pills');
+    return classes.join(' ');
+  });
 
   selectItem(item: OrbitNavbarItem, event: Event): void {
     if (item.disabled) {

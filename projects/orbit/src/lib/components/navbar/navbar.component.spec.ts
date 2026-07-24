@@ -37,4 +37,46 @@ describe('OrbitNavbarComponent', () => {
 
     expect(selected).toEqual(['overview']);
   });
+
+  it('applies tone class to the nav element', () => {
+    fixture.componentRef.setInput('tone', 'dark');
+    fixture.detectChanges();
+
+    const nav = fixture.nativeElement.querySelector('nav') as HTMLElement;
+    expect(nav.classList.contains('orbit-navbar--dark')).toBe(true);
+  });
+
+  it('applies size class to the nav element', () => {
+    fixture.componentRef.setInput('size', 'lg');
+    fixture.detectChanges();
+
+    const nav = fixture.nativeElement.querySelector('nav') as HTMLElement;
+    expect(nav.classList.contains('orbit-navbar--lg')).toBe(true);
+  });
+
+  it('applies variant class to the nav element', () => {
+    fixture.componentRef.setInput('variant', 'underline');
+    fixture.detectChanges();
+
+    const nav = fixture.nativeElement.querySelector('nav') as HTMLElement;
+    expect(nav.classList.contains('orbit-navbar--underline')).toBe(true);
+  });
+
+  it('combines multiple modifier classes', () => {
+    fixture.componentRef.setInput('tone', 'primary');
+    fixture.componentRef.setInput('size', 'sm');
+    fixture.componentRef.setInput('variant', 'pills');
+    fixture.detectChanges();
+
+    const nav = fixture.nativeElement.querySelector('nav') as HTMLElement;
+    expect(nav.classList.contains('orbit-navbar--primary')).toBe(true);
+    expect(nav.classList.contains('orbit-navbar--sm')).toBe(true);
+    expect(nav.classList.contains('orbit-navbar--pills')).toBe(true);
+  });
+
+  it('applies no modifier classes for default tone, md size, filled variant', () => {
+    const nav = fixture.nativeElement.querySelector('nav') as HTMLElement;
+    const modifierClasses = Array.from(nav.classList).filter((c) => c.startsWith('orbit-navbar--'));
+    expect(modifierClasses).toEqual([]);
+  });
 });

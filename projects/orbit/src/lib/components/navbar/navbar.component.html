@@ -1,4 +1,4 @@
-<nav class="orbit-navbar" [attr.aria-label]="ariaLabel()">
+<nav class="orbit-navbar" [class]="hostClasses()" [attr.aria-label]="ariaLabel()">
   @if (brand()) {
     <span class="orbit-navbar__brand">{{ brand() }}</span>
   }

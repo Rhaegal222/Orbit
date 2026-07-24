@@ -464,10 +464,65 @@ export class LabShellComponent {
 
   protected readonly sidebarSections: Signal<readonly OrbitSidebarSection[]> = computed(() => {
     const query = this.searchQuery().trim().toLowerCase();
-    const items: OrbitSidebarItem[] = CATALOG_ENTRIES.filter((entry) =>
-      entry.label.toLowerCase().includes(query),
-    ).map((entry) => ({ id: entry.slug, label: entry.label, icon: entry.icon }));
-    return [{ id: 'catalog', items }];
+    const filterItems = (slugs: string[]) =>
+      CATALOG_ENTRIES.filter(
+        (e) => slugs.includes(e.slug) && e.label.toLowerCase().includes(query),
+      ).map((e) => ({ id: e.slug, label: e.label, icon: e.icon }));
+
+    const foundations = filterItems(['themes', 'typography', 'motion', 'patterns', 'examples']);
+    const components = filterItems([
+      'button',
+      'avatar',
+      'badge',
+      'chip',
+      'accordion',
+      'alert',
+      'banner',
+      'skeleton',
+      'spinner',
+      'table',
+    ]);
+    const formAndInputs = filterItems([
+      'text-input',
+      'form-field',
+      'form-section',
+      'checkbox',
+      'select',
+      'pill-switch',
+      'pickers',
+      'slider',
+      'attachments',
+    ]);
+    const feedbackAndOverlays = filterItems(['dialog', 'panel', 'popover', 'tooltip', 'toast']);
+    const layoutAndNav = filterItems(['layout', 'navbar', 'breadcrumb', 'pagination', 'tab']);
+
+    const sections: OrbitSidebarSection[] = [];
+    if (foundations.length)
+      sections.push({ id: 'foundations', label: 'Fondamenta', items: foundations });
+    if (components.length)
+      sections.push({ id: 'components', label: 'Componenti', items: components });
+    if (formAndInputs.length)
+      sections.push({ id: 'form-inputs', label: 'Form & Selettori', items: formAndInputs });
+    if (feedbackAndOverlays.length)
+      sections.push({
+        id: 'feedback-overlays',
+        label: 'Feedback & Overlay',
+        items: feedbackAndOverlays,
+      });
+    if (layoutAndNav.length)
+      sections.push({ id: 'layout-nav', label: 'Layout & Navigazione', items: layoutAndNav });
+
+    return sections.length
+      ? sections
+      : [
+          {
+            id: 'all',
+            label: 'Risultati',
+            items: CATALOG_ENTRIES.filter((e) => e.label.toLowerCase().includes(query)).map(
+              (e) => ({ id: e.slug, label: e.label, icon: e.icon }),
+            ),
+          },
+        ];
   });
 
   protected readonly activeSidebarId: Signal<string | null> = toSignal(

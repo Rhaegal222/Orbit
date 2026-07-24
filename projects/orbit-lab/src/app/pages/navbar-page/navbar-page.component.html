@@ -1,16 +1,15 @@
 <article>
   <h1>Barra di navigazione</h1>
   <p>
-    <code>orbit-navbar</code> gestisce la navigazione orizzontale di un prodotto. Usa link nativi
-    con <code>href</code> oppure emette la voce selezionata per lasciare routing e stato al
-    consumer.
+    <code>orbit-navbar</code> gestisce la navigazione orizzontale di un prodotto. Supporta layout
+    standard e centrato con menu diviso, announcement bar, e molteplici varianti visive.
   </p>
 
   <section>
-    <h2>Esempio</h2>
+    <h2>Esempio base</h2>
     <p>
-      La voce attiva espone <code>aria-current=&quot;page&quot;</code>; su schermi stretti le voci
-      scorrono orizzontalmente.
+      La voce attiva espone <code>aria-current=&quot;page&quot;</code>. Brand a sinistra, voci di
+      navigazione al centro, azioni a destra.
     </p>
     <lab-example [code]="snippet" fullWidth>
       <orbit-navbar
@@ -25,11 +24,53 @@
   </section>
 
   <section>
+    <h2>Layout centrato (split menu)</h2>
+    <p>
+      Con <code>layout=&quot;center&quot;</code> il brand è centrato e le voci di navigazione si
+      dividono su entrambi i lati. Le voci di sinistra usano <code>items</code>, quelle di destra
+      <code>rightItems</code>.
+    </p>
+    <lab-example [code]="centerSnippet" fullWidth>
+      <orbit-navbar
+        layout="center"
+        brand="Rossa di Tropea"
+        [items]="centerLeftItems"
+        [rightItems]="centerRightItems"
+        [activeId]="activeId()"
+        (itemSelected)="selectItem($event)"
+      >
+        <orbit-button orbitNavbarActions tone="neutral" label="Carrello (0)" />
+      </orbit-navbar>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Announcement bar</h2>
+    <p>
+      Il content projection <code>[orbitNavbarAnnouncement]</code> inserisce una barra informativa
+      sottile sopra la navbar principale, con sfondo bordeaux e testo chiaro.
+    </p>
+    <lab-example [code]="announcementSnippet" fullWidth>
+      <orbit-navbar
+        layout="center"
+        brand="Rossa di Tropea"
+        [items]="centerLeftItems"
+        [rightItems]="centerRightItems"
+        [activeId]="activeId()"
+        (itemSelected)="selectItem($event)"
+      >
+        <span orbitNavbarAnnouncement>
+          Spedizione gratuita in Italia per ordini oltre 49 € — Raccolto 2026 disponibile
+        </span>
+        <orbit-button orbitNavbarActions tone="neutral" label="Carrello (0)" />
+      </orbit-navbar>
+    </lab-example>
+  </section>
+
+  <section>
     <h2>Tone</h2>
     <p>
-      L'input <code>tone</code> controlla lo schema colori della navbar. <code>default</code> usa la
-      superficie raised, <code>dark</code> uno sfondo scuro con testo invertito,
-      <code>primary</code> il colore brand e <code>transparent</code> rimuove sfondo e bordo.
+      L'input <code>tone</code> controlla lo schema colori della navbar.
     </p>
     <lab-example [code]="toneSnippet" fullWidth>
       <div class="navbar-tone-demo">
@@ -61,8 +102,7 @@
   <section>
     <h2>Size</h2>
     <p>
-      L'input <code>size</code> regola l'altezza, il padding e la dimensione del font. Tre valori:
-      <code>sm</code>, <code>md</code> (predefinito) e <code>lg</code>.
+      L'input <code>size</code> regola l'altezza, il padding e la dimensione del font.
     </p>
     <lab-example [code]="sizeSnippet" fullWidth>
       <div class="navbar-size-demo">
@@ -94,9 +134,8 @@
   <section>
     <h2>Variant</h2>
     <p>
-      L'input <code>variant</code> controlla lo stile degli item. <code>filled</code> (predefinito)
-      usa un background per lo stato attivo, <code>underline</code> mostra un bordo inferiore e
-      <code>pills</code> usa un border-radius pieno.
+      L'input <code>variant</code> controlla lo stile degli item: filled (background),
+      underline (bordo inferiore) e pills (border-radius pieno).
     </p>
     <lab-example [code]="variantSnippet" fullWidth>
       <div class="navbar-variant-demo">
@@ -128,8 +167,7 @@
   <section>
     <h2>Combinazioni</h2>
     <p>
-      Le tre input sono indipendenti e si combinano liberamente. Ad esempio una navbar dark con
-      variante underline e dimensione small.
+      Le input sono indipendenti e si combinano liberamente.
     </p>
     <lab-example fullWidth>
       <div class="navbar-combo-demo">
@@ -158,7 +196,7 @@
     <h2>Comportamento responsive</h2>
     <p>
       Sotto <code>--orbit-breakpoint-md</code> (48rem) la lista di navigazione va a capo su una
-      seconda riga invece di restare su una sola riga con la barra.
+      seconda riga. Nel layout centrato, brand e liste si riallineano verticalmente.
     </p>
   </section>
 </article>

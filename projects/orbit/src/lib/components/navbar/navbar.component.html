@@ -1,39 +1,119 @@
-<nav class="orbit-navbar" [class]="hostClasses()" [attr.aria-label]="ariaLabel()">
-  @if (brand()) {
-    <span class="orbit-navbar__brand">{{ brand() }}</span>
-  }
+<div class="orbit-navbar-wrapper">
+  <ng-content select="[orbitNavbarAnnouncement]" />
 
-  <ul class="orbit-navbar__list">
-    @for (item of items(); track item.id) {
-      <li>
-        @if (item.href) {
-          <a
-            class="orbit-navbar__item"
-            [class.orbit-navbar__item--active]="item.id === activeId()"
-            [class.orbit-navbar__item--disabled]="item.disabled"
-            [attr.aria-current]="item.id === activeId() ? 'page' : null"
-            [attr.aria-disabled]="item.disabled || null"
-            [attr.tabindex]="item.disabled ? -1 : null"
-            [href]="item.href"
-            (click)="selectItem(item, $event)"
-          >
-            {{ item.label }}
-          </a>
-        } @else {
-          <button
-            type="button"
-            class="orbit-navbar__item"
-            [class.orbit-navbar__item--active]="item.id === activeId()"
-            [disabled]="item.disabled"
-            [attr.aria-current]="item.id === activeId() ? 'page' : null"
-            (click)="selectItem(item, $event)"
-          >
-            {{ item.label }}
-          </button>
+  <nav class="orbit-navbar" [class]="hostClasses()" [attr.aria-label]="ariaLabel()">
+    @if (layout() === 'center') {
+      <ul class="orbit-navbar__list orbit-navbar__list--left">
+        @for (item of items(); track item.id) {
+          <li>
+            @if (item.href) {
+              <a
+                class="orbit-navbar__item"
+                [class.orbit-navbar__item--active]="item.id === activeId()"
+                [class.orbit-navbar__item--disabled]="item.disabled"
+                [attr.aria-current]="item.id === activeId() ? 'page' : null"
+                [attr.aria-disabled]="item.disabled || null"
+                [attr.tabindex]="item.disabled ? -1 : null"
+                [href]="item.href"
+                (click)="selectItem(item, $event)"
+              >
+                {{ item.label }}
+              </a>
+            } @else {
+              <button
+                type="button"
+                class="orbit-navbar__item"
+                [class.orbit-navbar__item--active]="item.id === activeId()"
+                [disabled]="item.disabled"
+                [attr.aria-current]="item.id === activeId() ? 'page' : null"
+                (click)="selectItem(item, $event)"
+              >
+                {{ item.label }}
+              </button>
+            }
+          </li>
         }
-      </li>
-    }
-  </ul>
+      </ul>
 
-  <div class="orbit-navbar__actions"><ng-content select="[orbitNavbarActions]" /></div>
-</nav>
+      <div class="orbit-navbar__brand">
+        <ng-content select="[orbitNavbarBrand]" />
+        @if (brand()) {
+          <span class="orbit-navbar__brand-text">{{ brand() }}</span>
+        }
+      </div>
+
+      <ul class="orbit-navbar__list orbit-navbar__list--right">
+        @for (item of rightItems(); track item.id) {
+          <li>
+            @if (item.href) {
+              <a
+                class="orbit-navbar__item"
+                [class.orbit-navbar__item--active]="item.id === activeId()"
+                [class.orbit-navbar__item--disabled]="item.disabled"
+                [attr.aria-current]="item.id === activeId() ? 'page' : null"
+                [attr.aria-disabled]="item.disabled || null"
+                [attr.tabindex]="item.disabled ? -1 : null"
+                [href]="item.href"
+                (click)="selectItem(item, $event)"
+              >
+                {{ item.label }}
+              </a>
+            } @else {
+              <button
+                type="button"
+                class="orbit-navbar__item"
+                [class.orbit-navbar__item--active]="item.id === activeId()"
+                [disabled]="item.disabled"
+                [attr.aria-current]="item.id === activeId() ? 'page' : null"
+                (click)="selectItem(item, $event)"
+              >
+                {{ item.label }}
+              </button>
+            }
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="orbit-navbar__brand">
+        <ng-content select="[orbitNavbarBrand]" />
+        @if (brand()) {
+          <span class="orbit-navbar__brand-text">{{ brand() }}</span>
+        }
+      </div>
+
+      <ul class="orbit-navbar__list">
+        @for (item of items(); track item.id) {
+          <li>
+            @if (item.href) {
+              <a
+                class="orbit-navbar__item"
+                [class.orbit-navbar__item--active]="item.id === activeId()"
+                [class.orbit-navbar__item--disabled]="item.disabled"
+                [attr.aria-current]="item.id === activeId() ? 'page' : null"
+                [attr.aria-disabled]="item.disabled || null"
+                [attr.tabindex]="item.disabled ? -1 : null"
+                [href]="item.href"
+                (click)="selectItem(item, $event)"
+              >
+                {{ item.label }}
+              </a>
+            } @else {
+              <button
+                type="button"
+                class="orbit-navbar__item"
+                [class.orbit-navbar__item--active]="item.id === activeId()"
+                [disabled]="item.disabled"
+                [attr.aria-current]="item.id === activeId() ? 'page' : null"
+                (click)="selectItem(item, $event)"
+              >
+                {{ item.label }}
+              </button>
+            }
+          </li>
+        }
+      </ul>
+    }
+
+    <div class="orbit-navbar__actions"><ng-content select="[orbitNavbarActions]" /></div>
+  </nav>
+</div>

@@ -10,6 +10,7 @@ export interface OrbitNavbarItem {
 export type OrbitNavbarTone = 'default' | 'dark' | 'primary' | 'transparent';
 export type OrbitNavbarSize = 'sm' | 'md' | 'lg';
 export type OrbitNavbarVariant = 'filled' | 'underline' | 'pills';
+export type OrbitNavbarLayout = 'default' | 'center';
 
 @Component({
   selector: 'orbit-navbar',
@@ -21,10 +22,12 @@ export class OrbitNavbarComponent {
   brand = input('');
   ariaLabel = input('Navigazione principale');
   items = input<readonly OrbitNavbarItem[]>([]);
+  rightItems = input<readonly OrbitNavbarItem[]>([]);
   activeId = input<string | null>(null);
   tone = input<OrbitNavbarTone>('default');
   size = input<OrbitNavbarSize>('md');
   variant = input<OrbitNavbarVariant>('filled');
+  layout = input<OrbitNavbarLayout>('default');
 
   itemSelected = output<OrbitNavbarItem>();
 
@@ -37,6 +40,7 @@ export class OrbitNavbarComponent {
     if (this.size() === 'lg') classes.push('orbit-navbar--lg');
     if (this.variant() === 'underline') classes.push('orbit-navbar--underline');
     if (this.variant() === 'pills') classes.push('orbit-navbar--pills');
+    if (this.layout() === 'center') classes.push('orbit-navbar--center');
     return classes.join(' ');
   });
 

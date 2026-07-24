@@ -1,7 +1,8 @@
 export { OrbitNavbarComponent } from './navbar.component';
 export type {
   OrbitNavbarItem,
-  OrbitNavbarTone,
+  OrbitNavbarLayout,
   OrbitNavbarSize,
+  OrbitNavbarTone,
   OrbitNavbarVariant,
 } from './navbar.component';

@@ -33,7 +33,7 @@
     <lab-example [code]="centerSnippet" fullWidth>
       <orbit-navbar
         layout="center"
-        brand="Rossa di Tropea"
+        brand="Galileo"
         [items]="centerLeftItems"
         [rightItems]="centerRightItems"
         [activeId]="activeId()"
@@ -47,21 +47,22 @@
   <section>
     <h2>Announcement bar</h2>
     <p>
-      Il content projection <code>[orbitNavbarAnnouncement]</code> inserisce una barra informativa
-      sottile sopra la navbar principale, con sfondo bordeaux e testo chiaro.
+      L'input <code>announcement</code> mostra una barra informativa sopra la navbar.
+      Con <code>announcementCloseable</code> appare un pulsante chiudi che emette
+      <code>announcementClosed</code>.
     </p>
     <lab-example [code]="announcementSnippet" fullWidth>
       <orbit-navbar
         layout="center"
-        brand="Rossa di Tropea"
+        brand="Galileo"
         [items]="centerLeftItems"
         [rightItems]="centerRightItems"
         [activeId]="activeId()"
         (itemSelected)="selectItem($event)"
+        announcement="Spedizione gratuita per ordini oltre 49 € — Nuova collezione disponibile"
+        [announcementCloseable]="true"
+        (announcementClosed)="announcementVisible.set(false)"
       >
-        <span orbitNavbarAnnouncement>
-          Spedizione gratuita in Italia per ordini oltre 49 € — Raccolto 2026 disponibile
-        </span>
         <orbit-button orbitNavbarActions tone="neutral" label="Carrello (0)" />
       </orbit-navbar>
     </lab-example>

@@ -65,7 +65,7 @@ export class NavbarPageComponent {
 
   protected readonly centerSnippet = `<orbit-navbar
   layout="center"
-  brand="Rossa di Tropea"
+  brand="Galileo"
   [items]="leftItems"
   [rightItems]="rightItems"
   [activeId]="activeId"
@@ -76,14 +76,14 @@ export class NavbarPageComponent {
 
   protected readonly announcementSnippet = `<orbit-navbar
   layout="center"
-  brand="Rossa di Tropea"
+  brand="Galileo"
   [items]="leftItems"
   [rightItems]="rightItems"
   [activeId]="activeId"
   (itemSelected)="activeId = $event.id"
 >
   <span orbitNavbarAnnouncement>
-    Spedizione gratuita in Italia per ordini oltre 49 € — Raccolto 2026 disponibile
+    Spedizione gratuita per ordini oltre 49 € — Nuova collezione disponibile
   </span>
   <orbit-button orbitNavbarActions label="Carrello (0)" />
 </orbit-navbar>`;

@@ -28,8 +28,11 @@ export class OrbitNavbarComponent {
   size = input<OrbitNavbarSize>('md');
   variant = input<OrbitNavbarVariant>('filled');
   layout = input<OrbitNavbarLayout>('default');
+  announcement = input('');
+  announcementCloseable = input(false);
 
   itemSelected = output<OrbitNavbarItem>();
+  announcementClosed = output<void>();
 
   protected readonly hostClasses = computed(() => {
     const classes = ['orbit-navbar'];

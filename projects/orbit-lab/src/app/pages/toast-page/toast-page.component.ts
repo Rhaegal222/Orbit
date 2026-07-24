@@ -41,6 +41,18 @@ this.toast.show({
     this.toast.show({ message: this.toneMessages[tone], tone, position: 'bottom-end' });
   }
 
+  showMultipleBottomStart(): void {
+    const tones: OrbitToastTone[] = ['success', 'danger', 'warning', 'info'];
+    tones.forEach((tone) => {
+      this.toast.show({
+        message: this.toneMessages[tone],
+        tone,
+        position: 'bottom-start',
+        duration: 0,
+      });
+    });
+  }
+
   showManual(): void {
     this.toast.show({
       message: 'Nessun auto-dismiss: chiudi manualmente',

@@ -470,13 +470,7 @@ export class LabShellComponent {
       ).map((e) => ({ id: e.slug, label: e.label, icon: e.icon }));
 
     const foundations = filterItems(['themes', 'typography', 'motion', 'patterns', 'examples']);
-    const components = filterItems([
-      'button',
-      'avatar',
-      'tags-badges',
-      'accordion',
-      'table',
-    ]);
+    const components = filterItems(['button', 'avatar', 'tags-badges', 'accordion', 'table']);
     const formAndInputs = filterItems([
       'form-field',
       'checkbox',
@@ -486,7 +480,8 @@ export class LabShellComponent {
       'attachments',
     ]);
     const pickers = filterItems(['date-picker', 'time-picker']);
-    const feedbackAndLoading = filterItems(['feedback', 'loading', 'toast']);
+    const feedback = filterItems(['alert', 'banner', 'toast']);
+    const loading = filterItems(['skeleton', 'spinner', 'progress-bar']);
     const overlays = filterItems(['dialog', 'panel', 'popover', 'tooltip']);
     const layoutAndNav = filterItems(['layout', 'navbar', 'breadcrumb', 'pagination', 'tab']);
 
@@ -497,12 +492,10 @@ export class LabShellComponent {
       sections.push({ id: 'components', label: 'Componenti', items: components });
     if (formAndInputs.length)
       sections.push({ id: 'form-inputs', label: 'Form & Input', items: formAndInputs });
-    if (pickers.length)
-      sections.push({ id: 'pickers', label: 'Selettori', items: pickers });
-    if (feedbackAndLoading.length)
-      sections.push({ id: 'feedback-loading', label: 'Feedback & Caricamento', items: feedbackAndLoading });
-    if (overlays.length)
-      sections.push({ id: 'overlays', label: 'Overlay', items: overlays });
+    if (pickers.length) sections.push({ id: 'pickers', label: 'Selettori', items: pickers });
+    if (feedback.length) sections.push({ id: 'feedback', label: 'Feedback', items: feedback });
+    if (loading.length) sections.push({ id: 'loading', label: 'Caricamento', items: loading });
+    if (overlays.length) sections.push({ id: 'overlays', label: 'Overlay', items: overlays });
     if (layoutAndNav.length)
       sections.push({ id: 'layout-nav', label: 'Layout & Navigazione', items: layoutAndNav });
 

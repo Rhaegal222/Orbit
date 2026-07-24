@@ -180,33 +180,28 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'feedback',
+    path: 'alert',
+    loadComponent: () =>
+      import('./pages/alert-page/alert-page.component').then((m) => m.AlertPageComponent),
+  },
+  {
+    path: 'banner',
     loadComponent: () =>
       import('./pages/banner-page/banner-page.component').then((m) => m.BannerPageComponent),
   },
   {
-    path: 'alert',
-    redirectTo: 'feedback',
-    pathMatch: 'full',
-  },
-  {
-    path: 'banner',
-    redirectTo: 'feedback',
-    pathMatch: 'full',
-  },
-  {
-    path: 'loading',
+    path: 'spinner',
     loadComponent: () =>
       import('./pages/spinner-page/spinner-page.component').then((m) => m.SpinnerPageComponent),
   },
   {
-    path: 'spinner',
-    redirectTo: 'loading',
-    pathMatch: 'full',
+    path: 'skeleton',
+    loadComponent: () =>
+      import('./pages/skeleton-page/skeleton-page.component').then((m) => m.SkeletonPageComponent),
   },
   {
-    path: 'skeleton',
-    redirectTo: 'loading',
+    path: 'loading',
+    redirectTo: 'spinner',
     pathMatch: 'full',
   },
   {
@@ -223,6 +218,11 @@ export const routes: Routes = [
     path: 'form-section',
     redirectTo: 'form-field',
     pathMatch: 'full',
+  },
+  {
+    path: 'dialog',
+    loadComponent: () =>
+      import('./pages/dialog-page/dialog-page.component').then((m) => m.DialogPageComponent),
   },
   {
     path: 'popover',

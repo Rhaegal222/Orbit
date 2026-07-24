@@ -6,24 +6,98 @@
   </p>
 
   <section>
-    <h2>Esempio</h2>
+    <h2>Contesto d'uso (Page Header Layout)</h2>
+    <p>
+      I Banner occupano l'intera larghezza e si collocano in cima alla pagina o alla vista
+      principale per messaggi di rilevanza globale.
+    </p>
     <lab-example [code]="usageSnippet" fullWidth>
-      <div data-example="info">
-        <orbit-banner tone="info">Manutenzione programmata alle 22:00.</orbit-banner>
+      <div
+        style="
+          width: 100%;
+          border: 1px solid var(--orbit-border-subtle);
+          border-radius: var(--orbit-radius-surface);
+          overflow: hidden;
+          background: var(--orbit-surface-default);
+        "
+      >
+        @if (bannerInfoVisible()) {
+          <orbit-banner tone="info" dismissible (dismissed)="toggleTone('info')">
+            Manutenzione straordinaria programmata per questa sera dalle 22:00 alle 23:00.
+          </orbit-banner>
+        }
+        <div
+          style="
+            padding: 1.25rem;
+            font-weight: var(--orbit-font-weight-emphasis);
+            font-size: var(--orbit-font-size-title);
+          "
+        >
+          Dashboard Operativa Aziendale
+        </div>
       </div>
     </lab-example>
   </section>
 
   <section>
     <h2>Tone</h2>
-    <div data-example="success">
-      <orbit-banner tone="success">Operazione completata su tutti gli ambienti.</orbit-banner>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem">
+      <orbit-button
+        label="Success"
+        variant="outline"
+        tone="success"
+        (clicked)="toggleTone('success')"
+      />
+      <orbit-button
+        label="Danger"
+        variant="outline"
+        tone="danger"
+        (clicked)="toggleTone('danger')"
+      />
+      <orbit-button
+        label="Warning"
+        variant="outline"
+        tone="neutral"
+        (clicked)="toggleTone('warning')"
+      />
+      <orbit-button label="Info" variant="outline" tone="neutral" (clicked)="toggleTone('info')" />
+      <orbit-button
+        label="Mostra tutti"
+        variant="solid"
+        tone="primary"
+        (clicked)="resetAllTones()"
+      />
     </div>
-    <div data-example="danger">
-      <orbit-banner tone="danger">Servizio temporaneamente non disponibile.</orbit-banner>
-    </div>
-    <div data-example="warning">
-      <orbit-banner tone="warning">La sessione scadrà tra 5 minuti.</orbit-banner>
+
+    <div style="display: flex; flex-direction: column; gap: var(--orbit-space-3)">
+      @if (bannerSuccessVisible()) {
+        <div data-example="success">
+          <orbit-banner tone="success" dismissible (dismissed)="toggleTone('success')"
+            >Operazione completata su tutti gli ambienti.</orbit-banner
+          >
+        </div>
+      }
+      @if (bannerDangerVisible()) {
+        <div data-example="danger">
+          <orbit-banner tone="danger" dismissible (dismissed)="toggleTone('danger')"
+            >Servizio temporaneamente non disponibile.</orbit-banner
+          >
+        </div>
+      }
+      @if (bannerWarningVisible()) {
+        <div data-example="warning">
+          <orbit-banner tone="warning" dismissible (dismissed)="toggleTone('warning')"
+            >La sessione scadrà tra 5 minuti.</orbit-banner
+          >
+        </div>
+      }
+      @if (bannerInfoVisible()) {
+        <div data-example="info">
+          <orbit-banner tone="info" dismissible (dismissed)="toggleTone('info')"
+            >Manutenzione programmata alle 22:00.</orbit-banner
+          >
+        </div>
+      }
     </div>
   </section>
 

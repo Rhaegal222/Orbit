@@ -53,7 +53,15 @@
 
   <section>
     <h2>Chiudi tutti</h2>
-    <orbit-button label="Dismiss all" variant="outline" tone="neutral" (clicked)="dismissAll()" />
+    <div style="display: flex; gap: 0.5rem">
+      <orbit-button
+        label="Mostra 4 Toast in basso a sinistra (bottom-start)"
+        variant="solid"
+        tone="primary"
+        (clicked)="showMultipleBottomStart()"
+      />
+      <orbit-button label="Dismiss all" variant="outline" tone="neutral" (clicked)="dismissAll()" />
+    </div>
   </section>
 
   <section>

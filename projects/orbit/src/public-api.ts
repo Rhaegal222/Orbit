@@ -50,6 +50,7 @@ export * from './lib/components/table-column';
 export * from './lib/components/table-row';
 export * from './lib/components/toast';
 export * from './lib/components/pagination';
+export * from './lib/components/auto-hide-on-scroll';
 export * from './lib/types';
 // Keep the barrel target explicit: the library compiler resolves public exports
 // with ESM semantics and does not consistently infer a directory `index.ts`.

@@ -12,6 +12,9 @@ All notable changes to Galileo Orbit are documented here.
 
 ### Added
 
+- Added `orbitAutoHideOnScroll`, a directive that hides a toolbar-like host element on downward
+  scroll and shows it again on upward scroll, active only under `--orbit-breakpoint-md`, to
+  reclaim vertical space in narrow modal/panel bodies.
 - Added the shared `--orbit-breakpoint-{sm,md,lg,xl,2xl}` token scale, mapped to
   Tailwind v4's `sm:`/`md:`/`lg:`/`xl:`/`2xl:` utilities.
 - Added `--orbit-control-height-touch-min`, a `(pointer: coarse)` touch-target floor

@@ -24,9 +24,9 @@ describe('OrbitCodeBlockComponent', () => {
   it('is collapsed by default when collapsible', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.orbit-code-block__surface').hidden).toBe(true);
-    expect(fixture.nativeElement.querySelector('[data-toggle-code]').getAttribute('aria-expanded')).toBe(
-      'false',
-    );
+    expect(
+      fixture.nativeElement.querySelector('[data-toggle-code]').getAttribute('aria-expanded'),
+    ).toBe('false');
   });
 
   it('expands and flips aria-expanded when the toggle is clicked', () => {
@@ -70,7 +70,9 @@ describe('OrbitCodeBlockComponent', () => {
 
   it('copies the code via OrbitClipboardService when the copy button is clicked', async () => {
     fixture.detectChanges();
-    const copyButton = fixture.nativeElement.querySelector('[data-copy-code] button') as HTMLButtonElement;
+    const copyButton = fixture.nativeElement.querySelector(
+      '[data-copy-code] button',
+    ) as HTMLButtonElement;
     expect(copyButton.getAttribute('aria-label')).toBe('Copia codice');
     copyButton.click();
     await fixture.whenStable();

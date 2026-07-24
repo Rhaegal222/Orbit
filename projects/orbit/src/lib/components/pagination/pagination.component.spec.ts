@@ -61,7 +61,9 @@ describe('OrbitPaginationComponent', () => {
     fixture.componentRef.setInput('currentPage', 1);
     fixture.componentRef.setInput('totalPages', 10);
     fixture.detectChanges();
-    const prev = fixture.nativeElement.querySelector('.orbit-pagination__prev') as HTMLButtonElement;
+    const prev = fixture.nativeElement.querySelector(
+      '.orbit-pagination__prev',
+    ) as HTMLButtonElement;
     expect(prev.disabled).toBe(true);
   });
 
@@ -69,7 +71,9 @@ describe('OrbitPaginationComponent', () => {
     fixture.componentRef.setInput('currentPage', 10);
     fixture.componentRef.setInput('totalPages', 10);
     fixture.detectChanges();
-    const next = fixture.nativeElement.querySelector('.orbit-pagination__next') as HTMLButtonElement;
+    const next = fixture.nativeElement.querySelector(
+      '.orbit-pagination__next',
+    ) as HTMLButtonElement;
     expect(next.disabled).toBe(true);
   });
 

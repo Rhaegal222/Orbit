@@ -9,10 +9,18 @@ import { OrbitAccordionItemComponent } from './accordion-item.component';
   imports: [OrbitAccordionComponent, OrbitAccordionItemComponent],
   template: `
     <orbit-accordion [multi]="multi">
-      <orbit-accordion-item header="Uno" [expanded]="expandedA" (expandedChange)="expandedA = $event">
+      <orbit-accordion-item
+        header="Uno"
+        [expanded]="expandedA"
+        (expandedChange)="expandedA = $event"
+      >
         Contenuto uno
       </orbit-accordion-item>
-      <orbit-accordion-item header="Due" [expanded]="expandedB" (expandedChange)="expandedB = $event">
+      <orbit-accordion-item
+        header="Due"
+        [expanded]="expandedB"
+        (expandedChange)="expandedB = $event"
+      >
         Contenuto due
       </orbit-accordion-item>
       <orbit-accordion-item

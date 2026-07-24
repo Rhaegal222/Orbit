@@ -17,14 +17,7 @@ import type { OrbitIconName } from '../../icons/icon-registry';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 
 export type OrbitTextInputType =
-  | 'text'
-  | 'email'
-  | 'password'
-  | 'number'
-  | 'search'
-  | 'tel'
-  | 'url'
-  | 'currency';
+  'text' | 'email' | 'password' | 'number' | 'search' | 'tel' | 'url' | 'currency';
 
 export type OrbitTextInputTone = 'default' | 'success';
 
@@ -85,7 +78,9 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
   isDisabled = signal(false);
   readonly i18n = inject(ORBIT_I18N);
   private readonly inputElement = viewChild<ElementRef<HTMLInputElement>>('control');
-  readonly clearSearchLabel = computed(() => this.i18n.labels.clearSearch || this.i18n.labels.close);
+  readonly clearSearchLabel = computed(
+    () => this.i18n.labels.clearSearch || this.i18n.labels.close,
+  );
   readonly typeLeadingIcon = computed<OrbitIconName | null>(() => {
     if (!this.showLeadingIcon() || this.leadingIcon() || this.leadingIconName()) return null;
     switch (this.type()) {
@@ -116,9 +111,7 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
       this.value.set('');
       return;
     }
-    this.value.set(
-      this.type() === 'currency' ? this.formatCurrency(String(val)) : String(val),
-    );
+    this.value.set(this.type() === 'currency' ? this.formatCurrency(String(val)) : String(val));
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -160,8 +153,7 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
 
   onInput(event: Event): void {
     const raw = (event.target as HTMLInputElement).value;
-    const formatted =
-      this.type() === 'currency' ? this.formatCurrency(raw) : raw;
+    const formatted = this.type() === 'currency' ? this.formatCurrency(raw) : raw;
     this.value.set(formatted);
     this.onChange(formatted);
   }
@@ -205,11 +197,12 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
     let intPart = commaIndex >= 0 ? cleaned.slice(0, commaIndex) : cleaned;
     let decPart =
       commaIndex >= 0
-        ? cleaned.slice(commaIndex + 1).replace(/,/g, '').slice(0, 2)
+        ? cleaned
+            .slice(commaIndex + 1)
+            .replace(/,/g, '')
+            .slice(0, 2)
         : '';
-    intPart = intPart
-      .replace(/^0+(?=\d)/, '')
-      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    intPart = intPart.replace(/^0+(?=\d)/, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     if (commaIndex < 0) return intPart;
     return `${intPart || '0'},${decPart}`;
   }

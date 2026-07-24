@@ -5,7 +5,9 @@ describe('OrbitModalFooterComponent', () => {
   let fixture: ComponentFixture<OrbitModalFooterComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [OrbitModalFooterComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [OrbitModalFooterComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(OrbitModalFooterComponent);
     fixture.detectChanges();
   });

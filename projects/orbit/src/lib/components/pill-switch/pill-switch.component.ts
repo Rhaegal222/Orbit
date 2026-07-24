@@ -89,10 +89,16 @@ export class OrbitPillSwitchComponent implements ControlValueAccessor {
     if (event.key === 'Home') nextIndex = enabled[0].index;
     if (event.key === 'End') nextIndex = enabled.at(-1)!.index;
     if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      nextIndex = enabled[(enabled.findIndex(({ index }) => index === currentIndex) - 1 + enabled.length) % enabled.length].index;
+      nextIndex =
+        enabled[
+          (enabled.findIndex(({ index }) => index === currentIndex) - 1 + enabled.length) %
+            enabled.length
+        ].index;
     }
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      nextIndex = enabled[(enabled.findIndex(({ index }) => index === currentIndex) + 1) % enabled.length].index;
+      nextIndex =
+        enabled[(enabled.findIndex(({ index }) => index === currentIndex) + 1) % enabled.length]
+          .index;
     }
     if (nextIndex === null) return;
 

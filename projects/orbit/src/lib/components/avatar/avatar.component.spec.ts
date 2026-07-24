@@ -20,25 +20,33 @@ describe('OrbitAvatarComponent', () => {
   it('derives two-letter initials from a compound name', () => {
     fixture.componentRef.setInput('name', 'Mario Rossi');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim()).toBe('MR');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim(),
+    ).toBe('MR');
   });
 
   it('derives a single-letter initial from a single-word name', () => {
     fixture.componentRef.setInput('name', 'Cher');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim()).toBe('C');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim(),
+    ).toBe('C');
   });
 
   it('falls back to "?" for an empty name', () => {
     fixture.componentRef.setInput('name', '');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim()).toBe('?');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim(),
+    ).toBe('?');
   });
 
   it('takes the first letter of the first and last word for names with more than two words', () => {
     fixture.componentRef.setInput('name', 'Maria Grazia Del Vecchio');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim()).toBe('MV');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim(),
+    ).toBe('MV');
   });
 
   it('renders an <img> with alt text when src is provided', () => {
@@ -58,7 +66,9 @@ describe('OrbitAvatarComponent', () => {
     fixture.nativeElement.querySelector('img').dispatchEvent(new Event('error'));
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('img')).toBeNull();
-    expect(fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim()).toBe('MR');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-avatar__initials')?.textContent?.trim(),
+    ).toBe('MR');
   });
 
   it('produces the same background hue for the same name', () => {

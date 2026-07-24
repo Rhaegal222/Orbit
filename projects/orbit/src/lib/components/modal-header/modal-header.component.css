@@ -27,10 +27,6 @@
   gap: var(--orbit-space-2);
   min-width: 0;
   flex: 1;
-  /* Extra inset on the leading side only, opposite the close button, so the title doesn't
-     read as flush against the edge while the close button keeps its own tighter inset. */
-  padding-inline-start: var(--orbit-item-padding-inline);
-  padding-block-start: var(--orbit-item-padding-block);
 }
 
 .orbit-modal-header__lead {

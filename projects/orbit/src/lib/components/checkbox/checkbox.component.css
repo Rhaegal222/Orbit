@@ -46,7 +46,10 @@
   border-radius: var(--orbit-radius-sm);
   background: var(--orbit-surface-default);
   flex-shrink: 0;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), transform var(--orbit-motion-fast) var(--orbit-easing-standard);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    transform var(--orbit-motion-fast) var(--orbit-easing-standard);
 }
 
 .orbit-checkbox__input:checked + .orbit-checkbox__box {
@@ -70,8 +73,14 @@
 }
 
 @keyframes orbit-checkbox-pop {
-  from { opacity: 0; transform: scale(0.7); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .orbit-checkbox__label {

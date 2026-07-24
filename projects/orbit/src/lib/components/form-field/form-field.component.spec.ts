@@ -26,20 +26,26 @@ describe('OrbitFormFieldComponent', () => {
   it('renders hint', () => {
     fixture.componentRef.setInput('hint', 'Max 50 caratteri');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-form-field__hint')?.textContent?.trim()).toBe('Max 50 caratteri');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-form-field__hint')?.textContent?.trim(),
+    ).toBe('Max 50 caratteri');
   });
 
   it('renders error', () => {
     fixture.componentRef.setInput('error', 'Campo obbligatorio');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.orbit-form-field__error')?.textContent?.trim()).toBe('Campo obbligatorio');
+    expect(
+      fixture.nativeElement.querySelector('.orbit-form-field__error')?.textContent?.trim(),
+    ).toBe('Campo obbligatorio');
   });
 
   it('can reserve feedback space before an error is present', () => {
     fixture.componentRef.setInput('reserveMessageSpace', true);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.orbit-form-field__feedback--reserved')).toBeTruthy();
+    expect(
+      fixture.nativeElement.querySelector('.orbit-form-field__feedback--reserved'),
+    ).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.orbit-form-field__error')).toBeNull();
   });
 

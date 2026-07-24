@@ -611,8 +611,8 @@ export class LabShellComponent {
         textScale: this.textScale(),
       },
       panelClass: 'lab-google-fonts-dialog-pane',
-      width: 'min(96vw, 73.75rem)',
-      maxWidth: '96vw',
+      width: '100%',
+      maxWidth: '100%',
     });
   }
 

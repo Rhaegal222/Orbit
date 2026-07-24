@@ -6,7 +6,9 @@ describe('OrbitModalHeaderComponent', () => {
   let component: OrbitModalHeaderComponent;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [OrbitModalHeaderComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [OrbitModalHeaderComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(OrbitModalHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -17,9 +19,9 @@ describe('OrbitModalHeaderComponent', () => {
     fixture.componentRef.setInput('subtitle', 'Aggiorna i dati prima di salvare');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('h2').textContent).toContain('Modifica elemento');
-    expect(fixture.nativeElement.querySelector('.orbit-modal-header__subtitle').textContent).toContain(
-      'Aggiorna i dati prima di salvare',
-    );
+    expect(
+      fixture.nativeElement.querySelector('.orbit-modal-header__subtitle').textContent,
+    ).toContain('Aggiorna i dati prima di salvare');
   });
 
   it('links the title to the id supplied by the dialog shell', () => {

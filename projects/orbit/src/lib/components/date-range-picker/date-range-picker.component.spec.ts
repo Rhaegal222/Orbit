@@ -9,7 +9,9 @@ describe('OrbitDateRangePickerComponent', () => {
   let overlayContainer: OverlayContainer;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [OrbitDateRangePickerComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [OrbitDateRangePickerComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(OrbitDateRangePickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

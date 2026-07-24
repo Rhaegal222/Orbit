@@ -6,7 +6,9 @@ describe('OrbitTableColumnComponent', () => {
   let fixture: ComponentFixture<OrbitTableColumnComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [OrbitTableColumnComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [OrbitTableColumnComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(OrbitTableColumnComponent);
   });
 

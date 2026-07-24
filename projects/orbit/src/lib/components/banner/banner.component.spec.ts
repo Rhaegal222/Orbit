@@ -69,7 +69,9 @@ describe('OrbitBannerComponent', () => {
 
     let emitted = false;
     fixture.componentInstance.dismissed.subscribe(() => (emitted = true));
-    (fixture.nativeElement.querySelector('.orbit-banner__close button') as HTMLButtonElement).click();
+    (
+      fixture.nativeElement.querySelector('.orbit-banner__close button') as HTMLButtonElement
+    ).click();
 
     expect(emitted).toBe(true);
     expect(fixture.nativeElement.classList.contains('orbit-banner')).toBe(true);

@@ -26,11 +26,6 @@
 
 .orbit-modal-footer__region--left {
   justify-content: flex-start;
-  /* Mirrors .orbit-modal-header__content: extra inset on the leading side, opposite
-     wherever the primary action sits (orbitModalFooterRight), which keeps its own
-     tighter inset. */
-  padding-inline-start: var(--orbit-item-padding-inline);
-  padding-block-start: var(--orbit-item-padding-block);
 }
 
 .orbit-modal-footer__region--center {
@@ -50,13 +45,8 @@
 }
 
 @media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
-  .orbit-modal-footer__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .orbit-modal-footer__region--center,
   .orbit-modal-footer__region--right {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 }
 

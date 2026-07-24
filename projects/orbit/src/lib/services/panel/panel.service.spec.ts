@@ -37,7 +37,9 @@ describe('OrbitPanelService', () => {
   it('anchors to the right by default and to the left when side is "left"', async () => {
     service.open(TestPanelContentComponent, { data: 'A' });
     await new Promise((resolve) => setTimeout(resolve, 0));
-    let pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
+    let pane = overlayContainer
+      .getContainerElement()
+      .querySelector('.orbit-panel-pane') as HTMLElement;
     expect(pane.classList).toContain('orbit-panel--right');
     let wrapper = overlayContainer
       .getContainerElement()
@@ -83,8 +85,15 @@ describe('OrbitPanelService', () => {
   });
 
   it('applies the sm/md/lg/xl/wide width by default and honors minWidth/maxWidth', () => {
-    service.open(TestPanelContentComponent, { data: 'A', size: 'lg', minWidth: '280px', maxWidth: '800px' });
-    const pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
+    service.open(TestPanelContentComponent, {
+      data: 'A',
+      size: 'lg',
+      minWidth: '280px',
+      maxWidth: '800px',
+    });
+    const pane = overlayContainer
+      .getContainerElement()
+      .querySelector('.orbit-panel-pane') as HTMLElement;
     expect(pane.style.width).toBe('600px');
     expect(pane.style.minWidth).toBe('280px');
     expect(pane.style.maxWidth).toBe('800px');
@@ -92,7 +101,9 @@ describe('OrbitPanelService', () => {
 
   it('spans the full viewport width when fullWidth is true, ignoring maxWidth', () => {
     service.open(TestPanelContentComponent, { data: 'A', fullWidth: true, maxWidth: '800px' });
-    const pane = overlayContainer.getContainerElement().querySelector('.orbit-panel-pane') as HTMLElement;
+    const pane = overlayContainer
+      .getContainerElement()
+      .querySelector('.orbit-panel-pane') as HTMLElement;
     expect(pane.style.width).toBe('100vw');
     expect(pane.style.maxWidth).toBe('');
   });

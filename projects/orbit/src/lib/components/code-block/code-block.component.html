@@ -31,7 +31,12 @@
         <orbit-icon name="copy" />
       </orbit-icon-button>
     }
-    <pre #codeSurface class="orbit-code-block__pre" data-code-block [id]="panelId"><code class="orbit-code-block__code">@for (line of lines(); track $index) {<span
+    <pre
+      #codeSurface
+      class="orbit-code-block__pre"
+      data-code-block
+      [id]="panelId"
+    ><code class="orbit-code-block__code">@for (line of lines(); track $index) {<span
       class="orbit-code-block__line"
     ><span class="orbit-code-block__line-number" aria-hidden="true">{{ $index + 1 }}</span><span class="orbit-code-block__line-content">{{ line || ' ' }}</span></span>}</code></pre>
   </div>

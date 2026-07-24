@@ -77,7 +77,9 @@ describe('OrbitTextInputComponent', () => {
     let emitted = 'not-cleared';
     component.registerOnChange((value) => (emitted = value));
 
-    const clearAction = fixture.nativeElement.querySelector('.orbit-input__action') as HTMLButtonElement;
+    const clearAction = fixture.nativeElement.querySelector(
+      '.orbit-input__action',
+    ) as HTMLButtonElement;
     expect(clearAction.getAttribute('aria-label')).toBe('Cancella ricerca');
     clearAction.click();
 
@@ -121,7 +123,9 @@ describe('OrbitTextInputComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('.orbit-input__action--leading')).toBeNull();
-    expect(fixture.nativeElement.querySelector('.orbit-input__icon--leading orbit-icon')).toBeTruthy();
+    expect(
+      fixture.nativeElement.querySelector('.orbit-input__icon--leading orbit-icon'),
+    ).toBeTruthy();
   });
 
   it('focuses the input when a decorative leading icon is clicked', () => {
@@ -148,7 +152,9 @@ describe('OrbitTextInputComponent', () => {
   it('renders placeholder', () => {
     fixture.componentRef.setInput('placeholder', 'Inserisci...');
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('input').getAttribute('placeholder')).toBe('Inserisci...');
+    expect(fixture.nativeElement.querySelector('input').getAttribute('placeholder')).toBe(
+      'Inserisci...',
+    );
   });
 
   it('implements writeValue', () => {

@@ -35,21 +35,29 @@ export class OrbitFormGridItemDirective {
 
   @HostBinding('style.--orbit-form-grid-span-sm')
   get smallSpan(): string | null {
-    return this.spanSm() === undefined ? null : String(coerceSpan(this.spanSm(), coerceSpan(this.span(), 12)));
+    return this.spanSm() === undefined
+      ? null
+      : String(coerceSpan(this.spanSm(), coerceSpan(this.span(), 12)));
   }
 
   @HostBinding('style.--orbit-form-grid-span-md')
   get mediumSpan(): string | null {
-    return this.spanMd() === undefined ? null : String(coerceSpan(this.spanMd(), coerceSpan(this.span(), 12)));
+    return this.spanMd() === undefined
+      ? null
+      : String(coerceSpan(this.spanMd(), coerceSpan(this.span(), 12)));
   }
 
   @HostBinding('style.--orbit-form-grid-span-lg')
   get largeSpan(): string | null {
-    return this.spanLg() === undefined ? null : String(coerceSpan(this.spanLg(), coerceSpan(this.span(), 12)));
+    return this.spanLg() === undefined
+      ? null
+      : String(coerceSpan(this.spanLg(), coerceSpan(this.span(), 12)));
   }
 
   @HostBinding('style.--orbit-form-grid-span-xl')
   get extraLargeSpan(): string | null {
-    return this.spanXl() === undefined ? null : String(coerceSpan(this.spanXl(), coerceSpan(this.span(), 12)));
+    return this.spanXl() === undefined
+      ? null
+      : String(coerceSpan(this.spanXl(), coerceSpan(this.span(), 12)));
   }
 }

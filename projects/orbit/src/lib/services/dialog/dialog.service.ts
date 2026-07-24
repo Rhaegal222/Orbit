@@ -4,22 +4,16 @@ import { ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { filter, take } from 'rxjs';
 
+/** Panel width per size — pane is always full viewport, modal centers itself via CSS margin. */
+
 export interface OrbitDialogConfig<T = unknown> {
   data?: T;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'wide';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   disableClose?: boolean;
   panelClass?: string;
 }
 
 export const ORBIT_DIALOG_DATA = new InjectionToken<unknown>('ORBIT_DIALOG_DATA');
-
-const SIZE_MAP: Record<string, string> = {
-  sm: '400px',
-  md: '560px',
-  lg: '720px',
-  xl: '900px',
-  wide: '1100px',
-};
 
 @Injectable({ providedIn: 'root' })
 export class OrbitDialogService {
@@ -36,9 +30,11 @@ export class OrbitDialogService {
       hasBackdrop: true,
       backdropClass: 'orbit-dialog-backdrop',
       panelClass: panelClasses,
-      width: SIZE_MAP[size],
-      maxHeight: '90vh',
-      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+      width: '100%',
+      height: '100%',
+      maxWidth: '100%',
+      maxHeight: '100%',
+      positionStrategy: this.overlay.position().global(),
       scrollStrategy: this.overlay.scrollStrategies.block(),
     };
 
@@ -59,9 +55,16 @@ export class OrbitDialogService {
     this.playEnterAnimation(overlayRef);
 
     if (!config.disableClose) {
-      overlayRef.backdropClick().pipe(take(1)).subscribe(() => this.close(overlayRef));
-      overlayRef.keydownEvents()
-        .pipe(filter((e) => e.keyCode === ESCAPE), take(1))
+      overlayRef
+        .backdropClick()
+        .pipe(take(1))
+        .subscribe(() => this.close(overlayRef));
+      overlayRef
+        .keydownEvents()
+        .pipe(
+          filter((e) => e.keyCode === ESCAPE),
+          take(1),
+        )
         .subscribe(() => this.close(overlayRef));
     }
 

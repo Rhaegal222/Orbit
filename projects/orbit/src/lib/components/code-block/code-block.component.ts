@@ -38,7 +38,9 @@ export class OrbitCodeBlockComponent {
   private readonly codeSurface = viewChild<ElementRef<HTMLElement>>('codeSurface');
   private dragStartedInsideSurface = false;
 
-  protected readonly collapsed = linkedSignal(() => this.collapsible() && this.initiallyCollapsed());
+  protected readonly collapsed = linkedSignal(
+    () => this.collapsible() && this.initiallyCollapsed(),
+  );
   protected readonly copyLabel = signal('Copia');
   /** Transient success confirmation shown over the code surface after a successful copy. */
   protected readonly showCopiedFeedback = signal(false);
@@ -74,7 +76,8 @@ export class OrbitCodeBlockComponent {
 
     const onMouseDown = (event: MouseEvent): void => {
       const surface = this.codeSurface()?.nativeElement;
-      this.dragStartedInsideSurface = !!surface && event.target instanceof Node && surface.contains(event.target);
+      this.dragStartedInsideSurface =
+        !!surface && event.target instanceof Node && surface.contains(event.target);
     };
     const onSelectionChange = (): void => {
       if (this.dragStartedInsideSurface) {
@@ -116,7 +119,9 @@ export class OrbitCodeBlockComponent {
 
     if (!startInside) {
       const precedesSurface =
-        (surface.compareDocumentPosition(range.startContainer) & Node.DOCUMENT_POSITION_PRECEDING) !== 0;
+        (surface.compareDocumentPosition(range.startContainer) &
+          Node.DOCUMENT_POSITION_PRECEDING) !==
+        0;
       if (precedesSurface) {
         clamped.setStart(bounds.startContainer, bounds.startOffset);
       } else {
@@ -125,7 +130,8 @@ export class OrbitCodeBlockComponent {
     }
     if (!endInside) {
       const followsSurface =
-        (surface.compareDocumentPosition(range.endContainer) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+        (surface.compareDocumentPosition(range.endContainer) & Node.DOCUMENT_POSITION_FOLLOWING) !==
+        0;
       if (followsSurface) {
         clamped.setEnd(bounds.endContainer, bounds.endOffset);
       } else {

@@ -1,12 +1,14 @@
 :host {
   display: block;
+  width: 100%;
 }
+
 .orbit-modal {
   display: flex;
   flex-direction: column;
-  width: min(100%, var(--orbit-modal-size-md));
+  width: min(100% - var(--orbit-space-6), var(--orbit-modal-size-md));
   margin-inline: auto;
-  max-height: 90vh;
+  max-height: calc(100dvh - var(--orbit-space-6));
   overflow: hidden;
   border: 1px solid var(--orbit-border-subtle);
   border-radius: var(--orbit-radius-surface);
@@ -16,29 +18,25 @@
 }
 
 .orbit-modal--sm {
-  width: min(100%, var(--orbit-modal-size-sm));
+  width: min(100% - var(--orbit-space-6), var(--orbit-modal-size-sm));
 }
 .orbit-modal--lg {
-  width: min(100%, var(--orbit-modal-size-lg));
+  width: min(100% - var(--orbit-space-6), var(--orbit-modal-size-lg));
 }
 .orbit-modal--xl {
-  width: min(100%, var(--orbit-modal-size-xl));
+  width: min(100% - var(--orbit-space-6), var(--orbit-modal-size-xl));
 }
 .orbit-modal--xxl {
-  width: min(100%, var(--orbit-modal-size-xxl));
-}
-.orbit-modal--full {
-  width: var(--orbit-modal-size-full);
+  width: min(100% - var(--orbit-space-6), var(--orbit-modal-size-xxl));
 }
 
-@media (max-width: 48rem) /* --orbit-breakpoint-md */ {
-  .orbit-modal,
-  .orbit-modal--sm,
+@media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
+  /* lg and above: true fullscreen */
   .orbit-modal--lg,
   .orbit-modal--xl,
-  .orbit-modal--xxl,
-  .orbit-modal--full {
+  .orbit-modal--xxl {
     width: 100%;
+    height: 100dvh;
     max-height: 100dvh;
     border-radius: var(--orbit-radius-none);
   }

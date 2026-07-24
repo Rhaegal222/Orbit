@@ -9,9 +9,12 @@
                 class="orbit-breadcrumb__link"
                 [href]="entry.item.href"
                 (click)="selectItem(entry.item, $event)"
-              >{{ entry.item.label }}</a>
+                >{{ entry.item.label }}</a
+              >
             } @else {
-              <span class="orbit-breadcrumb__current" aria-current="page">{{ entry.item.label }}</span>
+              <span class="orbit-breadcrumb__current" aria-current="page">{{
+                entry.item.label
+              }}</span>
             }
           } @else {
             <button
@@ -22,7 +25,9 @@
               aria-label="Mostra i percorsi intermedi nascosti"
               [attr.aria-expanded]="isPopoverOpen()"
               (click)="toggleHiddenItemsPopover(entry.hiddenItems, ellipsisTrigger)"
-            >…</button>
+            >
+              …
+            </button>
           }
           @if (!last) {
             <span class="orbit-breadcrumb__separator" aria-hidden="true">/</span>
@@ -37,7 +42,11 @@
   <ul class="orbit-breadcrumb__popover-list">
     @for (item of hiddenItems; track item.id) {
       <li>
-        <button type="button" class="orbit-breadcrumb__popover-item" (click)="selectHiddenItem(item)">
+        <button
+          type="button"
+          class="orbit-breadcrumb__popover-item"
+          (click)="selectHiddenItem(item)"
+        >
           {{ item.label }}
         </button>
       </li>

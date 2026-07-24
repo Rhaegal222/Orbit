@@ -37,8 +37,12 @@
   line-height: 1.25;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard), border-color var(--orbit-motion-fast) var(--orbit-easing-standard), color var(--orbit-motion-fast) var(--orbit-easing-standard),
-    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard), transform var(--orbit-motion-fast) var(--orbit-easing-shared);
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard),
+    transform var(--orbit-motion-fast) var(--orbit-easing-shared);
 }
 
 @media (pointer: coarse) {

@@ -81,7 +81,9 @@ describe('OrbitSelectComponent', () => {
   it('does not close when a pointerdown bubbles up from inside the overlay menu', () => {
     component.isOpen.set(true);
     fixture.detectChanges();
-    const option = overlayContainer.getContainerElement().querySelector('.orbit-select__option') as HTMLElement;
+    const option = overlayContainer
+      .getContainerElement()
+      .querySelector('.orbit-select__option') as HTMLElement;
     option.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
     expect(component.isOpen()).toBe(true);
   });

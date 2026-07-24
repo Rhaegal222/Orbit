@@ -78,13 +78,12 @@ export class OrbitAutocompleteComponent implements ControlValueAccessor, OnDestr
   filteredOptions = computed(() => {
     const q = this.query().toLocaleLowerCase('it-IT');
     if (!q) return this.options();
-    return this.options().filter((o) =>
-      o.label.toLocaleLowerCase('it-IT').includes(q),
-    );
+    return this.options().filter((o) => o.label.toLocaleLowerCase('it-IT').includes(q));
   });
 
   private readonly hasMenuContent = computed(
-    () => this.filteredOptions().length > 0 || (this.filteredOptions().length === 0 && !!this.query()),
+    () =>
+      this.filteredOptions().length > 0 || (this.filteredOptions().length === 0 && !!this.query()),
   );
 
   private overlaySyncEffect = effect(() => {

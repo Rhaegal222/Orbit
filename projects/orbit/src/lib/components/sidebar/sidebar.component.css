@@ -277,6 +277,10 @@
   gap: 0;
 }
 
+:host(.orbit-sidebar-host--collapsed) .orbit-sidebar__header-brand {
+  gap: 0;
+}
+
 :host(.orbit-sidebar-host--collapsed) .orbit-sidebar__item {
   gap: 0;
 }

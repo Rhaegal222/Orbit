@@ -256,7 +256,7 @@
   --orbit-modal-size-md: 45rem;
   --orbit-modal-size-lg: 60rem;
   --orbit-modal-size-xl: 73.75rem;
-  --orbit-modal-size-xxl: 82.5rem;
+  --orbit-modal-size-xxl: 90rem;
   --orbit-modal-size-full: min(96vw, 90rem);
   --orbit-section-index-size: calc(0.25rem + (1rem * var(--orbit-text-scale)));
   --orbit-section-divider: var(--orbit-border-subtle);

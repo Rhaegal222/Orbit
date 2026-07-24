@@ -93,7 +93,11 @@ describe('OrbitAutoHideOnScrollDirective', () => {
     const addEventListenerSpy = vi.spyOn(container, 'addEventListener');
     container.scrollTop = 500;
     container.dispatchEvent(new Event('scroll'));
-    expect(addEventListenerSpy).not.toHaveBeenCalledWith('scroll', expect.anything(), expect.anything());
+    expect(addEventListenerSpy).not.toHaveBeenCalledWith(
+      'scroll',
+      expect.anything(),
+      expect.anything(),
+    );
     expect(toolbar.getAttribute('aria-hidden')).toBeNull();
   });
 

@@ -52,7 +52,11 @@ export class OrbitTablistComponent {
     this.selectedChange.emit(component.value());
   }
 
-  private step(components: readonly OrbitTabComponent[], from: number, direction: number): number | null {
+  private step(
+    components: readonly OrbitTabComponent[],
+    from: number,
+    direction: number,
+  ): number | null {
     if (!components.length) return null;
     let idx = from;
     for (let i = 0; i < components.length; i++) {

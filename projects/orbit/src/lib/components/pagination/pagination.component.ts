@@ -18,7 +18,9 @@ export class OrbitPaginationComponent {
   totalPages = input.required<number>();
   pageChange = output<number>();
 
-  protected readonly visiblePages = computed(() => this.computeRange(this.currentPage(), this.totalPages()));
+  protected readonly visiblePages = computed(() =>
+    this.computeRange(this.currentPage(), this.totalPages()),
+  );
   protected readonly isFirstPage = computed(() => this.currentPage() <= 1);
   protected readonly isLastPage = computed(() => this.currentPage() >= this.totalPages());
 

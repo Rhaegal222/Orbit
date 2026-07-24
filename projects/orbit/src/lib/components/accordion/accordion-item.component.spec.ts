@@ -18,9 +18,9 @@ describe('OrbitAccordionItemComponent', () => {
   });
 
   it('renders the header text', () => {
-    expect(fixture.nativeElement.querySelector('.orbit-accordion-item__header-label').textContent.trim()).toBe(
-      'Sezione 1',
-    );
+    expect(
+      fixture.nativeElement.querySelector('.orbit-accordion-item__header-label').textContent.trim(),
+    ).toBe('Sezione 1');
   });
 
   it('emits expandedChange(true) when the collapsed header is clicked', () => {
@@ -51,7 +51,9 @@ describe('OrbitAccordionItemComponent', () => {
   it('sets aria-expanded to match the expanded input', () => {
     fixture.componentRef.setInput('expanded', true);
     fixture.detectChanges();
-    const header = fixture.nativeElement.querySelector('.orbit-accordion-item__header') as HTMLButtonElement;
+    const header = fixture.nativeElement.querySelector(
+      '.orbit-accordion-item__header',
+    ) as HTMLButtonElement;
     expect(header.getAttribute('aria-expanded')).toBe('true');
   });
 

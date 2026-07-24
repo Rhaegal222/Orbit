@@ -7,7 +7,9 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@an
     class="orbit-table"
     [class.orbit-table--bordered]="bordered()"
     [class.orbit-table--striped]="striped()"
-  ><ng-content /></table>`,
+  >
+    <ng-content />
+  </table>`,
   styleUrl: './table.component.css',
 })
 export class OrbitTableComponent {

@@ -33,7 +33,9 @@ describe('OrbitAttachmentDropzoneComponent', () => {
   });
 
   it('emits fileError for oversized file', () => {
-    const bigFile = new File(['x'.repeat(20 * 1024 * 1024)], 'big.pdf', { type: 'application/pdf' });
+    const bigFile = new File(['x'.repeat(20 * 1024 * 1024)], 'big.pdf', {
+      type: 'application/pdf',
+    });
     let emittedError: string | undefined;
     component.fileError.subscribe((e) => (emittedError = e));
     component['processFiles']([bigFile], 'drop');

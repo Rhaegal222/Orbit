@@ -6,7 +6,10 @@
     [attr.aria-label]="i18n.labels.previousPage"
     (click)="goToPrevious()"
   >
-    <orbit-icon name="chevron-down" class="orbit-pagination__nav-icon orbit-pagination__nav-icon--prev" />
+    <orbit-icon
+      name="chevron-down"
+      class="orbit-pagination__nav-icon orbit-pagination__nav-icon--prev"
+    />
   </button>
 
   <ul class="orbit-pagination__list">
@@ -19,7 +22,9 @@
             [class.orbit-pagination__page--current]="entry.page === currentPage()"
             [attr.aria-current]="entry.page === currentPage() ? 'page' : null"
             (click)="goToPage(entry.page)"
-          >{{ entry.page }}</button>
+          >
+            {{ entry.page }}
+          </button>
         } @else {
           <span class="orbit-pagination__ellipsis" aria-hidden="true">…</span>
         }
@@ -34,6 +39,9 @@
     [attr.aria-label]="i18n.labels.nextPage"
     (click)="goToNext()"
   >
-    <orbit-icon name="chevron-down" class="orbit-pagination__nav-icon orbit-pagination__nav-icon--next" />
+    <orbit-icon
+      name="chevron-down"
+      class="orbit-pagination__nav-icon orbit-pagination__nav-icon--next"
+    />
   </button>
 </nav>

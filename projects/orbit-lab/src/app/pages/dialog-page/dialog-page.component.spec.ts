@@ -27,7 +27,9 @@ describe('DialogPageComponent', () => {
   it('opens a real orbit-confirm-dialog on the overlay and records the confirmed outcome', () => {
     const openButton = Array.from(
       fixture.nativeElement.querySelectorAll('orbit-button button'),
-    ).find((btn) => (btn as HTMLButtonElement).textContent?.includes('Elimina allegato')) as HTMLButtonElement;
+    ).find((btn) =>
+      (btn as HTMLButtonElement).textContent?.includes('Elimina allegato'),
+    ) as HTMLButtonElement;
     expect(openButton).toBeTruthy();
     openButton.click();
     fixture.detectChanges();
@@ -35,8 +37,8 @@ describe('DialogPageComponent', () => {
     const overlayEl = overlayContainer.getContainerElement();
     expect(overlayEl.querySelector('orbit-confirm-dialog')).toBeTruthy();
 
-    const confirmButton = Array.from(overlayEl.querySelectorAll('orbit-button button')).find((btn) =>
-      btn.textContent?.includes('Elimina'),
+    const confirmButton = Array.from(overlayEl.querySelectorAll('orbit-button button')).find(
+      (btn) => btn.textContent?.includes('Elimina'),
     ) as HTMLButtonElement;
     expect(confirmButton).toBeTruthy();
 

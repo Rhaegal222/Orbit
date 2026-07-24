@@ -1,6 +1,8 @@
 <div class="orbit-drp" role="group" [attr.aria-label]="i18n.labels.openCalendar">
   <div class="orbit-drp__field">
-    <label class="orbit-drp__label" [for]="startInputId() || null">{{ startLabel() || i18n.labels.startDate }}</label>
+    <label class="orbit-drp__label" [for]="startInputId() || null">{{
+      startLabel() || i18n.labels.startDate
+    }}</label>
     <orbit-date-picker
       [inputId]="startInputId()"
       [ariaLabel]="startLabel() || i18n.labels.startDate"
@@ -14,7 +16,9 @@
   </div>
   <span class="orbit-drp__separator" aria-hidden="true">–</span>
   <div class="orbit-drp__field">
-    <label class="orbit-drp__label" [for]="endInputId() || null">{{ endLabel() || i18n.labels.endDate }}</label>
+    <label class="orbit-drp__label" [for]="endInputId() || null">{{
+      endLabel() || i18n.labels.endDate
+    }}</label>
     <orbit-date-picker
       [inputId]="endInputId()"
       [ariaLabel]="endLabel() || i18n.labels.endDate"

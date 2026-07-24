@@ -17,4 +17,7 @@ export class AvatarPageComponent {
 
   protected readonly sizesSnippet =
     '<orbit-avatar name="Mario Rossi" size="sm" />\n<orbit-avatar name="Mario Rossi" size="md" />\n<orbit-avatar name="Mario Rossi" size="lg" />';
+
+  protected readonly loadingSnippet =
+    '<orbit-avatar name="Mario Rossi" [loading]="true" size="sm" />\n<orbit-avatar name="Mario Rossi" [loading]="true" size="md" />\n<orbit-avatar name="Mario Rossi" [loading]="true" size="lg" />';
 }

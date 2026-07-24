@@ -53,6 +53,8 @@ describe('OrbitAvatarComponent', () => {
     fixture.componentRef.setInput('name', 'Mario Rossi');
     fixture.componentRef.setInput('src', 'https://example.test/avatar.png');
     fixture.detectChanges();
+    fixture.nativeElement.querySelector('img').dispatchEvent(new Event('load'));
+    fixture.detectChanges();
     const img = fixture.nativeElement.querySelector('img') as HTMLImageElement;
     expect(img).toBeTruthy();
     expect(img.alt).toBe('Mario Rossi');
@@ -109,6 +111,8 @@ describe('OrbitAvatarComponent', () => {
     fixture.componentRef.setInput('name', 'Mario Rossi');
     fixture.componentRef.setInput('src', 'https://example.test/avatar.png');
     fixture.detectChanges();
+    fixture.nativeElement.querySelector('img').dispatchEvent(new Event('load'));
+    fixture.detectChanges();
     const host = fixture.nativeElement.querySelector('.orbit-avatar') as HTMLElement;
     expect(host.hasAttribute('role')).toBe(false);
     expect(host.hasAttribute('aria-label')).toBe(false);
@@ -121,5 +125,24 @@ describe('OrbitAvatarComponent', () => {
     expect(
       fixture.nativeElement.querySelector('.orbit-avatar')?.classList.contains('orbit-avatar--lg'),
     ).toBe(true);
+  });
+
+  it('renders an orbit-spinner while the image is loading or when loading input is true', () => {
+    fixture.componentRef.setInput('name', 'Mario Rossi');
+    fixture.componentRef.setInput('src', 'https://example.test/avatar.png');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('orbit-spinner')).toBeTruthy();
+
+    fixture.nativeElement.querySelector('img').dispatchEvent(new Event('load'));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('orbit-spinner')).toBeNull();
+    expect(fixture.nativeElement.querySelector('img')).toBeTruthy();
+
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('orbit-spinner')).toBeTruthy();
   });
 });

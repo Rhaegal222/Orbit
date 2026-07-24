@@ -6,8 +6,16 @@
   [attr.role]="showImage() ? null : 'img'"
   [attr.aria-label]="showImage() ? null : name()"
 >
-  @if (showImage()) {
-    <img class="orbit-avatar__image" [src]="src()" [alt]="name()" (error)="onImageError()" />
+  @if (isImageLoading()) {
+    <orbit-spinner class="orbit-avatar__spinner" [size]="size() === 'lg' ? 'md' : 'sm'" />
+  } @else if (showImage()) {
+    <img
+      class="orbit-avatar__image"
+      [src]="src()"
+      [alt]="name()"
+      (load)="onImageLoad()"
+      (error)="onImageError()"
+    />
   } @else {
     <span class="orbit-avatar__initials" aria-hidden="true">{{ initials() }}</span>
   }

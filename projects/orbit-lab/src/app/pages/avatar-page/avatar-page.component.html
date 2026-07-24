@@ -35,6 +35,17 @@
   </section>
 
   <section>
+    <h2>Stato di Caricamento (Spinner)</h2>
+    <lab-example [code]="loadingSnippet">
+      <div data-example="loading" style="display: flex; align-items: center; gap: 1rem">
+        <orbit-avatar name="Mario Rossi" [loading]="true" size="sm" />
+        <orbit-avatar name="Mario Rossi" [loading]="true" size="md" />
+        <orbit-avatar name="Mario Rossi" [loading]="true" size="lg" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
     <h2>Accessibilità</h2>
     <ul>
       <li><code>name</code> imposta l'<code>alt</code> dell'immagine quando presente.</li>

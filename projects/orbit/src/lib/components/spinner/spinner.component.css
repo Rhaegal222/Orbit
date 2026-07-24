@@ -7,7 +7,7 @@
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: var(--orbit-radius-full);
-  color: var(--orbit-action-primary-bg);
+  color: inherit;
   animation: orbit-spinner-spin var(--orbit-motion-spin) linear infinite;
 }
 

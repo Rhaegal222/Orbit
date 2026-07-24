@@ -261,7 +261,7 @@
 .lab-shell__body--mobile-preview
   .lab-shell__phone[data-lab-orientation='landscape']
   .lab-shell__phone-viewport {
-  padding-right: 1.25rem;
+  padding-inline: max(1.75rem, env(safe-area-inset-left, 0px));
 }
 
 .lab-shell__body--mobile-preview

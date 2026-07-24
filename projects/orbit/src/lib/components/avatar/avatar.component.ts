@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { OrbitSpinnerComponent } from '../spinner/spinner.component';
 
 export type OrbitAvatarSize = 'sm' | 'md' | 'lg';
 
@@ -8,6 +9,7 @@ const AVATAR_HUES: readonly number[] = [4, 32, 96, 152, 200, 232, 268, 320];
 @Component({
   selector: 'orbit-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [OrbitSpinnerComponent],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.css',
   host: {
@@ -19,12 +21,23 @@ export class OrbitAvatarComponent {
   /** Used both as the `<img>` alt text and to derive the initials fallback. */
   name = input.required<string>();
   size = input<OrbitAvatarSize>('md');
+  loading = input<boolean | undefined>(undefined);
 
+  protected readonly imageLoaded = signal(false);
   protected readonly imageFailed = signal(false);
+
+  protected readonly isImageLoading = computed(() => {
+    if (this.loading() !== undefined) return !!this.loading();
+    return !!this.src() && !this.imageLoaded() && !this.imageFailed();
+  });
 
   protected readonly showImage = computed(() => !!this.src() && !this.imageFailed());
   protected readonly initials = computed(() => this.deriveInitials(this.name()));
   protected readonly backgroundHue = computed(() => this.hashToHue(this.name()));
+
+  onImageLoad(): void {
+    this.imageLoaded.set(true);
+  }
 
   onImageError(): void {
     this.imageFailed.set(true);

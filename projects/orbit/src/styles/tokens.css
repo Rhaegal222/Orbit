@@ -209,7 +209,7 @@
   --orbit-space-lg: var(--orbit-space-5);
   --orbit-space-xl: var(--orbit-space-6);
   --orbit-space-2xl: calc(var(--orbit-space-5) * 2);
-  --orbit-page-padding-inline: var(--orbit-space-lg);
+  --orbit-page-padding-inline: max(var(--orbit-space-6), env(safe-area-inset-left, 0px));
   --orbit-page-max-width-document: 75rem;
   --orbit-page-max-width-workspace: 90rem;
   /* Shared breakpoint scale (mobile-first). Cannot be read from a native @media
@@ -284,6 +284,20 @@
   --orbit-spinner-size-lg: calc(2.25rem * var(--orbit-text-scale));
   --orbit-spinner-size-xl: calc(3rem * var(--orbit-text-scale));
   --orbit-spinner-size-xxl: calc(4rem * var(--orbit-text-scale));
+  --orbit-avatar-size-sm: calc(2rem * var(--orbit-text-scale));
+  --orbit-avatar-size-md: calc(2.5rem * var(--orbit-text-scale));
+  --orbit-avatar-size-lg: calc(3.5rem * var(--orbit-text-scale));
+  --orbit-avatar-bg: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 12%,
+    var(--orbit-surface-subtle)
+  );
+  --orbit-avatar-fg: var(--orbit-action-primary-bg);
+  --orbit-avatar-border: color-mix(
+    in srgb,
+    var(--orbit-action-primary-bg) 25%,
+    var(--orbit-border-subtle)
+  );
   --orbit-sidebar-active-indicator-width: 0.1875rem;
   --orbit-sidebar-bg: var(--orbit-surface-default);
   --orbit-sidebar-fg: var(--orbit-text-primary);

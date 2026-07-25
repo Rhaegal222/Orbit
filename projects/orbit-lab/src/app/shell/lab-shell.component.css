@@ -62,19 +62,15 @@
   color: inherit;
 }
 
-.lab-shell__wordmark span {
-  color: var(--orbit-action-primary-bg);
-}
-
-.lab-shell__sidebar-wordmark {
-  font-weight: 800;
-  font-size: 1.15rem;
-  text-decoration: none;
-  color: inherit;
-}
-
+.lab-shell__wordmark span,
 .lab-shell__sidebar-wordmark span {
   color: var(--orbit-action-primary-bg);
+  font-size: 1.6rem;
+  line-height: 0.8;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -0.05em;
 }
 
 .lab-shell__sidebar-icon {
@@ -93,6 +89,13 @@
   color: var(--orbit-text-tertiary);
 }
 
+.lab-shell__sidebar-wordmark {
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-decoration: none;
+  color: inherit;
+}
+
 .lab-shell__root-link {
   font-weight: 800;
   font-size: 1.15rem;
@@ -102,6 +105,12 @@
 
 .lab-shell__root-link span {
   color: var(--orbit-action-primary-bg);
+  font-size: 1.6rem;
+  line-height: 0.8;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -0.05em;
 }
 
 .lab-shell__page-title {

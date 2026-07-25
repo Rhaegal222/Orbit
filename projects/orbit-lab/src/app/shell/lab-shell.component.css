@@ -77,8 +77,31 @@
   color: var(--orbit-action-primary-bg);
 }
 
+.lab-shell__sidebar-icon {
+  display: grid;
+  place-items: center;
+  width: var(--orbit-sidebar-brand-mark-size);
+  height: var(--orbit-sidebar-brand-mark-size);
+  border-radius: var(--orbit-radius-icon-surface);
+  background: var(--orbit-sidebar-brand-mark-bg);
+  color: var(--orbit-sidebar-brand-mark-fg);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
 .lab-shell__title-separator {
   color: var(--orbit-text-tertiary);
+}
+
+.lab-shell__root-link {
+  font-weight: var(--orbit-font-weight-emphasis);
+  font-size: var(--orbit-font-size-subtitle);
+  text-decoration: none;
+  color: var(--orbit-text-secondary);
+}
+
+.lab-shell__root-link:hover {
+  color: var(--orbit-text-primary);
 }
 
 .lab-shell__page-title {

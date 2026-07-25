@@ -7,5 +7,5 @@ coverage/
 .env
 .turbo/
 .worktrees/
-site/lab/
-site/studio/
+deploy/site/lab/
+deploy/site/studio/

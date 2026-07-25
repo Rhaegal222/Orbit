@@ -72,20 +72,44 @@ Wyrmrest and Galileo packages stay on their existing private registries
      Orbit", actual renders "Build with Orbit"; unrelated to this migration,
      not fixed, not investigated further)
 
-## ⚠️ Not yet committed
+5. **Galileo's GitLab repo converted the same way**, on a feature branch (not
+   pushed to `develop` directly):
+   - Branch `feature/orbit-public-split` pushed to
+     `gitlab.galileo.test/galileo/orbit`, MR not yet opened — GitLab gave the
+     creation link on push:
+     `https://gitlab.galileo.test/galileo/orbit/-/merge_requests/new?merge_request%5Bsource_branch%5D=feature%2Forbit-public-split`
+   - Same conversion as Wyrmrest: `projects/orbit/src/lib` removed,
+     `public-api.ts` re-exports from `@rhaegal222/orbit`, `.npmrc` and
+     `ng-package.json` updated the same way
+   - Kept `@galileo/orbit` as the package name (that one was already correct,
+     unlike Wyrmrest's stray naming) — only added `@rhaegal222/orbit` as a
+     dependency, nothing else touched
+   - Did **not** touch Galileo's `projects/orbit/LICENSE` (its "Copyright
+     Galileo, proprietary" content is correct there — only Wyrmrest's copy had
+     the wrong owner)
+   - Verified: 208/208 tests passing (orbit + orbit-lab, no pre-existing
+     failures here unlike Wyrmrest's `service` app), `orbit-lab` and
+     `orbit-studio` builds both pass
+   - **Someone with GitLab access still needs to actually open/merge the MR**
+     — pushing the branch doesn't do that automatically
 
-All `wyrmrest-orbit` changes above are **uncommitted working-tree changes**.
-The repo is currently on branch `promote/staging-20260725` (a staging
-promotion branch per the develop→staging→main flow in
-`docs/HOW-UPDATE-ORBIT.md`), not `develop`. Do not commit/push this on the
-promotion branch — check with Francesco which branch this belongs on before
-committing, since `staging`/`main` trigger automatic deploys.
+## `wyrmrest-orbit` commit status
 
-Also note the working tree already had other, unrelated uncommitted changes
-before this session touched anything (`docs/superpowers/plans/*.md`,
-`package-lock.json`, some `orbit-lab` page components, an untracked
-`example-switcher/` directory) — those are pre-existing WIP, not part of this
-migration; don't discard them.
+Committed and pushed to `develop` (commit converting `projects/orbit` to the
+thin wrapper) — **not** to `promote/staging-20260725`, which is where the
+working tree originally had these changes as uncommitted edits mixed in with
+unrelated pre-existing WIP. Those changes were moved to a clean `develop`
+checkout (via a git worktree) instead, and the `promote/staging-20260725`
+working tree was restored to its committed state for the orbit-related files
+only.
+
+The unrelated pre-existing WIP on `promote/staging-20260725` was left
+untouched (`docs/superpowers/plans/*.md`, some `orbit-lab` page components,
+an untracked `example-switcher/` directory) — not part of this migration,
+still sitting there uncommitted as it was found.
+
+`develop → staging → main` promotion (per `docs/HOW-UPDATE-ORBIT.md`) still
+needs to happen through the normal PR flow for this to reach staging/main.
 
 ## Deliberately not migrated to public repo (yet)
 
@@ -100,15 +124,9 @@ migration; don't discard them.
 
 ## Explicitly deferred / needs a decision
 
-1. **Galileo's GitLab repo is untouched.** The plan was always to convert it
-   into a fork too (same pattern as Wyrmrest above), but that requires
-   pushing to their shared `develop` branch — do this only via a proper
-   branch + PR, and only with a separate explicit go-ahead from Francesco,
-   since other people and the CI/CD pipeline depend on that branch.
-2. **Proprietary `LICENSE` residue inside Galileo's own checkout** (same file
-   found in Wyrmrest, same fix needed) was not touched — no write access
-   without the GitLab step above.
-3. **npm publish to npmjs.com** (the "real" public registry, installable by
+1. **Galileo's MR needs to be opened and merged** by someone with GitLab
+   access — see the link above. Not done automatically by pushing the branch.
+2. **npm publish to npmjs.com** (the "real" public registry, installable by
    anyone without a GitHub token) is still pending — blocked on Francesco
    running `npm login` (or providing an automation token via
    `export NPM_TOKEN=...` locally, never pasted in chat). GitHub Packages

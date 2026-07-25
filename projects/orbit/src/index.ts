@@ -1,1 +1,1 @@
-export * from './lib/public-api';
+export * from './public-api';

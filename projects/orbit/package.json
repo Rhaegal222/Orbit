@@ -14,6 +14,9 @@
     "./styles/tokens.css": "./styles/tokens.css",
     "./styles/theme.css": "./styles/theme.css"
   },
+  "dependencies": {
+    "@rhaegal222/orbit": "^0.1.1"
+  },
   "peerDependencies": {
     "@angular/core": "^22.0.0",
     "@angular/common": "^22.0.0",

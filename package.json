@@ -21,6 +21,7 @@
     "check": "npm run release:check"
   },
   "dependencies": {
+    "@rhaegal222/orbit": "^0.1.1",
     "@angular/common": "^22.0.0",
     "@angular/compiler": "^22.0.0",
     "@angular/core": "^22.0.0",

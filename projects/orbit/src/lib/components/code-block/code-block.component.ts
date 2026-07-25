@@ -16,7 +16,14 @@ import { DOCUMENT } from '@angular/common';
 import { OrbitClipboardService } from '../../services/clipboard';
 import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
 import { OrbitIconComponent } from '../../icons/icon.component';
-import * as Prism from 'prismjs';
+import * as PrismNamespace from 'prismjs';
+
+// prismjs is CJS with a dynamically constructed module.exports; depending on
+// how the consumer's bundler interops it, `import * as` resolves either to
+// the module itself or to a `{ default }` wrapper around it. Normalize once
+// so `Prism.languages`/`Prism.highlight` are reliable either way.
+const Prism: typeof PrismNamespace =
+  (PrismNamespace as unknown as { default?: typeof PrismNamespace }).default ?? PrismNamespace;
 
 let codeBlockSequence = 0;
 

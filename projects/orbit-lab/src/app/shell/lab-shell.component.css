@@ -94,14 +94,14 @@
 }
 
 .lab-shell__root-link {
-  font-weight: var(--orbit-font-weight-emphasis);
-  font-size: var(--orbit-font-size-subtitle);
+  font-weight: 800;
+  font-size: 1.15rem;
   text-decoration: none;
-  color: var(--orbit-text-secondary);
+  color: inherit;
 }
 
-.lab-shell__root-link:hover {
-  color: var(--orbit-text-primary);
+.lab-shell__root-link span {
+  color: var(--orbit-action-primary-bg);
 }
 
 .lab-shell__page-title {

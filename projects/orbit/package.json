@@ -1,7 +1,7 @@
 {
-  "name": "@galileo/orbit",
-  "version": "0.3.0",
-  "description": "Reusable UI foundations and design tokens for Galileo applications.",
+  "name": "@wyrmrest/orbit",
+  "version": "0.1.0",
+  "description": "Reusable UI foundations and design tokens for Wyrmrest applications.",
   "license": "UNLICENSED",
   "private": false,
   "sideEffects": [
@@ -14,6 +14,9 @@
     "./styles/tokens.css": "./styles/tokens.css",
     "./styles/theme.css": "./styles/theme.css"
   },
+  "dependencies": {
+    "@rhaegal222/orbit": "^0.1.1"
+  },
   "peerDependencies": {
     "@angular/core": "^22.0.0",
     "@angular/common": "^22.0.0",
@@ -22,12 +25,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.galileo.test/galileo/orbit.git"
+    "url": "git+https://git.wyrmrest.it/wyrmrest/wyrmrest-orbit.git"
   },
   "bugs": {
-    "url": "https://gitlab.galileo.test/galileo/orbit/-/issues"
+    "url": "https://git.wyrmrest.it/wyrmrest/wyrmrest-orbit/issues"
   },
-  "homepage": "https://gitlab.galileo.test/galileo/orbit#readme",
+  "homepage": "https://git.wyrmrest.it/wyrmrest/wyrmrest-orbit#readme",
   "publishConfig": {
     "access": "restricted"
   },

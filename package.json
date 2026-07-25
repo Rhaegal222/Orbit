@@ -4,18 +4,19 @@
   "description": "Reusable UI foundations and design tokens for Wyrmrest applications.",
   "license": "UNLICENSED",
   "private": false,
-  "sideEffects": [
-    "./src/styles/tokens.css"
-  ],
   "files": [
     "README.md",
-    "LICENSE",
-    "src/styles"
+    "LICENSE"
   ],
-  "exports": {
-    "./styles": "./src/styles/tokens.css"
-  },
   "scripts": {
+    "build:lib": "ng build orbit --configuration production",
+    "build:lab": "ng build orbit-lab --configuration production",
+    "build:studio": "ng build orbit-studio --configuration production",
+    "build:all": "npm run build:lib && npm run build:lab && npm run build:studio",
+    "test": "NG_CLI_ANALYTICS=false ng test --watch=false",
+    "test:watch": "ng test",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "check": "npm pack --dry-run",
     "release:check": "npm run check"
   },

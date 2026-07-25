@@ -7,12 +7,34 @@ import {
   numberAttribute,
   output,
   signal,
+  contentChild,
+  computed,
+  ElementRef,
+  Directive,
 } from '@angular/core';
 import { OrbitIconComponent } from '../../icons/icon.component';
 import type { OrbitIconName } from '../../icons/icon-registry';
 import { ORBIT_I18N } from '../../i18n/orbit-i18n';
 import { OrbitIconButtonComponent } from '../icon-button/icon-button.component';
 import { formatOrbitSidebarBadge } from './sidebar-navigation.util';
+
+@Directive({
+  selector: '[orbitSidebarBrand]',
+  standalone: true,
+})
+export class OrbitSidebarBrandDirective {}
+
+@Directive({
+  selector: '[orbitSidebarBrandLogo]',
+  standalone: true,
+})
+export class OrbitSidebarBrandLogoDirective {}
+
+@Directive({
+  selector: '[orbitSidebarBrandIcon]',
+  standalone: true,
+})
+export class OrbitSidebarBrandIconDirective {}
 
 export interface OrbitSidebarItem {
   id: string;
@@ -31,7 +53,10 @@ export interface OrbitSidebarSection {
 @Component({
   selector: 'orbit-sidebar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [OrbitIconComponent, OrbitIconButtonComponent],
+  imports: [
+    OrbitIconComponent,
+    OrbitIconButtonComponent,
+  ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
   host: {
@@ -62,6 +87,31 @@ export class OrbitSidebarComponent {
   collapsedChange = output<boolean>();
   /** Emitted by the header close action, shown only when `embedded` (e.g. a drawer opened via OrbitPanelService). */
   closed = output<void>();
+
+  customLogo = contentChild(OrbitSidebarBrandLogoDirective, { read: ElementRef });
+  customIcon = contentChild(OrbitSidebarBrandIconDirective, { read: ElementRef });
+  legacyBrand = contentChild(OrbitSidebarBrandDirective, { read: ElementRef });
+
+  hasCustomIcon = computed(() => !!this.customIcon());
+
+  logoInitial = computed(() => {
+    // Try to get text content from custom logo directive
+    const logoEl = this.customLogo()?.nativeElement;
+    if (logoEl && logoEl.textContent) {
+      const text = logoEl.textContent.trim();
+      if (text) return text.charAt(0).toUpperCase();
+    }
+    // Try legacy brand
+    const legacyEl = this.legacyBrand()?.nativeElement;
+    if (legacyEl && legacyEl.textContent) {
+      const text = legacyEl.textContent.trim();
+      if (text) return text.charAt(0).toUpperCase();
+    }
+    // Fallback to brand() input
+    const brandName = this.brand();
+    if (brandName) return brandName.charAt(0).toUpperCase();
+    return '';
+  });
 
   selectItem(item: OrbitSidebarItem): void {
     if (!item.disabled) this.itemSelected.emit(item);

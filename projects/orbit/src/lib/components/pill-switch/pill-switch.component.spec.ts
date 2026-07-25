@@ -70,10 +70,18 @@ describe('OrbitPillSwitchComponent', () => {
   });
 
   it('honours the public disabled input', () => {
-    fixture.componentInstance.disabled = true;
-    fixture.detectChanges();
+    const localFixture = TestBed.createComponent(OrbitPillSwitchComponent);
+    localFixture.componentRef.setInput('options', [
+      { label: 'Mensile', value: 'monthly' },
+      { label: 'Annuale', value: 'yearly' }
+    ]);
+    localFixture.componentRef.setInput('disabled', true);
+    localFixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('button').disabled).toBe(true);
+    const buttons = localFixture.nativeElement.querySelectorAll('button');
+    expect(buttons.length).toBe(2);
+    expect(buttons[0].disabled).toBe(true);
+    expect(buttons[1].disabled).toBe(true);
   });
 
   it('selects the next enabled option with ArrowRight', () => {

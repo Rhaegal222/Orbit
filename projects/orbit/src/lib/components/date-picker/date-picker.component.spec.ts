@@ -121,7 +121,7 @@ describe('OrbitDatePickerComponent', () => {
 
     expect(component.monthLabels[0]).toBe('Gen');
     expect(
-      fixture.nativeElement.querySelector('.orbit-dp__period-option')?.textContent.trim(),
+      overlayContainer.getContainerElement().querySelector('.orbit-dp__period-option')?.textContent.trim(),
     ).toBe('Gen');
   });
 

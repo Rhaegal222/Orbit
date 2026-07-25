@@ -9,3 +9,9 @@ coverage/
 .worktrees/
 deploy/site/lab/
 deploy/site/studio/
+deploy/lab/
+deploy/studio/
+deploy/main-*.js
+deploy/styles-*.css
+deploy/favicon.ico
+deploy/index.html

@@ -44,6 +44,12 @@
     },
     {
       "path": "./projects/orbit-studio/tsconfig.spec.json"
+    },
+    {
+      "path": "./service/tsconfig.app.json"
+    },
+    {
+      "path": "./service/tsconfig.spec.json"
     }
   ]
 }

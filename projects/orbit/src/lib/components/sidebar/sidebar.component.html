@@ -7,8 +7,20 @@
   @if (showHeader()) {
     <header class="orbit-sidebar__header">
       <div class="orbit-sidebar__header-brand">
-        <ng-content select="[orbitSidebarBrand]" />
-        @if (!customBrand()) {
+        @if (customBrand()) {
+          @if (!collapsed()) {
+            <ng-content select="[orbitSidebarBrandLogo]" />
+            <ng-content select="[orbitSidebarBrand]" />
+          } @else {
+            @if (hasCustomIcon()) {
+              <ng-content select="[orbitSidebarBrandIcon]" />
+            } @else {
+              <span class="orbit-sidebar__brand-mark" aria-hidden="true">
+                {{ logoInitial() }}
+              </span>
+            }
+          }
+        } @else {
           <span class="orbit-sidebar__brand-mark" aria-hidden="true">
             @if (brandIcon()) {
               <orbit-icon [name]="brandIcon()!" />

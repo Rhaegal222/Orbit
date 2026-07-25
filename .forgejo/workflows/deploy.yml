@@ -27,12 +27,14 @@ jobs:
         run: |
           npx ng build orbit-lab --configuration=production
           npx ng build orbit-studio --configuration=production
+          npx ng build service --configuration=production
 
-      - name: Copy build outputs to site/
+      - name: Copy build outputs to deploy/
         run: |
-          mkdir -p site/lab site/studio
-          cp -r dist/orbit-lab/browser/* site/lab/
-          cp -r dist/orbit-studio/browser/* site/studio/
+          mkdir -p deploy/lab deploy/studio
+          cp -r dist/service/browser/* deploy/
+          cp -r dist/orbit-lab/browser/* deploy/lab/
+          cp -r dist/orbit-studio/browser/* deploy/studio/
 
       - name: Select target
         run: |

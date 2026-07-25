@@ -1,0 +1,110 @@
+:host {
+  display: block;
+}
+.orbit-selectable-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-3);
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--orbit-space-3);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-tile);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+.orbit-selectable-tile:hover:not(:disabled) {
+  border-color: var(--orbit-border-strong);
+  background: var(--orbit-surface-subtle);
+}
+.orbit-selectable-tile--selected {
+  border-color: color-mix(in srgb, var(--orbit-action-primary-bg) 35%, var(--orbit-border-subtle));
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-default));
+}
+.orbit-selectable-tile--selected:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--orbit-action-primary-bg) 48%, var(--orbit-border-subtle));
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 16%, var(--orbit-surface-default));
+}
+.orbit-selectable-tile__icon {
+  display: var(--orbit-optional-icon-display);
+  place-items: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 auto;
+  color: var(--orbit-text-secondary);
+}
+.orbit-selectable-tile__icon:empty {
+  display: none;
+}
+.orbit-selectable-tile__icon ::ng-deep svg {
+  width: 100%;
+  height: 100%;
+}
+.orbit-selectable-tile--selected .orbit-selectable-tile__icon {
+  color: var(--orbit-action-primary-bg);
+}
+.orbit-selectable-tile:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+  box-shadow: var(--orbit-focus-ring);
+}
+.orbit-selectable-tile:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.orbit-selectable-tile__indicator {
+  display: grid;
+  place-items: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  border: 1px solid var(--orbit-border-strong);
+  border-radius: var(--orbit-radius-full);
+  color: var(--orbit-text-inverse);
+  font-size: var(--orbit-font-size-xs);
+}
+.orbit-selectable-tile--selected .orbit-selectable-tile__indicator {
+  border-color: var(--orbit-action-primary-bg);
+  background: var(--orbit-action-primary-bg);
+}
+.orbit-selectable-tile__label,
+.orbit-selectable-tile__description {
+  display: block;
+}
+.orbit-selectable-tile__content {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.orbit-selectable-tile__label {
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+.orbit-selectable-tile__description {
+  margin-top: var(--orbit-space-2xs);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-sm);
+}
+
+@keyframes orbit-pop {
+  0% {
+    transform: scale(0.8);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.orbit-selectable-tile--selected .orbit-selectable-tile__indicator {
+  animation: orbit-pop var(--orbit-motion-fast) var(--orbit-easing-standard);
+}

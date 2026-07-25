@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  border-top: 1px solid var(--orbit-border-subtle);
+}
+:host(.orbit-divider--dashed) {
+  border-top-style: dashed;
+  border-top-color: var(--orbit-border-strong);
+}

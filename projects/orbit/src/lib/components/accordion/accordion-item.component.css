@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+
+:host:last-child {
+  border-bottom: 0;
+}
+
+.orbit-accordion-item__heading {
+  margin: 0;
+}
+
+.orbit-accordion-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--orbit-space-3) var(--orbit-space-2);
+  border: 0;
+  background: transparent;
+  color: var(--orbit-text-primary);
+  font: inherit;
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-align: left;
+  cursor: pointer;
+}
+
+.orbit-accordion-item--disabled .orbit-accordion-item__header {
+  color: var(--orbit-text-secondary);
+  cursor: not-allowed;
+}
+
+.orbit-accordion-item__header:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.orbit-accordion-item__indicator {
+  flex: 0 0 auto;
+  transition: transform var(--orbit-motion-fast) var(--orbit-easing-shared);
+}
+
+/* Same rotation technique as the sidebar collapse toggle (sidebar.component.css). */
+.orbit-accordion-item__indicator--collapsed {
+  transform: rotate(-90deg);
+}
+
+.orbit-accordion-item__indicator--expanded {
+  transform: rotate(0deg);
+}
+
+.orbit-accordion-item__panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--orbit-motion-base) var(--orbit-easing-shared);
+}
+
+.orbit-accordion-item__panel--expanded {
+  max-height: 640px;
+}
+
+.orbit-accordion-item__panel-content {
+  padding: 0 var(--orbit-space-2) var(--orbit-space-3);
+  color: var(--orbit-text-primary);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-body);
+}

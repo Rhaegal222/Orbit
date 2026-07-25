@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "useDefineForClassFields": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@rhaegal222/orbit": ["./projects/orbit/src/public-api.ts"],
+      "@rhaegal222/orbit/styles": ["./projects/orbit/src/styles/tokens.css"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/orbit/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/orbit/tsconfig.spec.json"
+    }
+  ]
+}

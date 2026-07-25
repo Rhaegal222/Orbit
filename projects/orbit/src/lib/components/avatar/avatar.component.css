@@ -1,0 +1,59 @@
+:host {
+  display: inline-flex;
+}
+
+.orbit-avatar {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--orbit-radius-full);
+  background: var(--orbit-avatar-bg);
+  border: 1px solid var(--orbit-avatar-border);
+  color: var(--orbit-avatar-fg);
+  font-family: var(--orbit-font-sans);
+  font-weight: var(--orbit-font-weight-emphasis);
+  line-height: 1;
+  user-select: none;
+}
+
+.orbit-avatar--sm {
+  width: var(--orbit-avatar-size-sm);
+  height: var(--orbit-avatar-size-sm);
+  font-size: calc(var(--orbit-font-size-caption) * var(--orbit-text-scale));
+}
+
+.orbit-avatar--md {
+  width: var(--orbit-avatar-size-md);
+  height: var(--orbit-avatar-size-md);
+  font-size: calc(var(--orbit-font-size-label) * var(--orbit-text-scale));
+}
+
+.orbit-avatar--lg {
+  width: var(--orbit-avatar-size-lg);
+  height: var(--orbit-avatar-size-lg);
+  font-size: calc(var(--orbit-font-size-subtitle) * var(--orbit-text-scale));
+}
+
+.orbit-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orbit-avatar__image--hidden {
+  opacity: 0;
+  position: absolute;
+}
+
+.orbit-avatar__initials {
+  display: block;
+}
+
+.orbit-avatar__spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}

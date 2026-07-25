@@ -1,0 +1,6 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--orbit-layout-stack-gap);
+  min-width: 0;
+}

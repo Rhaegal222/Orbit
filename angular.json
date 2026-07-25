@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "analytics": false
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "orbit": {
+      "projectType": "library",
+      "root": "projects/orbit",
+      "sourceRoot": "projects/orbit/src",
+      "prefix": "orbit",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/orbit/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/orbit/tsconfig.lib.json"
+            },
+            "development": {
+              "tsConfig": "projects/orbit/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/orbit/tsconfig.spec.json",
+            "setupFiles": ["projects/orbit/vitest-setup.ts"]
+          }
+        }
+      }
+    }
+  }
+}

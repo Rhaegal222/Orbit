@@ -1,0 +1,54 @@
+{
+  "name": "orbit-workspace",
+  "version": "0.1.0",
+  "description": "Theme-neutral UI foundations and design tokens for Angular applications.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build:lib": "ng build orbit --configuration production",
+    "test": "NG_CLI_ANALYTICS=false ng test --watch=false",
+    "test:watch": "ng test",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "check": "npm run build:lib && npm run test",
+    "release:check": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rhaegal222/Orbit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rhaegal222/Orbit/issues"
+  },
+  "homepage": "https://github.com/Rhaegal222/Orbit#readme",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "prismjs": "^1.30.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.0.7",
+    "@angular/cdk": "^22.0.0",
+    "@angular/cli": "^22.0.7",
+    "@angular/compiler-cli": "^22.0.0",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/prismjs": "^1.26.6",
+    "jsdom": "^28.0.0",
+    "ng-packagr": "^22.0.0",
+    "postcss": "^8.5.0",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.1.0",
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
+  }
+}

@@ -1,0 +1,36 @@
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, var(--orbit-workspace-sidebar-width)) minmax(0, 1fr);
+  min-height: 0;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  overflow: hidden;
+}
+:host ::ng-deep .orbit-workspace__sidebar {
+  min-width: 0;
+  padding: var(--orbit-space-md);
+  border-inline-end: 1px solid var(--orbit-border-subtle);
+  background: var(--orbit-surface-subtle);
+}
+:host ::ng-deep .orbit-workspace__main {
+  min-width: 0;
+  padding: var(--orbit-space-lg);
+  background: var(--orbit-surface-default);
+}
+@media (max-width: 48rem) /* --orbit-breakpoint-md */ {
+  :host {
+    grid-template-columns: 1fr;
+    border: 0;
+    border-radius: 0;
+  }
+  :host ::ng-deep .orbit-workspace__sidebar {
+    border-inline-end: 0;
+    border-bottom: 1px solid var(--orbit-border-subtle);
+  }
+}
+
+@media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
+  :host ::ng-deep .orbit-workspace__main {
+    padding: var(--orbit-space-md);
+  }
+}

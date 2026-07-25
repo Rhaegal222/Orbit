@@ -1,0 +1,10 @@
+<div class="orbit-modal-body__scroll">
+  <ng-content></ng-content>
+
+  @if (loading()) {
+    <div class="orbit-modal-body__loader" [class.orbit-modal-body__loader--small]="loaderSmall()">
+      <span class="orbit-modal-body__spinner"></span>
+      <span class="orbit-modal-body__loader-text">{{ loadingLabel() || i18n.labels.loading }}</span>
+    </div>
+  }
+</div>

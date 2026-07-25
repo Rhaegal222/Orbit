@@ -10,9 +10,25 @@ This is the public base library. Organization-specific forks build on top of
 it via their own theme layer and stay in sync with this repository through
 the standard git upstream-remote workflow.
 
+## Install
+
+```bash
+npm install @rhaegal222/orbit
+```
+
+## Development
+
+```bash
+npm install
+npm run build:lib   # build the library
+npm test            # run unit tests
+```
+
 ## Status
 
-Scaffold — implementation in progress.
+51 UI primitives (buttons, form controls, overlays, data display, navigation)
+plus a three-tier design token system. Extracted from a private fork audit —
+verified free of organization-specific branding or business logic.
 
 ## License
 

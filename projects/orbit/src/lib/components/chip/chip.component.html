@@ -1,0 +1,26 @@
+<span
+  class="orbit-chip"
+  [class.orbit-chip--selected]="selected()"
+  [class.orbit-chip--disabled]="disabled()"
+>
+  <button
+    type="button"
+    class="orbit-chip__body"
+    [disabled]="disabled()"
+    [attr.aria-pressed]="selected()"
+    (click)="toggle()"
+  >
+    <ng-content />
+  </button>
+  @if (removable()) {
+    <button
+      type="button"
+      class="orbit-chip__remove"
+      [disabled]="disabled()"
+      [attr.aria-label]="i18n.labels.removeChip"
+      (click)="remove($event)"
+    >
+      <orbit-icon name="close" [size]="16" />
+    </button>
+  }
+</span>

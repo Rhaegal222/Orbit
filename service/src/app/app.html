@@ -1,216 +1,244 @@
-<div class="app-layout">
-  <!-- Orbit Sidebar (Left Side) -->
-  <orbit-sidebar
-    brand="Wyrmrest Orbit"
-    ariaLabel="Navigazione applicazione"
-    [sections]="sidebarSections()"
-    [activeId]="activeSection()"
-    [collapsed]="sidebarCollapsed()"
-    [showHeader]="true"
-    [showFooter]="true"
-    [customBrand]="true"
-    (itemSelected)="onSidebarItemSelected($event)"
-    (collapsedChange)="onSidebarCollapsedChange($event)"
+<!-- Navbar -->
+<orbit-navbar
+  brand="Wyrmrest Orbit"
+  [items]="navItems"
+  tone="dark"
+  ariaLabel="Main navigation"
+/>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero__content">
+    <div class="hero__badges">
+      <orbit-badge label="Angular 18+" tone="primary" />
+      <orbit-badge label="Zoneless Signals" tone="info" />
+      <orbit-badge label="Design Tokens" tone="success" />
+    </div>
+    <h1 class="hero__title">Build with <span class="hero__accent">Orbit</span></h1>
+    <p class="hero__subtitle">
+      A design-token-driven Angular component library built for enterprise applications.
+      Themeable, accessible, and composable.
+    </p>
+    <div class="hero__actions">
+      <orbit-button label="Get Started" variant="solid" tone="primary" />
+      <orbit-button label="View on Forgejo" variant="outline" tone="neutral" />
+    </div>
+  </div>
+</section>
+
+<orbit-divider />
+
+<!-- Features Section -->
+<section id="features" class="section">
+  <h2 class="section__title">Why Orbit?</h2>
+  <p class="section__subtitle">
+    Orbit gives your team a consistent, token-driven design system with first-class Angular support.
+  </p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <orbit-icon-button icon="settings" ariaLabel="Design tokens" tone="primary" />
+      <h3 class="feature-card__title">Design Tokens</h3>
+      <p class="feature-card__text">
+        Reference, semantic, and component token layers. Customize once, apply everywhere.
+      </p>
+    </div>
+    <div class="feature-card">
+      <orbit-icon-button icon="home" ariaLabel="Theme engine" tone="primary" />
+      <h3 class="feature-card__title">Theme Engine</h3>
+      <p class="feature-card__text">
+        Dark, light, accent swatches, density presets. Switch via data attributes, zero JS required.
+      </p>
+    </div>
+    <div class="feature-card">
+      <orbit-icon-button icon="user" ariaLabel="Accessible" tone="primary" />
+      <h3 class="feature-card__title">Accessible</h3>
+      <p class="feature-card__text">
+        ARIA semantics, keyboard navigation, focus management, and screen-reader support built in.
+      </p>
+    </div>
+    <div class="feature-card">
+      <orbit-icon-button icon="search" ariaLabel="Composable" tone="primary" />
+      <h3 class="feature-card__title">Composable</h3>
+      <p class="feature-card__text">
+        Standalone components with OnPush change detection. Import only what you need.
+      </p>
+    </div>
+  </div>
+</section>
+
+<orbit-divider />
+
+<!-- Component Showcase Section -->
+<section id="showcase" class="section">
+  <h2 class="section__title">Component Showcase</h2>
+  <p class="section__subtitle">
+    Explore the library's core components in action.
+  </p>
+
+  <orbit-tablist
+    ariaLabel="Component categories"
+    (selectedChange)="onShowcaseTabChange($event)"
   >
-    <!-- Custom Brand Slots (Optimized for collapsed state) -->
-    <a class="app-sidebar-logo" orbitSidebarBrandLogo href="/" aria-label="Wyrmrest Orbit, home">
-      WYRMREST<span>·</span>Orbit
-    </a>
-    <span class="app-sidebar-icon" orbitSidebarBrandIcon>W</span>
+    <orbit-tab value="buttons" label="Buttons" [selected]="activeShowcaseTab() === 'buttons'" />
+    <orbit-tab value="forms" label="Forms" [selected]="activeShowcaseTab() === 'forms'" />
+    <orbit-tab value="feedback" label="Feedback" [selected]="activeShowcaseTab() === 'feedback'" />
+  </orbit-tablist>
 
-    <!-- Search in Sidebar -->
-    <orbit-text-input
-      orbitSidebarSearch
-      type="search"
-      inputId="sidebar-search"
-      placeholder="Cerca..."
-      showLeadingIcon
-      leadingIconName="search"
-      [formControl]="searchControl"
-    />
+  <div class="showcase-panel">
+    @if (activeShowcaseTab() === 'buttons') {
+      <orbit-tab-panel value="buttons">
+        <div class="showcase-grid">
+          <div class="showcase-item">
+            <span class="showcase-label">Solid Primary</span>
+            <orbit-button label="Save Changes" variant="solid" tone="primary" />
+          </div>
+          <div class="showcase-item">
+            <span class="showcase-label">Outline Neutral</span>
+            <orbit-button label="Cancel" variant="outline" tone="neutral" />
+          </div>
+          <div class="showcase-item">
+            <span class="showcase-label">Solid Danger</span>
+            <orbit-button label="Delete" variant="solid" tone="danger" />
+          </div>
+          <div class="showcase-item">
+            <span class="showcase-label">Icon Buttons</span>
+            <div class="showcase-row">
+              <orbit-icon-button icon="home" ariaLabel="Home" tone="primary" />
+              <orbit-icon-button icon="settings" ariaLabel="Settings" tone="neutral" />
+              <orbit-icon-button icon="close" ariaLabel="Close" tone="danger" />
+            </div>
+          </div>
+          <div class="showcase-item">
+            <span class="showcase-label">Disabled</span>
+            <orbit-button label="Unavailable" variant="solid" tone="primary" [disabled]="true" />
+          </div>
+        </div>
+      </orbit-tab-panel>
+    }
 
-    <!-- Footer in Sidebar -->
-    <div orbitSidebarFooter class="app-sidebar-footer">
-      @if (!sidebarCollapsed()) {
-        <span class="version-text">Orbit v0.1.0</span>
-      } @else {
-        <span class="version-text">v0.1</span>
-      }
+    @if (activeShowcaseTab() === 'forms') {
+      <orbit-tab-panel value="forms">
+        <div class="showcase-grid showcase-grid--forms">
+          <div class="showcase-item">
+            <label class="showcase-label" for="showcase-name">Text Input</label>
+            <orbit-text-input
+              inputId="showcase-name"
+              placeholder="Enter your name"
+              [formControl]="nameControl"
+            />
+          </div>
+          <div class="showcase-item">
+            <label class="showcase-label" for="showcase-role">Select</label>
+            <orbit-select
+              inputId="showcase-role"
+              ariaLabel="Role"
+              [options]="roleOptions"
+              [formControl]="roleControl"
+            />
+          </div>
+          <div class="showcase-item showcase-item--full">
+            <span class="showcase-label">Synced Values</span>
+            <div class="showcase-inspector">
+              <span>Name: <code>{{ nameControl.value || '(empty)' }}</code></span>
+              <span>Role: <code>{{ roleControl.value }}</code></span>
+            </div>
+          </div>
+        </div>
+      </orbit-tab-panel>
+    }
+
+    @if (activeShowcaseTab() === 'feedback') {
+      <orbit-tab-panel value="feedback">
+        <div class="showcase-grid">
+          <div class="showcase-item">
+            <span class="showcase-label">Badge Tones</span>
+            <div class="showcase-row">
+              <orbit-badge label="Primary" tone="primary" />
+              <orbit-badge label="Success" tone="success" />
+              <orbit-badge label="Danger" tone="danger" />
+              <orbit-badge label="Warning" tone="warning" />
+              <orbit-badge label="Info" tone="info" />
+            </div>
+          </div>
+          <div class="showcase-item">
+            <span class="showcase-label">Spinner</span>
+            <div class="showcase-row">
+              <orbit-spinner />
+              <orbit-spinner size="lg" />
+              <orbit-spinner size="xl" />
+            </div>
+          </div>
+        </div>
+      </orbit-tab-panel>
+    }
+  </div>
+</section>
+
+<orbit-divider />
+
+<!-- Theming Section -->
+<section id="theming" class="section">
+  <h2 class="section__title">Theming</h2>
+  <p class="section__subtitle">
+    Switch themes and density presets in real time. All powered by CSS custom properties.
+  </p>
+
+  <div class="theming-controls">
+    <div class="theming-control">
+      <span class="theming-label">Theme</span>
+      <orbit-switch
+        inputId="theme-toggle"
+        ariaLabel="Toggle theme"
+        [ngModel]="theme() === 'dark'"
+        (ngModelChange)="toggleTheme()"
+      />
+      <span class="theming-value">{{ theme() === 'dark' ? 'Dark' : 'Light' }}</span>
     </div>
-  </orbit-sidebar>
-
-  <!-- Main Content Stage (Right Side) -->
-  <main class="app-main-content">
-    <!-- Navbar Header -->
-    <header class="app-navbar">
-      <div class="navbar-start">
-        <span class="breadcrumb-item">Workspace</span>
-        <span class="breadcrumb-separator">/</span>
-        <span class="breadcrumb-item active">{{ activeSection() | titlecase }}</span>
-      </div>
-      <div class="navbar-end">
-        <!-- Theme Toggle -->
-        <div class="theme-toggle-container">
-          <span class="toggle-label">Tema {{ theme() === 'dark' ? 'Scuro' : 'Chiaro' }}</span>
-          <orbit-switch
-            inputId="theme-switch"
-            ariaLabel="Cambia tema"
-            [ngModel]="theme() === 'dark'"
-            (ngModelChange)="toggleTheme()"
-          />
-        </div>
-
-        <!-- Density Switchers -->
-        <div class="density-buttons">
-          <button type="button" class="density-btn" [class.active]="density() === 'spacious'" (click)="setDensity('spacious')">Spacious</button>
-          <button type="button" class="density-btn" [class.active]="density() === 'comfortable'" (click)="setDensity('comfortable')">Comfortable</button>
-          <button type="button" class="density-btn" [class.active]="density() === 'compact'" (click)="setDensity('compact')">Compact</button>
-          <button type="button" class="density-btn" [class.active]="density() === 'dense'" (click)="setDensity('dense')">Dense</button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Dynamic Section View -->
-    <div class="app-viewport">
-      <!-- Section 1: Dashboard -->
-      @if (activeSection() === 'dashboard') {
-        <div class="viewport-section fade-in">
-          <div class="hero-card">
-            <h1>Benvenuto in <span class="gradient-title">Wyrmrest Orbit</span></h1>
-            <p>
-              Questa è la landing page ufficiale dell'applicazione built con la libreria di componenti **Orbit**.
-              Tutti gli elementi visualizzati in questa pagina utilizzano i reali componenti Angular compilati dalla libreria locale.
-            </p>
-            <div class="badge-row">
-              <span class="orbit-badge">Angular 18+</span>
-              <span class="orbit-badge">Ivy Engine</span>
-              <span class="orbit-badge">Zoneless Reativity</span>
-              <span class="orbit-badge">Vitest Verified</span>
-            </div>
-          </div>
-
-          <div class="dashboard-grid">
-            <!-- Sandbox / Form Component Card -->
-            <div class="dashboard-card">
-              <h2>Sandbox Componenti</h2>
-              <p class="card-desc">Modifica i campi per testare la reattività e lo stile dei controlli Orbit.</p>
-
-              <div class="form-container">
-                <!-- Text Input -->
-                <div class="field-group">
-                  <label for="user-name">Nome Utente</label>
-                  <orbit-text-input
-                    inputId="user-name"
-                    placeholder="Es. Mario Rossi"
-                    [formControl]="nameControl"
-                  />
-                </div>
-
-                <!-- Select Role -->
-                <div class="field-group">
-                  <label for="user-role">Ruolo Lavorativo</label>
-                  <orbit-select
-                    inputId="user-role"
-                    ariaLabel="Ruolo"
-                    [options]="roleOptions"
-                    [formControl]="roleControl"
-                  />
-                </div>
-
-                <!-- Pill Switch Billing -->
-                <div class="field-group">
-                  <label>Frequenza di Fatturazione</label>
-                  <orbit-pill-switch
-                    ariaLabel="Billing Frequency"
-                    [options]="billingOptions"
-                    [formControl]="billingPeriod"
-                  />
-                </div>
-
-                <!-- Value Inspector -->
-                <div class="inspector-box">
-                  <h3>Valori Sincronizzati:</h3>
-                  <ul>
-                    <li>Nome: <code>{{ nameControl.value || '(vuoto)' }}</code></li>
-                    <li>Ruolo: <code>{{ roleControl.value }}</code></li>
-                    <li>Billing: <code>{{ billingPeriod.value }}</code></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Action Buttons & Tones Card -->
-            <div class="dashboard-card">
-              <h2>Azioni & Toni Visivi</h2>
-              <p class="card-desc">Bottoni di azione configurati con vari stili visivi nativi di Orbit.</p>
-
-              <div class="actions-container">
-                <div class="button-section">
-                  <h3>Bottoni Principali</h3>
-                  <div class="button-row">
-                    <orbit-button label="Salva Modifiche" variant="solid" tone="primary" />
-                    <orbit-button label="Annulla" variant="outline" tone="neutral" />
-                    <orbit-button label="Elimina Account" variant="solid" tone="danger" />
-                  </div>
-                </div>
-
-                <div class="button-section">
-                  <h3>Bottoni Icona (IconButton)</h3>
-                  <div class="button-row">
-                    <orbit-icon-button icon="home" ariaLabel="Home" tone="primary" />
-                    <orbit-icon-button icon="settings" ariaLabel="Impostazioni" tone="neutral" />
-                    <orbit-icon-button icon="close" ariaLabel="Chiudi" tone="danger" />
-                  </div>
-                </div>
-
-                <div class="button-section">
-                  <h3>Stato Disabilitato</h3>
-                  <div class="button-row">
-                    <orbit-button label="Non cliccabile" variant="solid" tone="primary" [disabled]="true" />
-                    <orbit-icon-button icon="home" ariaLabel="Disabilitato" tone="neutral" [disabled]="true" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      }
-
-      <!-- Section 2: Components -->
-      @if (activeSection() === 'components') {
-        <div class="viewport-section fade-in">
-          <div class="info-hero">
-            <h2>Libreria Componenti Orbit</h2>
-            <p>Esplora l'intera collezione di componenti UI pronti per l'integrazione.</p>
-          </div>
-          
-          <div class="components-showcase-grid">
-            <div class="component-spec-card">
-              <h3>Sidebar Navigation</h3>
-              <p>La barra di navigazione sinistra in uso in questa applicazione supporta lo stato collassato con calcolo automatico dell'iniziale in mancanza di un'icona personalizzata.</p>
-            </div>
-            <div class="component-spec-card">
-              <h3>Pill Switch</h3>
-              <p>Interruttore a pillola con supporto per selezione singola esclusiva, animazione fluida di transizione della selezione e disabilitazione degli elementi.</p>
-            </div>
-            <div class="component-spec-card">
-              <h3>Select & Inputs</h3>
-              <p>Campi di testo e dropdown accessibili, che supportano la validazione nativa Angular e il binding bidirezionale tramite Reactive Forms.</p>
-            </div>
-          </div>
-        </div>
-      }
-
-      <!-- Other sections placeholders -->
-      @if (activeSection() !== 'dashboard' && activeSection() !== 'components') {
-        <div class="viewport-section fade-in empty-section">
-          <div class="empty-state">
-            <h2>Sezione {{ activeSection() | titlecase }}</h2>
-            <p>Questa sezione è un segnaposto per mostrare la navigazione della Sidebar.</p>
-            <orbit-button label="Torna alla Dashboard" variant="solid" tone="primary" (clicked)="onSidebarItemSelected({id: 'dashboard'})" />
-          </div>
-        </div>
-      }
+    <div class="theming-control">
+      <span class="theming-label">Density</span>
+      <orbit-pill-switch
+        ariaLabel="Density preset"
+        [options]="densityOptions"
+        [ngModel]="density()"
+        (ngModelChange)="onDensityChange($event)"
+      />
     </div>
-  </main>
-</div>
+  </div>
+</section>
+
+<orbit-divider />
+
+<!-- Installation Section -->
+<section id="install" class="section">
+  <h2 class="section__title">Installation</h2>
+  <p class="section__subtitle">
+    Get started in seconds. Install the package and import the components you need.
+  </p>
+
+  <div class="install-grid">
+    <div class="install-step">
+      <h3 class="install-step__title">1. Install</h3>
+      <orbit-code-block [code]="installCode" language="bash" [showActions]="true" />
+    </div>
+    <div class="install-step">
+      <h3 class="install-step__title">2. Import</h3>
+      <orbit-code-block [code]="importCode" language="typescript" [showActions]="true" />
+    </div>
+    <div class="install-step">
+      <h3 class="install-step__title">3. Theme</h3>
+      <orbit-code-block [code]="themeCode" language="html" [showActions]="true" />
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <orbit-divider />
+  <div class="footer__content">
+    <span class="footer__brand">Wyrmrest Orbit</span>
+    <span class="footer__version">v0.1.0</span>
+    <div class="footer__links">
+      <orbit-icon-button icon="home" ariaLabel="Home" tone="neutral" />
+    </div>
+  </div>
+</footer>

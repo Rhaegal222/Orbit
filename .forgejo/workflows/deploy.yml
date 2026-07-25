@@ -15,6 +15,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular apps
+        run: |
+          npx ng build orbit-lab --configuration=production
+          npx ng build orbit-studio --configuration=production
+          npx ng build service --configuration=production
+
+      - name: Copy build outputs to deploy/
+        run: |
+          mkdir -p deploy/lab deploy/studio
+          cp -r dist/service/browser/* deploy/
+          cp -r dist/orbit-lab/browser/* deploy/lab/
+          cp -r dist/orbit-studio/browser/* deploy/studio/
+
       - name: Select target
         run: |
           set -euo pipefail
@@ -40,7 +61,7 @@ jobs:
       - name: Build and start service
         run: |
           set -euo pipefail
-          TRAEFIK_ENABLE="$TRAEFIK_ENABLE" docker compose -p "$PROJECT_NAME" -f "$DEPLOY_DIR/docker-compose.yml" up -d --build --force-recreate
+          TRAEFIK_ENABLE="$TRAEFIK_ENABLE" docker compose -p "$PROJECT_NAME" -f "$DEPLOY_DIR/deploy/docker-compose.yml" up -d --build --force-recreate
 
       - name: Verify container health
         run: |

@@ -1,0 +1,86 @@
+<div class="orbit-select__wrapper">
+  @if (searchable()) {
+    <input
+      type="text"
+      class="orbit-select__input orbit-select__input--searchable"
+      [id]="inputId() || null"
+      [placeholder]="placeholder() || i18n.labels.select"
+      [value]="inputText()"
+      [disabled]="isDisabled()"
+      [required]="required()"
+      (input)="onInputChange($any($event.target).value)"
+      (focus)="onFocus()"
+      (click)="onInputClick()"
+      (blur)="onBlur()"
+      (keydown)="onKeydown($event)"
+    />
+  } @else {
+    <button
+      type="button"
+      class="orbit-select__input orbit-select__trigger"
+      [class.orbit-select__trigger--placeholder]="!inputText()"
+      [id]="inputId() || null"
+      [disabled]="isDisabled()"
+      [attr.aria-label]="inputText() || placeholder() || i18n.labels.select"
+      [attr.aria-expanded]="isOpen()"
+      aria-haspopup="listbox"
+      (focus)="onFocus()"
+      (click)="onInputClick()"
+      (blur)="onBlur()"
+      (keydown)="onKeydown($event)"
+    >
+      {{ inputText() || placeholder() || i18n.labels.select }}
+    </button>
+  }
+  <button
+    type="button"
+    class="orbit-select__toggle"
+    [disabled]="isDisabled()"
+    [attr.aria-label]="i18n.labels.openList"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="listbox"
+    (mousedown)="$event.preventDefault()"
+    (click)="onToggleClick()"
+  >
+    <svg
+      class="orbit-select__chevron"
+      [class.orbit-select__chevron--open]="isOpen()"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 6L8 10L12 6"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>
+
+<ng-template #menuTemplate>
+  <div class="orbit-select__menu" role="listbox" [attr.aria-labelledby]="inputId() || null">
+    @for (option of filteredOptions; track option.value; let i = $index) {
+      <button
+        type="button"
+        class="orbit-select__option"
+        [class.orbit-select__option--selected]="option.value === selectedValue()"
+        [class.orbit-select__option--active]="i === activeIndex()"
+        [disabled]="option.disabled"
+        [attr.aria-selected]="option.value === selectedValue()"
+        (mousedown)="$event.preventDefault()"
+        (click)="onOptionSelect(option)"
+      >
+        <span class="orbit-select__option-label">{{ option.label }}</span>
+        @if (option.value === selectedValue()) {
+          <span class="orbit-select__option-check" aria-hidden="true">✓</span>
+        }
+      </button>
+    }
+    @if (filteredOptions.length === 0) {
+      <p class="orbit-select__empty">{{ i18n.labels.noResults }}</p>
+    }
+  </div>
+</ng-template>

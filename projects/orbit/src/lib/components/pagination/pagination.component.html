@@ -1,0 +1,47 @@
+<nav class="orbit-pagination" aria-label="pagination">
+  <button
+    type="button"
+    class="orbit-pagination__prev"
+    [disabled]="isFirstPage()"
+    [attr.aria-label]="i18n.labels.previousPage"
+    (click)="goToPrevious()"
+  >
+    <orbit-icon
+      name="chevron-down"
+      class="orbit-pagination__nav-icon orbit-pagination__nav-icon--prev"
+    />
+  </button>
+
+  <ul class="orbit-pagination__list">
+    @for (entry of visiblePages(); track rangeTrackId(entry)) {
+      <li>
+        @if (entry.type === 'page') {
+          <button
+            type="button"
+            class="orbit-pagination__page"
+            [class.orbit-pagination__page--current]="entry.page === currentPage()"
+            [attr.aria-current]="entry.page === currentPage() ? 'page' : null"
+            (click)="goToPage(entry.page)"
+          >
+            {{ entry.page }}
+          </button>
+        } @else {
+          <span class="orbit-pagination__ellipsis" aria-hidden="true">…</span>
+        }
+      </li>
+    }
+  </ul>
+
+  <button
+    type="button"
+    class="orbit-pagination__next"
+    [disabled]="isLastPage()"
+    [attr.aria-label]="i18n.labels.nextPage"
+    (click)="goToNext()"
+  >
+    <orbit-icon
+      name="chevron-down"
+      class="orbit-pagination__nav-icon orbit-pagination__nav-icon--next"
+    />
+  </button>
+</nav>

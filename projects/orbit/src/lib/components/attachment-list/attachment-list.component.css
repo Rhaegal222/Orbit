@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  font-family: var(--orbit-font-sans);
+}
+
+.orbit-attachment-list {
+  display: grid;
+  gap: var(--orbit-field-stack-gap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.orbit-attachment-list__empty {
+  margin: 0;
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-sm);
+}

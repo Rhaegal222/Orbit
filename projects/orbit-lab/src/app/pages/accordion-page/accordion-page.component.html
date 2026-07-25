@@ -1,0 +1,71 @@
+<article>
+  <h1>Accordion</h1>
+  <p>
+    Pannelli espandibili impilati; per default solo uno aperto alla volta, con
+    <code>multi</code> tutti indipendenti.
+  </p>
+
+  <section>
+    <h2>Esempio (un solo pannello aperto)</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="single">
+        <orbit-accordion>
+          <orbit-accordion-item
+            header="Sezione 1"
+            [expanded]="singleExpandedFirst"
+            (expandedChange)="singleExpandedFirst = $event"
+          >
+            Contenuto della sezione 1.
+          </orbit-accordion-item>
+          <orbit-accordion-item
+            header="Sezione 2"
+            [expanded]="singleExpandedSecond"
+            (expandedChange)="singleExpandedSecond = $event"
+          >
+            Contenuto della sezione 2.
+          </orbit-accordion-item>
+          <orbit-accordion-item header="Sezione non disponibile" disabled>
+            Contenuto non raggiungibile.
+          </orbit-accordion-item>
+        </orbit-accordion>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Pannelli multipli aperti</h2>
+    <lab-example [code]="multiSnippet">
+      <div data-example="multi">
+        <orbit-accordion multi>
+          <orbit-accordion-item
+            header="Sezione 1"
+            [expanded]="multiExpandedFirst"
+            (expandedChange)="multiExpandedFirst = $event"
+          >
+            Contenuto della sezione 1.
+          </orbit-accordion-item>
+          <orbit-accordion-item
+            header="Sezione 2"
+            [expanded]="multiExpandedSecond"
+            (expandedChange)="multiExpandedSecond = $event"
+          >
+            Contenuto della sezione 2.
+          </orbit-accordion-item>
+        </orbit-accordion>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="disabledSnippet">
+      <div data-example="disabled">
+        <orbit-accordion>
+          <orbit-accordion-item header="Sezione non disponibile" disabled>
+            Contenuto non raggiungibile.
+          </orbit-accordion-item>
+        </orbit-accordion>
+      </div>
+    </lab-example>
+  </section>
+</article>

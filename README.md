@@ -36,6 +36,32 @@ The first release currently exposes the token stylesheet:
 
 Angular component entry points will be added as the existing UI Kit is extracted and validated.
 
+## Theming
+
+Orbit is intentionally separated from its visual identity. Components use semantic CSS custom properties, so the same component library can look native in different platforms without forks or Tailwind configuration.
+
+Override a theme at application level:
+
+```css
+:root {
+  --orbit-font-sans: 'Inter', sans-serif;
+  --orbit-action-primary-bg: #6d28d9;
+  --orbit-action-primary-fg: #ffffff;
+  --orbit-radius-control: 0.5rem;
+  --orbit-surface-canvas: #fbfaf8;
+}
+```
+
+Choose a density for the operating context: `spacious` (48px), `comfortable`
+(42px, default), `compact` (38px) or `dense` (34px, desktop expert flows).
+For example, set compact density where an operator-facing application needs more information on screen:
+
+```html
+<body data-orbit-density="compact"></body>
+```
+
+Use semantic tokens for themes rather than component-specific values whenever possible. See [the theming guide](docs/THEMING.md) for the token layers, scoping and supported customization points.
+
 ## Development
 
 ```bash

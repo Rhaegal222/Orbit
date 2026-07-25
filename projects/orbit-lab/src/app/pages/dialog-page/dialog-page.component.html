@@ -1,0 +1,50 @@
+<article>
+  <h1>Modal & Dialog</h1>
+  <p>
+    <code>OrbitDialogService</code> apre qualsiasi componente su un overlay CDK centrato, con
+    backdrop e chiusura su Escape. Supporta diverse configurazioni e dimensioni (<code>sm</code>,
+    <code>md</code>, <code>lg</code>, <code>xl</code>, <code>wide</code>).
+  </p>
+
+  <section>
+    <h2>Conferma (OrbitConfirmDialogComponent)</h2>
+    <p>Componente di conferma generico pronto all'uso (taglia <code>sm</code>).</p>
+    <lab-example [code]="confirmSnippet">
+      <orbit-button
+        variant="solid"
+        tone="danger"
+        label="Elimina allegato…"
+        (clicked)="openConfirm()"
+      />
+    </lab-example>
+    @if (lastResult()) {
+      <p>
+        Ultimo esito: <strong>{{ lastResult() }}</strong>
+      </p>
+    }
+  </section>
+
+  <section>
+    <h2>Dimensioni e Configurazioni</h2>
+    <p>Esempi di dialoghi con diverse dimensioni predefinite.</p>
+    <lab-example [code]="sizeSnippet">
+      <div style="display: flex; gap: var(--orbit-space-2); flex-wrap: wrap">
+        <orbit-button label="Taglia SM" variant="outline" (clicked)="openSize('sm')" />
+        <orbit-button label="Taglia MD" variant="outline" (clicked)="openSize('md')" />
+        <orbit-button label="Taglia LG" variant="outline" (clicked)="openSize('lg')" />
+        <orbit-button label="Taglia XL" variant="outline" (clicked)="openSize('xl')" />
+        <orbit-button label="Taglia XXL" variant="outline" (clicked)="openSize('xxl')" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Le modali con dimensione <code>sm</code> mantengono i bordi arrotondati ed il margine di
+      sicurezza anche su schermi ridotti. Le modali di taglia <code>md</code> e superiori passano a
+      tutta larghezza/altezza senza bordi arrotondati su dispositivi mobile per sfruttare al meglio
+      lo spazio visibile.
+    </p>
+  </section>
+</article>

@@ -1,0 +1,142 @@
+<article>
+  <h1>Animazioni</h1>
+  <p>
+    Motion tokenizzati per feedback, overlay, picker e contenuti espandibili. Le uscite sono più
+    rapide degli ingressi e <code>prefers-reduced-motion</code> riduce ogni animazione.
+  </p>
+
+  <section>
+    <h2>Token</h2>
+    <div class="motion-page__tokens">
+      @for (token of tokens; track token.name) {
+        <article
+          class="motion-page__token"
+          [style.--motion-token-duration]="token.duration"
+          [style.--motion-token-easing]="token.easing"
+        >
+          <code>{{ token.name }}</code>
+          <strong>{{ token.value }}</strong>
+          <span>{{ token.usage }}</span>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section>
+    <h2>Mappa dei pattern</h2>
+    <p>
+      La tabella usa <code>orbit-table</code>: su viewport strette scorre orizzontalmente invece di
+      sfondare il layout, senza bisogno di un layout alternativo hardcoded per il mobile. Sotto
+      48rem la colonna azioni si nasconde e la riga diventa tappabile: l'anteprima compare in
+      overlay tramite <code>OrbitDialogService</code> (CDK Overlay).
+    </p>
+    <orbit-table #patternsTable aria-label="Pattern di animazione Orbit">
+      <thead>
+        <tr>
+          <th>Area</th>
+          <th>Enter</th>
+          <th>Exit</th>
+          <th>Token</th>
+          <th class="motion-page__pattern-action-col">Anteprima</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pattern of patterns; track pattern.area) {
+          <tr
+            orbitTableRow
+            [class.motion-page__row--tappable]="isMobile()"
+            [attr.tabindex]="isMobile() ? 0 : null"
+            (click)="onRowTap(pattern)"
+            (keydown.enter)="onRowTap(pattern)"
+          >
+            <td>{{ pattern.area }}</td>
+            <td>{{ pattern.enter }}</td>
+            <td>{{ pattern.exit }}</td>
+            <td>
+              <code>{{ pattern.token }}</code>
+            </td>
+            <td class="motion-page__pattern-action motion-page__pattern-action-col">
+              <span class="motion-page__pattern-preview" aria-hidden="true">
+                @for (run of patternRuns(pattern.area); track run) {
+                  <span
+                    [class]="
+                      'motion-page__pattern-demo motion-page__pattern-demo--' + pattern.preview
+                    "
+                  ></span>
+                }
+              </span>
+              <orbit-button
+                [label]="isPatternPlaying(pattern.area) ? 'Stop' : 'Riproduci'"
+                [ariaLabel]="
+                  (isPatternPlaying(pattern.area) ? 'Ferma' : 'Riproduci') +
+                  ' animazione ' +
+                  pattern.area
+                "
+                variant="outline"
+                tone="neutral"
+                (clicked)="togglePattern(pattern.area)"
+              />
+            </td>
+          </tr>
+        }
+      </tbody>
+    </orbit-table>
+  </section>
+
+  <section>
+    <h2>Floating controls</h2>
+    <p>Apri il calendario o il popover: entrambi usano entrata con fade e scala dall’ancora.</p>
+    <lab-example [code]="floatingSnippet">
+      <div class="motion-page__floating-preview">
+        <orbit-date-picker inputId="motion-date" [formControl]="date" />
+        <orbit-popover content="Il popover entra dall’ancora, senza spostare il layout.">
+          <orbit-button variant="outline" tone="neutral" label="Apri popover" />
+        </orbit-popover>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Transizione di hover (button)</h2>
+    <p>
+      Usa <code>--orbit-motion-fast</code> e <code>--orbit-easing-standard</code> su sfondo, bordo e
+      ombra.
+    </p>
+    <lab-example [code]="buttonSnippet">
+      <orbit-button variant="solid" label="Passa il mouse" />
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Animazione di selezione (selectable-tile)</h2>
+    <p>
+      L'indicatore di selezione entra con un <code>@keyframes</code> (<code>orbit-pop</code>) che
+      usa <code>--orbit-easing-standard</code>; sfondo e bordo usano la stessa durata fast.
+    </p>
+    <lab-example [code]="tileSnippet">
+      <orbit-selectable-tile
+        label="Seleziona"
+        [selected]="tileSelected()"
+        (selectedChange)="toggleTile()"
+      />
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Espansione sezione</h2>
+    <p>La sezione usa grid height e fade con durata base; in chiusura usa la curva accelerate.</p>
+    <lab-example [code]="collapsibleSnippet">
+      <orbit-form-section title="Dettagli operativi" collapsible>
+        <p>Il contenuto resta nel DOM durante la transizione e conserva la relazione ARIA.</p>
+      </orbit-form-section>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <p>
+      Con <code>prefers-reduced-motion: reduce</code>, Orbit riduce transizioni e animazioni a una
+      durata impercettibile e interrompe le animazioni continue.
+    </p>
+  </section>
+</article>

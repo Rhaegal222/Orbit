@@ -1,0 +1,58 @@
+:host.orbit-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-4);
+  width: 100%;
+  padding: var(--orbit-space-4) var(--orbit-space-6);
+  border-radius: 0;
+  border-bottom: 1px solid var(--orbit-border-subtle);
+  box-sizing: border-box;
+}
+
+:host.orbit-banner--success {
+  background: var(--orbit-status-success-subtle);
+  border-color: var(--orbit-status-success);
+}
+:host.orbit-banner--success .orbit-banner__icon {
+  color: var(--orbit-status-success);
+}
+
+:host.orbit-banner--danger {
+  background: var(--orbit-status-danger-subtle);
+  border-color: var(--orbit-status-danger);
+}
+:host.orbit-banner--danger .orbit-banner__icon {
+  color: var(--orbit-status-danger);
+}
+
+:host.orbit-banner--warning {
+  background: var(--orbit-status-warning-subtle);
+  border-color: var(--orbit-status-warning);
+}
+:host.orbit-banner--warning .orbit-banner__icon {
+  color: var(--orbit-status-warning);
+}
+
+:host.orbit-banner--info {
+  background: var(--orbit-status-info-subtle);
+  border-color: var(--orbit-status-info);
+}
+:host.orbit-banner--info .orbit-banner__icon {
+  color: var(--orbit-status-info);
+}
+
+.orbit-banner__icon {
+  flex: none;
+  font-size: var(--orbit-font-size-lg);
+}
+
+.orbit-banner__content {
+  flex: 1 1 auto;
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-lg);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.orbit-banner__close {
+  flex: none;
+}

@@ -1,0 +1,30 @@
+<div class="orbit-accordion-item" [class.orbit-accordion-item--disabled]="disabled()">
+  <h3 class="orbit-accordion-item__heading">
+    <button
+      type="button"
+      class="orbit-accordion-item__header"
+      [disabled]="disabled()"
+      [attr.aria-expanded]="expanded()"
+      [attr.aria-controls]="panelId"
+      (click)="toggle()"
+    >
+      <span class="orbit-accordion-item__header-label">{{ header() }}</span>
+      <orbit-icon
+        name="chevron-down"
+        class="orbit-accordion-item__indicator"
+        [class.orbit-accordion-item__indicator--expanded]="expanded()"
+        [class.orbit-accordion-item__indicator--collapsed]="!expanded()"
+      />
+    </button>
+  </h3>
+  <div
+    class="orbit-accordion-item__panel"
+    [class.orbit-accordion-item__panel--expanded]="expanded()"
+    [id]="panelId"
+    role="region"
+  >
+    <div class="orbit-accordion-item__panel-content">
+      <ng-content />
+    </div>
+  </div>
+</div>

@@ -1,6 +1,11 @@
 node_modules/
 dist/
+dist_old/
+deploy/
+out-tsc/
 coverage/
 .angular/
 *.log
 .env
+.turbo/
+.worktrees/

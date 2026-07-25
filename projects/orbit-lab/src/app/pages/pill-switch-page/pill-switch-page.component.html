@@ -1,0 +1,59 @@
+<article>
+  <h1>Pill switch</h1>
+  <p>
+    Selettore esclusivo a "pillole" per un piccolo insieme di opzioni, alternativa ai radio button.
+  </p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="base">
+        <orbit-pill-switch ariaLabel="Intervallo" [options]="options" [formControl]="baseControl" />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="disabledSnippet">
+      <div data-example="disabled">
+        <orbit-pill-switch
+          ariaLabel="Intervallo disabilitato"
+          [options]="options"
+          [formControl]="disabledControl"
+        />
+      </div>
+    </lab-example>
+    <div data-example="option-disabled">
+      <p>
+        L'opzione "Mese" nell'esempio base è disabilitata singolarmente via
+        <code>OrbitPillSwitchOption.disabled</code>.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Larghezza intrinseca al numero di opzioni (<code>max-width: 100%</code> sul contenitore); con
+      molte opzioni su schermi stretti le etichette vanno in <code>white-space: nowrap</code>
+      e possono eccedere — non esiste un fallback a wrap automatico.
+    </p>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>
+        <code>role="radiogroup"</code> sul contenitore, ogni opzione è un
+        <code>&lt;button&gt;</code> con <code>role="radio"</code> e <code>aria-checked</code>.
+      </li>
+      <li>
+        L'input <code>disabled</code> di <code>orbit-pill-switch</code> è collegato correttamente al
+        template (<code>isControlDisabled = disabled() || isDisabled()</code>): funziona sia via
+        attributo/binding diretto sia via <code>[formControl]</code> disabilitato. A differenza di
+        <code>orbit-checkbox</code>, qui non c'è asimmetria da segnalare.
+      </li>
+    </ul>
+  </section>
+</article>

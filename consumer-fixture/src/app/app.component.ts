@@ -1,0 +1,46 @@
+import { Component } from '@angular/core';
+import {
+  OrbitButtonComponent,
+  OrbitBadgeComponent,
+  OrbitCheckboxComponent,
+  OrbitFormFieldComponent,
+  OrbitFormGridComponent,
+  OrbitFormSectionComponent,
+  OrbitPillSwitchComponent,
+  OrbitSelectComponent,
+  OrbitTextInputComponent,
+  OrbitAutocompleteComponent,
+  OrbitDatePickerComponent,
+  OrbitTimePickerComponent,
+  OrbitAttachmentDropzoneComponent,
+  OrbitModalHeaderComponent,
+  OrbitModalBodyComponent,
+  OrbitModalFooterComponent,
+  OrbitFormActionBarComponent,
+} from '@galileo/orbit';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+    OrbitButtonComponent,
+    OrbitBadgeComponent,
+    OrbitCheckboxComponent,
+    OrbitFormFieldComponent,
+    OrbitFormGridComponent,
+    OrbitFormSectionComponent,
+    OrbitPillSwitchComponent,
+    OrbitSelectComponent,
+    OrbitTextInputComponent,
+    OrbitAutocompleteComponent,
+    OrbitDatePickerComponent,
+    OrbitTimePickerComponent,
+    OrbitAttachmentDropzoneComponent,
+    OrbitModalHeaderComponent,
+    OrbitModalBodyComponent,
+    OrbitModalFooterComponent,
+    OrbitFormActionBarComponent,
+  ],
+  templateUrl: './app.component.html',
+})
+export class AppComponent {}

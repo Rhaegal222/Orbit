@@ -1,0 +1,18 @@
+@if (!hidden()) {
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    [style.--orbit-icon-size]="sizeInRem()"
+    [attr.aria-hidden]="decorative() ? 'true' : null"
+    [attr.role]="decorative() ? null : 'img'"
+    [attr.aria-label]="decorative() ? null : label()"
+  >
+    @for (path of paths(); track path) {
+      <path [attr.d]="path" />
+    }
+  </svg>
+}

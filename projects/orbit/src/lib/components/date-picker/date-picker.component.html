@@ -1,0 +1,139 @@
+<div class="orbit-dp">
+  <input
+    type="text"
+    class="orbit-dp__input"
+    [id]="inputId() || null"
+    [attr.aria-label]="ariaLabel() || null"
+    [placeholder]="
+      placeholder() || (mode() === 'date' ? 'GG/MM/AAAA' : mode() === 'month' ? 'MM/AAAA' : 'AAAA')
+    "
+    [value]="inputText()"
+    [disabled]="isDisabled()"
+    [required]="required()"
+    inputmode="numeric"
+    [attr.maxlength]="mode() === 'date' ? 10 : mode() === 'month' ? 7 : 4"
+    [attr.pattern]="
+      mode() === 'date'
+        ? '[0-3][0-9]/[0-1][0-9]/[0-9]{4}'
+        : mode() === 'month'
+          ? '[0-1][0-9]/[0-9]{4}'
+          : '[0-9]{4}'
+    "
+    (input)="onInputChange($any($event.target).value)"
+    (blur)="onInputBlur()"
+  />
+  <button
+    type="button"
+    class="orbit-dp__toggle"
+    [disabled]="isDisabled()"
+    [attr.aria-expanded]="isOpen()"
+    aria-haspopup="dialog"
+    [attr.aria-label]="i18n.labels.openCalendar"
+    (mousedown)="$event.preventDefault()"
+    (click)="toggle()"
+  >
+    <svg viewBox="0 0 16 16" fill="none" class="orbit-dp__icon">
+      <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2" />
+      <path
+        d="M5 1v3M11 1v3M2 7h12"
+        stroke="currentColor"
+        stroke-width="1.2"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
+</div>
+
+<ng-template #dropdownTemplate>
+  <div class="orbit-dp__dropdown" role="dialog" [attr.aria-label]="i18n.labels.openCalendar">
+    <div class="orbit-dp__nav">
+      <button
+        type="button"
+        class="orbit-dp__nav-btn"
+        (mousedown)="$event.preventDefault()"
+        (click)="prevMonth()"
+        [attr.aria-label]="i18n.labels.previousMonth"
+      >
+        <svg viewBox="0 0 16 16" fill="none">
+          <path
+            d="M10 3L5 8l5 5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+      <span class="orbit-dp__nav-title">{{ monthLabel() }}</span>
+      <button
+        type="button"
+        class="orbit-dp__nav-btn"
+        (mousedown)="$event.preventDefault()"
+        (click)="nextMonth()"
+        [attr.aria-label]="i18n.labels.nextMonth"
+      >
+        <svg viewBox="0 0 16 16" fill="none">
+          <path
+            d="M6 3l5 5-5 5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </div>
+
+    @if (mode() === 'date') {
+      <div class="orbit-dp__grid">
+        @for (wd of weekdayLabels; track wd) {
+          <div class="orbit-dp__weekday">{{ wd }}</div>
+        }
+        @for (day of calendarDays; track day.date.toISOString()) {
+          <button
+            type="button"
+            class="orbit-dp__day"
+            [class.orbit-dp__day--outside]="!day.currentMonth"
+            [class.orbit-dp__day--today]="day.today"
+            [class.orbit-dp__day--selected]="day.selected"
+            [disabled]="day.disabled"
+            (mousedown)="$event.preventDefault()"
+            (click)="selectDay(day)"
+          >
+            {{ day.day }}
+          </button>
+        }
+      </div>
+    } @else if (mode() === 'month') {
+      <div class="orbit-dp__period-grid" [attr.aria-label]="i18n.labels.selectMonth">
+        @for (month of monthLabels; track $index) {
+          <button
+            type="button"
+            class="orbit-dp__period-option"
+            [class.orbit-dp__period-option--selected]="isMonthSelected($index)"
+            [disabled]="isMonthDisabled($index)"
+            (mousedown)="$event.preventDefault()"
+            (click)="selectMonth($index)"
+          >
+            {{ month }}
+          </button>
+        }
+      </div>
+    } @else {
+      <div class="orbit-dp__period-grid" [attr.aria-label]="i18n.labels.selectYear">
+        @for (year of yearOptions; track year) {
+          <button
+            type="button"
+            class="orbit-dp__period-option"
+            [class.orbit-dp__period-option--selected]="isYearSelected(year)"
+            [disabled]="isYearDisabled(year)"
+            (mousedown)="$event.preventDefault()"
+            (click)="selectYear(year)"
+          >
+            {{ year }}
+          </button>
+        }
+      </div>
+    }
+  </div>
+</ng-template>

@@ -1,0 +1,141 @@
+<div
+  class="lab-shell__body"
+  data-lab-theme-container
+  [attr.data-orbit-theme]="theme() === 'dark' ? 'dark' : null"
+  [attr.data-orbit-density]="density()"
+  [attr.data-orbit-shape]="shape()"
+  [attr.data-orbit-text-scale]="textScale()"
+  [style.--orbit-text-scale]="textScale()"
+  [style.--orbit-optional-icon-display]="optionalIconDisplay()"
+  [style.--orbit-font-sans]="fontStack()"
+  [class.lab-shell__body--mobile-preview]="mobilePreview()"
+>
+  @if (!mobilePreview()) {
+    <orbit-sidebar
+      brand="Orbit Lab"
+      ariaLabel="Catalogo tecnico"
+      [sections]="sidebarSections()"
+      [activeId]="activeSidebarId()"
+      [collapsed]="sidebarCollapsed()"
+      [showHeader]="showSidebarHeader()"
+      [showFooter]="false"
+      [customBrand]="true"
+      (itemSelected)="onSidebarItemSelected($event)"
+      (collapsedChange)="onSidebarCollapsedChange($event)"
+    >
+      <a class="lab-shell__sidebar-wordmark" orbitSidebarBrandLogo href="/" aria-label="Orbit Lab, home">ORBIT<span>·</span>Lab</a>
+      <span class="lab-shell__sidebar-icon" orbitSidebarBrandIcon>O</span>
+      <orbit-text-input
+        orbitSidebarSearch
+        type="search"
+        inputId="lab-catalog-search"
+        placeholder="Cerca sezione…"
+        showLeadingIcon
+        leadingIconName="search"
+        [formControl]="searchControl"
+      />
+    </orbit-sidebar>
+  }
+
+  <div class="lab-shell__main">
+    <header class="lab-shell__header">
+      <div class="lab-shell__header-start">
+        <orbit-icon-button
+          class="lab-shell__nav-toggle"
+          icon="menu"
+          ariaLabel="Apri navigazione"
+          tone="neutral"
+          (clicked)="openNavigation()"
+        />
+        <div class="lab-shell__brand-title">
+          <a class="lab-shell__root-link" href="/" aria-label="Orbit, home">ORBIT<span>·</span></a>
+          <span class="lab-shell__title-separator">/</span>
+          <a class="lab-shell__wordmark" href="/lab/" aria-label="Orbit Lab, home">ORBIT<span>·</span>Lab</a>
+          <span class="lab-shell__title-separator">/</span>
+          <span class="lab-shell__page-title">{{ activeEntryLabel() }}</span>
+        </div>
+      </div>
+      <div class="lab-shell__header-center" data-lab-overlay-exempt>
+        @if (mobilePreview()) {
+          <orbit-button
+            [label]="orientation() === 'portrait' ? 'Ruota orizzontale' : 'Ruota verticale'"
+            variant="outline"
+            tone="neutral"
+            (clicked)="toggleOrientation()"
+          />
+          <orbit-selectable-tile
+            class="lab-shell__touch-mode-tile"
+            label="Modalità tocco"
+            [selected]="touchMode()"
+            (selectedChange)="toggleTouchMode()"
+          />
+          <div class="lab-shell__frame-presets">
+            <orbit-select
+              ariaLabel="Dimensione anteprima"
+              [options]="sizeOptions"
+              [formControl]="sizeControl"
+            />
+          </div>
+        }
+      </div>
+      <div class="lab-shell__header-actions">
+        <orbit-button
+          class="lab-shell__mobile-preview-toggle"
+          [label]="mobilePreview() ? 'Vista desktop' : 'Vista cellulare'"
+          variant="outline"
+          tone="neutral"
+          (clicked)="toggleMobilePreview()"
+        />
+        <orbit-button
+          class="lab-shell__options-toggle"
+          label="Opzioni"
+          variant="outline"
+          tone="neutral"
+          (clicked)="openOptions()"
+        />
+        <orbit-icon-button
+          class="lab-shell__options-toggle-icon"
+          icon="settings"
+          ariaLabel="Apri opzioni"
+          tone="neutral"
+          (clicked)="openOptions()"
+        />
+      </div>
+    </header>
+    <main class="lab-shell__content">
+      <div class="lab-shell__mobile-stage">
+        <div
+          class="lab-shell__phone"
+          aria-label="Anteprima smartphone"
+          [attr.data-lab-orientation]="orientation()"
+          [style.width.rem]="phoneWidthRem()"
+          [style.height]="phoneHeightCss()"
+        >
+          <div class="lab-shell__phone-screen" #phoneScreen>
+            <span class="lab-shell__phone-notch" aria-hidden="true"></span>
+            <header class="lab-shell__phone-header">
+              <orbit-icon-button
+                class="lab-shell__phone-menu-btn"
+                icon="menu"
+                ariaLabel="Apri menu navigazione"
+                (clicked)="openNavigation()"
+              />
+              <span class="lab-shell__phone-title">{{ activeEntryLabel() }}</span>
+              <orbit-icon-button
+                class="lab-shell__phone-options-btn"
+                icon="settings"
+                ariaLabel="Apri opzioni"
+                (clicked)="openOptions()"
+              />
+            </header>
+            <div class="lab-shell__phone-viewport">
+              <router-outlet />
+            </div>
+
+            <span class="lab-shell__phone-home-indicator" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

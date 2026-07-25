@@ -1,0 +1,55 @@
+<section
+  class="orbit-form-section"
+  [class.orbit-form-section--divided]="divided()"
+  [class.orbit-form-section--content-spaced]="contentSpacing()"
+>
+  @if (title() || index() !== null) {
+    <h2 class="orbit-form-section__title" [attr.id]="labelledBy">
+      @if (collapsible()) {
+        <button
+          type="button"
+          class="orbit-form-section__toggle"
+          [attr.aria-controls]="bodyId"
+          [attr.aria-expanded]="!collapsed()"
+          (click)="toggle()"
+        >
+          @if (index() !== null) {
+            <span class="orbit-form-section__index">{{ index() }}</span>
+          }
+          @if (title()) {
+            <span>{{ title() }}</span>
+          }
+          <ng-content select="[orbitFormSectionMeta]" />
+          <span class="orbit-form-section__rule" aria-hidden="true"></span>
+          <span
+            class="orbit-form-section__toggle-chevron"
+            [class.orbit-form-section__toggle-chevron--collapsed]="collapsed()"
+            aria-hidden="true"
+            >⌄</span
+          >
+        </button>
+      } @else {
+        @if (index() !== null) {
+          <span class="orbit-form-section__index">{{ index() }}</span>
+        }
+        @if (title()) {
+          <span>{{ title() }}</span>
+        }
+        <ng-content select="[orbitFormSectionMeta]" />
+        <span class="orbit-form-section__rule" aria-hidden="true"></span>
+      }
+    </h2>
+  }
+  <div
+    class="orbit-form-section__body"
+    [class.orbit-form-section__body--collapsed]="collapsible() && collapsed()"
+    [attr.id]="collapsible() ? bodyId : null"
+    [attr.role]="collapsible() ? 'region' : null"
+    [attr.aria-labelledby]="collapsible() ? labelledBy : null"
+    [attr.aria-hidden]="collapsible() && collapsed()"
+  >
+    <div class="orbit-form-section__body-content">
+      <ng-content />
+    </div>
+  </div>
+</section>

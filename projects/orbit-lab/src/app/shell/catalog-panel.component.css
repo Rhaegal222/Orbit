@@ -1,0 +1,28 @@
+/* This panel is always a slim side drawer (opened via OrbitPanelService, side: 'right'),
+   never a centered dialog — so it uses the sidebar's own compact spacing scale instead of
+   the header/body/footer's default modal padding (sized for a wide centered card). Setting
+   it here, on the component itself, means it looks the same whether opened through the real
+   CDK overlay or embedded inline in Orbit Lab's mobile-preview mockup. */
+/* !important: a density selector elsewhere in the cascade (e.g. [data-orbit-density=...]
+   in tokens.css) has the same specificity as :host and can win purely on source order, so a
+   plain override here isn't guaranteed to beat it — these need to unconditionally win. */
+:host {
+  --orbit-content-padding-block: var(--orbit-space-3) !important;
+  --orbit-content-padding-inline: var(--orbit-space-2) !important;
+  /* Header/footer match the same item-level rhythm as .lab-catalog-panel__field / .orbit-sidebar__item. */
+  --orbit-modal-header-padding-block-start: var(--orbit-item-padding-block) !important;
+  --orbit-modal-header-padding-block-end: var(--orbit-item-padding-block) !important;
+  --orbit-modal-footer-padding-block: var(--orbit-item-padding-block) !important;
+  --orbit-modal-padding-inline: var(--orbit-item-padding-inline) !important;
+}
+
+.lab-catalog-panel__options {
+  display: grid;
+  gap: var(--orbit-space-2);
+}
+
+/* Same per-row padding as .orbit-sidebar__item, so each field reads as one "item" in the
+   list rather than floating in the body's outer scroll padding alone. */
+.lab-catalog-panel__field {
+  padding: var(--orbit-item-padding-block) var(--orbit-item-padding-inline);
+}

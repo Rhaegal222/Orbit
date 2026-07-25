@@ -1,0 +1,154 @@
+<article>
+  <h1>Layout</h1>
+  <p>
+    Primitive compositive per ritmo, allineamento e workspace enterprise. I gap usano esclusivamente
+    la scala Orbit: 2xs, xs, sm, md, lg, xl e 2xl.
+  </p>
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="stackSnippet"
+      ><orbit-stack gap="lg"
+        ><strong>Catalogo prodotti</strong><span>Gestisci attributi, listini e canali B2B.</span
+        ><orbit-cluster gap="sm"
+          ><span>Attivo</span><span>98% completo</span
+          ><span>Ultima revisione oggi</span></orbit-cluster
+        ></orbit-stack
+      ></lab-example
+    >
+  </section>
+  <section>
+    <h2>Griglia modulo</h2>
+    <p>
+      Griglia a 12 colonne per form densi. Le composizioni <code>primary</code>/<code
+        >secondary</code
+      >
+      sono utili per un contenuto principale con metadati o azioni secondarie; gli item con
+      <code>orbitFormGridItem</code> servono invece per definire gli span a ogni breakpoint.
+    </p>
+
+    <h3>Composizione 7 / 5</h3>
+    <lab-example [code]="formCompositionSnippet" fullWidth>
+      <orbit-form-grid layout="7-5">
+        <div primary>
+          <orbit-form-field label="Nome prodotto" inputId="layout-grid-name">
+            <orbit-text-input inputId="layout-grid-name" placeholder="Modulo LED Smart" />
+          </orbit-form-field>
+        </div>
+        <div secondary>
+          <orbit-form-field label="Codice SKU" inputId="layout-grid-sku">
+            <orbit-text-input inputId="layout-grid-sku" placeholder="PRD-9042-X" />
+          </orbit-form-field>
+        </div>
+      </orbit-form-grid>
+    </lab-example>
+
+    <h3>Span responsivi</h3>
+    <lab-example [code]="formSpansSnippet" fullWidth>
+      <orbit-form-grid>
+        <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
+          <orbit-form-field label="Famiglia" inputId="layout-grid-family">
+            <orbit-text-input inputId="layout-grid-family" placeholder="Illuminazione" />
+          </orbit-form-field>
+        </div>
+        <div orbitFormGridItem [span]="12" [spanMd]="6" [spanLg]="4">
+          <orbit-form-field label="Canale" inputId="layout-grid-channel">
+            <orbit-text-input inputId="layout-grid-channel" placeholder="B2B Italia" />
+          </orbit-form-field>
+        </div>
+        <div orbitFormGridItem [span]="12" [spanLg]="4">
+          <orbit-form-field label="Margine target" inputId="layout-grid-margin">
+            <orbit-text-input inputId="layout-grid-margin" placeholder="32%" />
+          </orbit-form-field>
+        </div>
+      </orbit-form-grid>
+    </lab-example>
+
+    <h3>Colonna singola</h3>
+    <lab-example [code]="formSingleSnippet" fullWidth>
+      <orbit-form-grid layout="single">
+        <div primary>
+          <orbit-form-field label="Ragione sociale" inputId="layout-grid-company">
+            <orbit-text-input inputId="layout-grid-company" placeholder="Galileo Company" />
+          </orbit-form-field>
+        </div>
+        <div secondary>
+          <orbit-form-field label="Note" inputId="layout-grid-notes">
+            <orbit-text-input inputId="layout-grid-notes" placeholder="Informazioni aggiuntive" />
+          </orbit-form-field>
+        </div>
+      </orbit-form-grid>
+    </lab-example>
+
+    <h3>Densità compatta</h3>
+    <lab-example [code]="formCompactSnippet" fullWidth>
+      <orbit-form-grid density="compact">
+        <div orbitFormGridItem [span]="12" [spanSm]="6">
+          <orbit-form-field label="Codice interno" inputId="layout-grid-code">
+            <orbit-text-input inputId="layout-grid-code" placeholder="INT-204" />
+          </orbit-form-field>
+        </div>
+        <div orbitFormGridItem [span]="12" [spanSm]="6">
+          <orbit-form-field label="Versione" inputId="layout-grid-version">
+            <orbit-text-input inputId="layout-grid-version" placeholder="2.0" />
+          </orbit-form-field>
+        </div>
+      </orbit-form-grid>
+    </lab-example>
+  </section>
+  <section>
+    <h2>Page shell e header</h2>
+    <lab-example [code]="pageShellSnippet" [fullWidth]="true"
+      ><orbit-page-shell width="document"
+        ><orbit-page-header title="Listino Italia" subtitle="Aggiornato il 22 luglio 2026"
+          ><orbit-cluster gap="sm"
+            ><span>Bozza</span><span>3 modifiche</span></orbit-cluster
+          ></orbit-page-header
+        ></orbit-page-shell
+      ></lab-example
+    >
+  </section>
+  <section>
+    <h2>Sidebar e workspace</h2>
+    <lab-example [code]="workspaceSnippet" [fullWidth]="true"
+      ><orbit-workspace
+        ><aside orbitWorkspaceSidebar>
+          <orbit-stack gap="sm"
+            ><strong>Filtri</strong><span>Illuminazione</span><span>Attivi</span
+            ><span>Completeness ≥ 80%</span></orbit-stack
+          >
+        </aside>
+        <main orbitWorkspaceMain>
+          <orbit-stack gap="md"
+            ><strong>Portafoglio catalogo</strong
+            ><span>La griglia collassa in una colonna su schermi stretti.</span>
+            <div>
+              <span orbitDataAlign="start">SKU PRD-9042-X</span> ·
+              <span orbitDataAlign="end">€ 240,00</span>
+            </div></orbit-stack
+          >
+        </main></orbit-workspace
+      ></lab-example
+    >
+  </section>
+  <section>
+    <h2>Allineamento dati</h2>
+    <p>
+      Usa <code>orbitDataAlign="start"</code> per testo e codici, <code>"end"</code> per importi e
+      quantità, <code>"center"</code> per stati, icone e selezioni.
+    </p>
+    <p>
+      La griglia modulo usa una colonna sotto <code>36rem</code>; gli span <code>sm</code>,
+      <code>md</code>, <code>lg</code> e <code>xl</code> la rendono progressiva senza media query
+      nel consumer.
+    </p>
+  </section>
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      <code>orbit-workspace</code> collassa dalla griglia a 2 colonne a una colonna sotto
+      <code>--orbit-breakpoint-md</code> (48rem). <code>orbit-form-grid</code> espande
+      progressivamente lo span delle colonne a <code>--orbit-breakpoint-sm</code>, <code>md</code>,
+      <code>lg</code> e <code>xl</code>.
+    </p>
+  </section>
+</article>

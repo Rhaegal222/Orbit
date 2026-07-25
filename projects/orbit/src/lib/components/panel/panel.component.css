@@ -1,0 +1,10 @@
+:host.orbit-panel {
+  display: block;
+  padding: var(--orbit-space-5);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+}
+:host.orbit-panel--no-padding {
+  padding: 0;
+}

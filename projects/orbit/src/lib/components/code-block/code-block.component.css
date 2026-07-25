@@ -1,0 +1,175 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.orbit-code-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--orbit-space-2);
+  width: 100%;
+}
+
+.orbit-code-block__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--orbit-space-2);
+}
+
+.orbit-code-block__surface {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--orbit-code-block-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-code-block-bg);
+}
+
+.orbit-code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-1) var(--orbit-space-2);
+  border-bottom: 1px solid var(--orbit-code-block-border);
+  background: var(--orbit-code-block-gutter-bg);
+}
+
+.orbit-code-block__copy {
+  position: relative;
+  top: auto;
+  right: auto;
+}
+
+.orbit-code-block__copied-feedback {
+  position: absolute;
+  inset: 0;
+  z-index: var(--orbit-z-popover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--orbit-space-2);
+  /* Mirrors orbit-button's translucent/neutral tone (--btn-translucent-bg / --btn-soft-border
+     for tone="neutral" variant="translucent"): color-mix(in srgb, --orbit-surface-subtle 72%,
+     transparent) / color-mix(in srgb, --orbit-border-strong 72%, transparent). */
+  background: color-mix(in srgb, var(--orbit-surface-subtle) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--orbit-border-strong) 72%, transparent);
+  color: var(--orbit-action-neutral-fg-subtle);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-sm);
+  font-weight: var(--orbit-font-weight-emphasis);
+  animation: orbit-backdrop-enter var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-code-block__copied-icon {
+  font-size: var(--orbit-font-size-lg);
+  color: var(--orbit-status-success);
+}
+
+.orbit-code-block__copy {
+  /* orbit-icon-button reads these tokens for its own border/background/color, so
+     overriding them here restyles the child without piercing its encapsulation. */
+  --orbit-border-subtle: var(--orbit-code-block-border);
+  --orbit-surface-default: var(--orbit-code-block-action-bg);
+  --orbit-text-secondary: var(--orbit-code-block-action-fg);
+  --orbit-surface-subtle: var(--orbit-code-block-action-bg-hover);
+  --orbit-text-primary: var(--orbit-code-block-action-fg-hover);
+}
+
+.orbit-code-block__action {
+  height: 1.75rem;
+  padding: 0 var(--orbit-space-3);
+  border: 1px solid var(--orbit-code-block-border);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-code-block-action-bg);
+  color: var(--orbit-code-block-action-fg);
+  font-size: var(--orbit-font-size-sm);
+  font-family: var(--orbit-font-sans);
+  cursor: pointer;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-code-block__action:hover {
+  background: var(--orbit-code-block-action-bg-hover);
+  color: var(--orbit-code-block-action-fg-hover);
+}
+
+.orbit-code-block__action:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.orbit-code-block__pre {
+  margin: 0;
+  width: 100%;
+  min-block-size: calc(var(--orbit-control-height) + 2 * var(--orbit-space-2));
+  padding: var(--orbit-space-3) calc(var(--orbit-control-height) + 2 * var(--orbit-space-2))
+    var(--orbit-space-3) 0;
+  border: 0;
+  background: transparent;
+  color: var(--orbit-code-block-fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--orbit-font-size-sm);
+  white-space: normal;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+.orbit-code-block__code {
+  display: block;
+  min-width: max-content;
+}
+
+.orbit-code-block__line {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  min-height: calc(var(--orbit-font-size-sm) * var(--orbit-line-height-body));
+}
+
+.orbit-code-block__line:nth-child(even) {
+  background: var(--orbit-code-block-line-alt-bg);
+}
+
+.orbit-code-block__line-number {
+  padding: 0 var(--orbit-space-2);
+  border-right: 1px solid var(--orbit-code-block-gutter-border);
+  background: var(--orbit-code-block-gutter-bg);
+  color: var(--orbit-code-block-line-number-fg);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  user-select: none;
+}
+
+.orbit-code-block__line-content {
+  padding: 0 var(--orbit-space-3);
+  white-space: pre;
+}
+
+.orbit-code-block__line--highlighted {
+  background: var(--orbit-code-block-highlight-bg);
+  border-left: 2px solid var(--orbit-code-block-highlight-border);
+}
+
+.orbit-code-block__line--highlighted .orbit-code-block__line-number {
+  background: var(--orbit-code-block-highlight-bg);
+}
+
+.orbit-code-block__language-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--orbit-space-2);
+  height: 1.25rem;
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-code-block-action-bg);
+  color: var(--orbit-code-block-action-fg);
+  font-family: var(--orbit-font-sans);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* Prism.js token colors live in styles.css: [innerHTML]-injected markup never receives
+   Angular's emulated-encapsulation attribute, so a scoped rule here could never match it. */

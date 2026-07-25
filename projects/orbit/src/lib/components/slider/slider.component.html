@@ -1,0 +1,19 @@
+<div class="orbit-slider">
+  <input
+    type="range"
+    class="orbit-slider__control"
+    [id]="inputId() || null"
+    [min]="min()"
+    [max]="resolvedMax()"
+    [step]="resolvedStep()"
+    [value]="value()"
+    [disabled]="isControlDisabled()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.aria-valuetext]="ariaValueText() || null"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+  @if (showValue()) {
+    <output class="orbit-slider__value" [for]="inputId() || null">{{ value() }}</output>
+  }
+</div>

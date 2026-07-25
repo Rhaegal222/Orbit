@@ -1,0 +1,37 @@
+<div class="orbit-attachment-list-item__marker" aria-hidden="true">
+  <orbit-icon name="document" [size]="20" />
+</div>
+
+<div class="orbit-attachment-list-item__content">
+  <span class="orbit-attachment-list-item__name">{{ name() }}</span>
+  @if (metadata()) {
+    <span class="orbit-attachment-list-item__metadata">{{ metadata() }}</span>
+  }
+</div>
+
+@if (statusLabel()) {
+  <span
+    class="orbit-attachment-list-item__status"
+    [class.orbit-attachment-list-item__status--readonly]="readonly() || status() === 'readonly'"
+  >
+    {{ statusLabel() }}
+  </span>
+}
+
+@if (actions().length) {
+  <div class="orbit-attachment-list-item__actions" aria-label="Azioni elemento">
+    @for (action of actions(); track action.id) {
+      <orbit-icon-button
+        [icon]="action.icon ?? null"
+        [ariaLabel]="action.ariaLabel || action.label"
+        [tone]="action.tone ?? (action.icon === 'remove' ? 'danger' : 'neutral')"
+        [disabled]="action.disabled"
+        (clicked)="triggerAction(action)"
+      >
+        @if (!action.icon) {
+          <span aria-hidden="true">{{ action.label.slice(0, 1) }}</span>
+        }
+      </orbit-icon-button>
+    }
+  </div>
+}

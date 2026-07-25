@@ -1,0 +1,55 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "useDefineForClassFields": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@galileo/orbit": ["./projects/orbit/src/public-api.ts"],
+      "@galileo/orbit/styles": ["./projects/orbit/src/styles/tokens.css"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/orbit/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/orbit/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/orbit-lab/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/orbit-lab/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/orbit-studio/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/orbit-studio/tsconfig.spec.json"
+    },
+    {
+      "path": "./service/tsconfig.app.json"
+    },
+    {
+      "path": "./service/tsconfig.spec.json"
+    }
+  ]
+}

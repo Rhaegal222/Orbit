@@ -1,0 +1,125 @@
+<article>
+  <h1>Table</h1>
+  <p>
+    Componente presentazionale: il consumer possiede l'iterazione riga e la logica di ordinamento.
+    <code>orbit-table-column</code> emette solo la direzione richiesta;
+    <code>orbitTableRow</code> marca lo stato disabilitato/muted.
+  </p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="snippet">
+      <orbit-table>
+        <thead>
+          <tr>
+            <th>
+              <orbit-table-column
+                sortable
+                [sortDirection]="sortDirection()"
+                (sortChange)="onSortChange($event)"
+                >Nome</orbit-table-column
+              >
+            </th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of sortedRows(); track row.name) {
+            <tr orbitTableRow [disabled]="!row.active" [attr.data-row-disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Varianti</h2>
+    <p>
+      <code>bordered</code> aggiunge bordi verticali e un contorno alla tabella;
+      <code>striped</code> alterna lo sfondo delle righe.
+    </p>
+
+    <h3>Default</h3>
+    <lab-example [fullWidth]="true">
+      <orbit-table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+
+    <h3>Bordered</h3>
+    <lab-example [code]="borderedSnippet" [fullWidth]="true">
+      <orbit-table bordered>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+
+    <h3>Striped</h3>
+    <lab-example [code]="stripedSnippet" [fullWidth]="true">
+      <orbit-table striped>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+
+    <h3>Bordered + Striped</h3>
+    <lab-example [code]="borderedStripedSnippet" [fullWidth]="true">
+      <orbit-table bordered striped>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Stato</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.name) {
+            <tr orbitTableRow [disabled]="!row.active">
+              <td>{{ row.name }}</td>
+              <td>{{ row.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </orbit-table>
+    </lab-example>
+  </section>
+</article>

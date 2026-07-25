@@ -1,0 +1,121 @@
+.lab-logo-demos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--orbit-space-4);
+  margin-top: var(--orbit-space-4);
+}
+
+.lab-logo-card {
+  padding: var(--orbit-space-5);
+  border-radius: var(--orbit-radius-surface);
+  border: 1px solid var(--orbit-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--orbit-space-3);
+}
+
+.lab-logo-card__label {
+  font-size: var(--orbit-font-size-caption);
+  color: var(--orbit-text-tertiary);
+}
+
+.lab-logo-card--light {
+  background: var(--orbit-surface-default);
+}
+
+.lab-logo-card--dark {
+  background: var(--orbit-surface-canvas);
+  color: var(--orbit-text-primary);
+}
+
+.lab-logo-card--primary {
+  background: var(--orbit-action-primary-bg);
+  color: var(--orbit-action-primary-fg);
+}
+
+.lab-logo-card--primary .lab-logo-card__label {
+  color: var(--orbit-action-primary-fg-muted);
+}
+
+.lab-logo-wordmark {
+  font-weight: 800;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lab-logo-wordmark span {
+  color: var(--orbit-action-primary-bg);
+}
+
+.lab-logo-card--dark .lab-logo-wordmark span {
+  color: var(--orbit-action-primary-bg);
+}
+
+.lab-logo-card--primary .lab-logo-wordmark span {
+  color: var(--orbit-action-primary-fg);
+}
+
+.lab-logo-wordmark--sm {
+  font-size: 0.875rem;
+}
+
+.lab-logo-wordmark--md {
+  font-size: 1.15rem;
+}
+
+.lab-logo-wordmark--lg {
+  font-size: 1.5rem;
+}
+
+.lab-logo-wordmark--xl {
+  font-size: 2.25rem;
+}
+
+.lab-logo-sizes {
+  display: flex;
+  align-items: end;
+  gap: var(--orbit-space-5);
+  margin-top: var(--orbit-space-4);
+}
+
+.lab-logo-header-demo {
+  margin-top: var(--orbit-space-4);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  overflow: hidden;
+}
+
+.lab-logo-site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 5.5rem;
+  padding: 0 var(--orbit-space-4);
+  border-bottom: 1px solid var(--orbit-border-subtle);
+  background: var(--orbit-surface-default);
+}
+
+.lab-logo-site-header nav {
+  display: flex;
+  gap: var(--orbit-space-4);
+}
+
+.lab-logo-site-header nav a {
+  color: var(--orbit-text-secondary);
+  text-decoration: none;
+}
+
+.lab-logo-site-header nav a:hover {
+  color: var(--orbit-text-primary);
+}
+
+.lab-logo-code {
+  margin-top: var(--orbit-space-3);
+  padding: var(--orbit-space-4);
+  background: var(--orbit-surface-canvas);
+  border-radius: var(--orbit-radius-control);
+  font-family: var(--orbit-font-mono);
+  font-size: var(--orbit-font-size-caption);
+  overflow-x: auto;
+  white-space: pre;
+}

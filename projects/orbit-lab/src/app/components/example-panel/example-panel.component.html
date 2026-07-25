@@ -1,0 +1,35 @@
+<div class="lab-example">
+  @if (code()) {
+    <div class="lab-example__actions">
+      <orbit-button
+        class="lab-example__toggle-button"
+        [label]="isCodeVisible() ? 'Nascondi codice' : 'Mostra codice'"
+        tone="neutral"
+        variant="translucent"
+        (clicked)="toggleCode()"
+      />
+      <orbit-icon-button
+        class="lab-example__toggle-icon-button"
+        icon="document"
+        [ariaLabel]="isCodeVisible() ? 'Nascondi codice' : 'Mostra codice'"
+        tone="neutral"
+        (clicked)="toggleCode()"
+      />
+    </div>
+  }
+  <div class="lab-example__preview">
+    <div class="lab-example__content" [class.lab-example__content--full-width]="fullWidth()">
+      <ng-content />
+    </div>
+  </div>
+  @if (code() && isCodeVisible()) {
+    <div class="lab-example__source">
+      <orbit-code-block
+        class="lab-example__code"
+        [code]="code()"
+        [language]="language()"
+        [collapsible]="false"
+      />
+    </div>
+  }
+</div>

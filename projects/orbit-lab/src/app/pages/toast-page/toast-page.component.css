@@ -1,0 +1,3 @@
+section > div[data-example] {
+  margin-block-end: var(--orbit-space-3);
+}

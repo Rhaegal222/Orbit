@@ -1,0 +1,17 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--orbit-space-1);
+}
+:host(.orbit-table-column--sortable) {
+  cursor: pointer;
+  user-select: none;
+}
+.orbit-table-column__sort-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+  transition: transform var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+.orbit-table-column__sort-icon--asc {
+  transform: rotate(180deg);
+}

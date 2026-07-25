@@ -14,6 +14,10 @@ Before tagging, update `package.json` and `CHANGELOG.md`, then run:
 npm run release:check
 ```
 
+`npm run release:check` builds the package, checks its packed contents and installs
+the freshly generated tarball into `consumer-fixture` before building that consumer.
+This catches missing exports and stylesheet assets that a workspace build cannot detect.
+
 ## CI publication
 
 Pushing a tag that matches `vX.Y.Z` starts the `publish-package` job. It publishes to the Wyrmrest npm registry using the workflow token; no registry secret is stored in this repository.
@@ -34,7 +38,7 @@ Consumers configure the scoped group registry in `.npmrc`:
 //git.wyrmrest.it/api/packages/wyrmrest/npm/:_authToken=
 ```
 
-`NPM_TOKEN` must be supplied through the consuming project’s secret store or CI variables, never committed.
+`NPM_TOKEN` must be supplied through the consuming project's secret store or CI variables, never committed.
 
 ## Angular components
 

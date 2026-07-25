@@ -1,0 +1,92 @@
+.typography-page__roles {
+  display: grid;
+  gap: var(--orbit-space-2);
+}
+
+.typography-page__role {
+  display: grid;
+  grid-template-columns: minmax(15rem, 1fr) minmax(0, 1.4fr);
+  align-items: center;
+  gap: var(--orbit-space-5);
+  padding: var(--orbit-space-3);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-raised);
+}
+
+.typography-page__role-meta {
+  display: grid;
+  gap: var(--orbit-space-1);
+}
+
+.typography-page__role-meta strong {
+  color: var(--orbit-text-primary);
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.typography-page__role-meta code,
+.typography-page__role-meta span {
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-caption);
+}
+
+.typography-page__display,
+.typography-page__title,
+.typography-page__subtitle,
+.typography-page__body,
+.typography-page__label,
+.typography-page__caption,
+.typography-page__code {
+  color: var(--orbit-text-primary);
+}
+
+.typography-page__display {
+  font-size: var(--orbit-font-size-display);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.typography-page__title {
+  font-size: var(--orbit-font-size-title);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.typography-page__subtitle {
+  font-size: var(--orbit-font-size-subtitle);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.typography-page__body {
+  font-size: var(--orbit-font-size-body);
+}
+
+.typography-page__label {
+  font-size: var(--orbit-font-size-label);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+.typography-page__caption {
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-caption);
+}
+
+.typography-page__code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--orbit-font-size-code);
+}
+
+.typography-page__scale-preview {
+  display: grid;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-4);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-raised);
+}
+
+@media (max-width: 42rem) {
+  .typography-page__role {
+    grid-template-columns: 1fr;
+    gap: var(--orbit-space-3);
+  }
+}

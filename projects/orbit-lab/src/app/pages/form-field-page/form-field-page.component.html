@@ -1,0 +1,50 @@
+<article>
+  <h1>Form field</h1>
+  <p>Associa label, hint ed errore a un controllo proiettato via <code>ng-content</code>.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="base">
+        <orbit-form-field label="Ragione sociale" inputId="fld-base" required>
+          <orbit-text-input inputId="fld-base" />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Con hint</h2>
+    <lab-example [code]="hintSnippet">
+      <div data-example="hint">
+        <orbit-form-field
+          label="Codice fiscale"
+          inputId="fld-hint"
+          hint="16 caratteri alfanumerici"
+        >
+          <orbit-text-input inputId="fld-hint" />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Con errore</h2>
+    <lab-example [code]="errorSnippet">
+      <div data-example="error">
+        <orbit-form-field label="Email" inputId="fld-error" error="Formato non valido">
+          <orbit-text-input inputId="fld-error" [invalid]="true" />
+        </orbit-form-field>
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <p>
+      Nota: l'associazione dell'errore al controllo tramite <code>aria-describedby</code> non è
+      ancora presente in <code>orbit-form-field</code> (il messaggio ha <code>role="alert"</code>
+      ma non è collegato esplicitamente all'input). Segnalato come nota per Core, non corretto qui.
+    </p>
+  </section>
+</article>

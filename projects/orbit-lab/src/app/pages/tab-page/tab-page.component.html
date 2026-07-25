@@ -1,0 +1,114 @@
+<article>
+  <h1>Tab</h1>
+  <p>
+    Selezione controllata dal consumer; frecce/Home/End spostano focus e selezione, saltando le tab
+    disabilitate. Ogni tab può proiettare un badge contatore.
+  </p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="snippet">
+      <orbit-tablist ariaLabel="Sezioni" (selectedChange)="active.set($event)">
+        <orbit-tab value="general" label="Generale" [selected]="active() === 'general'" />
+        <orbit-tab value="docs" label="Documenti" [selected]="active() === 'docs'">
+          <orbit-badge orbitTabBadge label="3" tone="neutral" />
+        </orbit-tab>
+        <orbit-tab value="closed" label="Chiuso" [selected]="active() === 'closed'" disabled />
+      </orbit-tablist>
+
+      @if (active() === 'general') {
+        <orbit-tab-panel value="general">Contenuto generale.</orbit-tab-panel>
+      }
+      @if (active() === 'docs') {
+        <orbit-tab-panel value="docs">Elenco documenti.</orbit-tab-panel>
+      }
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Overflow (scroll orizzontale)</h2>
+    <p>
+      Quando le tab superano la larghezza disponibile, il tablist non le comprime né le fa andare a
+      capo: le tab rimangono visibili e scorrono orizzontalmente. Il contenuto del pannello resta
+      visibile sotto la barra delle tab.
+    </p>
+    <lab-example [code]="scrollSnippet" fullWidth>
+      <orbit-tablist
+        pickerMode="scroll"
+        style="max-width: 30rem"
+        ariaLabel="Molte sezioni"
+        (selectedChange)="scrollActive.set($event)"
+      >
+        @for (tab of scrollTabs; track tab.value) {
+          <orbit-tab
+            [value]="tab.value"
+            [label]="tab.label"
+            [selected]="scrollActive() === tab.value"
+          />
+        }
+      </orbit-tablist>
+
+      <orbit-tab-panel [value]="scrollActive()">
+        Contenuto della {{ tabLabel(scrollActive()) }}.
+      </orbit-tab-panel>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Picker modale</h2>
+    <p>
+      In spazi stretti il tablist passa in modalità <em>compact</em>: nasconde le tab, mostra il
+      nome + badge della tab corrente e un pulsante per aprire un selettore a griglia (modale con
+      card di anteprima). Il toggle nella barra compact permette di passare alla modalità offcanvas.
+    </p>
+    <lab-example [code]="modalSnippet" fullWidth>
+      <orbit-tablist
+        pickerMode="modal"
+        style="max-width: 30rem"
+        ariaLabel="Sezioni"
+        (selectedChange)="modalActive.set($event)"
+      >
+        @for (tab of scrollTabs; track tab.value) {
+          <orbit-tab
+            [value]="tab.value"
+            [label]="tab.label"
+            [selected]="modalActive() === tab.value"
+          />
+        }
+      </orbit-tablist>
+
+      <orbit-tab-panel [value]="modalActive()">
+        Contenuto della {{ tabLabel(modalActive()) }}.
+      </orbit-tab-panel>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Picker offcanvas</h2>
+    <p>
+      La variante offcanvas apre un pannello laterale con una
+      <code>orbit-sidebar embedded</code> che elenca le tab come voci di navigazione. Utile quando
+      si preferisce un'interfaccia a lista invece che una griglia di card.
+    </p>
+    <lab-example [code]="offcanvasSnippet" fullWidth>
+      <orbit-tablist
+        pickerMode="offcanvas"
+        style="max-width: 30rem"
+        ariaLabel="Sezioni"
+        (selectedChange)="offcanvasActive.set($event)"
+      >
+        @for (tab of scrollTabs; track tab.value) {
+          <orbit-tab
+            [value]="tab.value"
+            [label]="tab.label"
+            [selected]="offcanvasActive() === tab.value"
+          />
+        }
+      </orbit-tablist>
+
+      <orbit-tab-panel [value]="offcanvasActive()">
+        Contenuto della {{ tabLabel(offcanvasActive()) }}.
+      </orbit-tab-panel>
+    </lab-example>
+  </section>
+</article>

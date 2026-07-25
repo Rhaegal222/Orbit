@@ -1,0 +1,60 @@
+<article>
+  <h1>Checkbox</h1>
+  <p>Casella di selezione singola con label integrata e icona di spunta.</p>
+
+  <section>
+    <h2>Esempio</h2>
+    <lab-example [code]="usageSnippet">
+      <div data-example="base">
+        <orbit-checkbox
+          label="Invia una notifica al responsabile"
+          inputId="cb-base"
+          [formControl]="baseControl"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Stati</h2>
+    <lab-example [code]="checkedSnippet">
+      <div data-example="checked">
+        <orbit-checkbox label="Selezionato" inputId="cb-checked" [formControl]="checkedControl" />
+      </div>
+    </lab-example>
+    <lab-example [code]="disabledSnippet">
+      <div data-example="disabled">
+        <orbit-checkbox
+          label="Disabilitato"
+          inputId="cb-disabled"
+          [formControl]="disabledControl"
+        />
+      </div>
+    </lab-example>
+  </section>
+
+  <section>
+    <h2>Comportamento responsive</h2>
+    <p>
+      Dimensione fissa (1.125rem), nessun adattamento a viewport: si comporta come un controllo
+      inline in qualunque larghezza.
+    </p>
+  </section>
+
+  <section>
+    <h2>Accessibilità</h2>
+    <ul>
+      <li>
+        Toggle nativo via <code>&lt;input type="checkbox"&gt;</code> visivamente nascosto ma
+        presente nel DOM (tastiera/screen reader nativi).
+      </li>
+      <li>
+        <strong>Nota per Core:</strong> l'input <code>disabled</code> dichiarato in
+        <code>checkbox.component.ts</code> non è collegato a nulla nel template — solo
+        <code>setDisabledState()</code> (quindi un <code>[formControl]</code>/<code>[ngModel]</code>
+        disabilitato) disabilita davvero il controllo. Passare <code>[disabled]="true"</code>
+        direttamente non ha alcun effetto. Segnalato come blocker, non corretto qui.
+      </li>
+    </ul>
+  </section>
+</article>

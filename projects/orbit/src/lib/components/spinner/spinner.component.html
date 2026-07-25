@@ -1,0 +1,10 @@
+<span
+  class="orbit-spinner"
+  role="status"
+  [class.orbit-spinner--sm]="size() === 'sm'"
+  [class.orbit-spinner--md]="size() === 'md'"
+  [class.orbit-spinner--lg]="size() === 'lg'"
+  [class.orbit-spinner--xl]="size() === 'xl'"
+  [class.orbit-spinner--xxl]="size() === 'xxl'"
+  [attr.aria-label]="ariaLabel() || i18n.labels.loading"
+></span>

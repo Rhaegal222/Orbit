@@ -1,0 +1,256 @@
+:host {
+  display: block;
+}
+
+.orbit-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--orbit-control-height);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-raised);
+  font-family: var(--orbit-font-sans);
+  overflow: hidden;
+  transition:
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    box-shadow var(--orbit-motion-fast) var(--orbit-easing-standard),
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-input:focus-within {
+  border-color: var(--orbit-action-primary-bg);
+  box-shadow: var(--orbit-focus-ring);
+}
+
+.orbit-input:hover:not(.orbit-input--disabled):not(:focus-within) {
+  border-color: var(--orbit-border-strong);
+  background: var(--orbit-surface-default);
+}
+
+:host(.orbit-input--readonly) .orbit-input {
+  background: var(--orbit-surface-subtle);
+}
+
+:host(.orbit-input--readonly) .orbit-input__control {
+  cursor: default;
+}
+
+:host(.orbit-input--success) .orbit-input {
+  border-color: color-mix(in srgb, var(--orbit-status-success) 28%, var(--orbit-border-subtle));
+  background: var(--orbit-status-success-subtle);
+}
+
+:host(.orbit-input--success) .orbit-input__control {
+  color: var(--orbit-status-success);
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+/* ── Invalid ── */
+:host(.orbit-input--invalid) .orbit-input,
+.orbit-input--invalid {
+  border-color: var(--orbit-status-danger);
+}
+:host(.orbit-input--invalid) .orbit-input:focus-within,
+.orbit-input--invalid:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--orbit-status-danger) 25%, transparent);
+}
+
+/* ── Disabled ── */
+:host(.orbit-input--disabled) .orbit-input,
+.orbit-input--disabled {
+  background: var(--orbit-surface-subtle);
+  pointer-events: none;
+}
+
+/* ── Control ── */
+.orbit-input__control {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--orbit-control-padding-inline);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--orbit-text-primary);
+  font: inherit;
+  font-size: var(--orbit-font-size-body);
+  line-height: 1.25;
+  cursor: text;
+}
+
+.orbit-input__control::placeholder {
+  color: var(--orbit-text-placeholder);
+}
+
+.orbit-input__control:disabled {
+  cursor: not-allowed;
+  color: var(--orbit-text-secondary);
+}
+
+.orbit-input__control[type='number'] {
+  appearance: textfield;
+}
+
+.orbit-input__control[type='number']::-webkit-inner-spin-button,
+.orbit-input__control[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+/* ── Leading icon / symbol ── */
+.orbit-input__icon--leading,
+.orbit-input__symbol {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  flex: 0 0 var(--orbit-control-adornment-size);
+  border-right: 1px solid var(--orbit-border-subtle);
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-tertiary);
+  font-size: var(--orbit-font-size-lg);
+}
+
+.orbit-input__icon--leading {
+  cursor: text;
+}
+
+.orbit-input__symbol {
+  font-style: normal;
+  font-weight: var(--orbit-font-weight-emphasis);
+}
+
+/* ── Trailing icon ── */
+.orbit-input__icon--trailing {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  flex: 0 0 var(--orbit-control-adornment-size);
+  border-left: 1px solid var(--orbit-border-subtle);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-lg);
+}
+
+/* ── Trailing action button ── */
+.orbit-input__action {
+  display: grid;
+  place-items: center;
+  flex: 0 0 var(--orbit-control-action-size);
+  align-self: stretch;
+  border: 0;
+  border-left: 1px solid var(--orbit-border-subtle);
+  background: transparent;
+  color: var(--orbit-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-input__action--leading {
+  border-right: 1px solid var(--orbit-border-subtle);
+  border-left: 0;
+}
+
+.orbit-input__password-icon {
+  width: var(--orbit-font-size-lg);
+  height: var(--orbit-font-size-lg);
+}
+
+.orbit-input__action:not(.orbit-input__action--leading):hover:not(:disabled) {
+  background: var(--orbit-surface-subtle);
+  border-left-color: var(--orbit-text-secondary);
+  color: var(--orbit-text-secondary);
+}
+
+.orbit-input:not(:focus-within):has(
+    .orbit-input__action:not(.orbit-input__action--leading):hover:not(:disabled)
+  ),
+.orbit-input:not(:focus-within):has(.orbit-input__number-step:hover:not(:disabled)) {
+  border-color: var(--orbit-text-secondary);
+}
+
+.orbit-input__action:not(.orbit-input__action--leading):active:not(:disabled) {
+  background: var(--orbit-surface-default);
+  border-left-color: var(--orbit-action-primary-bg);
+  color: var(--orbit-action-primary-bg);
+}
+
+.orbit-input__action:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.orbit-input__action:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Number stepper ── */
+.orbit-input__number-stepper {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-self: stretch;
+  flex: 0 0 var(--orbit-control-action-size);
+}
+
+.orbit-input__number-step {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-left: 1px solid var(--orbit-border-subtle);
+  background: transparent;
+  color: var(--orbit-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    border-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.orbit-input__number-step--up {
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+
+.orbit-input__number-step--up orbit-icon {
+  transform: rotate(180deg);
+}
+
+.orbit-input__number-step:hover:not(:disabled) {
+  background: var(--orbit-surface-subtle);
+  border-left-color: var(--orbit-text-secondary);
+  color: var(--orbit-text-secondary);
+}
+
+.orbit-input__number-step--up:hover:not(:disabled),
+.orbit-input__number-stepper:has(
+    .orbit-input__number-step:not(.orbit-input__number-step--up):hover:not(:disabled)
+  )
+  .orbit-input__number-step--up {
+  border-bottom-color: var(--orbit-text-secondary);
+}
+
+.orbit-input__number-step:active:not(:disabled) {
+  background: var(--orbit-surface-default);
+  border-left-color: var(--orbit-action-primary-bg);
+  color: var(--orbit-action-primary-bg);
+}
+
+.orbit-input__number-step--up:active:not(:disabled),
+.orbit-input__number-stepper:has(
+    .orbit-input__number-step:not(.orbit-input__number-step--up):active:not(:disabled)
+  )
+  .orbit-input__number-step--up {
+  border-bottom-color: var(--orbit-action-primary-bg);
+}
+
+.orbit-input__number-step:focus-visible {
+  position: relative;
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: -2px;
+}
+
+.orbit-input__number-step:disabled {
+  cursor: not-allowed;
+  color: var(--orbit-text-tertiary);
+}

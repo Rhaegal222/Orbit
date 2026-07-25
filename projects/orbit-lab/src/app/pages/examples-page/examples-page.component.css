@@ -1,0 +1,587 @@
+:host {
+  display: block;
+}
+
+.examples__tablist {
+  margin-block-end: var(--orbit-space-4);
+}
+
+/* The landing example renders `lab-example` in `bare` mode (no panel chrome/padding) so the
+   tablist above it needs its own inset to avoid sitting flush against the viewport edge. */
+:host-context(.lab-example-host--bare) .examples__tablist {
+  padding: var(--orbit-space-4) var(--orbit-space-5) 0;
+}
+
+/* Container (not viewport) query: in the Lab's mobile-preview mockup the phone box is far
+   narrower than the desktop browser window, so `@media` would never match. See
+   `.lab-shell__phone-viewport` in lab-shell.component.css for the `lab-viewport` container. */
+@container lab-viewport (max-width: 40rem) {
+  :host-context(.lab-example-host--bare) .examples__tablist {
+    padding: var(--orbit-space-3) var(--orbit-space-4) 0;
+  }
+}
+
+.examples__workspace {
+  display: grid;
+  gap: var(--orbit-layout-gap);
+}
+
+.examples__header,
+.examples__header-actions,
+.examples__stats,
+.examples__filter-grid,
+.examples__dossier-grid,
+.examples__dossier-side {
+  display: grid;
+  gap: var(--orbit-space-3);
+}
+
+.examples__header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+}
+.examples__header-actions {
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: end;
+}
+.examples__stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-block-start: var(--orbit-layout-gap);
+}
+.examples__stats div {
+  display: grid;
+  gap: var(--orbit-space-1);
+  padding: var(--orbit-space-3);
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-subtle);
+}
+.examples__stats span,
+.examples__header p,
+.examples__alert,
+.examples__modal-intro p {
+  margin: 0;
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-sm);
+  line-height: var(--orbit-line-height-normal);
+}
+.examples__stats strong {
+  font-size: var(--orbit-font-size-lg);
+  color: var(--orbit-text-primary);
+}
+.examples__header h2,
+.examples__modal-intro h2 {
+  margin: var(--orbit-space-1) 0;
+  font-size: var(--orbit-font-size-xl);
+  color: var(--orbit-text-primary);
+}
+.examples__eyebrow {
+  margin: 0;
+  color: var(--orbit-text-label);
+  font-size: var(--orbit-font-size-xs);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-transform: uppercase;
+}
+.examples__filter-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: end;
+}
+.examples__dossier-grid {
+  grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
+}
+.examples__dossier-side {
+  align-content: start;
+}
+.examples__alert {
+  margin-block-start: var(--orbit-space-2);
+}
+.examples__modal-intro {
+  display: grid;
+  gap: var(--orbit-space-1);
+}
+.examples__quick-action-content {
+  display: grid;
+  gap: var(--orbit-layout-gap);
+}
+
+.examples__landing {
+  position: relative;
+  --landing-gutter: calc(var(--orbit-space-6) * 2);
+  --landing-section-gap: calc(var(--orbit-space-6) * 1.5);
+  /* A fixed (not max-) height: `.examples__landing-scroll` below needs a definite `height: 100%`
+     to resolve against — percentage heights resolve to `auto` when the containing block's own
+     height isn't itself a definite value, which `max-height` alone never provides. */
+  height: 38rem;
+  overflow: hidden;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-default);
+  /* Bounds the demo to a fixed "device viewport" and — since `transform` (even a no-op one)
+     establishes a containing block for `position: fixed` descendants — makes *this* box, not the
+     real page, what the landing offcanvas anchors and clips to. Without it, the offcanvas would
+     size/position itself against the real browser viewport and escape this preview card whenever
+     the surrounding Lab page scrolls.
+     The actual scrolling happens one level down, in `.examples__landing-scroll`: a `position: fixed`
+     element anchors to its containing block's padding box but still moves with *that same box's*
+     own scroll offset if the box scrolls itself — so if this element were both the fixed-position
+     containing block *and* the scroll container, the offcanvas would drift away with the content
+     instead of staying pinned once the user scrolled the preview. Splitting the two roles across
+     parent/child keeps the offcanvas pinned to the non-scrolling outer frame regardless of how far
+     the inner content has scrolled. */
+  transform: translateZ(0);
+}
+
+.examples__landing-scroll {
+  display: grid;
+  align-content: start;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Locks the preview's own scroll while the offcanvas menu is open, so dragging/scrolling over the
+   dimmed background can't move content behind the drawer — the usual expectation for any modal
+   drawer, and doubly so here since this scroll container (not the real page) is what the user
+   actually sees move. */
+.examples__landing-scroll--locked {
+  overflow-y: hidden;
+}
+
+.examples__landing-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
+  gap: var(--landing-gutter);
+  padding: var(--landing-gutter);
+  background: linear-gradient(135deg, var(--orbit-surface-default), var(--orbit-surface-subtle));
+}
+
+.examples__landing-copy,
+.examples__landing-highlight,
+.examples__landing-section,
+.examples__landing-features,
+.examples__landing-actions,
+.examples__landing-trust,
+.examples__landing-metrics,
+.examples__landing-cta,
+.examples__landing-footer {
+  display: grid;
+  gap: var(--orbit-space-3);
+}
+
+.examples__landing-copy {
+  align-content: center;
+  justify-items: start;
+}
+
+.examples__landing-eyebrow,
+.examples__landing-copy > p:not(.examples__landing-eyebrow),
+.examples__landing-highlight p,
+.examples__landing-features p,
+.examples__landing-footer {
+  margin: 0;
+  color: var(--orbit-text-label);
+  font-size: var(--orbit-font-size-label);
+  line-height: var(--orbit-line-height-normal);
+}
+
+.examples__landing-eyebrow {
+  color: var(--orbit-action-primary-bg);
+  font-weight: var(--orbit-font-weight-emphasis);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.examples__landing h2,
+.examples__landing h3,
+.examples__landing h4 {
+  margin: 0;
+  color: var(--orbit-text-primary);
+}
+
+.examples__landing h2 {
+  max-width: 15ch;
+  font-size: var(--orbit-font-size-display);
+  line-height: var(--orbit-line-height-title);
+}
+
+.examples__landing h3 {
+  max-width: 26ch;
+  font-size: var(--orbit-font-size-title);
+  line-height: var(--orbit-line-height-title);
+}
+
+.examples__landing h4 {
+  font-size: var(--orbit-font-size-subtitle);
+}
+
+.examples__landing-actions {
+  grid-auto-flow: column;
+  justify-content: start;
+}
+
+.examples__landing-trust {
+  grid-auto-flow: column;
+  justify-content: start;
+  margin-block-start: var(--orbit-space-3);
+}
+
+.examples__landing-trust span {
+  display: grid;
+  gap: var(--orbit-space-1);
+  color: var(--orbit-text-secondary);
+  font-size: var(--orbit-font-size-caption);
+}
+
+.examples__landing-trust strong,
+.examples__landing-metrics strong {
+  color: var(--orbit-text-primary);
+  font-size: var(--orbit-font-size-subtitle);
+}
+
+.examples__landing-highlight {
+  align-content: start;
+  min-height: 22rem;
+  padding: var(--orbit-space-5);
+  border: 1px solid var(--orbit-action-primary-bg);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-action-primary-bg);
+  color: var(--orbit-action-primary-fg);
+}
+
+.examples__landing-highlight > span,
+.examples__landing-highlight p {
+  color: var(--orbit-action-primary-fg);
+}
+
+.examples__landing-highlight > span {
+  font-size: var(--orbit-font-size-caption);
+  font-weight: var(--orbit-font-weight-emphasis);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.examples__landing-highlight strong {
+  font-size: var(--orbit-font-size-title);
+}
+
+.examples__landing-highlight-visual {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: end;
+  gap: var(--orbit-space-2);
+  min-height: 8rem;
+  margin-block-start: auto;
+}
+
+.examples__landing-highlight-visual span {
+  border-radius: var(--orbit-radius-control) var(--orbit-radius-control) 0 0;
+  background: color-mix(in srgb, var(--orbit-action-primary-fg) 72%, transparent);
+}
+
+.examples__landing-highlight-visual span:nth-child(1) {
+  min-height: 28%;
+}
+.examples__landing-highlight-visual span:nth-child(2) {
+  min-height: 55%;
+}
+.examples__landing-highlight-visual span:nth-child(3) {
+  min-height: 42%;
+}
+.examples__landing-highlight-visual span:nth-child(4) {
+  min-height: 78%;
+}
+
+.examples__landing-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: var(--landing-section-gap) var(--landing-gutter);
+  background: var(--orbit-surface-subtle);
+  border-block: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-metrics div {
+  display: grid;
+  gap: var(--orbit-space-1);
+  padding-inline: var(--orbit-space-3);
+  border-inline-start: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-metrics div:first-child {
+  border-inline-start: 0;
+}
+
+.examples__landing-metrics span {
+  color: var(--orbit-text-label);
+  font-size: var(--orbit-font-size-caption);
+}
+
+.examples__landing-section {
+  padding: var(--landing-gutter);
+}
+
+.examples__landing-features {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.examples__landing-features orbit-panel {
+  display: grid;
+  gap: var(--orbit-space-3);
+  min-block-size: calc(var(--orbit-control-height) * 4);
+}
+
+.examples__landing-cta {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--orbit-space-5);
+  margin: 0 var(--landing-gutter) var(--landing-gutter);
+  padding: var(--landing-section-gap);
+  border-radius: var(--orbit-radius-surface);
+  background: var(--orbit-surface-subtle);
+}
+
+.examples__landing-footer {
+  grid-auto-flow: column;
+  justify-content: space-between;
+  padding: var(--orbit-space-4) var(--landing-gutter);
+  border-top: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-footer-copyright {
+  order: -1;
+}
+
+.examples__landing-footer-list {
+  display: flex;
+  gap: var(--orbit-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.examples__landing-footer-list li:not(:last-child)::after {
+  content: '\00B7';
+  margin-inline-start: var(--orbit-space-2);
+}
+
+/* --- Landing navbar wrapper + hamburger --- */
+
+.examples__landing-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.examples__landing-hamburger {
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--orbit-control-height);
+  height: var(--orbit-control-height);
+  padding: 0;
+  border: 1px solid var(--orbit-border-subtle);
+  border-radius: var(--orbit-radius-control);
+  background: var(--orbit-surface-default);
+  color: var(--orbit-text-primary);
+  cursor: pointer;
+  transition: background-color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.examples__landing-hamburger:hover {
+  background: var(--orbit-surface-subtle);
+}
+
+.examples__landing-hamburger:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+  box-shadow: var(--orbit-focus-ring);
+}
+
+/* --- Offcanvas overlay --- */
+
+.examples__landing-offcanvas-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgb(0 0 0 / 40%);
+  animation: examples-fade-in var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.examples__landing-offcanvas {
+  position: fixed;
+  top: 0;
+  start: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  /* `%` here (not `vw`/`dvh`) resolves against this element's actual containing block: on a real
+     device that's the viewport (same result as vw/dvh), but inside the Lab's mobile-preview
+     mockup .lab-shell__phone-screen's own transform makes *it* the containing block instead —
+     vw/dvh would ignore that and size against the real desktop window, escaping the phone bezel. */
+  width: min(20rem, 85%);
+  height: 100%;
+  background: var(--orbit-surface-default);
+  box-shadow: var(--orbit-shadow-modal);
+  animation: examples-slide-in var(--orbit-motion-base) var(--orbit-easing-standard);
+}
+
+.examples__landing-offcanvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--orbit-space-3);
+  padding: var(--orbit-space-3) var(--orbit-space-4);
+  border-bottom: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-offcanvas-brand {
+  font-size: var(--orbit-font-size-subtitle);
+  font-weight: var(--orbit-font-weight-emphasis);
+  color: var(--orbit-text-primary);
+}
+
+.examples__landing-offcanvas-nav {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: var(--orbit-space-3) var(--orbit-space-4);
+}
+
+.examples__landing-offcanvas-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--orbit-control-height);
+  padding: 0 var(--orbit-space-3);
+  border: 1px solid transparent;
+  border-radius: var(--orbit-radius-control);
+  background: transparent;
+  color: var(--orbit-text-secondary);
+  font: inherit;
+  font-size: var(--orbit-font-size-body);
+  font-weight: var(--orbit-font-weight-emphasis);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color var(--orbit-motion-fast) var(--orbit-easing-standard),
+    color var(--orbit-motion-fast) var(--orbit-easing-standard);
+}
+
+.examples__landing-offcanvas-item:hover {
+  background: var(--orbit-surface-subtle);
+  color: var(--orbit-text-primary);
+}
+
+.examples__landing-offcanvas-item--active {
+  background: color-mix(in srgb, var(--orbit-action-primary-bg) 12%, var(--orbit-surface-default));
+  color: var(--orbit-action-primary-bg);
+}
+
+.examples__landing-offcanvas-item:focus-visible {
+  outline: 2px solid var(--orbit-action-primary-bg);
+  outline-offset: 2px;
+}
+
+.examples__landing-offcanvas-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--orbit-space-2);
+  padding: var(--orbit-space-3) var(--orbit-space-4);
+  border-top: 1px solid var(--orbit-border-subtle);
+}
+
+.examples__landing-offcanvas-btn {
+  width: 100%;
+}
+
+@keyframes examples-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes examples-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@container lab-viewport (max-width: 64rem) {
+  .examples__filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .examples__dossier-grid {
+    grid-template-columns: 1fr;
+  }
+  .examples__landing-hero {
+    grid-template-columns: 1fr;
+  }
+  .examples__landing-features {
+    grid-template-columns: 1fr;
+  }
+}
+@container lab-viewport (max-width: 48rem) {
+  .examples__header {
+    grid-template-columns: 1fr;
+  }
+  .examples__header-actions {
+    grid-auto-flow: row;
+    justify-content: stretch;
+  }
+  .examples__stats,
+  .examples__filter-grid {
+    grid-template-columns: 1fr;
+  }
+  .examples__landing-hero,
+  .examples__landing-section {
+    padding: var(--orbit-space-5);
+  }
+  .examples__landing-actions,
+  .examples__landing-trust {
+    grid-auto-flow: row;
+    justify-content: stretch;
+  }
+  .examples__landing-footer {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+  .examples__landing-footer-copyright {
+    order: 1;
+    grid-column: 1 / -1;
+    justify-self: center;
+    text-align: center;
+  }
+  .examples__landing-footer-list {
+    flex-direction: column;
+    gap: var(--orbit-space-2);
+  }
+  .examples__landing-footer-list li:not(:last-child)::after {
+    content: none;
+  }
+  .examples__landing-hamburger {
+    display: inline-flex;
+  }
+  .examples__landing-nav-cta {
+    display: none;
+  }
+  .examples__landing-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: var(--orbit-space-5);
+  }
+  .examples__landing-metrics div:nth-child(odd) {
+    border-inline-start: 0;
+  }
+  .examples__landing-cta {
+    grid-template-columns: 1fr;
+    margin: 0 var(--orbit-space-5) var(--orbit-space-5);
+    padding: var(--orbit-space-5);
+  }
+  .examples__landing-footer {
+    padding: var(--orbit-space-4) var(--orbit-space-5);
+  }
+}

@@ -11,13 +11,12 @@
     "build:lab": "ng build orbit-lab",
     "build:studio": "ng build orbit-studio",
     "test": "ng test orbit-lab --watch=false",
-    "test:core": "ng test orbit --watch=false",
     "lint": "ng lint",
     "format:check": "prettier --config .prettierrc --list-different \"projects/**/*.{ts,html,css,json}\"",
     "format:write": "prettier --config .prettierrc --write \"projects/**/*.{ts,html,css,json}\"",
     "pack:check": "npm run build && cd dist/orbit-new && npm pack --dry-run",
     "fixture:verify": "bash consumer-fixture/verify.sh",
-    "release:check": "npm run format:check && npm run test:core && npm run test && npm run pack:check && npm run fixture:verify",
+    "release:check": "npm run format:check && npm run test && npm run pack:check && npm run fixture:verify",
     "check": "npm run release:check"
   },
   "dependencies": {

@@ -1,0 +1,4 @@
+.git
+.forgejo
+node_modules
+npm-debug.log

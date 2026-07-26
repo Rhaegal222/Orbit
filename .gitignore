@@ -1,7 +1,13 @@
 node_modules/
 dist/
 dist_old/
-deploy/
+# deploy/ holds checked-in infra (Dockerfile, docker-compose.yml, nginx.conf)
+# plus build artifacts copied there by CI (index.html, *.js, *.css, lab/, studio/) — ignore only the latter.
+deploy/*
+!deploy/Dockerfile
+!deploy/Dockerfile.dockerignore
+!deploy/docker-compose.yml
+!deploy/nginx.conf
 out-tsc/
 coverage/
 .angular/

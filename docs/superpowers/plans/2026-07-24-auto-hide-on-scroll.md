@@ -1,6 +1,8 @@
 # Orbit auto-hide-on-scroll directive Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add a public Orbit Core directive, `[orbitAutoHideOnScroll]`, that hides a toolbar-like
 host element on downward scroll and shows it again on upward scroll, but only below the
@@ -53,7 +55,7 @@ This task is one cohesive TDD cycle across several test cases, since the pieces 
 detection, breakpoint gating, direction logic, accessibility) are meaningless in isolation from
 each other.
 
-- [ ] **Step 1: Create the directive skeleton and host test harness, write the first failing test**
+- [x] **Step 1: Create the directive skeleton and host test harness, write the first failing test**
 
 Create `projects/orbit/src/lib/components/auto-hide-on-scroll/auto-hide-on-scroll.directive.ts`:
 
@@ -276,12 +278,12 @@ describe('OrbitAutoHideOnScrollDirective', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it passes (baseline, no-scroll-container case)**
+- [x] **Step 2: Run the test to verify it passes (baseline, no-scroll-container case)**
 
 Run: `npx ng test orbit --watch=false`
 Expected: PASS — 1 test, `OrbitAutoHideOnScrollDirective > does nothing when no scrollable ancestor exists`.
 
-- [ ] **Step 3: Add the breakpoint-gating tests**
+- [x] **Step 3: Add the breakpoint-gating tests**
 
 Add to the same `describe` block in `auto-hide-on-scroll.directive.spec.ts`:
 
@@ -308,14 +310,14 @@ Add to the same `describe` block in `auto-hide-on-scroll.directive.spec.ts`:
   });
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `npx ng test orbit --watch=false`
 Expected: PASS — both new tests green. The directive from Step 1 already guards on
 `mediaQuery.matches` in `setup()` and re-attaches on the `change` event in `onMediaChange()`, so
 no code change is needed here; this step is confirmation, not implementation.
 
-- [ ] **Step 5: Add the scroll-direction and threshold tests**
+- [x] **Step 5: Add the scroll-direction and threshold tests**
 
 ```typescript
   it('hides after scrolling down past the 8px threshold', async () => {
@@ -377,13 +379,13 @@ no code change is needed here; this step is confirmation, not implementation.
   });
 ```
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `npx ng test orbit --watch=false`
 Expected: PASS — all tests so far green. If any fail, re-read `evaluateScroll()` in the directive
 against the failing assertion before changing anything else.
 
-- [ ] **Step 7: Add the breakpoint-crossing and cleanup tests**
+- [x] **Step 7: Add the breakpoint-crossing and cleanup tests**
 
 ```typescript
   it('forces itself visible and detaches the listener when resized back above md', async () => {
@@ -417,12 +419,12 @@ against the failing assertion before changing anything else.
   });
 ```
 
-- [ ] **Step 8: Run the full spec file and verify everything passes**
+- [x] **Step 8: Run the full spec file and verify everything passes**
 
 Run: `npx ng test orbit --watch=false`
 Expected: PASS — all 9 tests in `auto-hide-on-scroll.directive.spec.ts` green, 0 failures.
 
-- [ ] **Step 9: Create the barrel file**
+- [x] **Step 9: Create the barrel file**
 
 Create `projects/orbit/src/lib/components/auto-hide-on-scroll/index.ts`:
 
@@ -430,7 +432,7 @@ Create `projects/orbit/src/lib/components/auto-hide-on-scroll/index.ts`:
 export { OrbitAutoHideOnScrollDirective } from './auto-hide-on-scroll.directive';
 ```
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/auto-hide-on-scroll/
@@ -451,7 +453,7 @@ git commit -m "feat: add OrbitAutoHideOnScrollDirective"
 - Produces: `OrbitAutoHideOnScrollDirective` importable from `@galileo/orbit` — Task 3's dialog
   consumer imports it from there, not from the internal path.
 
-- [ ] **Step 1: Add the export to `public-api.ts`**
+- [x] **Step 1: Add the export to `public-api.ts`**
 
 In `projects/orbit/src/public-api.ts`, add this line immediately before
 `export * from './lib/types';`:
@@ -460,12 +462,12 @@ In `projects/orbit/src/public-api.ts`, add this line immediately before
 export * from './lib/components/auto-hide-on-scroll';
 ```
 
-- [ ] **Step 2: Verify the package still builds and the symbol resolves**
+- [x] **Step 2: Verify the package still builds and the symbol resolves**
 
 Run: `npx ng build orbit`
 Expected: Build succeeds with no new errors or warnings.
 
-- [ ] **Step 3: Add the CHANGELOG entry**
+- [x] **Step 3: Add the CHANGELOG entry**
 
 In `CHANGELOG.md`, under `## Unreleased` → `### Added`, add this line (keep existing entries
 above it untouched):
@@ -476,7 +478,7 @@ above it untouched):
   reclaim vertical space in narrow modal/panel bodies.
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add projects/orbit/src/public-api.ts CHANGELOG.md
@@ -493,7 +495,7 @@ git commit -m "feat: export OrbitAutoHideOnScrollDirective from the package entr
 **Interfaces:**
 - Consumes: `OrbitAutoHideOnScrollDirective` from `@galileo/orbit` (Task 2).
 
-- [ ] **Step 1: Import the directive and apply it to the toolbar wrapper**
+- [x] **Step 1: Import the directive and apply it to the toolbar wrapper**
 
 In `projects/orbit-lab/src/app/shell/google-fonts-dialog.component.ts`, update the import block
 (currently lines 6-14) to add `OrbitAutoHideOnScrollDirective`:
@@ -541,7 +543,7 @@ directive:
 </div>
 ```
 
-- [ ] **Step 2: Run the orbit-lab unit test suite**
+- [x] **Step 2: Run the orbit-lab unit test suite**
 
 Run: `npx ng test orbit-lab --watch=false`
 Expected: PASS — no test currently asserts on the exact DOM structure of
@@ -549,7 +551,7 @@ Expected: PASS — no test currently asserts on the exact DOM structure of
 fail on this, update its selector to look inside the new wrapper rather than changing the
 directive's placement.
 
-- [ ] **Step 3: Start the dev server and verify in the browser**
+- [x] **Step 3: Start the dev server and verify in the browser**
 
 Run: `npm run start` (if not already running), then open `http://localhost:4200`.
 
@@ -568,7 +570,7 @@ Manually verify, using the running Orbit Lab app:
    skips the search input entirely and lands on the next focusable element in the font list
    (verifies `inert`).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/shell/google-fonts-dialog.component.ts

@@ -82,4 +82,15 @@ describe('PanelPageComponent', () => {
     const overlayEl = overlayContainer.getContainerElement();
     expect(overlayEl.querySelector('orbit-sidebar[embedded]')).toBeTruthy();
   });
+
+  it('documents the example switcher and reacts to a selection made through it', () => {
+    expect(fixture.nativeElement.textContent).toContain('Selettore esempio');
+    const switcherHost = fixture.nativeElement.querySelector('lab-example-switcher');
+    expect(switcherHost.textContent).toContain('Portafoglio catalogo');
+
+    fixture.componentInstance.selectExampleSwitcherDemo('dossier');
+    fixture.detectChanges();
+
+    expect(switcherHost.textContent).toContain('Dossier prodotto');
+  });
 });

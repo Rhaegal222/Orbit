@@ -15,33 +15,33 @@
 
 ### 1. Token CSS — aggiunte a `tokens.css`
 
-- [ ] 1.1 Aggiungere `--orbit-radius-full: 9999px`
-- [ ] 1.2 Aggiungere componente token badge: `--orbit-badge-primary-fg`, `--orbit-badge-success-fg`, `--orbit-badge-danger-fg`, `--orbit-badge-warning-fg`, `--orbit-badge-info-fg`, `--orbit-badge-neutral-fg`
+- [x] 1.1 Aggiungere `--orbit-radius-full: 9999px`
+- [x] 1.2 Aggiungere componente token badge: `--orbit-badge-primary-fg`, `--orbit-badge-success-fg`, `--orbit-badge-danger-fg`, `--orbit-badge-warning-fg`, `--orbit-badge-info-fg`, `--orbit-badge-neutral-fg`
 
 **File:** `projects/orbit/src/styles/tokens.css`
 **Verifica:** `ng build orbit` produce CSS senza errori, token presenti nel bundle.
 
 ### 2. OrbitFormSectionComponent — token + collassabile
 
-- [ ] 2.1 Sostituire token legacy nel CSS:
+- [x] 2.1 Sostituire token legacy nel CSS:
   - `--orbit-color-border` → `--orbit-border-subtle`
   - `--orbit-color-text-muted` → `--orbit-text-secondary`
   - `--orbit-font-family` → `--orbit-font-sans`
   - `--orbit-font-weight-bold` → `--orbit-font-weight-emphasis`
-- [ ] 2.2 Aggiungere input `collapsible` (boolean, default `false`)
-- [ ] 2.3 Aggiungere signal `collapsed` (stato interno, default `false` — aperto)
-- [ ] 2.4 Modificare template: header come `<button type="button">` quando `collapsible`
-- [ ] 2.5 Aggiungere `aria-expanded`, `aria-controls`, `id` stabile sul body
-- [ ] 2.6 Aggiungere `hidden` attribute sul body quando collassato
-- [ ] 2.7 Aggiungere `role="region"` sul body quando collassabile
-- [ ] 2.8 Test: espansione/collasso, aria-expanded, collegamento header/body, tastiera
+- [x] 2.2 Aggiungere input `collapsible` (boolean, default `false`)
+- [x] 2.3 Aggiungere signal `collapsed` (stato interno, default `false` — aperto)
+- [x] 2.4 Modificare template: header come `<button type="button">` quando `collapsible`
+- [x] 2.5 Aggiungere `aria-expanded`, `aria-controls`, `id` stabile sul body
+- [x] 2.6 Aggiungere `hidden` attribute sul body quando collassato
+- [x] 2.7 Aggiungere `role="region"` sul body quando collassabile
+- [x] 2.8 Test: espansione/collasso, aria-expanded, collegamento header/body, tastiera
 
 **File:** `projects/orbit/src/lib/components/form-section/form-section.component.ts`, `.html`, `.css`, `.spec.ts`
 **Verifica:** test collapsible passano, `ng test orbit` verde.
 
 ### 3. OrbitTextInputComponent — token
 
-- [ ] 3.1 Sostituire token legacy nel CSS:
+- [x] 3.1 Sostituire token legacy nel CSS:
   - `--orbit-color-border` → `--orbit-border-subtle`
   - `--orbit-color-surface` → `--orbit-surface-default`
   - `--orbit-color-surface-muted` → `--orbit-surface-subtle`
@@ -55,14 +55,14 @@
   - `--orbit-control-padding-x` → `--orbit-control-padding-inline`
   - `--orbit-shadow-focus` → `--orbit-focus-ring`
   - `rgba(220, 53, 69, 0.25)` → `color-mix(in srgb, var(--orbit-status-danger) 25%, transparent)`
-- [ ] 3.2 Test: verifica assenza token legacy nei CSS
+- [x] 3.2 Test: verifica assenza token legacy nei CSS
 
 **File:** `projects/orbit/src/lib/components/text-input/text-input.component.css`, `.spec.ts`
 **Verifica:** `grep` token legacy = 0 occorrenze, test passano.
 
 ### 4. OrbitSelectComponent — token
 
-- [ ] 4.1 Sostituire token legacy nel CSS:
+- [x] 4.1 Sostituire token legacy nel CSS:
   - `--orbit-color-border` → `--orbit-border-subtle`
   - `--orbit-color-surface` → `--orbit-surface-default`
   - `--orbit-color-surface-muted` → `--orbit-surface-subtle`
@@ -79,14 +79,14 @@
   - `--orbit-shadow-lg` → `--orbit-shadow-overlay`
   - `--orbit-radius-sm` → `--orbit-radius-sm` (OK, esiste)
   - `rgba(220, 53, 69, 0.25)` → `color-mix(in srgb, var(--orbit-status-danger) 25%, transparent)`
-- [ ] 4.2 Test: verifica assenza token legacy nei CSS
+- [x] 4.2 Test: verifica assenza token legacy nei CSS
 
 **File:** `projects/orbit/src/lib/components/select/select.component.css`, `.spec.ts`
 **Verifica:** `grep` token legacy = 0 occorrenze, test passano.
 
 ### 5. OrbitCheckboxComponent — token
 
-- [ ] 5.1 Sostituire token legacy nel CSS:
+- [x] 5.1 Sostituire token legacy nel CSS:
   - `--orbit-color-border` → `--orbit-border-subtle`
   - `--orbit-color-surface` → `--orbit-surface-default`
   - `--orbit-color-text` → `--orbit-text-primary`
@@ -95,14 +95,14 @@
   - `--orbit-font-family` → `--orbit-font-sans`
   - `--orbit-font-size-base` → `--orbit-font-size-body`
   - `#fff` → `var(--orbit-text-inverse)`
-- [ ] 5.2 Test: verifica assenza token legacy nei CSS
+- [x] 5.2 Test: verifica assenza token legacy nei CSS
 
 **File:** `projects/orbit/src/lib/components/checkbox/checkbox.component.css`, `.spec.ts`
 **Verifica:** `grep` token legacy = 0 occorrenze, test passano.
 
 ### 6. OrbitPillSwitchComponent — token
 
-- [ ] 6.1 Sostituire token legacy nel CSS:
+- [x] 6.1 Sostituire token legacy nel CSS:
   - `--orbit-color-border` → `--orbit-border-subtle`
   - `--orbit-color-surface-muted` → `--orbit-surface-subtle`
   - `--orbit-color-surface` → `--orbit-surface-default`
@@ -114,14 +114,14 @@
   - `--orbit-font-size-xs` → `--orbit-font-size-xs` (OK, esiste)
   - `--orbit-font-weight-bold` → `--orbit-font-weight-emphasis`
   - `--orbit-shadow-sm` → `--orbit-shadow-raised`
-- [ ] 6.2 Test: verifica assenza token legacy nei CSS
+- [x] 6.2 Test: verifica assenza token legacy nei CSS
 
 **File:** `projects/orbit/src/lib/components/pill-switch/pill-switch.component.css`, `.spec.ts`
 **Verifica:** `grep` token legacy = 0 occorrenze, test passano.
 
 ### 7. OrbitBadgeComponent — token
 
-- [ ] 7.1 Sostituire token legacy nel CSS:
+- [x] 7.1 Sostituire token legacy nel CSS:
   - `--orbit-font-family` → `--orbit-font-sans`
   - `--orbit-font-size-xs` → `--orbit-font-size-xs` (OK)
   - `--orbit-font-weight-semibold` → `--orbit-font-weight-emphasis`
@@ -138,17 +138,17 @@
   - `#055160` → `var(--orbit-badge-info-fg)`
   - `--orbit-color-neutral-subtle` → `var(--orbit-surface-subtle)`
   - `#41464b` → `var(--orbit-badge-neutral-fg)`
-- [ ] 7.2 Test: verifica assenza token legacy e hard-coded nei CSS
+- [x] 7.2 Test: verifica assenza token legacy e hard-coded nei CSS
 
 **File:** `projects/orbit/src/lib/components/badge/badge.component.css`, `.spec.ts`
 **Verifica:** `grep` token legacy + hex color = 0 occorrenze, test passano.
 
 ### 8. Verifica globale
 
-- [ ] 8.1 `ng build orbit` — build libreria passa
-- [ ] 8.2 `ng test orbit` — tutti i test passano
-- [ ] 8.3 `grep -r 'orbit-color-\|orbit-font-family\|orbit-font-size-base\|orbit-control-padding-x\|orbit-shadow-focus\|orbit-shadow-lg\|orbit-shadow-sm\|orbit-font-weight-bold\|orbit-font-weight-semibold' projects/orbit/src/lib/components/{form-section,text-input,select,checkbox,pill-switch,badge}/` — 0 occorrenze
-- [ ] 8.4 Aggiornare `docs/THEMING.md` e `CHANGELOG.md` per i token pubblici aggiunti
+- [x] 8.1 `ng build orbit` — build libreria passa
+- [x] 8.2 `ng test orbit` — tutti i test passano
+- [x] 8.3 `grep -r 'orbit-color-\|orbit-font-family\|orbit-font-size-base\|orbit-control-padding-x\|orbit-shadow-focus\|orbit-shadow-lg\|orbit-shadow-sm\|orbit-font-weight-bold\|orbit-font-weight-semibold' projects/orbit/src/lib/components/{form-section,text-input,select,checkbox,pill-switch,badge}/` — 0 occorrenze
+- [x] 8.4 Aggiornare `docs/THEMING.md` e `CHANGELOG.md` per i token pubblici aggiunti
 
 ## Mapping token applicato
 

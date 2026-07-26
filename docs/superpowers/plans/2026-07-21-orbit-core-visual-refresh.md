@@ -1,6 +1,8 @@
 # Orbit Core — Visual Refresh (gap-closing) Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** close the remaining gaps between Orbit Core and the "Orbit Visual Refresh" mockup spec (`docs/superpowers/specs/2026-07-21-orbit-core-visual-refresh-design.md`) — the palette/radii/shadow/text-scale foundation described in that spec is **already implemented** in `projects/orbit/src/styles/tokens.css` (verified by re-reading the file: ink palette, 10px/20px/14px radii, deep overlay shadow, `--orbit-text-scale` calc-based font sizes and 80%-ratio control heights, 12% focus ring are all already present). What remains: the accent/CTA/font swatch mechanisms, two missing interactive-state refinements, and a shared icon set with scale-sensitivity support.
 
@@ -26,7 +28,7 @@
 **Interfaces:**
 - Produces: `[data-orbit-accent='violet']` and `[data-orbit-accent='teal']` attribute selectors overriding `--orbit-action-primary-bg` / `--orbit-action-primary-bg-hover`. Default (no attribute) stays the current blue (`--orbit-ref-brand-500` = `#3457d5`).
 
-- [ ] **Step 1: Add the two accent override blocks**
+- [x] **Step 1: Add the two accent override blocks**
 
 Add this new block immediately after the `[data-orbit-density='compact']` block (currently ends at line 193) and before the `[data-orbit-theme='dark']` block:
 
@@ -43,17 +45,17 @@ Add this new block immediately after the `[data-orbit-density='compact']` block 
 }
 ```
 
-- [ ] **Step 2: Verify the new selectors are present**
+- [x] **Step 2: Verify the new selectors are present**
 
 Run: `grep -c "data-orbit-accent" projects/orbit/src/styles/tokens.css`
 Expected: `2` (one for `violet`, one for `teal`)
 
-- [ ] **Step 3: Verify no existing test broke**
+- [x] **Step 3: Verify no existing test broke**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all test files pass (this app compiles `@galileo/orbit` from source, so a CSS syntax error would show up as a build failure here).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add projects/orbit/src/styles/tokens.css
@@ -72,7 +74,7 @@ git commit -m "feat(orbit): add accent color swatch (violet, teal)"
 - Consumes: nothing new.
 - Produces: new semantic tokens `--orbit-cta-bg` (default `#1f8a4c`, matches `--orbit-status-success`) and `--orbit-cta-bg-hover`; `[data-orbit-cta='blue']` and `[data-orbit-cta='ink']` override them. `.orbit-btn--primary` now derives `--btn-bg`/`--btn-bg-hover`/`--btn-border` from `--orbit-cta-bg`/`--orbit-cta-bg-hover` instead of `--orbit-action-primary-bg` — the accent (selection/focus/links) and the CTA (primary button) become independently swatchable, matching the mockup where accent=blue but CTA=green by default.
 
-- [ ] **Step 1: Add the CTA tokens and swatch overrides to tokens.css**
+- [x] **Step 1: Add the CTA tokens and swatch overrides to tokens.css**
 
 In the `:root` block, immediately after the `--orbit-action-primary-fg` line, add:
 
@@ -95,7 +97,7 @@ Then, in the same new block added in Task 1 (after `[data-orbit-density='compact
 }
 ```
 
-- [ ] **Step 2: Repoint the primary button tone**
+- [x] **Step 2: Repoint the primary button tone**
 
 In `projects/orbit/src/lib/components/button/button.component.css`, replace the `.orbit-btn--primary` block:
 
@@ -112,7 +114,7 @@ In `projects/orbit/src/lib/components/button/button.component.css`, replace the 
 }
 ```
 
-- [ ] **Step 3: Add the colored shadow the mockup specifies for the primary CTA (matches the existing `--success` pattern)**
+- [x] **Step 3: Add the colored shadow the mockup specifies for the primary CTA (matches the existing `--success` pattern)**
 
 Immediately after `.orbit-btn--solid.orbit-btn--success { ... }` in the same file, add:
 
@@ -122,22 +124,22 @@ Immediately after `.orbit-btn--solid.orbit-btn--success { ... }` in the same fil
 }
 ```
 
-- [ ] **Step 4: Run the button spec — must still pass unchanged (regression, not a new test)**
+- [x] **Step 4: Run the button spec — must still pass unchanged (regression, not a new test)**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/button.component.spec.ts'`
 Expected: existing tests pass (they assert `orbit-btn--primary` class presence, not resolved colors, so no test code changes needed).
 
-- [ ] **Step 5: Verify the repoint via grep (colors aren't observable through jsdom computed style without a real cascade)**
+- [x] **Step 5: Verify the repoint via grep (colors aren't observable through jsdom computed style without a real cascade)**
 
 Run: `grep -A6 "Tone: primary" projects/orbit/src/lib/components/button/button.component.css`
 Expected: block references `--orbit-cta-bg`/`--orbit-cta-bg-hover`, no direct reference to `--orbit-action-primary-bg` left in that block.
 
-- [ ] **Step 6: Full orbit-lab verification**
+- [x] **Step 6: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass (button-page renders every tone × variant combination, would fail to compile on a CSS/token typo).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit/src/styles/tokens.css projects/orbit/src/lib/components/button/button.component.css
@@ -154,7 +156,7 @@ git commit -m "feat(orbit): add CTA color swatch and decouple primary button fro
 **Interfaces:**
 - Produces: `[data-orbit-font='inter']` and `[data-orbit-font='system']` overriding `--orbit-font-sans`. Default (no attribute) stays Public Sans (already `--orbit-ref-font-sans`).
 
-- [ ] **Step 1: Add the two font overrides**
+- [x] **Step 1: Add the two font overrides**
 
 In the same new block used by Tasks 1–2, add:
 
@@ -168,17 +170,17 @@ In the same new block used by Tasks 1–2, add:
 }
 ```
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 Run: `grep -c "data-orbit-font" projects/orbit/src/styles/tokens.css`
 Expected: `2`
 
-- [ ] **Step 3: Full orbit-lab verification**
+- [x] **Step 3: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add projects/orbit/src/styles/tokens.css
@@ -197,7 +199,7 @@ git commit -m "feat(orbit): add font family swatch (Public Sans, Inter, System U
 - Consumes: existing `.orbit-selectable-tile--selected` class already toggled by `OrbitSelectableTileComponent` on `selected()` input (unchanged).
 - Produces: `@keyframes orbit-pop` applied to `.orbit-selectable-tile--selected .orbit-selectable-tile__indicator`.
 
-- [ ] **Step 1: Write the failing test (or the first test, if no spec file exists yet)**
+- [x] **Step 1: Write the failing test (or the first test, if no spec file exists yet)**
 
 ```ts
 it('marks the indicator as selected so the pop-in animation applies', () => {
@@ -210,12 +212,12 @@ it('marks the indicator as selected so the pop-in animation applies', () => {
 
 If `selectable-tile.component.spec.ts` doesn't exist yet, create it following the pattern in `projects/orbit/src/lib/components/pill-switch/pill-switch.component.spec.ts` (TestBed host wrapper component with `[label]`, `[selected]` bindings).
 
-- [ ] **Step 2: Run it**
+- [x] **Step 2: Run it**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/selectable-tile.component.spec.ts'`
 Expected: PASS (this assertion is already true today — it's a baseline/regression guard before the CSS-only change below, since jsdom can't observe CSS animations).
 
-- [ ] **Step 3: Add the animation**
+- [x] **Step 3: Add the animation**
 
 Append to `selectable-tile.component.css`:
 
@@ -231,17 +233,17 @@ Append to `selectable-tile.component.css`:
 }
 ```
 
-- [ ] **Step 4: Verify via grep (jsdom does not execute CSS animations, so this is the real check)**
+- [x] **Step 4: Verify via grep (jsdom does not execute CSS animations, so this is the real check)**
 
 Run: `grep -c "orbit-pop" projects/orbit/src/lib/components/selectable-tile/selectable-tile.component.css`
 Expected: `2` (the `@keyframes` declaration and its one usage)
 
-- [ ] **Step 5: Run the full component test again**
+- [x] **Step 5: Run the full component test again**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/selectable-tile.component.spec.ts'`
 Expected: PASS
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/selectable-tile/
@@ -259,7 +261,7 @@ git commit -m "feat(orbit): add check pop-in animation to selected selectable-ti
 - Consumes: nothing new (host-level styling only).
 - Produces: `:host(:hover)` rule darkening the background slightly, matching the "riga documento: hover leggero scurimento" rule from the mockup spec.
 
-- [ ] **Step 1: Add the hover rule**
+- [x] **Step 1: Add the hover rule**
 
 In `attachment-list-item.component.css`, immediately after the `:host { ... }` block (currently lines 1-12), add:
 
@@ -269,17 +271,17 @@ In `attachment-list-item.component.css`, immediately after the `:host { ... }` b
 }
 ```
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 Run: `grep -A2 ":host(:hover)" projects/orbit/src/lib/components/attachment-list-item/attachment-list-item.component.css`
 Expected: shows the new rule.
 
-- [ ] **Step 3: Run the existing component spec (regression)**
+- [x] **Step 3: Run the existing component spec (regression)**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/attachment-list-item.component.spec.ts'`
 Expected: PASS unchanged (no test asserts hover background, this is a CSS-only addition).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/attachment-list-item/attachment-list-item.component.css
@@ -301,7 +303,7 @@ git commit -m "feat(orbit): add hover state to attachment list item"
 **Interfaces:**
 - Produces: `OrbitIconName = 'close' | 'calendar' | 'chevron-down' | 'check'` (first 4 icons — the doc's full 18-icon set follows the identical registry-entry pattern as a mechanical fast-follow, not required for this task's deliverable to be complete and testable). `ORBIT_ICON_PATHS: Record<OrbitIconName, string[]>` (array of SVG `<path d>` values per icon, since some icons need multiple paths, e.g. `close`'s two diagonal strokes). `OrbitIconComponent` with `name = input.required<OrbitIconName>()`, selector `orbit-icon`.
 
-- [ ] **Step 1: Write the icon registry**
+- [x] **Step 1: Write the icon registry**
 
 ```ts
 // projects/orbit/src/lib/icons/icon-registry.ts
@@ -320,7 +322,7 @@ export const ORBIT_ICON_PATHS: Record<OrbitIconName, string[]> = {
 };
 ```
 
-- [ ] **Step 2: Write the failing component test**
+- [x] **Step 2: Write the failing component test**
 
 ```ts
 // projects/orbit/src/lib/icons/icon.component.spec.ts
@@ -359,12 +361,12 @@ describe('OrbitIconComponent', () => {
 });
 ```
 
-- [ ] **Step 3: Run it to verify it fails**
+- [x] **Step 3: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/icon.component.spec.ts'`
 Expected: FAIL (`OrbitIconComponent` does not exist yet)
 
-- [ ] **Step 4: Write the component**
+- [x] **Step 4: Write the component**
 
 ```ts
 // projects/orbit/src/lib/icons/icon.component.ts
@@ -405,12 +407,12 @@ export * from './icon.component';
 export * from './icon-registry';
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- [x] **Step 5: Run tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/icon.component.spec.ts'`
 Expected: PASS (3 tests)
 
-- [ ] **Step 6: Export from public-api**
+- [x] **Step 6: Export from public-api**
 
 In `projects/orbit/src/public-api.ts`, add:
 
@@ -418,12 +420,12 @@ In `projects/orbit/src/public-api.ts`, add:
 export * from './lib/icons';
 ```
 
-- [ ] **Step 7: Full orbit-lab verification (confirms the export resolves through the library path mapping)**
+- [x] **Step 7: Full orbit-lab verification (confirms the export resolves through the library path mapping)**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add projects/orbit/src/lib/icons/ projects/orbit/src/public-api.ts
@@ -443,7 +445,7 @@ git commit -m "feat(orbit): add shared OrbitIconComponent with a 4-icon starter 
 - Consumes: `OrbitIconComponent` from Task 6.
 - Produces: two new inputs — `scaleSensitive = input(false, { transform: booleanAttribute })` (opt-in per the mockup rule: only icons next to text that can wrap/grow are scale-sensitive; check/selection, header, and attachment-row icons stay `scaleSensitive=false`, the default) and `textScale = input(1, { transform: numberAttribute })` (the effective current scale, passed down by the consumer that already knows it — avoids reading `--orbit-text-scale` back out of the CSS cascade via `getComputedStyle`, which would be fragile and untestable in jsdom).
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Add to `icon.component.spec.ts`:
 
@@ -474,12 +476,12 @@ it('keeps a non-scale-sensitive icon like check visible at any scale', () => {
 
 (Correction to the test written in Task 6, Step 2: `scaleSensitive` defaults to `false`, so those three original tests keep passing unmodified — no need to touch them.)
 
-- [ ] **Step 2: Run to verify the two new tests fail**
+- [x] **Step 2: Run to verify the two new tests fail**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/icon.component.spec.ts'`
 Expected: FAIL on the `hides a scale-sensitive icon...` test (`scaleSensitive`/`textScale` inputs don't exist yet, so it currently always renders).
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 ```ts
 // projects/orbit/src/lib/icons/icon.component.ts
@@ -527,17 +529,17 @@ export class OrbitIconComponent {
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/icon.component.spec.ts'`
 Expected: PASS (6 tests total)
 
-- [ ] **Step 5: Full orbit-lab verification**
+- [x] **Step 5: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add projects/orbit/src/lib/icons/

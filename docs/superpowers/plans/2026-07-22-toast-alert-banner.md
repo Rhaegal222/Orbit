@@ -1,6 +1,8 @@
 # Toast, Alert e Banner Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add three new feedback components to the Orbit design system — `OrbitToastService`/`OrbitToastComponent` (transient overlay notifications, stacked per corner), `OrbitAlertComponent` (inline card-level message), and `OrbitBannerComponent` (full-width page/section message) — plus the 3 new icons they need, and a catalog demo page per component in `orbit-lab`.
 
@@ -60,7 +62,7 @@ New files:
 **Interfaces:**
 - Produces: `OrbitIconName` union gains `'alert-circle' | 'alert-triangle' | 'info'`; `ORBIT_ICON_PATHS` gains matching entries. Later tasks (toast/alert/banner components) consume these three names directly as `OrbitIconName` values.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Add these three tests to `projects/orbit/src/lib/icons/icon.component.spec.ts`, right after the existing `'renders the slider icon...'` test (before the `'uses a 24x24 viewBox...'` test):
 
@@ -87,13 +89,13 @@ Add these three tests to `projects/orbit/src/lib/icons/icon.component.spec.ts`, 
   });
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: FAIL — `alert-circle`/`alert-triangle`/`info` are not assignable to `OrbitIconName` (TypeScript compile error) or, if compilation is loose enough to run, the three new tests fail because `ORBIT_ICON_PATHS[undefined]` yields no paths.
 
-- [ ] **Step 3: Add the icons to the registry**
+- [x] **Step 3: Add the icons to the registry**
 
 In `projects/orbit/src/lib/icons/icon-registry.ts`, extend the `OrbitIconName` union (append after `'slider'`):
 
@@ -153,13 +155,13 @@ Add these entries to `ORBIT_ICON_PATHS`, right after the `slider` entry (before 
   ],
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: PASS — all `OrbitIconComponent` tests green, including the 3 new ones.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 (Skipped — this plan does not run git commands. Leave the change staged in the working tree for the user to commit.)
 
@@ -184,7 +186,7 @@ Expected: PASS — all `OrbitIconComponent` tests green, including the 3 new one
   - `export class OrbitToastRef { dismiss(): void; pauseAutoDismiss(): void; resumeAutoDismiss(): void; readonly afterDismissed$: Observable<void>; }`
   - `export class OrbitToastService { show(config: OrbitToastConfig): OrbitToastRef; dismissAll(): void; }` (`providedIn: 'root'`)
 
-- [ ] **Step 1: Write `OrbitToastRef`**
+- [x] **Step 1: Write `OrbitToastRef`**
 
 Create `projects/orbit/src/lib/services/toast/toast-ref.ts`:
 
@@ -250,7 +252,7 @@ export class OrbitToastRef {
 }
 ```
 
-- [ ] **Step 2: Write `OrbitToastService`**
+- [x] **Step 2: Write `OrbitToastService`**
 
 Create `projects/orbit/src/lib/services/toast/toast.service.ts`:
 
@@ -465,7 +467,7 @@ import { OrbitToastRef } from './toast-ref';
 
 This creates a real dependency from `toast.service.ts` on Task 3's `toast.component.ts`. That is intentional and mirrors how `OrbitPanelService` takes a `ComponentType` — here the type is fixed to `OrbitToastComponent` because the service owns the markup (the design spec's toast is a single reusable visual, not an arbitrary portal like the panel). **Because of this dependency, do Task 3 immediately after finishing Task 2's non-service files, and only write `toast.service.spec.ts` (Step 4 below) after Task 3's component exists** — this plan orders Task 3 next for exactly that reason; if executed by a subagent per task, tell the Task 2 implementer to stop after Step 3 (leave the spec for a follow-up once Task 3 lands), and have the Task 3 implementer finish Task 2 Steps 4-6 as part of wiring the component in.
 
-- [ ] **Step 3: Write the barrel**
+- [x] **Step 3: Write the barrel**
 
 Create `projects/orbit/src/lib/services/toast/index.ts`:
 
@@ -476,7 +478,7 @@ export { ORBIT_TOAST_DATA, ORBIT_TOAST_REF } from './toast.service';
 export type { OrbitToastConfig, OrbitToastData, OrbitToastTone, OrbitToastPosition } from './toast.service';
 ```
 
-- [ ] **Step 4: Write the failing service tests (do this only after Task 3's `OrbitToastComponent` exists)**
+- [x] **Step 4: Write the failing service tests (do this only after Task 3's `OrbitToastComponent` exists)**
 
 Create `projects/orbit/src/lib/services/toast/toast.service.spec.ts`:
 
@@ -602,13 +604,13 @@ describe('OrbitToastService', () => {
 });
 ```
 
-- [ ] **Step 5: Run the tests to verify they fail, then pass**
+- [x] **Step 5: Run the tests to verify they fail, then pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Before Task 3 lands (component doesn't exist / import fails): expected FAIL with a module-not-found error on `../../components/toast/toast.component`. After Task 3 is complete, re-run the same command; expected PASS for every test listed above. If the stacking test's DOM order is wrong (e.g. `bottom-end` should push new items so the most recent is nearest the screen edge — i.e. first in DOM if the container is `flex-direction: column-reverse`, or you choose to keep normal order and rely on `unshift` as coded above), adjust `toast.component.html`'s container CSS in Task 3 rather than the service's `unshift`/`push` logic, since the service only controls array order and the visual "nearest the edge" requirement is a CSS concern for `bottom-*` vs `top-*` containers (see Task 3 Step 3 CSS).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -627,7 +629,7 @@ Before Task 3 lands (component doesn't exist / import fails): expected FAIL with
 - Consumes: `ORBIT_TOAST_DATA`, `ORBIT_TOAST_REF` (`InjectionToken`s from Task 2's `toast.service.ts`), `OrbitToastRef` (Task 2), `OrbitIconComponent` (existing, `projects/orbit/src/lib/icons/icon.component.ts`), `OrbitIconButtonComponent` (existing, `projects/orbit/src/lib/components/icon-button/icon-button.component.ts`), `ORBIT_I18N` (existing, `projects/orbit/src/lib/i18n/orbit-i18n.ts`), the 3 new icon names from Task 1 (`alert-circle`, `alert-triangle`, `info`) plus existing `check`.
 - Produces: `OrbitToastComponent` class, consumed by Task 2's `toast.service.ts` (`ComponentPortal(OrbitToastComponent, ...)`) and re-exported from `projects/orbit/src/public-api.ts` (Task 6).
 
-- [ ] **Step 1: Write the component class**
+- [x] **Step 1: Write the component class**
 
 Create `projects/orbit/src/lib/components/toast/toast.component.ts`:
 
@@ -687,7 +689,7 @@ export class OrbitToastComponent {
 }
 ```
 
-- [ ] **Step 2: Write the template**
+- [x] **Step 2: Write the template**
 
 Create `projects/orbit/src/lib/components/toast/toast.component.html`:
 
@@ -704,7 +706,7 @@ Create `projects/orbit/src/lib/components/toast/toast.component.html`:
 }
 ```
 
-- [ ] **Step 3: Write the CSS**
+- [x] **Step 3: Write the CSS**
 
 Create `projects/orbit/src/lib/components/toast/toast.component.css`. This file also carries the position-container rules that Task 2's service applies via `panelClass` (`.orbit-toast-container`, `.orbit-toast-container--<position>`) — CDK overlay panes pick up global styles from the loaded stylesheet, so these selectors work even though the container element itself is created by the service, not this component:
 
@@ -796,7 +798,7 @@ Then, in a **global** (non-component-scoped) stylesheet reachable by the overlay
 
 This makes `top-*` containers stack newest-at-bottom (appended via `push` in the service) and `bottom-*` containers stack newest-at-bottom-of-DOM-but-visually-nearest-the-bottom-edge via `column-reverse` (also appended via `unshift`, so the DOM order is oldest-first but the reversed flex direction renders the most recently unshifted item, which is DOM-first, at the bottom). Verify this visually against Task 2's stacking test, which asserts `messages[0]` (first child in DOM) is the most recently shown toast for `bottom-end` — since Task 2's service `unshift`s for bottom positions, the newest toast is DOM-first, and `column-reverse` then renders DOM-first at the bottom, i.e. nearest the screen edge. This matches the spec's stacking requirement exactly.
 
-- [ ] **Step 4: Write the barrel**
+- [x] **Step 4: Write the barrel**
 
 Create `projects/orbit/src/lib/components/toast/index.ts`:
 
@@ -804,11 +806,11 @@ Create `projects/orbit/src/lib/components/toast/index.ts`:
 export { OrbitToastComponent } from './toast.component';
 ```
 
-- [ ] **Step 5: Finish Task 2 — replace the `require()` placeholder and write `toast.service.spec.ts`**
+- [x] **Step 5: Finish Task 2 — replace the `require()` placeholder and write `toast.service.spec.ts`**
 
 Now that `OrbitToastComponent` exists, go back to `projects/orbit/src/lib/services/toast/toast.service.ts` and apply the fix described in Task 2 Step 2 ("IMPORTANT — fix the `require()` before moving on"): replace the `require(...)` line with a top-level `import { OrbitToastComponent } from '../../components/toast/toast.component';`, delete the dead `refInjector` lines, and use the corrected `show()` method body shown there. Then create `projects/orbit/src/lib/services/toast/toast.service.spec.ts` exactly as written in Task 2 Step 4.
 
-- [ ] **Step 6: Write the component spec**
+- [x] **Step 6: Write the component spec**
 
 Create `projects/orbit/src/lib/components/toast/toast.component.spec.ts`:
 
@@ -883,13 +885,13 @@ describe('OrbitToastComponent', () => {
 });
 ```
 
-- [ ] **Step 7: Run all toast tests and verify they pass**
+- [x] **Step 7: Run all toast tests and verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: PASS for `toast.component.spec.ts` and `toast.service.spec.ts` (from Task 2 Step 5), plus all previously-passing tests still green.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -908,7 +910,7 @@ Expected: PASS for `toast.component.spec.ts` and `toast.service.spec.ts` (from T
 - Consumes: `OrbitIconComponent`, `OrbitIconButtonComponent`, `ORBIT_I18N` (all existing, same imports as Task 3).
 - Produces: `export type OrbitAlertTone = 'success' | 'danger' | 'warning' | 'info';` and `OrbitAlertComponent` with `tone = input<OrbitAlertTone>('info')`, `dismissible = input(false, { transform: booleanAttribute })`, `dismissed = output<void>()`. Consumed by Task 7 (alert catalog page) and `public-api.ts` (Task 6).
 
-- [ ] **Step 1: Write the failing component spec**
+- [x] **Step 1: Write the failing component spec**
 
 Create `projects/orbit/src/lib/components/alert/alert.component.spec.ts`:
 
@@ -1087,13 +1089,13 @@ describe('OrbitAlertComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: FAIL — `Cannot find module './alert.component'`.
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 Create `projects/orbit/src/lib/components/alert/alert.component.ts`:
 
@@ -1144,7 +1146,7 @@ export class OrbitAlertComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 Create `projects/orbit/src/lib/components/alert/alert.component.html`:
 
@@ -1163,7 +1165,7 @@ Create `projects/orbit/src/lib/components/alert/alert.component.html`:
 }
 ```
 
-- [ ] **Step 5: Write the CSS**
+- [x] **Step 5: Write the CSS**
 
 Create `projects/orbit/src/lib/components/alert/alert.component.css`:
 
@@ -1225,7 +1227,7 @@ Create `projects/orbit/src/lib/components/alert/alert.component.css`:
 }
 ```
 
-- [ ] **Step 6: Write the barrel**
+- [x] **Step 6: Write the barrel**
 
 Create `projects/orbit/src/lib/components/alert/index.ts`:
 
@@ -1234,13 +1236,13 @@ export { OrbitAlertComponent } from './alert.component';
 export type { OrbitAlertTone } from './alert.component';
 ```
 
-- [ ] **Step 7: Run the tests to verify they pass**
+- [x] **Step 7: Run the tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: PASS for all `alert.component.spec.ts` tests.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -1259,7 +1261,7 @@ Expected: PASS for all `alert.component.spec.ts` tests.
 - Consumes: same as Task 4 (`OrbitIconComponent`, `OrbitIconButtonComponent`, `ORBIT_I18N`).
 - Produces: `export type OrbitBannerTone = 'success' | 'danger' | 'warning' | 'info';` and `OrbitBannerComponent` with the identical `tone`/`dismissible`/`dismissed` API as `OrbitAlertComponent` (a distinct class, not a subclass or a variant flag — per spec, layout differs structurally). Consumed by Task 7 (banner catalog page) and `public-api.ts` (Task 6).
 
-- [ ] **Step 1: Write the failing component spec**
+- [x] **Step 1: Write the failing component spec**
 
 Create `projects/orbit/src/lib/components/banner/banner.component.spec.ts`:
 
@@ -1343,13 +1345,13 @@ describe('OrbitBannerComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: FAIL — `Cannot find module './banner.component'`.
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 Create `projects/orbit/src/lib/components/banner/banner.component.ts`:
 
@@ -1400,7 +1402,7 @@ export class OrbitBannerComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 Create `projects/orbit/src/lib/components/banner/banner.component.html`:
 
@@ -1419,7 +1421,7 @@ Create `projects/orbit/src/lib/components/banner/banner.component.html`:
 }
 ```
 
-- [ ] **Step 5: Write the CSS** (full-width, more prominent padding/typography than Alert, per spec)
+- [x] **Step 5: Write the CSS** (full-width, more prominent padding/typography than Alert, per spec)
 
 Create `projects/orbit/src/lib/components/banner/banner.component.css`:
 
@@ -1484,7 +1486,7 @@ Create `projects/orbit/src/lib/components/banner/banner.component.css`:
 }
 ```
 
-- [ ] **Step 6: Write the barrel**
+- [x] **Step 6: Write the barrel**
 
 Create `projects/orbit/src/lib/components/banner/index.ts`:
 
@@ -1493,13 +1495,13 @@ export { OrbitBannerComponent } from './banner.component';
 export type { OrbitBannerTone } from './banner.component';
 ```
 
-- [ ] **Step 7: Run the tests to verify they pass**
+- [x] **Step 7: Run the tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: PASS for all `banner.component.spec.ts` tests, and every other `orbit` test still green.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -1514,7 +1516,7 @@ Expected: PASS for all `banner.component.spec.ts` tests, and every other `orbit`
 - Consumes: `projects/orbit/src/lib/components/toast` (Task 3), `projects/orbit/src/lib/components/alert` (Task 4), `projects/orbit/src/lib/components/banner` (Task 5), `projects/orbit/src/lib/services/toast` (Task 2).
 - Produces: `OrbitToastComponent`, `OrbitAlertComponent`, `OrbitBannerComponent`, `OrbitToastService`, `OrbitToastRef`, `ORBIT_TOAST_DATA`, `ORBIT_TOAST_REF`, `OrbitToastConfig`, `OrbitToastTone`, `OrbitToastPosition`, `OrbitAlertTone`, `OrbitBannerTone` — all importable from `@galileo/orbit`, consumed by Task 7's catalog pages.
 
-- [ ] **Step 1: Add the exports**
+- [x] **Step 1: Add the exports**
 
 Edit `projects/orbit/src/public-api.ts`. Add these lines after `export * from './lib/components/badge';` (keeping the file's existing component-then-service-then-i18n grouping):
 
@@ -1561,13 +1563,13 @@ export * from './lib/i18n';
 export * from './lib/services/clipboard';
 ```
 
-- [ ] **Step 2: Verify the library still builds and tests pass**
+- [x] **Step 2: Verify the library still builds and tests pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: PASS — no new tests here, this step only confirms the barrel edits didn't introduce a circular import or naming collision (e.g. `OrbitAlertTone` vs any pre-existing export). If a naming collision is reported, check whether `OrbitToastTone`, `OrbitAlertTone`, or `OrbitBannerTone` collide with each other — they don't, since each is scoped to its own component file and none previously existed — or with `OrbitBadgeTone` (different name, no collision).
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -1587,7 +1589,7 @@ Expected: PASS — no new tests here, this step only confirms the barrel edits d
 - Consumes: `OrbitButtonComponent` (existing), `OrbitToastService`, `OrbitToastTone`, `OrbitToastPosition` (Task 2, via `@galileo/orbit`), `LabExampleComponent` (existing, `../../catalog/example-panel.component`).
 - Produces: `ToastPageComponent`, registered under route path `toast` and catalog slug `toast`.
 
-- [ ] **Step 1: Write the failing page spec**
+- [x] **Step 1: Write the failing page spec**
 
 Create `projects/orbit-lab/src/app/pages/toast-page/toast-page.component.spec.ts`:
 
@@ -1638,13 +1640,13 @@ describe('ToastPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: FAIL — `Cannot find module './toast-page.component'`.
 
-- [ ] **Step 3: Write the page component**
+- [x] **Step 3: Write the page component**
 
 Create `projects/orbit-lab/src/app/pages/toast-page/toast-page.component.ts`:
 
@@ -1706,7 +1708,7 @@ this.toast.show({
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 Create `projects/orbit-lab/src/app/pages/toast-page/toast-page.component.html`:
 
@@ -1761,7 +1763,7 @@ Create `projects/orbit-lab/src/app/pages/toast-page/toast-page.component.html`:
 </article>
 ```
 
-- [ ] **Step 5: Write the CSS**
+- [x] **Step 5: Write the CSS**
 
 Create `projects/orbit-lab/src/app/pages/toast-page/toast-page.component.css`:
 
@@ -1771,7 +1773,7 @@ section > div[data-example] {
 }
 ```
 
-- [ ] **Step 6: Register the route**
+- [x] **Step 6: Register the route**
 
 Edit `projects/orbit-lab/src/app/app.routes.ts`. Add this route entry after the `panel` route block (right before the `navbar` route):
 
@@ -1783,7 +1785,7 @@ Edit `projects/orbit-lab/src/app/app.routes.ts`. Add this route entry after the 
   },
 ```
 
-- [ ] **Step 7: Add the catalog entry**
+- [x] **Step 7: Add the catalog entry**
 
 Edit `projects/orbit-lab/src/app/catalog/catalog.ts`. Insert alphabetically by Italian `label` (`'Toast'` sorts after `'Tipografia'`... actually check ordering: entries are sorted by label text — `'Tab'`, `'Table'`, `'Temi e superfici'`, `'Tipografia'` — `'Toast'` sorts after `'Tipografia'` and before nothing since it's currently last alphabetically among T-entries; insert it as the last entry in the array, after `typography`):
 
@@ -1801,13 +1803,13 @@ placed as the final line before the closing `];`, i.e. after the `typography` en
 
 (Note: strict alphabetical order would place `Toast` before `Typography` since "Toast" < "Tipografia" is false — "Tipografia" < "Toast" alphabetically since 'i' < 'o' — so `Toast` after `Tipografia` is correct, but it must come before `Themes`/`Temi` label check: `'Temi e superfici'` < `'Tipografia'` < `'Toast'`, all correct in ascending order as placed.)
 
-- [ ] **Step 8: Run the tests to verify they pass**
+- [x] **Step 8: Run the tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: PASS for all `toast-page.component.spec.ts` tests.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -1826,7 +1828,7 @@ Expected: PASS for all `toast-page.component.spec.ts` tests.
 - Consumes: `OrbitAlertComponent`, `OrbitButtonComponent` (both via `@galileo/orbit`), `LabExampleComponent` (existing).
 - Produces: `AlertPageComponent`, registered under route path `alert` and catalog slug `alert`.
 
-- [ ] **Step 1: Write the failing page spec**
+- [x] **Step 1: Write the failing page spec**
 
 Create `projects/orbit-lab/src/app/pages/alert-page/alert-page.component.spec.ts`:
 
@@ -1882,13 +1884,13 @@ describe('AlertPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: FAIL — `Cannot find module './alert-page.component'`.
 
-- [ ] **Step 3: Write the page component**
+- [x] **Step 3: Write the page component**
 
 Create `projects/orbit-lab/src/app/pages/alert-page/alert-page.component.ts`:
 
@@ -1923,7 +1925,7 @@ export class AlertPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 Create `projects/orbit-lab/src/app/pages/alert-page/alert-page.component.html`:
 
@@ -1980,7 +1982,7 @@ Create `projects/orbit-lab/src/app/pages/alert-page/alert-page.component.html`:
 </article>
 ```
 
-- [ ] **Step 5: Register the route**
+- [x] **Step 5: Register the route**
 
 Edit `projects/orbit-lab/src/app/app.routes.ts`. Add this route entry after the `badge` route block (right before the `form-grid` redirect):
 
@@ -1992,7 +1994,7 @@ Edit `projects/orbit-lab/src/app/app.routes.ts`. Add this route entry after the 
   },
 ```
 
-- [ ] **Step 6: Add the catalog entry**
+- [x] **Step 6: Add the catalog entry**
 
 Edit `projects/orbit-lab/src/app/catalog/catalog.ts`. Insert alphabetically — `'Alert'` sorts before `'Allegati'` (`'Alert'` < `'Allegati'` since 'e' < 'l' at index 2)? Compare character by character: "Aler" vs "Alle" — index 1 'l' vs 'l' equal, index 2 'e' vs 'l' — 'e' < 'l', so `'Alert'` sorts before `'Allegati'`. Insert as the new first entry:
 
@@ -2003,13 +2005,13 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
   ...
 ```
 
-- [ ] **Step 7: Run the tests to verify they pass**
+- [x] **Step 7: Run the tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: PASS for all `alert-page.component.spec.ts` tests.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -2028,7 +2030,7 @@ Expected: PASS for all `alert-page.component.spec.ts` tests.
 - Consumes: `OrbitBannerComponent`, `OrbitButtonComponent` (both via `@galileo/orbit`), `LabExampleComponent` (existing).
 - Produces: `BannerPageComponent`, registered under route path `banner` and catalog slug `banner`.
 
-- [ ] **Step 1: Write the failing page spec**
+- [x] **Step 1: Write the failing page spec**
 
 Create `projects/orbit-lab/src/app/pages/banner-page/banner-page.component.spec.ts`:
 
@@ -2084,13 +2086,13 @@ describe('BannerPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: FAIL — `Cannot find module './banner-page.component'`.
 
-- [ ] **Step 3: Write the page component**
+- [x] **Step 3: Write the page component**
 
 Create `projects/orbit-lab/src/app/pages/banner-page/banner-page.component.ts`:
 
@@ -2125,7 +2127,7 @@ export class BannerPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 Create `projects/orbit-lab/src/app/pages/banner-page/banner-page.component.html`:
 
@@ -2182,7 +2184,7 @@ Create `projects/orbit-lab/src/app/pages/banner-page/banner-page.component.html`
 </article>
 ```
 
-- [ ] **Step 5: Register the route**
+- [x] **Step 5: Register the route**
 
 Edit `projects/orbit-lab/src/app/app.routes.ts`. Add this route entry after the `dialog` route block (right before the `popover` route):
 
@@ -2194,7 +2196,7 @@ Edit `projects/orbit-lab/src/app/app.routes.ts`. Add this route entry after the 
   },
 ```
 
-- [ ] **Step 6: Add the catalog entry**
+- [x] **Step 6: Add the catalog entry**
 
 Edit `projects/orbit-lab/src/app/catalog/catalog.ts`. Insert alphabetically — `'Banner'` sorts after `'Barra di navigazione'`? Compare "Banner" vs "Barra": index 1 'a' == 'a', index 2 'n' vs 'r' — 'n' < 'r', so `'Banner'` sorts before `'Barra di navigazione'`. Insert right after `badge`'s current position, before `navbar`:
 
@@ -2207,13 +2209,13 @@ Edit `projects/orbit-lab/src/app/catalog/catalog.ts`. Insert alphabetically — 
 
 (Placed after `motion`/`'Animazioni'` and before `navbar`/`'Barra di navigazione'`, preserving ascending alphabetical order: "Allegati" < "Animazioni" < "Banner" < "Barra di navigazione".)
 
-- [ ] **Step 7: Run the tests to verify they pass**
+- [x] **Step 7: Run the tests to verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: PASS for all `banner-page.component.spec.ts` tests, and the full `orbit-lab` suite (minus the excluded in-progress directory) green.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 (Skipped — no git commands in this plan.)
 
@@ -2225,23 +2227,23 @@ Expected: PASS for all `banner-page.component.spec.ts` tests, and the full `orbi
 
 **Interfaces:** none — this task only runs the full test suites built by Tasks 1–9.
 
-- [ ] **Step 1: Run the full `orbit` library suite**
+- [x] **Step 1: Run the full `orbit` library suite**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 
 Expected: PASS — every spec file touched or created in Tasks 1–6 is green, plus all pre-existing `orbit` specs remain green (no regressions from the `public-api.ts` barrel edit or the global `tokens.css` toast-container CSS addition).
 
-- [ ] **Step 2: Run the full `orbit-lab` suite, excluding the in-progress examples-page directory**
+- [x] **Step 2: Run the full `orbit-lab` suite, excluding the in-progress examples-page directory**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 
 Expected: PASS — every spec file created in Tasks 7–9 is green, plus all pre-existing `orbit-lab` specs remain green (no regressions from the `app.routes.ts` and `catalog.ts` edits).
 
-- [ ] **Step 3: Manually sanity-check catalog ordering**
+- [x] **Step 3: Manually sanity-check catalog ordering**
 
 Read `projects/orbit-lab/src/app/catalog/catalog.ts` and confirm the full array is still in ascending order by `label` (Italian collation, plain string comparison is sufficient since all labels are ASCII-only aside from accribute-free Italian text already in the file). The three new entries (`Alert`, `Banner`, `Toast`) must each sit between the two labels that alphabetically bracket them, per Tasks 7/8/9 Step 6/7.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 (Skipped — no git commands in this plan. Leave all changes in the working tree for the user to review and commit themselves.)
 

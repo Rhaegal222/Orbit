@@ -1,6 +1,8 @@
 # Orbit Lab Catalog Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Build the Orbit Lab technical catalog shell and its first five component pages (Button, Badge, Form grid, Form field, Form section), honestly distinguishing components that are token-clean from those blocked on Orbit Core drift, plus a generic "stabilizing" page for text-input/select/checkbox/pill-switch.
 
@@ -29,7 +31,7 @@
 **Interfaces:**
 - Produces: `CatalogStatus = 'verified' | 'token-blocked' | 'stabilizing'`, `CatalogEntry { slug: string; label: string; status: CatalogStatus; blockedTokens?: string[]; blockedFile?: string }`, `CATALOG_ENTRIES: CatalogEntry[]`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/catalog/catalog.spec.ts
@@ -80,12 +82,12 @@ describe('CATALOG_ENTRIES', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/catalog/catalog.spec.ts'`
 Expected: FAIL with "Cannot find module './catalog'" (file does not exist yet).
 
-- [ ] **Step 3: Write the model**
+- [x] **Step 3: Write the model**
 
 ```ts
 // projects/orbit-lab/src/app/catalog/catalog-entry.model.ts
@@ -102,7 +104,7 @@ export interface CatalogEntry {
 }
 ```
 
-- [ ] **Step 4: Write the catalog**
+- [x] **Step 4: Write the catalog**
 
 ```ts
 // projects/orbit-lab/src/app/catalog/catalog.ts
@@ -162,12 +164,12 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
 ];
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/catalog/catalog.spec.ts'`
 Expected: PASS (4 tests).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/catalog
@@ -188,7 +190,7 @@ git commit -m "feat(orbit-lab): add catalog entry model and declarative catalog"
 - Consumes: `CATALOG_ENTRIES` from Task 1 (`projects/orbit-lab/src/app/catalog/catalog`).
 - Produces: `LabShellComponent` with `protected theme = signal<'default' | 'dark'>('default')`, `protected density = signal<'comfortable' | 'compact'>('comfortable')`, methods `setTheme(theme: 'default' | 'dark')` and `setDensity(density: 'comfortable' | 'compact')`. Later tasks route into `<router-outlet>` inside this shell.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts
@@ -241,12 +243,12 @@ describe('LabShellComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/shell/lab-shell.component.spec.ts'`
 Expected: FAIL with "Cannot find module './lab-shell.component'".
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/shell/lab-shell.component.ts
@@ -280,7 +282,7 @@ export class LabShellComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/shell/lab-shell.component.html -->
@@ -352,7 +354,7 @@ export class LabShellComponent {
 
 and add `import { CommonModule } from '@angular/common';` to the top of `lab-shell.component.ts`.
 
-- [ ] **Step 5: Write the styles**
+- [x] **Step 5: Write the styles**
 
 ```css
 /* projects/orbit-lab/src/app/shell/lab-shell.component.css */
@@ -459,12 +461,12 @@ and add `import { CommonModule } from '@angular/common';` to the top of `lab-she
 
 Note: this file intentionally uses only tokens already confirmed to resolve today (`--orbit-font-sans`, `--orbit-text-primary/secondary`, `--orbit-surface-*`, `--orbit-border-subtle`, `--orbit-action-primary-bg`, `--orbit-radius-control`, `--orbit-font-weight-emphasis`, and the `--orbit-ref-space-*` / `--orbit-ref-font-size-*` reference tokens for spacing/sizing that have no semantic equivalent yet). Using `--orbit-ref-*` directly here is a deliberate, documented exception for Lab's own chrome (not a component), pending Core adding the missing semantic spacing/sizing tokens in Phase 0.
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/shell/lab-shell.component.spec.ts'`
 Expected: PASS (5 tests).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/shell
@@ -484,7 +486,7 @@ git commit -m "feat(orbit-lab): add shell with theme/density controls and nav"
 **Interfaces:**
 - Consumes: `LabShellComponent` (Task 2), page components created in Tasks 4–9 (forward references by path only — routes are added incrementally per task, this task creates the array with the entries available so far and each later task appends its own route).
 
-- [ ] **Step 1: Replace routes with one entry per verified/blocked page (grown incrementally)**
+- [x] **Step 1: Replace routes with one entry per verified/blocked page (grown incrementally)**
 
 ```ts
 // projects/orbit-lab/src/app/app.routes.ts
@@ -506,7 +508,7 @@ export const routes: Routes = [
 
 (Tasks 5–9 each add one more object to this array; each task's step shows the exact addition in context so no placeholder is left.)
 
-- [ ] **Step 2: Point bootstrap at the shell**
+- [x] **Step 2: Point bootstrap at the shell**
 
 ```ts
 // projects/orbit-lab/src/main.ts
@@ -517,13 +519,13 @@ import { LabShellComponent } from './app/shell/lab-shell.component';
 bootstrapApplication(LabShellComponent, appConfig);
 ```
 
-- [ ] **Step 3: Delete the old demo root component**
+- [x] **Step 3: Delete the old demo root component**
 
 ```bash
 rm projects/orbit-lab/src/app/app.component.ts
 ```
 
-- [ ] **Step 4: Update `index.html` root selector**
+- [x] **Step 4: Update `index.html` root selector**
 
 ```html
 <!-- projects/orbit-lab/src/index.html -->
@@ -542,12 +544,12 @@ rm projects/orbit-lab/src/app/app.component.ts
 </html>
 ```
 
-- [ ] **Step 5: Run the full orbit-lab test suite to confirm nothing else references the deleted component**
+- [x] **Step 5: Run the full orbit-lab test suite to confirm nothing else references the deleted component**
 
 Run: `npx ng test orbit-lab`
 Expected: PASS, no failures about missing `app.component`.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app.routes.ts projects/orbit-lab/src/main.ts projects/orbit-lab/src/index.html
@@ -567,7 +569,7 @@ git commit -m "feat(orbit-lab): bootstrap from LabShellComponent with routed pag
 **Interfaces:**
 - Consumes: `OrbitButtonComponent` from `@galileo/orbit` (inputs: `label`, `variant: 'solid'|'soft'|'outline'|'flat'`, `tone: 'primary'|'success'|'danger'|'neutral'`, `disabled`, `loading`, `type`; output: `clicked`).
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/button-page/button-page.component.spec.ts
@@ -619,12 +621,12 @@ describe('ButtonPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/pages/button-page/button-page.component.spec.ts'`
 Expected: FAIL with "Cannot find module './button-page.component'".
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/button-page/button-page.component.ts
@@ -646,7 +648,7 @@ export class ButtonPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/button-page/button-page.component.html -->
@@ -705,12 +707,12 @@ export class ButtonPageComponent {
 </article>
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/pages/button-page/button-page.component.spec.ts'`
 Expected: PASS (6 tests).
 
-- [ ] **Step 6: Add the route**
+- [x] **Step 6: Add the route**
 
 ```ts
 // projects/orbit-lab/src/app/app.routes.ts — append to the routes array from Task 3
@@ -723,7 +725,7 @@ Expected: PASS (6 tests).
 
 (This entry is a forward reference to Task 5; add it together with Task 5's component so the app keeps compiling. If executing Task 4 in isolation, skip this step and add both entries when Task 5 lands.)
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/button-page
@@ -746,7 +748,7 @@ Badge, Form grid, Form field and Form section all need the same "blocked on Core
 **Interfaces:**
 - Produces: `LabBlockedBannerComponent` with inputs `file = input.required<string>()`, `tokens = input.required<string[]>()`. Renders a `[data-blocked-banner]` element listing `file` and each token in `tokens`. Consumed by every token-blocked page (Tasks 5–8).
 
-- [ ] **Step 1: Write the failing test for the banner**
+- [x] **Step 1: Write the failing test for the banner**
 
 ```ts
 // projects/orbit-lab/src/app/catalog/blocked-banner.component.spec.ts
@@ -782,12 +784,12 @@ describe('LabBlockedBannerComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/catalog/blocked-banner.component.spec.ts'`
 Expected: FAIL with "Cannot find module './blocked-banner.component'".
 
-- [ ] **Step 3: Write the banner component**
+- [x] **Step 3: Write the banner component**
 
 ```ts
 // projects/orbit-lab/src/app/catalog/blocked-banner.component.ts
@@ -819,12 +821,12 @@ export class LabBlockedBannerComponent {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/catalog/blocked-banner.component.spec.ts'`
 Expected: PASS (2 tests).
 
-- [ ] **Step 5: Write the failing test for the Badge page**
+- [x] **Step 5: Write the failing test for the Badge page**
 
 ```ts
 // projects/orbit-lab/src/app/pages/badge-page/badge-page.component.spec.ts
@@ -857,12 +859,12 @@ describe('BadgePageComponent', () => {
 });
 ```
 
-- [ ] **Step 6: Run test to verify it fails**
+- [x] **Step 6: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/pages/badge-page/badge-page.component.spec.ts'`
 Expected: FAIL with "Cannot find module './badge-page.component'".
 
-- [ ] **Step 7: Write the Badge page component**
+- [x] **Step 7: Write the Badge page component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/badge-page/badge-page.component.ts
@@ -896,7 +898,7 @@ export class BadgePageComponent {
 }
 ```
 
-- [ ] **Step 8: Write the Badge page template**
+- [x] **Step 8: Write the Badge page template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/badge-page/badge-page.component.html -->
@@ -923,12 +925,12 @@ export class BadgePageComponent {
 </article>
 ```
 
-- [ ] **Step 9: Run test to verify it passes**
+- [x] **Step 9: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/pages/badge-page/badge-page.component.spec.ts'`
 Expected: PASS (2 tests).
 
-- [ ] **Step 10: Add the route**
+- [x] **Step 10: Add the route**
 
 ```ts
 // projects/orbit-lab/src/app/app.routes.ts — append after the 'badge' entry added in Task 4 Step 6
@@ -943,7 +945,7 @@ Expected: PASS (2 tests).
 
 (Forward reference to Task 6, same convention as Task 4 Step 6.)
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/catalog/blocked-banner.component.ts \
@@ -964,7 +966,7 @@ git commit -m "feat(orbit-lab): add shared blocked-banner and Badge catalog page
 **Interfaces:**
 - Consumes: `OrbitFormGridComponent` from `@galileo/orbit` (no inputs; two content projection slots `[primary]` and `[secondary]`), `LabBlockedBannerComponent` from Task 5.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/form-grid-page/form-grid-page.component.spec.ts
@@ -997,12 +999,12 @@ describe('FormGridPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/pages/form-grid-page/form-grid-page.component.spec.ts'`
 Expected: FAIL with "Cannot find module './form-grid-page.component'".
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/form-grid-page/form-grid-page.component.ts
@@ -1029,7 +1031,7 @@ export class FormGridPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/form-grid-page/form-grid-page.component.html -->
@@ -1057,12 +1059,12 @@ export class FormGridPageComponent {
 </article>
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/pages/form-grid-page/form-grid-page.component.spec.ts'`
 Expected: PASS (2 tests).
 
-- [ ] **Step 6: Add the route**
+- [x] **Step 6: Add the route**
 
 ```ts
 // projects/orbit-lab/src/app/app.routes.ts — append after 'form-grid'
@@ -1075,7 +1077,7 @@ Expected: PASS (2 tests).
   },
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/form-grid-page
@@ -1094,7 +1096,7 @@ git commit -m "feat(orbit-lab): add Form grid catalog page"
 **Interfaces:**
 - Consumes: `OrbitFormFieldComponent` (inputs: `label`, `inputId`, `hint`, `error`, `required`, `disabled`), `OrbitTextInputComponent` (used only as the projected control example — its own page is "stabilizing", but Form field's page needs *a* control to demonstrate label/hint/error association), `LabBlockedBannerComponent`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/form-field-page/form-field-page.component.spec.ts
@@ -1132,12 +1134,12 @@ describe('FormFieldPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/pages/form-field-page/form-field-page.component.spec.ts'`
 Expected: FAIL with "Cannot find module './form-field-page.component'".
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/form-field-page/form-field-page.component.ts
@@ -1165,7 +1167,7 @@ export class FormFieldPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/form-field-page/form-field-page.component.html -->
@@ -1213,12 +1215,12 @@ export class FormFieldPageComponent {
 </article>
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/pages/form-field-page/form-field-page.component.spec.ts'`
 Expected: PASS (3 tests).
 
-- [ ] **Step 6: Add the route**
+- [x] **Step 6: Add the route**
 
 ```ts
 // projects/orbit-lab/src/app/app.routes.ts — append after 'form-field'
@@ -1231,7 +1233,7 @@ Expected: PASS (3 tests).
   },
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/form-field-page
@@ -1250,7 +1252,7 @@ git commit -m "feat(orbit-lab): add Form field catalog page"
 **Interfaces:**
 - Consumes: `OrbitFormSectionComponent` (inputs: `title`, `divided`, `fill`, `contentSpacing` — **no `collapsible` input exists yet**, this page must not assume one), `LabBlockedBannerComponent`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/form-section-page/form-section-page.component.spec.ts
@@ -1288,12 +1290,12 @@ describe('FormSectionPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/pages/form-section-page/form-section-page.component.spec.ts'`
 Expected: FAIL with "Cannot find module './form-section-page.component'".
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/form-section-page/form-section-page.component.ts
@@ -1321,7 +1323,7 @@ export class FormSectionPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/form-section-page/form-section-page.component.html -->
@@ -1361,12 +1363,12 @@ export class FormSectionPageComponent {
 </article>
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/pages/form-section-page/form-section-page.component.spec.ts'`
 Expected: PASS (3 tests).
 
-- [ ] **Step 6: Add the route**
+- [x] **Step 6: Add the route**
 
 ```ts
 // projects/orbit-lab/src/app/app.routes.ts — append after 'form-section'
@@ -1404,7 +1406,7 @@ Expected: PASS (3 tests).
   },
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/form-section-page
@@ -1424,7 +1426,7 @@ git commit -m "feat(orbit-lab): add Form section catalog page"
 - Consumes: Angular Router's `ActivatedRoute` snapshot `data.componentName` (set per-route in Task 8 Step 6).
 - Produces: `StabilizingPageComponent`, reused by all four "stabilizing" routes.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/stabilizing-page/stabilizing-page.component.spec.ts
@@ -1461,12 +1463,12 @@ describe('StabilizingPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx ng test orbit-lab --include='**/pages/stabilizing-page/stabilizing-page.component.spec.ts'`
 Expected: FAIL with "Cannot find module './stabilizing-page.component'".
 
-- [ ] **Step 3: Write the component**
+- [x] **Step 3: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/stabilizing-page/stabilizing-page.component.ts
@@ -1485,7 +1487,7 @@ export class StabilizingPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/stabilizing-page/stabilizing-page.component.html -->
@@ -1502,12 +1504,12 @@ export class StabilizingPageComponent {
 </article>
 ```
 
-- [ ] **Step 5: Run test to verify it passes**
+- [x] **Step 5: Run test to verify it passes**
 
 Run: `npx ng test orbit-lab --include='**/pages/stabilizing-page/stabilizing-page.component.spec.ts'`
 Expected: PASS (2 tests).
 
-- [ ] **Step 6: Run the full orbit-lab suite and build**
+- [x] **Step 6: Run the full orbit-lab suite and build**
 
 Run: `npx ng test orbit-lab`
 Expected: PASS, all suites from Tasks 1–9 green.
@@ -1515,7 +1517,7 @@ Expected: PASS, all suites from Tasks 1–9 green.
 Run: `npx ng build orbit-lab`
 Expected: build succeeds with no missing-token or missing-route errors.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/stabilizing-page

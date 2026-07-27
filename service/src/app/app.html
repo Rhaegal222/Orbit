@@ -1,244 +1,153 @@
-<!-- Navbar -->
-<orbit-navbar
-  brand="Wyrmrest Orbit"
-  [items]="navItems"
-  tone="dark"
-  ariaLabel="Main navigation"
-/>
+<orbit-navbar brand="Wyrmrest Orbit" [items]="navItems" ariaLabel="Navigazione Orbit" tone="dark">
+  <a orbitNavbarActions href="/lab/"><orbit-button label="Apri Orbit Lab" size="sm" /></a>
+</orbit-navbar>
 
-<!-- Hero Section -->
-<section class="hero">
-  <div class="hero__content">
-    <div class="hero__badges">
-      <orbit-badge label="Angular 18+" tone="primary" />
-      <orbit-badge label="Zoneless Signals" tone="info" />
-      <orbit-badge label="Design Tokens" tone="success" />
-    </div>
-    <h1 class="hero__title">Build with <span class="hero__accent">Orbit</span></h1>
-    <p class="hero__subtitle">
-      A design-token-driven Angular component library built for enterprise applications.
-      Themeable, accessible, and composable.
+<main>
+  <section class="hero">
+    <orbit-badge label="Libreria UI pubblica" tone="info" />
+    <h1>Interfacce coerenti, costruite per evolvere.</h1>
+    <p>
+      Orbit è la libreria Angular di Wyrmrest: componenti accessibili e token CSS per comporre
+      prodotti solidi senza imporre un solo brand.
     </p>
     <div class="hero__actions">
-      <orbit-button label="Get Started" variant="solid" tone="primary" />
-      <orbit-button label="View on Forgejo" variant="outline" tone="neutral" />
+      <a href="#install"><orbit-button label="Inizia l’installazione" /></a>
+      <a href="/lab/"
+        ><orbit-button label="Esplora Orbit Lab" tone="neutral" variant="outline"
+      /></a>
     </div>
-  </div>
-</section>
+    <div class="hero__meta">
+      <span>v0.1.3</span><span>51 componenti</span><span>Angular 22</span>
+    </div>
+  </section>
 
-<orbit-divider />
-
-<!-- Features Section -->
-<section id="features" class="section">
-  <h2 class="section__title">Why Orbit?</h2>
-  <p class="section__subtitle">
-    Orbit gives your team a consistent, token-driven design system with first-class Angular support.
-  </p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <orbit-icon-button icon="settings" ariaLabel="Design tokens" tone="primary" />
-      <h3 class="feature-card__title">Design Tokens</h3>
-      <p class="feature-card__text">
-        Reference, semantic, and component token layers. Customize once, apply everywhere.
+  <section id="architecture" class="section">
+    <div class="section__heading">
+      <span>Architettura</span>
+      <h2>Una libreria, strumenti distinti.</h2>
+      <p>
+        Core, Lab e Studio hanno responsabilità precise: il pacchetto resta leggero, le esperienze
+        di prova e configurazione restano separate.
       </p>
     </div>
-    <div class="feature-card">
-      <orbit-icon-button icon="home" ariaLabel="Theme engine" tone="primary" />
-      <h3 class="feature-card__title">Theme Engine</h3>
-      <p class="feature-card__text">
-        Dark, light, accent swatches, density presets. Switch via data attributes, zero JS required.
+    <div class="grid grid--three">
+      <orbit-panel
+        ><h3>Orbit Core</h3>
+        <p>
+          Il pacchetto pubblico npm: primitive Angular, comportamenti accessibili e contratti di
+          token.
+        </p>
+        <a href="#install">Installa il pacchetto</a></orbit-panel
+      >
+      <orbit-panel
+        ><h3>Orbit Lab</h3>
+        <p>
+          Il catalogo tecnico per verificare componenti, stati, responsive design e accessibilità.
+        </p>
+        <a href="/lab/">Apri il Lab</a></orbit-panel
+      >
+      <orbit-panel
+        ><h3>Orbit Studio</h3>
+        <p>
+          Il configuratore visuale è in sviluppo. Presto renderà i temi ripetibili e versionabili.
+        </p>
+        <a href="/studio/">Scopri lo Studio</a></orbit-panel
+      >
+    </div>
+  </section>
+
+  <section id="tokens" class="section section--dark">
+    <div class="section__heading">
+      <span>Design token</span>
+      <h2>Un contratto a tre livelli.</h2>
+      <p>
+        Reference, semantic e component token separano i valori dal loro significato e dall’uso
+        concreto.
       </p>
     </div>
-    <div class="feature-card">
-      <orbit-icon-button icon="user" ariaLabel="Accessible" tone="primary" />
-      <h3 class="feature-card__title">Accessible</h3>
-      <p class="feature-card__text">
-        ARIA semantics, keyboard navigation, focus management, and screen-reader support built in.
+    <div class="grid grid--three token-grid">
+      <div>
+        <b>01 · Reference</b><code>--orbit-ref-*</code>
+        <p>Scale, palette e geometrie grezze.</p>
+      </div>
+      <div>
+        <b>02 · Semantic</b><code>--orbit-action-primary-bg</code>
+        <p>L’intento: superficie, testo, azione, feedback.</p>
+      </div>
+      <div>
+        <b>03 · Component</b><code>--orbit-button-*</code>
+        <p>Il mapping locale del singolo controllo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section playground">
+    <div class="section__heading">
+      <span>Provalo dal vivo</span>
+      <h2>Densità senza riscrivere il markup.</h2>
+      <p>
+        La densità modifica spaziatura e dimensioni, mantenendo la stessa semantica e lo stesso
+        comportamento.
       </p>
     </div>
-    <div class="feature-card">
-      <orbit-icon-button icon="search" ariaLabel="Composable" tone="primary" />
-      <h3 class="feature-card__title">Composable</h3>
-      <p class="feature-card__text">
-        Standalone components with OnPush change detection. Import only what you need.
+    <div class="playground__content">
+      <div class="playground__controls">
+        <orbit-button
+          label="Comfortable"
+          [variant]="density() === 'comfortable' ? 'solid' : 'outline'"
+          (clicked)="density.set('comfortable')"
+        /><orbit-button
+          label="Compact"
+          [variant]="density() === 'compact' ? 'solid' : 'outline'"
+          (clicked)="density.set('compact')"
+        />
+      </div>
+      <orbit-panel class="preview"
+        ><orbit-badge label="Pronto" tone="success" />
+        <h3>Workspace di esempio</h3>
+        <p>Un’anteprima che eredita i token attivi dell’interfaccia.</p>
+        <orbit-button label="Salva modifiche"
+      /></orbit-panel>
+    </div>
+  </section>
+
+  <section id="catalog" class="section">
+    <div class="section__heading">
+      <span>Catalogo</span>
+      <h2>Primitive, form, layout e feedback.</h2>
+      <p>
+        Una base comune per controlli, overlay, dati e navigazione, progettata per essere composta.
       </p>
     </div>
-  </div>
-</section>
-
-<orbit-divider />
-
-<!-- Component Showcase Section -->
-<section id="showcase" class="section">
-  <h2 class="section__title">Component Showcase</h2>
-  <p class="section__subtitle">
-    Explore the library's core components in action.
-  </p>
-
-  <orbit-tablist
-    ariaLabel="Component categories"
-    (selectedChange)="onShowcaseTabChange($event)"
-  >
-    <orbit-tab value="buttons" label="Buttons" [selected]="activeShowcaseTab() === 'buttons'" />
-    <orbit-tab value="forms" label="Forms" [selected]="activeShowcaseTab() === 'forms'" />
-    <orbit-tab value="feedback" label="Feedback" [selected]="activeShowcaseTab() === 'feedback'" />
-  </orbit-tablist>
-
-  <div class="showcase-panel">
-    @if (activeShowcaseTab() === 'buttons') {
-      <orbit-tab-panel value="buttons">
-        <div class="showcase-grid">
-          <div class="showcase-item">
-            <span class="showcase-label">Solid Primary</span>
-            <orbit-button label="Save Changes" variant="solid" tone="primary" />
-          </div>
-          <div class="showcase-item">
-            <span class="showcase-label">Outline Neutral</span>
-            <orbit-button label="Cancel" variant="outline" tone="neutral" />
-          </div>
-          <div class="showcase-item">
-            <span class="showcase-label">Solid Danger</span>
-            <orbit-button label="Delete" variant="solid" tone="danger" />
-          </div>
-          <div class="showcase-item">
-            <span class="showcase-label">Icon Buttons</span>
-            <div class="showcase-row">
-              <orbit-icon-button icon="home" ariaLabel="Home" tone="primary" />
-              <orbit-icon-button icon="settings" ariaLabel="Settings" tone="neutral" />
-              <orbit-icon-button icon="close" ariaLabel="Close" tone="danger" />
-            </div>
-          </div>
-          <div class="showcase-item">
-            <span class="showcase-label">Disabled</span>
-            <orbit-button label="Unavailable" variant="solid" tone="primary" [disabled]="true" />
-          </div>
-        </div>
-      </orbit-tab-panel>
-    }
-
-    @if (activeShowcaseTab() === 'forms') {
-      <orbit-tab-panel value="forms">
-        <div class="showcase-grid showcase-grid--forms">
-          <div class="showcase-item">
-            <label class="showcase-label" for="showcase-name">Text Input</label>
-            <orbit-text-input
-              inputId="showcase-name"
-              placeholder="Enter your name"
-              [formControl]="nameControl"
-            />
-          </div>
-          <div class="showcase-item">
-            <label class="showcase-label" for="showcase-role">Select</label>
-            <orbit-select
-              inputId="showcase-role"
-              ariaLabel="Role"
-              [options]="roleOptions"
-              [formControl]="roleControl"
-            />
-          </div>
-          <div class="showcase-item showcase-item--full">
-            <span class="showcase-label">Synced Values</span>
-            <div class="showcase-inspector">
-              <span>Name: <code>{{ nameControl.value || '(empty)' }}</code></span>
-              <span>Role: <code>{{ roleControl.value }}</code></span>
-            </div>
-          </div>
-        </div>
-      </orbit-tab-panel>
-    }
-
-    @if (activeShowcaseTab() === 'feedback') {
-      <orbit-tab-panel value="feedback">
-        <div class="showcase-grid">
-          <div class="showcase-item">
-            <span class="showcase-label">Badge Tones</span>
-            <div class="showcase-row">
-              <orbit-badge label="Primary" tone="primary" />
-              <orbit-badge label="Success" tone="success" />
-              <orbit-badge label="Danger" tone="danger" />
-              <orbit-badge label="Warning" tone="warning" />
-              <orbit-badge label="Info" tone="info" />
-            </div>
-          </div>
-          <div class="showcase-item">
-            <span class="showcase-label">Spinner</span>
-            <div class="showcase-row">
-              <orbit-spinner />
-              <orbit-spinner size="lg" />
-              <orbit-spinner size="xl" />
-            </div>
-          </div>
-        </div>
-      </orbit-tab-panel>
-    }
-  </div>
-</section>
-
-<orbit-divider />
-
-<!-- Theming Section -->
-<section id="theming" class="section">
-  <h2 class="section__title">Theming</h2>
-  <p class="section__subtitle">
-    Switch themes and density presets in real time. All powered by CSS custom properties.
-  </p>
-
-  <div class="theming-controls">
-    <div class="theming-control">
-      <span class="theming-label">Theme</span>
-      <orbit-switch
-        inputId="theme-toggle"
-        ariaLabel="Toggle theme"
-        [ngModel]="theme() === 'dark'"
-        (ngModelChange)="toggleTheme()"
-      />
-      <span class="theming-value">{{ theme() === 'dark' ? 'Dark' : 'Light' }}</span>
+    <div class="grid grid--two">
+      <orbit-panel
+        ><h3>Input e form</h3>
+        <p>Text input, select, date picker, checkbox, switch e layout per form.</p></orbit-panel
+      ><orbit-panel
+        ><h3>Layout e navigazione</h3>
+        <p>Navbar, sidebar, workspace, panel, tab e page shell.</p></orbit-panel
+      ><orbit-panel
+        ><h3>Feedback</h3>
+        <p>Badge, alert, banner, toast, spinner e skeleton.</p></orbit-panel
+      ><orbit-panel
+        ><h3>Compositi</h3>
+        <p>Dialog, modal, table, attachment list e blocchi di codice.</p></orbit-panel
+      >
     </div>
-    <div class="theming-control">
-      <span class="theming-label">Density</span>
-      <orbit-pill-switch
-        ariaLabel="Density preset"
-        [options]="densityOptions"
-        [ngModel]="density()"
-        (ngModelChange)="onDensityChange($event)"
-      />
-    </div>
-  </div>
-</section>
+  </section>
 
-<orbit-divider />
+  <section id="install" class="section install">
+    <div class="section__heading">
+      <span>Installazione</span>
+      <h2>Un package npm, un contratto di token.</h2>
+      <p>Installa Orbit dalla registry pubblica e importa soltanto ciò che serve alla tua app.</p>
+    </div>
+    <orbit-code-block [code]="installCode" language="bash" [showActions]="true" />
+    <orbit-code-block [code]="themeCode" language="css" [showActions]="true" />
+  </section>
+</main>
 
-<!-- Installation Section -->
-<section id="install" class="section">
-  <h2 class="section__title">Installation</h2>
-  <p class="section__subtitle">
-    Get started in seconds. Install the package and import the components you need.
-  </p>
-
-  <div class="install-grid">
-    <div class="install-step">
-      <h3 class="install-step__title">1. Install</h3>
-      <orbit-code-block [code]="installCode" language="bash" [showActions]="true" />
-    </div>
-    <div class="install-step">
-      <h3 class="install-step__title">2. Import</h3>
-      <orbit-code-block [code]="importCode" language="typescript" [showActions]="true" />
-    </div>
-    <div class="install-step">
-      <h3 class="install-step__title">3. Theme</h3>
-      <orbit-code-block [code]="themeCode" language="html" [showActions]="true" />
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-  <orbit-divider />
-  <div class="footer__content">
-    <span class="footer__brand">Wyrmrest Orbit</span>
-    <span class="footer__version">v0.1.0</span>
-    <div class="footer__links">
-      <orbit-icon-button icon="home" ariaLabel="Home" tone="neutral" />
-    </div>
-  </div>
+<footer>
+  <span>Wyrmrest Orbit · MIT</span><a href="https://github.com/Rhaegal222/Orbit">GitHub</a
+  ><a href="/lab/">Orbit Lab</a>
 </footer>

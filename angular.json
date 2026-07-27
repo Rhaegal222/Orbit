@@ -36,7 +36,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/orbit/**/*.ts", "projects/orbit/**/*.html"],
+            "lintFilePatterns": [
+              "projects/orbit/**/*.ts",
+              "projects/orbit/**/*.html"
+            ],
             "eslintConfig": "projects/orbit/eslint.config.js"
           }
         }
@@ -54,7 +57,10 @@
             "browser": "projects/orbit-lab/src/main.ts",
             "index": "projects/orbit-lab/src/index.html",
             "tsConfig": "projects/orbit-lab/tsconfig.app.json",
-            "styles": ["projects/orbit/src/styles/styles.css", "projects/orbit-lab/src/styles.css"]
+            "styles": [
+              "projects/orbit/src/styles/styles.css",
+              "projects/orbit-lab/src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -96,7 +102,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/orbit-lab/**/*.ts", "projects/orbit-lab/**/*.html"],
+            "lintFilePatterns": [
+              "projects/orbit-lab/**/*.ts",
+              "projects/orbit-lab/**/*.html"
+            ],
             "eslintConfig": "projects/orbit-lab/eslint.config.js"
           }
         }
@@ -120,7 +129,9 @@
                 "input": "projects/orbit-studio/public"
               }
             ],
-            "styles": ["projects/orbit-studio/src/styles.css"]
+            "styles": [
+              "projects/orbit-studio/src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -160,6 +171,61 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "service": {
+      "projectType": "application",
+      "root": "service",
+      "sourceRoot": "service/src",
+      "prefix": "orbit",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "service/src/main.ts",
+            "index": "service/src/index.html",
+            "tsConfig": "service/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "service/public"
+              }
+            ],
+            "styles": [
+              "service/src/styles.css"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "all",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "750kB",
+                  "maximumError": "1MB"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "service:build:production"
+            },
+            "development": {
+              "buildTarget": "service:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }

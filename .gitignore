@@ -8,7 +8,6 @@ deploy/*
 !deploy/Dockerfile.dockerignore
 !deploy/docker-compose.yml
 !deploy/nginx.conf
-!deploy/index.html
 out-tsc/
 coverage/
 .angular/

@@ -1,26 +1,6 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@import "@rhaegal222/orbit/styles";
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--orbit-font-sans);
-  font-size: var(--orbit-font-size-body);
-  line-height: var(--orbit-line-height-body);
-  color: var(--orbit-text-primary);
-  background: var(--orbit-surface-canvas);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--orbit-font-sans); background: var(--orbit-surface-canvas); }
+a { color: inherit; text-decoration: none; }

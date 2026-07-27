@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `orbit-topbar`, a compact application header with start, centre and end projection slots.
+- Semantic application-chrome background tokens and topbar component tokens.
+
 All notable changes to Galileo Orbit are documented here.
 
 ## Unreleased

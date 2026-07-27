@@ -1,5 +1,12 @@
 # Orbit dashboard/surveillance primitives — design
 
+> **Superseded (2026-07-27).** After review, the decision was to *not* add new public components
+> for this need. A local CSS Grid + existing public primitives (`orbit-panel`, `orbit-stack`,
+> `orbit-icon`, `orbit-badge`, `orbit-cluster`, `orbit-spinner`) composes the same three needs
+> (KPI rows, action bar, video wall) without introducing premature public API. See
+> `2026-07-27-orbit-dashboard-composition-guide-design.md` for the composition-guide replacement.
+> This document is kept for historical reference only — do not implement it.
+
 ## Problem
 
 A consumer team building KPI dashboards and camera-surveillance screens on top of Orbit reports

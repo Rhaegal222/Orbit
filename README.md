@@ -1,5 +1,6 @@
 # Orbit
 
+[![CI](https://github.com/Rhaegal222/Orbit/actions/workflows/ci.yml/badge.svg)](https://github.com/Rhaegal222/Orbit/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/%40rhaegal222%2Forbit?logo=npm&label=npm)](https://www.npmjs.com/package/@rhaegal222/orbit)
 [![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular)](https://angular.dev/)
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
@@ -135,9 +136,10 @@ bootstrapApplication(AppComponent, {
 
 ```bash
 npm install
-npm run build:lib    # production library build
-npm test             # unit tests
-npm run check        # build and test verification
+npm run lint           # lint with angular-eslint
+npm run build:lib      # production library build
+npm test               # unit tests
+npm run check          # lint, build and test verification
 ```
 
 ### Compatibility

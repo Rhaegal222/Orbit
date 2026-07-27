@@ -29,11 +29,47 @@ npm install
 ### Development commands
 
 ```bash
-npm run build          # build the library
-npm test               # run unit tests
-npm run check          # full verification (build + test + pack)
-npm run lint           # lint the codebase
-npm run format:check   # check formatting
+npm run build:lib     # build the library
+npm test              # run unit tests
+npm run check         # full verification (build + test)
+npm run lint          # lint the codebase
+npm run format:check  # check formatting
+```
+
+## Syncing your fork
+
+Keep your fork up to date with the upstream repository:
+
+```bash
+# Add the upstream remote (once)
+git remote add upstream https://github.com/Rhaegal222/Orbit.git
+
+# Fetch and merge upstream changes
+git fetch upstream
+git checkout main
+git merge upstream/main
+git push origin main
+```
+
+### Syncing a feature branch
+
+If your feature branch is behind upstream:
+
+```bash
+git checkout feat/my-feature
+git fetch upstream
+git rebase upstream/main
+# resolve conflicts if any, then:
+git push origin feat/my-feature --force-with-lease
+```
+
+### Staying current
+
+Check for upstream changes before starting new work:
+
+```bash
+git fetch upstream
+git log --oneline upstream/main..main  # see if you're behind
 ```
 
 ## Making changes

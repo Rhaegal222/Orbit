@@ -141,3 +141,11 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Angular
+.angular/
+
+# Internal docs — Forgejo only, never push to GitHub
+docs/DEPLOYMENT.md
+docs/UPDATE-GUIDELINES.md
+docs/ORBIT-ALIGNMENT-PLAN.md

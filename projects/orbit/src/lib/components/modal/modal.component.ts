@@ -20,8 +20,8 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@an
     [class.orbit-modal--xl]="size() === 'xl'"
     [class.orbit-modal--xxl]="size() === 'xxl'"
     [attr.aria-labelledby]="labelledBy() || null"
+    [attr.aria-label]="!labelledBy() ? 'Finestra di dialogo' : null"
     [attr.aria-describedby]="describedBy() || null"
-    [attr.aria-label]="labelledBy() ? null : 'Finestra di dialogo'"
   >
     <ng-content />
   </section>`,
@@ -32,5 +32,6 @@ export class OrbitModalComponent {
   describedBy = input('');
   /** `sm` confirmations, `md` linear forms, `lg`–`xxl` multi-column work. */
   size = input<'sm' | 'md' | 'lg' | 'xl' | 'xxl'>('md');
+  /** Tightens header/body/footer spacing for dense, low-chrome dialogs (e.g. quick actions). */
   compact = input(false, { transform: booleanAttribute });
 }

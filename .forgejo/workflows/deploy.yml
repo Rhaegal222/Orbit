@@ -21,9 +21,10 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm ci
+
+      - name: Lint
+        run: npm run lint
 
       - name: Build Angular apps
         run: |
@@ -71,7 +72,7 @@ jobs:
           for attempt in $(seq 1 12); do
             status=$(docker inspect --format='{{.State.Health.Status}}' "$CONTAINER_NAME" 2>/dev/null || echo starting)
             echo "attempt $attempt/12: $status"
-            if [ "$status" = healthy ]; then
+            if [ "$status" = "healthy" ]; then
               exit 0
             fi
             sleep 5

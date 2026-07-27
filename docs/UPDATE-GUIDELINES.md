@@ -1,4 +1,4 @@
-# Orbit — Linee Guidida Aggiornamento
+# Orbit — Linee Guida Aggiornamento
 
 ## Architettura a tre livelli
 
@@ -9,19 +9,19 @@ Galileo (gitlab.galileo.test)     ← sviluppo componenti (privato)
         ▼
 Forgejo (git.wyrmrest.it)        ← wrapper + deploy + lab/studio
         │
-        │  cherry-pick libreria
+        │  sync-to-github.yml (auto)
         ▼
 GitHub (github.com/Rhaegal222)   ← @rhaegal222/orbit (npm public)
         │
-        │  npm publish
+        │  publish.yml (tag v*)
         ▼
-npm registry                     ← consumato da tutti
+npmjs.com                        ← consumato da tutti
 ```
 
 ## Regole fondamentali
 
 1. **Galileo è la sorgente dello sviluppo** — tutti i nuovi componenti e fix vengono creati qui
-2. **GitHub è la sorgente della libreria pubblica** — `@rhaegal222/orbit` su npm
+2. **GitHub è la sorgente della libreria pubblica** — `@rhaegal222/orbit` su npmjs.com
 3. **Forgejo è il deployment** — wrapper thin + apps (lab, studio, service)
 
 ## Aggiornamento da Galileo → Forgejo
@@ -47,20 +47,11 @@ git push forgejo develop:develop
 
 ## Aggiornamento da Forgejo/Galileo → GitHub
 
-### Quando pushare su GitHub
+### Automatico (consigliato)
 
-- Fix di bug nei componenti della libreria (`projects/orbit/`)
-- Nuovi componenti aggiunti a Galileo
-- Miglioramenti ai token CSS
+Il workflow `sync-to-github.yml` estrae automaticamente `projects/orbit/src/` e apre una PR su GitHub quando viene pushato su develop con modifiche alla libreria.
 
-### Cosa NON pushare su GitHub
-
-- `deploy/` (Dockerfile, compose, nginx)
-- `service/`, `lab/`, `studio/` (applicazioni Angular)
-- `.forgejo/` (CI/CD)
-- Configurazioni Forgejo-specifiche
-
-### Procedura
+### Manuale (quando necessario)
 
 ```bash
 cd /home/rhaegal222/Server/development/rhaegal222/wyrmrest/wyrmrest-orbit
@@ -72,46 +63,51 @@ git checkout -b publish/library-to-github upstream/main
 git cherry-pick <commit-hash> --no-commit
 
 # 3. Risolvi conflitti se necessario
-git checkout --theirs <file>    # prendi versione Galileo
+git checkout --theirs <file>
 git add <file>
 
 # 4. Commit e push
 git commit -m "fix(scope): descrizione"
-git remote set-url upstream "https://Rhaegal222:GH_TOKEN@github.com/Rhaegal222/Orbit.git"
 git push upstream publish/library-to-github:main
-git remote set-url upstream "https://github.com/Rhaegal222/Orbit.git"
 
 # 5. Torna su develop
 git checkout develop
 git branch -D publish/library-to-github
 ```
 
+### Cosa NON pushare su GitHub
+
+- `deploy/` (Dockerfile, compose, nginx)
+- `service/`, `projects/orbit-lab/`, `projects/orbit-studio/` (applicazioni Angular)
+- `.forgejo/` (CI/CD)
+- Configurazioni Forgejo-specifiche
+
 ## Pubblicazione npm
 
-### Prerequisiti
+### Pubblica (`@rhaegal222/orbit`)
+
+La pubblicazione è automatizzata tramite GitHub Actions:
 
 ```bash
-# Login (una tantum)
-npm adduser
+# Crea tag v* su upstream/main → triggera publish.yml
+git tag v0.1.4
+git push upstream v0.1.4
 ```
 
-### Procedura
+### Aggiorna wrapper (`@wyrmrest/orbit`)
+
+Il workflow `npm-bump.yml` controlla settimanalmente la versione su npmjs.com e apre un MR automatico. In alternativa:
 
 ```bash
-cd /home/rhaegal222/Server/development/rhaegal222/wyrmrest/wyrmrest-orbit
-
-# 1. Aggiorna versione (patch/minor/major)
-sed -i 's/"version": "0.1.X"/"version": "0.1.Y"/' projects/orbit/package.json
-
-# 2. Build
-npm run build:lib
-
-# 3. Pubblica
-cd dist/orbit-new
-npm publish --access public
+# Aggiorna manualmente
+sed -i 's/"@rhaegal222\/orbit": "\^0\.1\.3"/"@rhaegal222\/orbit": "^0.1.4"/' \
+  projects/orbit/package.json
+git add projects/orbit/package.json
+git commit -m "chore: bump @rhaegal222/orbit to ^0.1.4"
+git push origin develop
 ```
 
-### Naming
+## Naming
 
 | Package | Registry | Access |
 |---------|----------|--------|
@@ -121,16 +117,13 @@ npm publish --access public
 
 ## Consumo
 
-### Da npm (pubblico)
+### Da npmjs.com (pubblico)
 
 ```bash
 npm install @rhaegal222/orbit
 ```
 
-```json
-// .npmrc
-@rhaegal222:registry=https://npm.pkg.github.com
-```
+Nessuna autenticazione necessaria per l'installazione.
 
 ### Da Forgejo (privato)
 
@@ -139,9 +132,8 @@ npm install @wyrmrest/orbit
 ```
 
 ```ini
-// .npmrc
+# .npmrc
 @wyrmrest:registry=https://git.wyrmrest.it/api/packages/wyrmrest/npm/
-//git.wyrmrest.it/api/packages/wyrmrest/npm/:_authToken=TOKEN
 ```
 
 ### Da GitLab (privato)
@@ -151,16 +143,17 @@ npm install @galileo/orbit
 ```
 
 ```ini
-// .npmrc
+# .npmrc
 @galileo:registry=https://gitlab.galileo.test/api/v4/groups/142/-/packages/npm/
 ```
 
 ## Credenziali
 
-| Servizio | Dove | Variabile |
-|----------|------|-----------|
-| GitLab | `.env` del transit gateway | `GITLAB_USERNAME`, `GITLAB_PASSWORD` |
-| VPN | `.env` del transit gateway | `VPN_PASSWORD` |
-| npm | `~/.npmrc` | `_authToken` |
-| GitHub | `~/.git-credentials` | token personale |
-| Forgejo | git remote URL | token repo |
+Tutte le credenziali sono in Vault. Nessuna deve essere committata.
+
+| Servizio | Vault path | Uso |
+|----------|-----------|-----|
+| npm | `wyrmrest/access/npm` | `NPM_TOKEN` per publish GitHub Actions |
+| GitHub | `wyrmrest/access/github` | `GITHUB_SYNC_TOKEN` per sync Forgejo → GitHub |
+| Forgejo | `wyrmrest/services/production/wyrmrest-git` | Token Forgejo per CI |
+| GitLab | `wyrmrest/access/gitlab` | Credenziali GitLab per update-orbit.sh |

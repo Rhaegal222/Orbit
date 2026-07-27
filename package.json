@@ -9,16 +9,20 @@
     "LICENSE"
   ],
   "scripts": {
-    "build:lib": "ng build orbit --configuration production",
-    "build:lab": "ng build orbit-lab --configuration production",
-    "build:studio": "ng build orbit-studio --configuration production",
-    "build:all": "npm run build:lib && npm run build:lab && npm run build:studio",
-    "test": "NG_CLI_ANALYTICS=false ng test --watch=false",
-    "test:watch": "ng test",
-    "format:check": "prettier --check .",
-    "format:write": "prettier --write .",
-    "check": "npm pack --dry-run",
-    "release:check": "npm run check"
+    "ng": "ng",
+    "start": "ng serve orbit-lab",
+    "start:studio": "ng serve orbit-studio",
+    "build": "ng build orbit",
+    "build:lab": "ng build orbit-lab",
+    "build:studio": "ng build orbit-studio",
+    "test": "ng test orbit-lab --watch=false",
+    "lint": "ng lint",
+    "format:check": "prettier --config .prettierrc --list-different \"projects/**/*.{ts,html,css,json}\"",
+    "format:write": "prettier --config .prettierrc --write \"projects/**/*.{ts,html,css,json}\"",
+    "pack:check": "npm run build && cd dist/orbit-new && npm pack --dry-run",
+    "fixture:verify": "bash consumer-fixture/verify.sh",
+    "release:check": "npm run format:check && npm run test && npm run pack:check && npm run fixture:verify",
+    "check": "npm run release:check"
   },
   "repository": {
     "type": "git",

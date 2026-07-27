@@ -2,8 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm",
-    "analytics": false
+    "packageManager": "npm"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -27,6 +26,19 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/orbit/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/orbit/**/*.ts", "projects/orbit/**/*.html"],
+            "eslintConfig": "projects/orbit/eslint.config.js"
+          }
         }
       }
     },
@@ -78,8 +90,14 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/orbit-lab/tsconfig.spec.json",
-            "setupFiles": ["projects/orbit/vitest-setup.ts"]
+            "tsConfig": "projects/orbit-lab/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/orbit-lab/**/*.ts", "projects/orbit-lab/**/*.html"],
+            "eslintConfig": "projects/orbit-lab/eslint.config.js"
           }
         }
       }
@@ -141,73 +159,7 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "setupFiles": ["projects/orbit/vitest-setup.ts"]
-          }
-        }
-      }
-    },
-    "service": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "service",
-      "sourceRoot": "service/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:application",
-          "options": {
-            "browser": "service/src/main.ts",
-            "tsConfig": "service/tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "service/public"
-              }
-            ],
-            "styles": [
-              "projects/orbit/src/styles/styles.css",
-              "service/src/styles.css"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "service:build:production"
-            },
-            "development": {
-              "buildTarget": "service:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "service/tsconfig.spec.json",
-            "setupFiles": ["projects/orbit/vitest-setup.ts"]
-          }
+          "builder": "@angular/build:unit-test"
         }
       }
     }

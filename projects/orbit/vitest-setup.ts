@@ -1,9 +1,18 @@
 if (typeof window !== 'undefined') {
   class ResizeObserverMock {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe(): void {
+      // Intentionally empty test double.
+    }
+
+    unobserve(): void {
+      // Intentionally empty test double.
+    }
+
+    disconnect(): void {
+      // Intentionally empty test double.
+    }
   }
-  (globalThis as any).ResizeObserver = ResizeObserverMock;
-  (window as any).ResizeObserver = ResizeObserverMock;
+
+  Object.assign(globalThis, { ResizeObserver: ResizeObserverMock });
+  Object.assign(window, { ResizeObserver: ResizeObserverMock });
 }

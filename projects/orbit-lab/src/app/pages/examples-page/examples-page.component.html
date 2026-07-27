@@ -433,11 +433,20 @@
         <orbit-tab-panel value="landing">
           <section class="examples__landing" aria-labelledby="landing-title">
             @if (offcanvasOpen()) {
-              <div class="examples__landing-offcanvas-backdrop" (click)="closeOffcanvas()"></div>
+              <!-- Mouse/touch-only dismiss affordance: aria-hidden because keyboard and screen-reader
+                   users already have two real, focusable ways to close this (the header close
+                   button below, and Escape on the dialog itself) — the backdrop isn't meant to be
+                   reachable by keyboard, so it doesn't need its own key handler. -->
+              <div
+                class="examples__landing-offcanvas-backdrop"
+                aria-hidden="true"
+                (click)="closeOffcanvas()"
+              ></div>
               <aside
                 class="examples__landing-offcanvas"
                 role="dialog"
                 aria-label="Menu di navigazione"
+                (keydown.escape)="closeOffcanvas()"
               >
                 <header class="examples__landing-offcanvas-header">
                   <span class="examples__landing-offcanvas-brand">Lumenova</span>

@@ -313,6 +313,20 @@ export class LabCatalogOptionsPanelComponent {
   }
 }
 
+interface LabCatalogNavigationPanelData {
+  theme: WritableSignal<LabTheme>;
+  density: WritableSignal<LabDensity>;
+  textScale: WritableSignal<LabTextScale>;
+  font: WritableSignal<LabFont>;
+  fontOptions: Signal<OrbitSelectOption[]>;
+  shadowIntensity: WritableSignal<LabShadowIntensity>;
+  shape: WritableSignal<LabShape>;
+  sidebarSections: Signal<readonly OrbitSidebarSection[]>;
+  activeSidebarId: Signal<string | null>;
+  searchControl: FormControl<string>;
+  onSidebarItemSelected: (item: OrbitSidebarItem) => void;
+}
+
 @Component({
   selector: 'lab-catalog-navigation-panel',
   standalone: true,
@@ -356,7 +370,7 @@ export class LabCatalogOptionsPanelComponent {
   </orbit-panel-surface>`,
 })
 class LabCatalogNavigationPanelComponent {
-  readonly data = inject(ORBIT_PANEL_DATA) as any;
+  readonly data = inject(ORBIT_PANEL_DATA) as LabCatalogNavigationPanelData;
   private readonly panel = inject(OrbitPanelService);
 
   readonly fontStack = computed(() => fontStack(this.data.font()));

@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { OrbitButtonComponent, OrbitNavbarComponent, type OrbitNavbarItem } from '@galileo/orbit';
+import {
+  OrbitButtonComponent,
+  OrbitIconButtonComponent,
+  OrbitNavbarComponent,
+  OrbitTopbarComponent,
+  type OrbitNavbarItem,
+} from '@galileo/orbit';
 import { LabExampleComponent } from '../../components/example-panel/example-panel.component';
 
 const NAV_ITEMS: readonly OrbitNavbarItem[] = [
@@ -25,7 +31,13 @@ const CENTER_RIGHT_ITEMS: readonly OrbitNavbarItem[] = [
   selector: 'lab-navbar-page',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LabExampleComponent, OrbitButtonComponent, OrbitNavbarComponent],
+  imports: [
+    LabExampleComponent,
+    OrbitButtonComponent,
+    OrbitIconButtonComponent,
+    OrbitNavbarComponent,
+    OrbitTopbarComponent,
+  ],
   templateUrl: './navbar-page.component.html',
   styles: `
     .navbar-tone-demo,
@@ -46,6 +58,12 @@ export class NavbarPageComponent {
 
   protected readonly centerLeftItems = CENTER_LEFT_ITEMS;
   protected readonly centerRightItems = CENTER_RIGHT_ITEMS;
+
+  protected readonly topbarSnippet = `<orbit-topbar ariaLabel="Area operativa">
+  <orbit-icon-button orbitTopbarStart icon="menu" ariaLabel="Apri navigazione" />
+  <strong orbitTopbarCenter>Dashboard</strong>
+  <orbit-icon-button orbitTopbarEnd icon="settings" ariaLabel="Apri impostazioni" />
+</orbit-topbar>`;
 
   protected readonly snippet = `<orbit-navbar
   brand="Orbit"

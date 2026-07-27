@@ -4,6 +4,26 @@ All notable changes to Galileo Orbit are documented here.
 
 ## Unreleased
 
+## [0.3.0] - 2026-07-27
+
+### Changed
+
+- `@galileo/orbit` is now a thin wrapper over
+  [`@rhaegal222/orbit`](https://www.npmjs.com/package/@rhaegal222/orbit), the theme-neutral
+  component library extracted from this project and published publicly on npm. All 51 UI
+  components are re-exported unchanged from `@rhaegal222/orbit`; `@galileo/orbit` itself now
+  ships only Galileo's own `styles.css`, `tokens.css` and `theme.css` (the Galileo-branded default
+  theme layered on top of the public token contract).
+- First published release: available from the GitLab Package Registry under the `@galileo` scope
+  (`https://gitlab.galileo.test/api/v4/groups/142/-/packages/npm/`).
+
+## Component library history (pre-split, now `@rhaegal222/orbit`)
+
+> The entries below predate the extraction above and describe the component library itself —
+> the code they refer to no longer lives in this repository. They're kept here for historical
+> reference; see the [`@rhaegal222/orbit` changelog](https://github.com/Rhaegal222/Orbit/blob/main/CHANGELOG.md)
+> for its ongoing history.
+
 - Added switch thumb tokens with a tonal active thumb so its state remains distinct in every theme.
 - Fixed badge padding, height and icon gap to follow the active density scope.
 - Replaced remaining legacy `--orbit-color-*` alias tokens in popover with current semantic tokens.

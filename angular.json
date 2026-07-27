@@ -32,6 +32,13 @@
           "options": {
             "tsConfig": "projects/orbit/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/orbit/**/*.ts", "projects/orbit/**/*.html"],
+            "eslintConfig": "projects/orbit/eslint.config.js"
+          }
         }
       }
     },
@@ -84,6 +91,13 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/orbit-lab/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/orbit-lab/**/*.ts", "projects/orbit-lab/**/*.html"],
+            "eslintConfig": "projects/orbit-lab/eslint.config.js"
           }
         }
       }

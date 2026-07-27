@@ -16,7 +16,7 @@
     "format:write": "prettier --config .prettierrc --write \"projects/**/*.{ts,html,css,json}\"",
     "pack:check": "npm run build && cd dist/orbit-new && npm pack --dry-run",
     "fixture:verify": "bash consumer-fixture/verify.sh",
-    "release:check": "npm run format:check && npm run test && npm run pack:check && npm run fixture:verify",
+    "release:check": "npm run format:check && npm run lint && npm run test && npm run pack:check && npm run fixture:verify",
     "check": "npm run release:check"
   },
   "dependencies": {
@@ -37,14 +37,18 @@
     "@angular/cdk": "^22.0.0",
     "@angular/cli": "^22.0.7",
     "@angular/compiler-cli": "^22.0.0",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.0",
     "@types/prismjs": "^1.26.6",
+    "angular-eslint": "22.1.0",
+    "eslint": "^10.6.0",
     "jsdom": "^28.0.0",
     "ng-packagr": "^22.0.0",
     "postcss": "^8.5.0",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.1.0",
     "typescript": "~6.0.2",
+    "typescript-eslint": "8.62.1",
     "vitest": "^4.0.8"
   }
 }

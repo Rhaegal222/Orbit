@@ -38,14 +38,16 @@ jobs:
       - name: Install and build
         run: |
           npm ci
-          npm run build
+          npm run build:lib
 
       - name: Verify package
-        run: npm pack --dry-run
+        run: |
+          cd dist/orbit-new
+          npm pack --dry-run
 
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          cd dist/orbit
+          cd dist/orbit-new
           npm publish --access public

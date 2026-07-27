@@ -12,7 +12,7 @@ import { TooltipComponent } from './tooltip.component';
   },
 })
 export class OrbitTooltipDirective implements OnDestroy {
-  orbitTooltip = input.required<string>({ alias: 'orbitTooltip' });
+  orbitTooltip = input.required<string>();
   orbitTooltipPosition = input<'top' | 'bottom' | 'left' | 'right'>('top');
   orbitTooltipDelay = input(0);
 

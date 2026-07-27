@@ -37,7 +37,7 @@ function splitHighlightedLines(html: string): string[] {
 
   for (const segment of raw) {
     let line = '';
-    let cursor = 0;
+    const cursor = 0;
     const combined = openStack.join('') + segment;
 
     TOKEN_CLOSE_RE.lastIndex = 0;

@@ -39,7 +39,7 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@rhaegal222/orbit": "^0.1.1",
+    "@rhaegal222/orbit": "^0.1.2",
     "@angular/common": "^22.0.0",
     "@angular/compiler": "^22.0.0",
     "@angular/core": "^22.0.0",

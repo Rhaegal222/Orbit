@@ -1,0 +1,12 @@
+# Default owners for everything in the repo
+* @Rhaegal222
+
+# Library source
+projects/orbit/src/ @Rhaegal222
+
+# CI/CD
+.github/ @Rhaegal222
+.forgejo/ @Rhaegal222
+
+# Documentation
+*.md @Rhaegal222

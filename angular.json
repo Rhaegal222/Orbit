@@ -32,7 +32,18 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/orbit/tsconfig.spec.json",
-            "setupFiles": ["projects/orbit/vitest-setup.ts"]
+            "setupFiles": [
+              "projects/orbit/vitest-setup.ts"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/orbit/src/**/*.ts",
+              "projects/orbit/src/**/*.html"
+            ]
           }
         }
       }

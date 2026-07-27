@@ -2,6 +2,20 @@
   display: block;
 }
 
+.examples__mobile-switcher {
+  display: none;
+}
+
+@media (max-width: 40rem) {
+  .examples__mobile-switcher {
+    display: block;
+  }
+
+  .examples__tablist {
+    display: none;
+  }
+}
+
 .examples__tablist {
   margin-block-end: var(--orbit-space-4);
 }

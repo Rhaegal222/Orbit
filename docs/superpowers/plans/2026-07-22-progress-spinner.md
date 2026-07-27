@@ -1,6 +1,8 @@
 # Progress Bar e Spinner Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add two reusable, display-only Orbit components — `OrbitProgressBarComponent` (determinate + indeterminate progress) and `OrbitSpinnerComponent` (3-size loading spinner) — plus their orbit-lab catalog demo pages, per the approved spec at `docs/superpowers/specs/2026-07-22-progress-spinner-design.md`.
 
@@ -46,7 +48,7 @@
 **Interfaces:**
 - Produces: `OrbitProgressBarComponent` with selector `orbit-progress-bar`, inputs `value = input<number | undefined>(undefined)` (0–100, `undefined`/`NaN` ⇒ indeterminate) and `ariaLabel = input<string | undefined>(undefined)`. No outputs.
 
-- [ ] **Step 1: Write the failing spec**
+- [x] **Step 1: Write the failing spec**
 
 Create `projects/orbit/src/lib/components/progress-bar/progress-bar.component.spec.ts`:
 
@@ -134,12 +136,12 @@ describe('OrbitProgressBarComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the spec to verify it fails**
+- [x] **Step 2: Run the spec to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit/src/lib/components/progress-bar/progress-bar.component.spec.ts`
 Expected: FAIL — cannot resolve `./progress-bar.component` (module not found).
 
-- [ ] **Step 3: Create the component class**
+- [x] **Step 3: Create the component class**
 
 Create `projects/orbit/src/lib/components/progress-bar/progress-bar.component.ts`:
 
@@ -170,7 +172,7 @@ export class OrbitProgressBarComponent {
 }
 ```
 
-- [ ] **Step 4: Create the template**
+- [x] **Step 4: Create the template**
 
 Create `projects/orbit/src/lib/components/progress-bar/progress-bar.component.html`:
 
@@ -188,7 +190,7 @@ Create `projects/orbit/src/lib/components/progress-bar/progress-bar.component.ht
 </div>
 ```
 
-- [ ] **Step 5: Create the stylesheet**
+- [x] **Step 5: Create the stylesheet**
 
 Create `projects/orbit/src/lib/components/progress-bar/progress-bar.component.css`:
 
@@ -231,7 +233,7 @@ Create `projects/orbit/src/lib/components/progress-bar/progress-bar.component.cs
 }
 ```
 
-- [ ] **Step 6: Create the barrel file**
+- [x] **Step 6: Create the barrel file**
 
 Create `projects/orbit/src/lib/components/progress-bar/index.ts`:
 
@@ -239,7 +241,7 @@ Create `projects/orbit/src/lib/components/progress-bar/index.ts`:
 export { OrbitProgressBarComponent } from './progress-bar.component';
 ```
 
-- [ ] **Step 7: Export from the library's public API**
+- [x] **Step 7: Export from the library's public API**
 
 In `projects/orbit/src/public-api.ts`, add a new line (alphabetically grouped is not enforced by the existing file — append next to the other `components/*` exports, immediately after the `panel-surface`/`panel` group and before `sidebar`, matching the file's loose grouping by feature area):
 
@@ -251,12 +253,12 @@ export * from './lib/components/sidebar';
 
 (i.e. insert `export * from './lib/components/progress-bar';` on its own line directly after the existing `export * from './lib/components/panel';` line.)
 
-- [ ] **Step 8: Run the spec to verify it passes**
+- [x] **Step 8: Run the spec to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit/src/lib/components/progress-bar/progress-bar.component.spec.ts`
 Expected: PASS — 7 tests passing.
 
-- [ ] **Step 9: Run the full `orbit` library test suite**
+- [x] **Step 9: Run the full `orbit` library test suite**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all existing `orbit` tests still pass, plus the 7 new ones.
@@ -277,7 +279,7 @@ Expected: PASS — all existing `orbit` tests still pass, plus the 7 new ones.
 - Consumes: `ORBIT_I18N` injection token and `OrbitI18n` type from `projects/orbit/src/lib/i18n/orbit-i18n.ts` (`labels.loading: string`, value `'Operazione in corso'` by default).
 - Produces: `export type OrbitSpinnerSize = 'sm' | 'md' | 'lg';` and `OrbitSpinnerComponent` with selector `orbit-spinner`, inputs `size = input<OrbitSpinnerSize>('md')` and `ariaLabel = input<string | undefined>(undefined)`. No outputs.
 
-- [ ] **Step 1: Write the failing spec**
+- [x] **Step 1: Write the failing spec**
 
 Create `projects/orbit/src/lib/components/spinner/spinner.component.spec.ts`:
 
@@ -333,12 +335,12 @@ describe('OrbitSpinnerComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the spec to verify it fails**
+- [x] **Step 2: Run the spec to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit/src/lib/components/spinner/spinner.component.spec.ts`
 Expected: FAIL — cannot resolve `./spinner.component` (module not found).
 
-- [ ] **Step 3: Create the component class**
+- [x] **Step 3: Create the component class**
 
 Create `projects/orbit/src/lib/components/spinner/spinner.component.ts`:
 
@@ -362,7 +364,7 @@ export class OrbitSpinnerComponent {
 }
 ```
 
-- [ ] **Step 4: Create the template**
+- [x] **Step 4: Create the template**
 
 Create `projects/orbit/src/lib/components/spinner/spinner.component.html`:
 
@@ -377,7 +379,7 @@ Create `projects/orbit/src/lib/components/spinner/spinner.component.html`:
 ></span>
 ```
 
-- [ ] **Step 5: Create the stylesheet**
+- [x] **Step 5: Create the stylesheet**
 
 Create `projects/orbit/src/lib/components/spinner/spinner.component.css`:
 
@@ -417,7 +419,7 @@ Create `projects/orbit/src/lib/components/spinner/spinner.component.css`:
 }
 ```
 
-- [ ] **Step 6: Create the barrel file**
+- [x] **Step 6: Create the barrel file**
 
 Create `projects/orbit/src/lib/components/spinner/index.ts`:
 
@@ -425,7 +427,7 @@ Create `projects/orbit/src/lib/components/spinner/index.ts`:
 export { OrbitSpinnerComponent, type OrbitSpinnerSize } from './spinner.component';
 ```
 
-- [ ] **Step 7: Export from the library's public API**
+- [x] **Step 7: Export from the library's public API**
 
 In `projects/orbit/src/public-api.ts`, insert `export * from './lib/components/spinner';` directly after the `slider` export line:
 
@@ -435,12 +437,12 @@ export * from './lib/components/spinner';
 export * from './lib/components/switch';
 ```
 
-- [ ] **Step 8: Run the spec to verify it passes**
+- [x] **Step 8: Run the spec to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit/src/lib/components/spinner/spinner.component.spec.ts`
 Expected: PASS — 4 tests passing.
 
-- [ ] **Step 9: Run the full `orbit` library test suite**
+- [x] **Step 9: Run the full `orbit` library test suite**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all existing `orbit` tests still pass, plus the 7 (Task 1) + 4 (Task 2) new ones.
@@ -461,7 +463,7 @@ Expected: PASS — all existing `orbit` tests still pass, plus the 7 (Task 1) + 
 - Consumes: `OrbitProgressBarComponent` (selector `orbit-progress-bar`, inputs `value`, `ariaLabel` — from Task 1), `OrbitSliderComponent` (selector `orbit-slider`, CVA-based — existing), `LabExampleComponent` (selector `lab-example`, input `code: string` — existing, from `projects/orbit-lab/src/app/catalog/example-panel.component.ts`), `CatalogEntry`/`CATALOG_ENTRIES` (existing), `toSignal` from `@angular/core/rxjs-interop`.
 - Produces: `ProgressBarPageComponent`; a new `'bar-chart'` member of `OrbitIconName`.
 
-- [ ] **Step 1: Add the `bar-chart` icon to the registry**
+- [x] **Step 1: Add the `bar-chart` icon to the registry**
 
 In `projects/orbit/src/lib/icons/icon-registry.ts`, add `'bar-chart'` to the `OrbitIconName` union (append after `'slider'`):
 
@@ -514,12 +516,12 @@ And add the matching entry to `ORBIT_ICON_PATHS`, appended after the `slider` en
 };
 ```
 
-- [ ] **Step 2: Run the orbit-lab catalog test to confirm the type change doesn't break anything**
+- [x] **Step 2: Run the orbit-lab catalog test to confirm the type change doesn't break anything**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit/src/lib/icons`
 Expected: PASS — existing icon tests unaffected (they test specific named icons, not an exhaustive enumeration).
 
-- [ ] **Step 3: Write the failing page spec**
+- [x] **Step 3: Write the failing page spec**
 
 Create `projects/orbit-lab/src/app/pages/progress-bar-page/progress-bar-page.component.spec.ts`:
 
@@ -581,12 +583,12 @@ describe('ProgressBarPageComponent', () => {
 });
 ```
 
-- [ ] **Step 4: Run the spec to verify it fails**
+- [x] **Step 4: Run the spec to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit-lab/src/app/pages/progress-bar-page/progress-bar-page.component.spec.ts`
 Expected: FAIL — cannot resolve `./progress-bar-page.component` (module not found).
 
-- [ ] **Step 5: Create the page component**
+- [x] **Step 5: Create the page component**
 
 Create `projects/orbit-lab/src/app/pages/progress-bar-page/progress-bar-page.component.ts`:
 
@@ -624,7 +626,7 @@ export class ProgressBarPageComponent {
 }
 ```
 
-- [ ] **Step 6: Create the template**
+- [x] **Step 6: Create the template**
 
 Create `projects/orbit-lab/src/app/pages/progress-bar-page/progress-bar-page.component.html`:
 
@@ -675,7 +677,7 @@ Create `projects/orbit-lab/src/app/pages/progress-bar-page/progress-bar-page.com
 </article>
 ```
 
-- [ ] **Step 7: Add the catalog entry**
+- [x] **Step 7: Add the catalog entry**
 
 In `projects/orbit-lab/src/app/catalog/catalog.ts`, insert the new entry immediately before the existing `navbar` entry (`Barra di navigazione`), so the two `Barra …` labels stay in their correct relative alphabetical order:
 
@@ -686,7 +688,7 @@ In `projects/orbit-lab/src/app/catalog/catalog.ts`, insert the new entry immedia
   { slug: 'navbar', label: 'Barra di navigazione', status: 'verified', icon: 'menu' },
 ```
 
-- [ ] **Step 8: Add the route**
+- [x] **Step 8: Add the route**
 
 In `projects/orbit-lab/src/app/app.routes.ts`, insert a new route entry directly after the `slider` route:
 
@@ -705,12 +707,12 @@ In `projects/orbit-lab/src/app/app.routes.ts`, insert a new route entry directly
   },
 ```
 
-- [ ] **Step 9: Run the page spec to verify it passes**
+- [x] **Step 9: Run the page spec to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit-lab/src/app/pages/progress-bar-page/progress-bar-page.component.spec.ts`
 Expected: PASS — 5 tests passing.
 
-- [ ] **Step 10: Run the catalog spec and confirm no new (only the known pre-existing) failure**
+- [x] **Step 10: Run the catalog spec and confirm no new (only the known pre-existing) failure**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit-lab/src/app/catalog/catalog.spec.ts`
 Expected: the `'marks every catalog entry as verified'` and `'leaves no blockedFile/blockedTokens on verified entries'` tests PASS; the `'lists every entry in alphabetical label order'` test still FAILS with the same pre-existing `Badge`/`Barra di navigazione` and `Layout`/`Input di testo` swaps as before this task (confirm the new `Barra di avanzamento` entry does not appear as a newly out-of-order item in the diff).
@@ -730,7 +732,7 @@ Expected: the `'marks every catalog entry as verified'` and `'leaves no blockedF
 - Consumes: `OrbitSpinnerComponent` (selector `orbit-spinner`, input `size: OrbitSpinnerSize`, `ariaLabel` — from Task 2), `LabExampleComponent` (existing).
 - Produces: `SpinnerPageComponent`.
 
-- [ ] **Step 1: Write the failing page spec**
+- [x] **Step 1: Write the failing page spec**
 
 Create `projects/orbit-lab/src/app/pages/spinner-page/spinner-page.component.spec.ts`:
 
@@ -790,12 +792,12 @@ describe('SpinnerPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the spec to verify it fails**
+- [x] **Step 2: Run the spec to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit-lab/src/app/pages/spinner-page/spinner-page.component.spec.ts`
 Expected: FAIL — cannot resolve `./spinner-page.component` (module not found).
 
-- [ ] **Step 3: Create the page component**
+- [x] **Step 3: Create the page component**
 
 Create `projects/orbit-lab/src/app/pages/spinner-page/spinner-page.component.ts`:
 
@@ -820,7 +822,7 @@ export class SpinnerPageComponent {
 }
 ```
 
-- [ ] **Step 4: Create the template**
+- [x] **Step 4: Create the template**
 
 Create `projects/orbit-lab/src/app/pages/spinner-page/spinner-page.component.html`:
 
@@ -868,7 +870,7 @@ Create `projects/orbit-lab/src/app/pages/spinner-page/spinner-page.component.htm
 </article>
 ```
 
-- [ ] **Step 5: Add the catalog entry**
+- [x] **Step 5: Add the catalog entry**
 
 In `projects/orbit-lab/src/app/catalog/catalog.ts`, insert the new entry immediately before the existing `tooltip` entry (`Suggerimenti`), directly after `slider`, so `Spinner` sits in its correct alphabetical slot between `Slider` and `Suggerimenti`:
 
@@ -878,7 +880,7 @@ In `projects/orbit-lab/src/app/catalog/catalog.ts`, insert the new entry immedia
   { slug: 'tooltip', label: 'Suggerimenti', status: 'verified', icon: 'message-circle' },
 ```
 
-- [ ] **Step 6: Add the route**
+- [x] **Step 6: Add the route**
 
 In `projects/orbit-lab/src/app/app.routes.ts`, insert a new route entry directly after the `progress-bar` route added in Task 3:
 
@@ -899,17 +901,17 @@ In `projects/orbit-lab/src/app/app.routes.ts`, insert a new route entry directly
   },
 ```
 
-- [ ] **Step 7: Run the page spec to verify it passes**
+- [x] **Step 7: Run the page spec to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx vitest run projects/orbit-lab/src/app/pages/spinner-page/spinner-page.component.spec.ts`
 Expected: PASS — 6 tests passing.
 
-- [ ] **Step 8: Run the full `orbit-lab` test suite (excluding the unrelated in-progress `examples-page` directory)**
+- [x] **Step 8: Run the full `orbit-lab` test suite (excluding the unrelated in-progress `examples-page` directory)**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS, except for the single pre-existing, unrelated `catalog.spec.ts` ordering failure noted in Global Constraints — no other failures.
 
-- [ ] **Step 9: Run the full `orbit` library suite one more time as a final cross-check**
+- [x] **Step 9: Run the full `orbit` library suite one more time as a final cross-check**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — no regressions from the icon-registry change in Task 3.

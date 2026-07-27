@@ -1,6 +1,8 @@
 # Skeleton Loader Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add `OrbitSkeletonComponent` — a stateless, presentational loading placeholder (text/circle/rect shapes) to the `orbit` library, plus a catalog demo page in `orbit-lab` that shows all three shapes and a simulated-loading-to-real-content example.
 
@@ -37,7 +39,7 @@
 - Consumes: existing tokens `--orbit-surface-subtle`, `--orbit-text-primary`, `--orbit-font-size-body`, `--orbit-line-height-body`, `--orbit-radius-sm`, `--orbit-radius-control` (all already defined in `projects/orbit/src/styles/tokens.css`, confirmed present).
 - Produces (for Task 2 and any future consumer): selector `orbit-skeleton`, exported symbols `OrbitSkeletonComponent` and `OrbitSkeletonShape` from `@galileo/orbit` (via `projects/orbit/src/public-api.ts`), inputs `shape: OrbitSkeletonShape` (default `'text'`), `width: string` (default `'100%'`), `height: string | undefined` (default `undefined`).
 
-- [ ] **Step 1: Write the failing spec file**
+- [x] **Step 1: Write the failing spec file**
 
 Create `projects/orbit/src/lib/components/skeleton/skeleton.component.spec.ts`:
 
@@ -132,12 +134,12 @@ describe('OrbitSkeletonComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the spec to verify it fails**
+- [x] **Step 2: Run the spec to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './skeleton.component'` (or similar resolution error), since `skeleton.component.ts` does not exist yet.
 
-- [ ] **Step 3: Implement `OrbitSkeletonComponent`**
+- [x] **Step 3: Implement `OrbitSkeletonComponent`**
 
 Create `projects/orbit/src/lib/components/skeleton/skeleton.component.ts`:
 
@@ -204,7 +206,7 @@ export class OrbitSkeletonComponent {
 }
 ```
 
-- [ ] **Step 4: Add the shimmer stylesheet, with the reduced-motion override**
+- [x] **Step 4: Add the shimmer stylesheet, with the reduced-motion override**
 
 Create `projects/orbit/src/lib/components/skeleton/skeleton.component.css`:
 
@@ -267,7 +269,7 @@ Create `projects/orbit/src/lib/components/skeleton/skeleton.component.css`:
 }
 ```
 
-- [ ] **Step 5: Add the barrel export**
+- [x] **Step 5: Add the barrel export**
 
 Create `projects/orbit/src/lib/components/skeleton/index.ts`:
 
@@ -276,7 +278,7 @@ export { OrbitSkeletonComponent } from './skeleton.component';
 export type { OrbitSkeletonShape } from './skeleton.component';
 ```
 
-- [ ] **Step 6: Wire the barrel into the library's public API**
+- [x] **Step 6: Wire the barrel into the library's public API**
 
 Modify `projects/orbit/src/public-api.ts` — add the export right after the `badge` line (both are simple, tokens-only display components):
 
@@ -285,12 +287,12 @@ export * from './lib/components/badge';
 export * from './lib/components/skeleton';
 ```
 
-- [ ] **Step 7: Run the spec to verify it passes**
+- [x] **Step 7: Run the spec to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitSkeletonComponent` tests green, no other `orbit` suite regressions.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 Do not run `git` commands — leave the working tree as-is for the human to review and commit.
 
@@ -310,7 +312,7 @@ Do not run `git` commands — leave the working tree as-is for the human to revi
 - Consumes: `OrbitSkeletonComponent`, `OrbitSkeletonShape` from `@galileo/orbit` (Task 1); `LabExampleComponent` from `projects/orbit-lab/src/app/catalog/example-panel.component.ts` (input `code: string`); `CatalogEntry` shape from `projects/orbit-lab/src/app/catalog/catalog-entry.model.ts` (`slug`, `label`, `status`, `icon: OrbitIconName`).
 - Produces: route path `skeleton` lazy-loading `SkeletonPageComponent`; catalog entry `{ slug: 'skeleton', label: 'Skeleton', status: 'verified', icon: 'square' }`.
 
-- [ ] **Step 1: Write the failing spec file**
+- [x] **Step 1: Write the failing spec file**
 
 Create `projects/orbit-lab/src/app/pages/skeleton-page/skeleton-page.component.spec.ts`:
 
@@ -369,12 +371,12 @@ describe('SkeletonPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run the spec to verify it fails**
+- [x] **Step 2: Run the spec to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: FAIL — `Cannot find module './skeleton-page.component'`.
 
-- [ ] **Step 3: Implement `SkeletonPageComponent`**
+- [x] **Step 3: Implement `SkeletonPageComponent`**
 
 Create `projects/orbit-lab/src/app/pages/skeleton-page/skeleton-page.component.ts`:
 
@@ -437,7 +439,7 @@ export class SkeletonPageComponent {
 }
 ```
 
-- [ ] **Step 4: Write the template**
+- [x] **Step 4: Write the template**
 
 Create `projects/orbit-lab/src/app/pages/skeleton-page/skeleton-page.component.html`:
 
@@ -504,7 +506,7 @@ Create `projects/orbit-lab/src/app/pages/skeleton-page/skeleton-page.component.h
 </article>
 ```
 
-- [ ] **Step 5: Add the card layout stylesheet**
+- [x] **Step 5: Add the card layout stylesheet**
 
 Create `projects/orbit-lab/src/app/pages/skeleton-page/skeleton-page.component.css`:
 
@@ -539,7 +541,7 @@ Create `projects/orbit-lab/src/app/pages/skeleton-page/skeleton-page.component.c
 }
 ```
 
-- [ ] **Step 6: Register the catalog entry**
+- [x] **Step 6: Register the catalog entry**
 
 Modify `projects/orbit-lab/src/app/catalog/catalog.ts` — insert the new entry between `form-section` (`'Sezioni modulo'`) and `slider` (`'Slider'`), which is the locally-correct alphabetical slot (`'Skeleton'` sorts between them):
 
@@ -549,7 +551,7 @@ Modify `projects/orbit-lab/src/app/catalog/catalog.ts` — insert the new entry 
   { slug: 'slider', label: 'Slider', status: 'verified', icon: 'slider' },
 ```
 
-- [ ] **Step 7: Register the lazy route**
+- [x] **Step 7: Register the lazy route**
 
 Modify `projects/orbit-lab/src/app/app.routes.ts` — add the route next to `slider` (alphabetically adjacent in the routes array too, though route order itself isn't asserted by any test):
 
@@ -568,12 +570,12 @@ Modify `projects/orbit-lab/src/app/app.routes.ts` — add the route next to `sli
   },
 ```
 
-- [ ] **Step 8: Run the orbit-lab suite to verify the new specs pass**
+- [x] **Step 8: Run the orbit-lab suite to verify the new specs pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for `SkeletonPageComponent` and all pre-existing suites, **except** the already-known-broken `catalog.spec.ts` alphabetical-order test (see Global Constraints — that failure predates this plan and is not a regression to fix here).
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 Do not run `git` commands — leave the working tree as-is for the human to review and commit.
 
@@ -585,24 +587,24 @@ Do not run `git` commands — leave the working tree as-is for the human to revi
 
 **Interfaces:** none.
 
-- [ ] **Step 1: Run the full `orbit` library suite**
+- [x] **Step 1: Run the full `orbit` library suite**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS, including all `OrbitSkeletonComponent` tests from Task 1, with zero regressions in any other `orbit` component suite.
 
-- [ ] **Step 2: Run the full `orbit-lab` suite (excluding the in-progress `examples-page` directory)**
+- [x] **Step 2: Run the full `orbit-lab` suite (excluding the in-progress `examples-page` directory)**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for every suite except the pre-existing `catalog.spec.ts` alphabetical-order failure documented in Global Constraints. Confirm no *new* failures were introduced (diff the failing-test list against the pre-change baseline: only that one test should be red, and it should be red for the same reason as before — `'Barra di navigazione'`/`'Badge'` and `'Layout'`/`'Input di testo'` ordering, not anything related to the new `skeleton` entry).
 
-- [ ] **Step 3: Manual visual smoke check (optional but recommended)**
+- [x] **Step 3: Manual visual smoke check (optional but recommended)**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run start` (serves `orbit-lab`), then navigate to `/skeleton` in the browser and confirm:
 - The three shape examples render with visible shimmer motion.
 - The "Caricamento simulato" card grid shows skeletons for ~1.8s, then swaps to the three real cards (titles: "Rilascio v2.4", "Manutenzione pianificata", "Nuovo componente").
 - With OS-level "reduce motion" enabled (e.g. `prefers-reduced-motion: reduce` via browser devtools rendering emulation), the shimmer stops moving and only the flat base color remains.
 
-- [ ] **Step 4: Self-review against the spec**
+- [x] **Step 4: Self-review against the spec**
 
 Confirm every spec requirement maps to a task:
 - Component shape/inputs/host bindings (spec lines 17-33) → Task 1, Step 3.

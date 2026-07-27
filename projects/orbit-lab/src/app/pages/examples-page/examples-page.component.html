@@ -7,6 +7,12 @@
   }
 
   <lab-example [fullWidth]="true">
+    <lab-example-switcher
+      class="examples__mobile-switcher"
+      [items]="exampleSwitcherItems"
+      [selected]="selectedExample()"
+      (selectedChange)="selectExample($event)"
+    />
     <orbit-tablist
       class="examples__tablist"
       ariaLabel="Esempi del catalogo prodotti"

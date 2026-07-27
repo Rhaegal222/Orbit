@@ -1,6 +1,8 @@
 # Orbit Mobile/Responsive Strategy Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Close Galileo Orbit's mobile/responsive gap — shared breakpoint tokens, a pointer-based touch-target floor, a documented mobile-navigation composition pattern, responsive page-shell padding, and migration of every existing hardcoded `@media` value onto the new shared scale — without changing desktop (`lg`/`xl`/`2xl`) behavior.
 
@@ -58,7 +60,7 @@ and forcing it through `OrbitPanelService` would break its existing API) — onl
   `--orbit-breakpoint-2xl` (`96rem`) — read by later tasks as documentation/Tailwind
   source of truth; every component `@media` rule in Tasks 5–6 uses these literal values.
 
-- [ ] **Step 1: Add the breakpoint tokens to `tokens.css`**
+- [x] **Step 1: Add the breakpoint tokens to `tokens.css`**
 
 Insert after line 214 (`--orbit-page-max-width-workspace: 90rem;`):
 
@@ -73,7 +75,7 @@ Insert after line 214 (`--orbit-page-max-width-workspace: 90rem;`):
   --orbit-breakpoint-2xl: 96rem;
 ```
 
-- [ ] **Step 2: Map the same literal values into Tailwind's `@theme` screens**
+- [x] **Step 2: Map the same literal values into Tailwind's `@theme` screens**
 
 In `projects/orbit/src/styles/theme.css`, insert before the closing `}` of the
 `@theme` block (after `--shadow-orbit-overlay: var(--orbit-shadow-overlay);`):
@@ -89,7 +91,7 @@ In `projects/orbit/src/styles/theme.css`, insert before the closing `}` of the
   --breakpoint-2xl: 96rem;
 ```
 
-- [ ] **Step 3: Document the token in `docs/THEMING.md`**
+- [x] **Step 3: Document the token in `docs/THEMING.md`**
 
 Insert after line 23 (the end of the "Token layers" table), before the "### Action
 foregrounds and dark theme" heading:
@@ -112,7 +114,7 @@ comment naming the token it must match — treat the token as the documented sou
 truth, not a live reference.
 ```
 
-- [ ] **Step 4: Add the CHANGELOG entry**
+- [x] **Step 4: Add the CHANGELOG entry**
 
 In `CHANGELOG.md`, under `## Unreleased` → `### Added` (after line 12, the
 `data-orbit-shape` entry):
@@ -122,14 +124,14 @@ In `CHANGELOG.md`, under `## Unreleased` → `### Added` (after line 12, the
   Tailwind v4's `sm:`/`md:`/`lg:`/`xl:`/`2xl:` utilities.
 ```
 
-- [ ] **Step 5: Manual verification**
+- [x] **Step 5: Manual verification**
 
 Run `npm run check`. Open Orbit Lab (`ng serve orbit-lab`), navigate to any page using
 a Tailwind `sm:`/`md:` utility class (e.g. the theme-switcher layout), resize the
 browser across 640px/768px/1024px/1280px and confirm the utility classes still toggle
 at those widths (Tailwind must have picked up the new `@theme` screens without error).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add projects/orbit/src/styles/tokens.css projects/orbit/src/styles/theme.css docs/THEMING.md CHANGELOG.md
@@ -156,7 +158,7 @@ git commit -m "feat(orbit): add shared --orbit-breakpoint-* token scale"
 - Produces: `--orbit-control-height-touch-min: 2.75rem` — a token other Orbit
   components can adopt later; no other task in this plan consumes it directly.
 
-- [ ] **Step 1: Add the token**
+- [x] **Step 1: Add the token**
 
 In `tokens.css`, immediately after the breakpoint tokens from Task 1:
 
@@ -165,7 +167,7 @@ In `tokens.css`, immediately after the breakpoint tokens from Task 1:
   --orbit-control-height-touch-min: 2.75rem;
 ```
 
-- [ ] **Step 2: Apply the floor to `.orbit-btn` (button)**
+- [x] **Step 2: Apply the floor to `.orbit-btn` (button)**
 
 In `projects/orbit/src/lib/components/button/button.component.css`, after the
 `.orbit-btn` rule block (the block starting at line 6, containing
@@ -179,7 +181,7 @@ In `projects/orbit/src/lib/components/button/button.component.css`, after the
 }
 ```
 
-- [ ] **Step 3: Apply the floor to `.orbit-icon-button`**
+- [x] **Step 3: Apply the floor to `.orbit-icon-button`**
 
 In `projects/orbit/src/lib/components/icon-button/icon-button.component.css`, after
 the `.orbit-icon-button` rule block (lines 4–14), append:
@@ -193,7 +195,7 @@ the `.orbit-icon-button` rule block (lines 4–14), append:
 }
 ```
 
-- [ ] **Step 4: Apply the floor to `.orbit-checkbox` (label wrapper)**
+- [x] **Step 4: Apply the floor to `.orbit-checkbox` (label wrapper)**
 
 In `projects/orbit/src/lib/components/checkbox/checkbox.component.css`, after the
 `.orbit-checkbox` rule block (lines 5–14), append:
@@ -206,7 +208,7 @@ In `projects/orbit/src/lib/components/checkbox/checkbox.component.css`, after th
 }
 ```
 
-- [ ] **Step 5: Apply the floor to `.orbit-switch` (label wrapper)**
+- [x] **Step 5: Apply the floor to `.orbit-switch` (label wrapper)**
 
 In `projects/orbit/src/lib/components/switch/switch.component.css`, after the
 `.orbit-switch` rule block (lines 5–13, which already sets
@@ -220,7 +222,7 @@ In `projects/orbit/src/lib/components/switch/switch.component.css`, after the
 }
 ```
 
-- [ ] **Step 6: Apply the floor to `.orbit-pill-switch__option`**
+- [x] **Step 6: Apply the floor to `.orbit-pill-switch__option`**
 
 In `projects/orbit/src/lib/components/pill-switch/pill-switch.component.css`, after
 the `.orbit-pill-switch__option` rule block (starts at line 23), append:
@@ -233,7 +235,7 @@ the `.orbit-pill-switch__option` rule block (starts at line 23), append:
 }
 ```
 
-- [ ] **Step 7: Apply the floor to `.orbit-select__input` (trigger)**
+- [x] **Step 7: Apply the floor to `.orbit-select__input` (trigger)**
 
 In `projects/orbit/src/lib/components/select/select.component.css`, after the
 `.orbit-select__input` rule block (starts at line 11, sets
@@ -247,7 +249,7 @@ In `projects/orbit/src/lib/components/select/select.component.css`, after the
 }
 ```
 
-- [ ] **Step 8: Document the token in `docs/THEMING.md`**
+- [x] **Step 8: Document the token in `docs/THEMING.md`**
 
 Append to the end of the "Breakpoints" section added in Task 1:
 
@@ -260,7 +262,7 @@ select — independent of density, so `compact`/`dense` stay touch-safe on a
 touch/hybrid device while a mouse-driven desktop window (even narrow) is unaffected.
 ```
 
-- [ ] **Step 9: Add the CHANGELOG entry**
+- [x] **Step 9: Add the CHANGELOG entry**
 
 In `CHANGELOG.md` → `### Added`:
 
@@ -270,14 +272,14 @@ In `CHANGELOG.md` → `### Added`:
   of the active density.
 ```
 
-- [ ] **Step 10: Manual verification**
+- [x] **Step 10: Manual verification**
 
 `npm run check`. In Chrome DevTools, open Orbit Lab, toggle device toolbar (which sets
 `pointer: coarse`), and confirm button/icon-button/checkbox/switch/pill-switch/select
 grow to at least 44px in the emulated device; then close device toolbar and confirm
 `compact`/`dense` density controls shrink back on a normal mouse pointer.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add projects/orbit/src/styles/tokens.css projects/orbit/src/lib/components/button/button.component.css projects/orbit/src/lib/components/icon-button/icon-button.component.css projects/orbit/src/lib/components/checkbox/checkbox.component.css projects/orbit/src/lib/components/switch/switch.component.css projects/orbit/src/lib/components/pill-switch/pill-switch.component.css projects/orbit/src/lib/components/select/select.component.css docs/THEMING.md CHANGELOG.md
@@ -309,7 +311,7 @@ documentation and a working Orbit Lab example.
   export) — a component demonstrating the pattern; `PanelPageComponent.openSidebarDrawer()`
   (new method).
 
-- [ ] **Step 1: Add a row to the interaction patterns table**
+- [x] **Step 1: Add a row to the interaction patterns table**
 
 In `docs/PATTERNS-AND-GOVERNANCE.md`, insert a new row into the table (after the
 "Preserved canvas" row, before "Local result", around line 11):
@@ -318,7 +320,7 @@ In `docs/PATTERNS-AND-GOVERNANCE.md`, insert a new row into the table (after the
 | Mobile navigation | `orbit-sidebar embedded` opened via `OrbitPanelService` | The primary navigation must collapse into an overlay under `--orbit-breakpoint-sm`. | The navigation is already visible in a persistent rail on the current viewport. |
 ```
 
-- [ ] **Step 2: Check whether `panel-page.component.spec.ts` already exists**
+- [x] **Step 2: Check whether `panel-page.component.spec.ts` already exists**
 
 ```bash
 test -f projects/orbit-lab/src/app/pages/panel-page/panel-page.component.spec.ts && echo EXISTS || echo MISSING
@@ -327,7 +329,7 @@ test -f projects/orbit-lab/src/app/pages/panel-page/panel-page.component.spec.ts
 If `EXISTS`, read it before Step 6 and add the new test alongside the existing ones
 instead of creating a new file.
 
-- [ ] **Step 3: Add the demo content component to `panel-page.component.ts`**
+- [x] **Step 3: Add the demo content component to `panel-page.component.ts`**
 
 After the existing `LabPanelDemoContentComponent` class (ends at line 78), add:
 
@@ -359,7 +361,7 @@ class LabSidebarDrawerContentComponent {
 }
 ```
 
-- [ ] **Step 4: Add `OrbitIconButtonComponent` to `PanelPageComponent`'s imports and add the open method**
+- [x] **Step 4: Add `OrbitIconButtonComponent` to `PanelPageComponent`'s imports and add the open method**
 
 In the `imports` array of the `@Component` decorator for `PanelPageComponent` (starts
 at line 84), add `OrbitIconButtonComponent` and import it at the top alongside the
@@ -381,7 +383,7 @@ other `@galileo/orbit` imports (line 2). Then add this method to the
   }
 ```
 
-- [ ] **Step 5: Add the example block to `panel-page.component.html`**
+- [x] **Step 5: Add the example block to `panel-page.component.html`**
 
 Insert a new `<section>` after the existing "Sidebar" section (after its closing
 `</section>`, i.e. after line 168's `</lab-example>` and its section close):
@@ -400,7 +402,7 @@ Insert a new `<section>` after the existing "Sidebar" section (after its closing
 </section>
 ```
 
-- [ ] **Step 6: Write the test**
+- [x] **Step 6: Write the test**
 
 Add to `panel-page.component.spec.ts` (create following the existing
 `panel-page.component.spec.ts:64` pattern from the audit if the file exists, otherwise
@@ -423,7 +425,7 @@ Adjust the button selector to match whatever selector the existing
 `panel-page.component.spec.ts` already uses for `orbit-icon-button` clicks (check
 Step 2's file before finalizing this selector).
 
-- [ ] **Step 7: Run the test**
+- [x] **Step 7: Run the test**
 
 ```bash
 npm run test -- panel-page
@@ -431,7 +433,7 @@ npm run test -- panel-page
 
 Expected: PASS.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add docs/PATTERNS-AND-GOVERNANCE.md projects/orbit-lab/src/app/pages/panel-page/
@@ -449,7 +451,7 @@ git commit -m "docs(orbit): demonstrate drawer-nav composition (orbit-sidebar + 
 **Interfaces:**
 - No new inputs/outputs. Purely a `@media`-scoped override of an existing token usage.
 
-- [ ] **Step 1: Add the responsive padding rule**
+- [x] **Step 1: Add the responsive padding rule**
 
 In `projects/orbit/src/lib/components/layout/page-shell.component.css`, append after
 the existing rules (after line 17, the `.orbit-page-shell--full` block):
@@ -467,20 +469,20 @@ narrower than the default `--orbit-page-padding-inline` (`var(--orbit-space-lg)`
 `tokens.css:212`) — this only overrides the computed padding under `sm`, it does not
 redefine `--orbit-page-padding-inline` itself.
 
-- [ ] **Step 2: Add the CHANGELOG entry**
+- [x] **Step 2: Add the CHANGELOG entry**
 
 ```markdown
 - `orbit-page-shell` now reduces its inline padding under `--orbit-breakpoint-sm`.
 ```
 
-- [ ] **Step 3: Manual verification**
+- [x] **Step 3: Manual verification**
 
 `npm run check`. In Orbit Lab, open the `layout` page (which renders `orbit-page-shell`
 usage), resize the browser to below 640px and confirm the content padding visibly
 tightens; resize back above 1024px and confirm the padding matches current behavior
 exactly (no regression).
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/layout/page-shell.component.css CHANGELOG.md
@@ -503,7 +505,7 @@ delta widens the range in which the component keeps its current wider layout (se
 - Modify: `projects/orbit/src/lib/components/modal-footer/modal-footer.component.css:36`
 - Modify: `CHANGELOG.md`
 
-- [ ] **Step 1: `attachment-list-item` — 32rem → 40rem**
+- [x] **Step 1: `attachment-list-item` — 32rem → 40rem**
 
 In `attachment-list-item.component.css`, change:
 
@@ -517,7 +519,7 @@ to:
 @media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
 ```
 
-- [ ] **Step 2: `form-action-bar` — 32rem → 40rem**
+- [x] **Step 2: `form-action-bar` — 32rem → 40rem**
 
 In `form-action-bar.component.css`, change:
 
@@ -531,7 +533,7 @@ to:
 @media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
 ```
 
-- [ ] **Step 3: `date-range-picker` — 36rem → 40rem**
+- [x] **Step 3: `date-range-picker` — 36rem → 40rem**
 
 In `date-range-picker.component.css`, change:
 
@@ -545,7 +547,7 @@ to:
 @media (max-width: 40rem) /* --orbit-breakpoint-sm */ { .orbit-drp { grid-template-columns: 1fr; align-items: stretch; } .orbit-drp__separator { display: none; } }
 ```
 
-- [ ] **Step 4: `modal-footer` — 36rem → 40rem**
+- [x] **Step 4: `modal-footer` — 36rem → 40rem**
 
 In `modal-footer.component.css`, change:
 
@@ -559,7 +561,7 @@ to:
 @media (max-width: 40rem) /* --orbit-breakpoint-sm */ {
 ```
 
-- [ ] **Step 5: Add the CHANGELOG entry**
+- [x] **Step 5: Add the CHANGELOG entry**
 
 ```markdown
 ### Changed
@@ -573,14 +575,14 @@ to:
 (Add under the existing `### Changed` heading in `CHANGELOG.md`, or create the heading
 if Task 6 has not already added it — check before duplicating.)
 
-- [ ] **Step 6: Manual verification**
+- [x] **Step 6: Manual verification**
 
 `npm run check`. In Orbit Lab: open the `attachments` page and resize across 32–40rem
 (512–640px) to confirm the layout now stays wide until 40rem; open `pickers` and
 `dialog` pages and repeat for date-range-picker and modal-footer. Confirm nothing
 changes above 40rem (desktop unaffected) and at `lg`/`xl`/`2xl`.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/attachment-list-item/attachment-list-item.component.css projects/orbit/src/lib/components/form-action-bar/form-action-bar.component.css projects/orbit/src/lib/components/date-range-picker/date-range-picker.component.css projects/orbit/src/lib/components/modal-footer/modal-footer.component.css CHANGELOG.md
@@ -603,7 +605,7 @@ already match `md`/`lg`/`xl` exactly — comment-only).
 - Modify: `projects/orbit/src/lib/components/form-grid/form-grid.component.css:38,44,50,64`
 - Modify: `CHANGELOG.md`
 
-- [ ] **Step 1: `navbar` — 42rem → 48rem**
+- [x] **Step 1: `navbar` — 42rem → 48rem**
 
 In `navbar.component.css`, change:
 
@@ -617,7 +619,7 @@ to:
 @media (max-width: 48rem) /* --orbit-breakpoint-md */ {
 ```
 
-- [ ] **Step 2: `modal` — add the reference comment (48rem, no numeric change)**
+- [x] **Step 2: `modal` — add the reference comment (48rem, no numeric change)**
 
 In `modal.component.css`, change:
 
@@ -631,7 +633,7 @@ to:
 @media (max-width: 48rem) /* --orbit-breakpoint-md */ {
 ```
 
-- [ ] **Step 3: `workspace` — add the reference comment (48rem, no numeric change)**
+- [x] **Step 3: `workspace` — add the reference comment (48rem, no numeric change)**
 
 In `workspace.component.css`, change:
 
@@ -645,7 +647,7 @@ to:
 @media (max-width: 48rem) /* --orbit-breakpoint-md */ {
 ```
 
-- [ ] **Step 4: `form-grid` — first step 36rem → 40rem, others get the reference comment**
+- [x] **Step 4: `form-grid` — first step 36rem → 40rem, others get the reference comment**
 
 In `form-grid.component.css`, change all four occurrences:
 
@@ -681,7 +683,7 @@ In `form-grid.component.css`, change all four occurrences:
 @media (min-width: 80rem) /* --orbit-breakpoint-xl */ {
 ```
 
-- [ ] **Step 5: Add the CHANGELOG entry**
+- [x] **Step 5: Add the CHANGELOG entry**
 
 Under `### Changed` in `CHANGELOG.md` (same heading as Task 5's entry if that task ran
 first — check before duplicating the heading):
@@ -694,7 +696,7 @@ first — check before duplicating the heading):
   unchanged (already exactly `md`/`lg`/`xl`).
 ```
 
-- [ ] **Step 6: Manual verification**
+- [x] **Step 6: Manual verification**
 
 `npm run check`. In Orbit Lab: open `navbar` page, resize across 42–48rem
 (672–768px), confirm the navbar keeps items on one row slightly longer than before.
@@ -703,7 +705,7 @@ the first column-span step now activates at 40rem. Confirm `modal` (`dialog` pag
 `workspace` (`layout` page) behavior at 48rem is visually identical to before (numeric
 no-op). Confirm `lg`/`xl`/`2xl` behavior across all four components is unchanged.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/navbar/navbar.component.css projects/orbit/src/lib/components/modal/modal.component.css projects/orbit/src/lib/components/layout/workspace.component.css projects/orbit/src/lib/components/form-grid/form-grid.component.css CHANGELOG.md
@@ -730,7 +732,7 @@ boundaries instead of being visually scaled inside a fixed frame.
   `device: WritableSignal<LabDevice>` signals (`lab-shell.component.ts:344-345`).
 - Produces: `frameWidthRem: WritableSignal<number>` (new), `setFrameWidth(rem: number): void` (new).
 
-- [ ] **Step 1: Check the existing spec file's structure**
+- [x] **Step 1: Check the existing spec file's structure**
 
 ```bash
 cat projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts
@@ -739,7 +741,7 @@ cat projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts
 Read the output before writing Step 2's test so the new test matches the file's
 existing `TestBed` setup exactly (imports, providers, router mocking).
 
-- [ ] **Step 2: Write the failing test**
+- [x] **Step 2: Write the failing test**
 
 Add to `lab-shell.component.spec.ts` (matching the existing file's setup found in
 Step 1):
@@ -755,7 +757,7 @@ it('setFrameWidth updates the frame width signal to the given rem value', () => 
 });
 ```
 
-- [ ] **Step 3: Run the test to verify it fails**
+- [x] **Step 3: Run the test to verify it fails**
 
 ```bash
 npm run test -- lab-shell
@@ -763,7 +765,7 @@ npm run test -- lab-shell
 
 Expected: FAIL — `setFrameWidth` is not a function.
 
-- [ ] **Step 4: Add the signal and method**
+- [x] **Step 4: Add the signal and method**
 
 In `lab-shell.component.ts`, after the `protected readonly touchMode = signal(false);`
 line (line 347):
@@ -780,7 +782,7 @@ And after the `toggleTouchMode` method (ends around line 442):
   }
 ```
 
-- [ ] **Step 5: Run the test to verify it passes**
+- [x] **Step 5: Run the test to verify it passes**
 
 ```bash
 npm run test -- lab-shell
@@ -788,7 +790,7 @@ npm run test -- lab-shell
 
 Expected: PASS.
 
-- [ ] **Step 6: Wire breakpoint preset buttons into the template**
+- [x] **Step 6: Wire breakpoint preset buttons into the template**
 
 In `lab-shell.component.html`, near the existing mobile-preview toggle controls (the
 audit found them around lines 11/41/58/72 — locate the `mobilePreview`/`device` toggle
@@ -805,7 +807,7 @@ markup and add these buttons alongside it):
 }
 ```
 
-- [ ] **Step 7: Bind the frame width in CSS**
+- [x] **Step 7: Bind the frame width in CSS**
 
 In `lab-shell.component.html`, find the device-frame host element (the element
 carrying the fixed `aspect-ratio`/width styling described by the audit) and bind:
@@ -819,14 +821,14 @@ In `lab-shell.component.css`, find the rule that currently sets a fixed width/
 `width` declaration from it (keep `aspect-ratio` only if it is still wanted for the
 device chrome image; the inner content area must be free to reflow at the bound width).
 
-- [ ] **Step 8: Manual verification**
+- [x] **Step 8: Manual verification**
 
 `ng serve orbit-lab`. Toggle mobile preview, click each preset button, and confirm a
 component with an existing `@media` rule (e.g. `orbit-navbar`) visibly changes layout
 at the corresponding preset — this is the concrete proof the frame now exercises real
 `@media` conditions instead of a static mockup.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/shell/lab-shell.component.ts projects/orbit-lab/src/app/shell/lab-shell.component.html projects/orbit-lab/src/app/shell/lab-shell.component.css projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts
@@ -849,7 +851,7 @@ exists on some pages, e.g. `button-page.component.html:43`, under the heading
 - Modify: `projects/orbit-lab/src/app/pages/layout-page/layout-page.component.html`
 - Modify: `projects/orbit-lab/src/app/pages/dialog-page/dialog-page.component.html`
 
-- [ ] **Step 1: Check each target file for an existing "Comportamento responsive" heading**
+- [x] **Step 1: Check each target file for an existing "Comportamento responsive" heading**
 
 ```bash
 for f in attachment-page pickers-page navbar-page layout-page dialog-page; do
@@ -860,7 +862,7 @@ done
 
 Skip any file that already has the heading — add the section only where it's missing.
 
-- [ ] **Step 2: Add the section to `attachment-page.component.html`** (attachment-list-item)
+- [x] **Step 2: Add the section to `attachment-page.component.html`** (attachment-list-item)
 
 Append before the closing `</article>`:
 
@@ -874,7 +876,7 @@ Append before the closing `</article>`:
 </section>
 ```
 
-- [ ] **Step 3: Add the section to `pickers-page.component.html`** (date-range-picker)
+- [x] **Step 3: Add the section to `pickers-page.component.html`** (date-range-picker)
 
 ```html
 <section>
@@ -887,7 +889,7 @@ Append before the closing `</article>`:
 </section>
 ```
 
-- [ ] **Step 4: Add the section to `navbar-page.component.html`**
+- [x] **Step 4: Add the section to `navbar-page.component.html`**
 
 ```html
 <section>
@@ -899,7 +901,7 @@ Append before the closing `</article>`:
 </section>
 ```
 
-- [ ] **Step 5: Add the section to `layout-page.component.html`** (workspace + form-grid)
+- [x] **Step 5: Add the section to `layout-page.component.html`** (workspace + form-grid)
 
 ```html
 <section>
@@ -913,7 +915,7 @@ Append before the closing `</article>`:
 </section>
 ```
 
-- [ ] **Step 6: Add the section to `dialog-page.component.html`** (modal / modal-footer)
+- [x] **Step 6: Add the section to `dialog-page.component.html`** (modal / modal-footer)
 
 ```html
 <section>
@@ -926,13 +928,13 @@ Append before the closing `</article>`:
 </section>
 ```
 
-- [ ] **Step 7: Manual verification**
+- [x] **Step 7: Manual verification**
 
 `ng serve orbit-lab`. Visit each modified page, confirm the new section renders
 correctly and the prose matches what Tasks 4–6 actually shipped (re-check the exact
 breakpoint values used after those tasks' edits, in case any changed during review).
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/attachment-page/attachment-page.component.html projects/orbit-lab/src/app/pages/pickers-page/pickers-page.component.html projects/orbit-lab/src/app/pages/navbar-page/navbar-page.component.html projects/orbit-lab/src/app/pages/layout-page/layout-page.component.html projects/orbit-lab/src/app/pages/dialog-page/dialog-page.component.html

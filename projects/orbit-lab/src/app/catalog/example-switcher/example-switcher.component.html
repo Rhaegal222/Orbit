@@ -1,0 +1,29 @@
+<div class="lab-example-switcher">
+  <div class="lab-example-switcher__current">
+    <span class="lab-example-switcher__label">{{ current().label }}</span>
+    <orbit-badge tone="neutral" [label]="current().badge" />
+  </div>
+  <div class="lab-example-switcher__actions">
+    <orbit-icon-button
+      icon="menu"
+      ariaLabel="Passa a menu laterale"
+      [attr.aria-pressed]="mode() === 'offcanvas'"
+      [tone]="mode() === 'offcanvas' ? 'primary' : 'neutral'"
+      (clicked)="setMode('offcanvas')"
+    />
+    <orbit-icon-button
+      icon="grid"
+      ariaLabel="Passa a schede di anteprima"
+      [attr.aria-pressed]="mode() === 'modal'"
+      [tone]="mode() === 'modal' ? 'primary' : 'neutral'"
+      (clicked)="setMode('modal')"
+    />
+    <orbit-button
+      label="Cambia scheda"
+      [ariaLabel]="'Cambia scheda, attualmente: ' + current().label"
+      variant="outline"
+      tone="neutral"
+      (clicked)="open()"
+    />
+  </div>
+</div>

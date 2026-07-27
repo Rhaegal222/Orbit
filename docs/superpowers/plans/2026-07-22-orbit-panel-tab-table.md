@@ -1,6 +1,8 @@
 # Orbit — Panel, Tab, Table Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** add three missing Orbit component families — Panel (offcanvas overlay + persistent sidebar), Tab (tablist/tab/tab-panel), and Table (sortable/filterable columns, disabled row state) — plus a catalog demo page per family in `orbit-lab`.
 
@@ -32,7 +34,7 @@
 **Interfaces:**
 - Produces: `OrbitPanelService.open<T>(component: ComponentType<T>, config?: OrbitPanelConfig): OrbitPanelRef<T>`. `OrbitPanelConfig { data?: unknown; side?: 'left' | 'right' (default 'right'); size?: 'sm' | 'md' | 'lg' | 'xl' | 'wide' (default 'md'); disableClose?: boolean; panelClass?: string }`. `OrbitPanelRef<T> { close(): void; overlayRef: OverlayRef; componentInstance: T }`. `ORBIT_PANEL_DATA: InjectionToken<unknown>`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit/src/lib/services/panel/panel.service.spec.ts
@@ -116,12 +118,12 @@ describe('OrbitPanelService', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/panel.service.spec.ts'`
 Expected: FAIL (`./panel.service` does not exist yet)
 
-- [ ] **Step 3: Write the minimal implementation**
+- [x] **Step 3: Write the minimal implementation**
 
 ```ts
 // projects/orbit/src/lib/services/panel/panel.service.ts
@@ -233,12 +235,12 @@ export { OrbitPanelService, ORBIT_PANEL_DATA } from './panel.service';
 export type { OrbitPanelConfig, OrbitPanelRef } from './panel.service';
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/panel.service.spec.ts'`
 Expected: PASS (5 tests)
 
-- [ ] **Step 5: Add the global overlay CSS classes**
+- [x] **Step 5: Add the global overlay CSS classes**
 
 In `projects/orbit/src/styles/styles.css`, add after the existing `.orbit-dialog-panel` block:
 
@@ -251,7 +253,7 @@ In `projects/orbit/src/styles/styles.css`, add after the existing `.orbit-dialog
 }
 ```
 
-- [ ] **Step 6: Export from public-api**
+- [x] **Step 6: Export from public-api**
 
 In `projects/orbit/src/public-api.ts`, add near the existing `export * from './lib/services/dialog';` line:
 
@@ -259,12 +261,12 @@ In `projects/orbit/src/public-api.ts`, add near the existing `export * from './l
 export * from './lib/services/panel';
 ```
 
-- [ ] **Step 7: Full orbit-lab verification**
+- [x] **Step 7: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass (confirms the new export resolves through the library path mapping).
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add projects/orbit/src/lib/services/panel/ projects/orbit/src/styles/styles.css projects/orbit/src/public-api.ts
@@ -290,7 +292,7 @@ git commit -m "feat(orbit): add OrbitPanelService for side-anchored offcanvas pa
 - Consumes: nothing from Task 1 directly (a consumer's own component uses both `OrbitPanelService.open()` and `orbit-panel-surface` together, but neither references the other in code).
 - Produces: `OrbitPanelSurfaceComponent` (selector `orbit-panel-surface`, inputs `labelledBy = input('')`, `describedBy = input('')`) — the visual shell a consumer places inside the component they pass to `OrbitPanelService.open()`. `OrbitPanelComponent` (selector `orbit-panel`, input `padding = input<'none' | 'default'>('default')`) — the persistent, non-overlay sidebar variant placed directly in a layout.
 
-- [ ] **Step 1: Write the failing test for the offcanvas shell**
+- [x] **Step 1: Write the failing test for the offcanvas shell**
 
 ```ts
 // projects/orbit/src/lib/components/panel-surface/panel-surface.component.spec.ts
@@ -329,12 +331,12 @@ describe('OrbitPanelSurfaceComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/panel-surface.component.spec.ts'`
 Expected: FAIL (`./panel-surface.component` does not exist)
 
-- [ ] **Step 3: Implement the offcanvas shell**
+- [x] **Step 3: Implement the offcanvas shell**
 
 ```ts
 // projects/orbit/src/lib/components/panel-surface/panel-surface.component.ts
@@ -381,12 +383,12 @@ export class OrbitPanelSurfaceComponent {
 export { OrbitPanelSurfaceComponent } from './panel-surface.component';
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/panel-surface.component.spec.ts'`
 Expected: PASS (2 tests)
 
-- [ ] **Step 5: Write the failing test for the sidebar variant**
+- [x] **Step 5: Write the failing test for the sidebar variant**
 
 ```ts
 // projects/orbit/src/lib/components/panel/panel.component.spec.ts
@@ -423,12 +425,12 @@ describe('OrbitPanelComponent', () => {
 });
 ```
 
-- [ ] **Step 6: Run test to verify it fails**
+- [x] **Step 6: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/panel.component.spec.ts'`
 Expected: FAIL (`./panel.component` does not exist)
 
-- [ ] **Step 7: Implement the sidebar variant**
+- [x] **Step 7: Implement the sidebar variant**
 
 ```ts
 // projects/orbit/src/lib/components/panel/panel.component.ts
@@ -468,12 +470,12 @@ export class OrbitPanelComponent {
 export { OrbitPanelComponent } from './panel.component';
 ```
 
-- [ ] **Step 8: Run test to verify it passes**
+- [x] **Step 8: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/panel.component.spec.ts'`
 Expected: PASS (3 tests)
 
-- [ ] **Step 9: Export both from public-api**
+- [x] **Step 9: Export both from public-api**
 
 In `projects/orbit/src/public-api.ts`, add:
 
@@ -482,12 +484,12 @@ export * from './lib/components/panel-surface';
 export * from './lib/components/panel';
 ```
 
-- [ ] **Step 10: Full orbit-lab verification**
+- [x] **Step 10: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/panel-surface/ projects/orbit/src/lib/components/panel/ projects/orbit/src/public-api.ts
@@ -513,7 +515,7 @@ git commit -m "feat(orbit): add orbit-panel-surface (offcanvas shell) and orbit-
 **Interfaces:**
 - Produces: `OrbitTabComponent` (selector `orbit-tab`; inputs `value = input.required<string>()`, `label = input('')`, `disabled = input(false, booleanAttribute)`, `selected = input(false, booleanAttribute)`; public method `focus(): void`; host renders `role="tab"`, `id="orbit-tab-" + value()`, `aria-controls="orbit-tab-panel-" + value()`). `OrbitTabPanelComponent` (selector `orbit-tab-panel`; input `value = input.required<string>()`; host renders `role="tabpanel"`, `id="orbit-tab-panel-" + value()`, `aria-labelledby="orbit-tab-" + value()`, `tabindex="0"`). Task 4's `orbit-tablist` consumes `OrbitTabComponent`'s `value()`, `disabled()`, and `focus()`.
 
-- [ ] **Step 1: Write the failing test for orbit-tab**
+- [x] **Step 1: Write the failing test for orbit-tab**
 
 ```ts
 // projects/orbit/src/lib/components/tab/tab.component.spec.ts
@@ -569,12 +571,12 @@ describe('OrbitTabComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/tab.component.spec.ts'`
 Expected: FAIL (`./tab.component` does not exist)
 
-- [ ] **Step 3: Implement orbit-tab**
+- [x] **Step 3: Implement orbit-tab**
 
 ```ts
 // projects/orbit/src/lib/components/tab/tab.component.ts
@@ -653,12 +655,12 @@ export class OrbitTabComponent {
 export { OrbitTabComponent } from './tab.component';
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/tab.component.spec.ts'`
 Expected: PASS (5 tests)
 
-- [ ] **Step 5: Write the failing test for orbit-tab-panel**
+- [x] **Step 5: Write the failing test for orbit-tab-panel**
 
 ```ts
 // projects/orbit/src/lib/components/tab-panel/tab-panel.component.spec.ts
@@ -686,12 +688,12 @@ describe('OrbitTabPanelComponent', () => {
 });
 ```
 
-- [ ] **Step 6: Run test to verify it fails**
+- [x] **Step 6: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/tab-panel.component.spec.ts'`
 Expected: FAIL (`./tab-panel.component` does not exist)
 
-- [ ] **Step 7: Implement orbit-tab-panel**
+- [x] **Step 7: Implement orbit-tab-panel**
 
 ```ts
 // projects/orbit/src/lib/components/tab-panel/tab-panel.component.ts
@@ -727,12 +729,12 @@ export class OrbitTabPanelComponent {
 export { OrbitTabPanelComponent } from './tab-panel.component';
 ```
 
-- [ ] **Step 8: Run test to verify it passes**
+- [x] **Step 8: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/tab-panel.component.spec.ts'`
 Expected: PASS (1 test)
 
-- [ ] **Step 9: Export both from public-api**
+- [x] **Step 9: Export both from public-api**
 
 In `projects/orbit/src/public-api.ts`, add:
 
@@ -741,12 +743,12 @@ export * from './lib/components/tab';
 export * from './lib/components/tab-panel';
 ```
 
-- [ ] **Step 10: Full orbit-lab verification**
+- [x] **Step 10: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/tab/ projects/orbit/src/lib/components/tab-panel/ projects/orbit/src/public-api.ts
@@ -767,7 +769,7 @@ git commit -m "feat(orbit): add orbit-tab and orbit-tab-panel"
 - Consumes: `OrbitTabComponent` from Task 3 — its `value()`, `disabled()`, and `focus()`.
 - Produces: `OrbitTablistComponent` (selector `orbit-tablist`; inputs `ariaLabel = input('')`; output `selectedChange = output<string>()`). Click on a tab, or `ArrowLeft`/`ArrowRight`/`Home`/`End` while focus is within the tablist, calls `.focus()` on the target `orbit-tab` and emits `selectedChange` with its `value()`. Disabled tabs are skipped.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit/src/lib/components/tablist/tablist.component.spec.ts
@@ -850,12 +852,12 @@ describe('OrbitTablistComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/tablist.component.spec.ts'`
 Expected: FAIL (`./tablist.component` does not exist)
 
-- [ ] **Step 3: Implement orbit-tablist**
+- [x] **Step 3: Implement orbit-tablist**
 
 ```ts
 // projects/orbit/src/lib/components/tablist/tablist.component.ts
@@ -943,12 +945,12 @@ export class OrbitTablistComponent {
 export { OrbitTablistComponent } from './tablist.component';
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/tablist.component.spec.ts'`
 Expected: PASS (6 tests)
 
-- [ ] **Step 5: Export from public-api**
+- [x] **Step 5: Export from public-api**
 
 In `projects/orbit/src/public-api.ts`, add:
 
@@ -956,12 +958,12 @@ In `projects/orbit/src/public-api.ts`, add:
 export * from './lib/components/tablist';
 ```
 
-- [ ] **Step 6: Full orbit-lab verification**
+- [x] **Step 6: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/tablist/ projects/orbit/src/public-api.ts
@@ -988,7 +990,7 @@ git commit -m "feat(orbit): add orbit-tablist with click and arrow-key activatio
 - Consumes: `OrbitIconComponent` (`../../icons/icon.component`, already in the library since the visual-refresh plan) for the sort indicator.
 - Produces: `OrbitTableComponent` (selector `orbit-table`, no inputs, wraps `<table class="orbit-table">`). `OrbitTableColumnComponent` (selector `orbit-table-column`, used inside a `<th>`; inputs `sortable = input(false, booleanAttribute)`, `sortDirection = input<'asc' | 'desc' | null>(null)`; output `sortChange = output<'asc' | 'desc'>()` — emits the *next* direction, toggled from the current one, defaulting to `'asc'` when `sortDirection()` is `null`).
 
-- [ ] **Step 1: Write the failing test for orbit-table**
+- [x] **Step 1: Write the failing test for orbit-table**
 
 ```ts
 // projects/orbit/src/lib/components/table/table.component.spec.ts
@@ -1025,12 +1027,12 @@ describe('OrbitTableComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/table.component.spec.ts'`
 Expected: FAIL (`./table.component` does not exist)
 
-- [ ] **Step 3: Implement orbit-table**
+- [x] **Step 3: Implement orbit-table**
 
 ```ts
 // projects/orbit/src/lib/components/table/table.component.ts
@@ -1079,12 +1081,12 @@ export class OrbitTableComponent {}
 export { OrbitTableComponent } from './table.component';
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/table.component.spec.ts'`
 Expected: PASS (1 test)
 
-- [ ] **Step 5: Write the failing test for orbit-table-column**
+- [x] **Step 5: Write the failing test for orbit-table-column**
 
 ```ts
 // projects/orbit/src/lib/components/table-column/table-column.component.spec.ts
@@ -1148,12 +1150,12 @@ describe('OrbitTableColumnComponent', () => {
 });
 ```
 
-- [ ] **Step 6: Run test to verify it fails**
+- [x] **Step 6: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/table-column.component.spec.ts'`
 Expected: FAIL (`./table-column.component` does not exist)
 
-- [ ] **Step 7: Implement orbit-table-column**
+- [x] **Step 7: Implement orbit-table-column**
 
 ```ts
 // projects/orbit/src/lib/components/table-column/table-column.component.ts
@@ -1229,12 +1231,12 @@ export class OrbitTableColumnComponent {
 export { OrbitTableColumnComponent } from './table-column.component';
 ```
 
-- [ ] **Step 8: Run test to verify it passes**
+- [x] **Step 8: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/table-column.component.spec.ts'`
 Expected: PASS (5 tests)
 
-- [ ] **Step 9: Export both from public-api**
+- [x] **Step 9: Export both from public-api**
 
 In `projects/orbit/src/public-api.ts`, add:
 
@@ -1243,12 +1245,12 @@ export * from './lib/components/table';
 export * from './lib/components/table-column';
 ```
 
-- [ ] **Step 10: Full orbit-lab verification**
+- [x] **Step 10: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/table/ projects/orbit/src/lib/components/table-column/ projects/orbit/src/public-api.ts
@@ -1269,7 +1271,7 @@ git commit -m "feat(orbit): add orbit-table and orbit-table-column with sort tog
 - Consumes: nothing (styling class `.orbit-table-row--disabled` is already defined in `table.component.css` from Task 5, scoped via `::ng-deep`).
 - Produces: `OrbitTableRowDirective` (selector `[orbitTableRow]`; input `disabled = input(false, booleanAttribute)`) — applied to a consumer's own `<tr>`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```ts
 // projects/orbit/src/lib/components/table-row/table-row.directive.spec.ts
@@ -1326,12 +1328,12 @@ describe('OrbitTableRowDirective', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/table-row.directive.spec.ts'`
 Expected: FAIL (`./table-row.directive` does not exist)
 
-- [ ] **Step 3: Implement the directive**
+- [x] **Step 3: Implement the directive**
 
 ```ts
 // projects/orbit/src/lib/components/table-row/table-row.directive.ts
@@ -1354,12 +1356,12 @@ export class OrbitTableRowDirective {
 export { OrbitTableRowDirective } from './table-row.directive';
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit --include='**/table-row.directive.spec.ts'`
 Expected: PASS (3 tests)
 
-- [ ] **Step 5: Export from public-api**
+- [x] **Step 5: Export from public-api**
 
 In `projects/orbit/src/public-api.ts`, add:
 
@@ -1367,12 +1369,12 @@ In `projects/orbit/src/public-api.ts`, add:
 export * from './lib/components/table-row';
 ```
 
-- [ ] **Step 6: Full orbit-lab verification**
+- [x] **Step 6: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit/src/lib/components/table-row/ projects/orbit/src/public-api.ts
@@ -1393,7 +1395,7 @@ git commit -m "feat(orbit): add orbitTableRow directive for disabled row state"
 **Interfaces:**
 - Consumes: `OrbitPanelService`, `OrbitPanelSurfaceComponent`, `OrbitPanelComponent`, `OrbitModalHeaderComponent`, `OrbitButtonComponent` (all already exported), `LabExampleComponent` (`../../catalog/example-panel.component`).
 
-- [ ] **Step 1: Write the component and its demo content**
+- [x] **Step 1: Write the component and its demo content**
 
 ```ts
 // projects/orbit-lab/src/app/pages/panel-page/panel-page.component.ts
@@ -1446,7 +1448,7 @@ panel.open(MyPanelContentComponent, { side: 'right', size: 'md' });`;
 }
 ```
 
-- [ ] **Step 2: Write the template**
+- [x] **Step 2: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/panel-page/panel-page.component.html -->
@@ -1474,7 +1476,7 @@ panel.open(MyPanelContentComponent, { side: 'right', size: 'md' });`;
 </article>
 ```
 
-- [ ] **Step 3: Write the test**
+- [x] **Step 3: Write the test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/panel-page/panel-page.component.spec.ts
@@ -1520,7 +1522,7 @@ describe('PanelPageComponent', () => {
 });
 ```
 
-- [ ] **Step 4: Add the catalog entry and route**
+- [x] **Step 4: Add the catalog entry and route**
 
 In `projects/orbit-lab/src/app/catalog/catalog.ts`, add before the closing `];`:
 
@@ -1538,17 +1540,17 @@ In `projects/orbit-lab/src/app/app.routes.ts`, add:
   },
 ```
 
-- [ ] **Step 5: Run the tests**
+- [x] **Step 5: Run the tests**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab --include='**/panel-page.component.spec.ts' --include='**/catalog.spec.ts'`
 Expected: all pass.
 
-- [ ] **Step 6: Full orbit-lab verification**
+- [x] **Step 6: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass (aside from any pre-existing failures already present on the branch before this plan started — note them in the report, do not attempt to fix unrelated pre-existing failures).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/panel-page/ projects/orbit-lab/src/app/catalog/catalog.ts projects/orbit-lab/src/app/app.routes.ts
@@ -1569,7 +1571,7 @@ git commit -m "feat(orbit-lab): add Panel catalog page (offcanvas + sidebar)"
 **Interfaces:**
 - Consumes: `OrbitTablistComponent`, `OrbitTabComponent`, `OrbitTabPanelComponent`, `OrbitBadgeComponent` (all already exported), `LabExampleComponent`.
 
-- [ ] **Step 1: Write the component**
+- [x] **Step 1: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/tab-page/tab-page.component.ts
@@ -1608,7 +1610,7 @@ export class TabPageComponent {
 }
 ```
 
-- [ ] **Step 2: Write the template**
+- [x] **Step 2: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/tab-page/tab-page.component.html -->
@@ -1641,7 +1643,7 @@ export class TabPageComponent {
 </article>
 ```
 
-- [ ] **Step 3: Write the test**
+- [x] **Step 3: Write the test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/tab-page/tab-page.component.spec.ts
@@ -1690,7 +1692,7 @@ describe('TabPageComponent', () => {
 });
 ```
 
-- [ ] **Step 4: Add the catalog entry and route**
+- [x] **Step 4: Add the catalog entry and route**
 
 In `projects/orbit-lab/src/app/catalog/catalog.ts`, add:
 
@@ -1707,17 +1709,17 @@ In `projects/orbit-lab/src/app/app.routes.ts`, add:
   },
 ```
 
-- [ ] **Step 5: Run the tests**
+- [x] **Step 5: Run the tests**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab --include='**/tab-page.component.spec.ts' --include='**/catalog.spec.ts'`
 Expected: all pass.
 
-- [ ] **Step 6: Full orbit-lab verification**
+- [x] **Step 6: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass (aside from any pre-existing unrelated failures already on the branch).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/tab-page/ projects/orbit-lab/src/app/catalog/catalog.ts projects/orbit-lab/src/app/app.routes.ts
@@ -1738,7 +1740,7 @@ git commit -m "feat(orbit-lab): add Tab catalog page"
 **Interfaces:**
 - Consumes: `OrbitTableComponent`, `OrbitTableColumnComponent`, `OrbitTableRowDirective` (all already exported), `LabExampleComponent`.
 
-- [ ] **Step 1: Write the component**
+- [x] **Step 1: Write the component**
 
 ```ts
 // projects/orbit-lab/src/app/pages/table-page/table-page.component.ts
@@ -1794,7 +1796,7 @@ export class TablePageComponent {
 }
 ```
 
-- [ ] **Step 2: Write the template**
+- [x] **Step 2: Write the template**
 
 ```html
 <!-- projects/orbit-lab/src/app/pages/table-page/table-page.component.html -->
@@ -1834,7 +1836,7 @@ export class TablePageComponent {
 </article>
 ```
 
-- [ ] **Step 3: Write the test**
+- [x] **Step 3: Write the test**
 
 ```ts
 // projects/orbit-lab/src/app/pages/table-page/table-page.component.spec.ts
@@ -1884,7 +1886,7 @@ describe('TablePageComponent', () => {
 });
 ```
 
-- [ ] **Step 4: Add the catalog entry and route**
+- [x] **Step 4: Add the catalog entry and route**
 
 In `projects/orbit-lab/src/app/catalog/catalog.ts`, add:
 
@@ -1902,17 +1904,17 @@ In `projects/orbit-lab/src/app/app.routes.ts`, add:
   },
 ```
 
-- [ ] **Step 5: Run the tests**
+- [x] **Step 5: Run the tests**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab --include='**/table-page.component.spec.ts' --include='**/catalog.spec.ts'`
 Expected: all pass.
 
-- [ ] **Step 6: Full orbit-lab verification**
+- [x] **Step 6: Full orbit-lab verification**
 
 Run: `source ~/.nvm/nvm.sh && nvm use 24.16.0 && npx ng test orbit-lab`
 Expected: all pass (aside from any pre-existing unrelated failures already on the branch).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/table-page/ projects/orbit-lab/src/app/catalog/catalog.ts projects/orbit-lab/src/app/app.routes.ts

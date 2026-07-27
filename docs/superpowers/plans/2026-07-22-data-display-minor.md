@@ -1,6 +1,8 @@
 # Data-display minori Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add five independent, medium/low-complexity data-display/navigation components to the Orbit library — `OrbitAvatarComponent`, `OrbitChipComponent`, `OrbitBreadcrumbComponent`, `OrbitPaginationComponent`, `OrbitAccordionComponent`/`OrbitAccordionItemComponent` — plus five matching `orbit-lab` catalog demo pages, per the approved spec at `docs/superpowers/specs/2026-07-22-data-display-minor-design.md`.
 
@@ -45,7 +47,7 @@
 - Consumes: nothing from other tasks.
 - Produces: `OrbitAvatarComponent` (selector `orbit-avatar`), `export type OrbitAvatarSize = 'sm' | 'md' | 'lg'`. Inputs: `src = input<string | undefined>(undefined)`, `name = input.required<string>()`, `size = input<OrbitAvatarSize>('md')`. No outputs.
 
-- [ ] **Step 1: Write the failing spec**
+- [x] **Step 1: Write the failing spec**
 
 Create `projects/orbit/src/lib/components/avatar/avatar.component.spec.ts`:
 
@@ -150,12 +152,12 @@ describe('OrbitAvatarComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './avatar.component'` (file does not exist yet).
 
-- [ ] **Step 3: Implement `OrbitAvatarComponent`**
+- [x] **Step 3: Implement `OrbitAvatarComponent`**
 
 Create `projects/orbit/src/lib/components/avatar/avatar.component.ts`:
 
@@ -287,7 +289,7 @@ export { OrbitAvatarComponent } from './avatar.component';
 export type { OrbitAvatarSize } from './avatar.component';
 ```
 
-- [ ] **Step 4: Register the barrel export**
+- [x] **Step 4: Register the barrel export**
 
 In `projects/orbit/src/public-api.ts`, add a line after the `divider` export (alphabetical grouping is not strictly enforced in this file — follow the existing convention of appending near related display components, right after `export * from './lib/components/divider';` and before `export * from './lib/components/selectable-tile';`):
 
@@ -295,7 +297,7 @@ In `projects/orbit/src/public-api.ts`, add a line after the `divider` export (al
 export * from './lib/components/avatar';
 ```
 
-- [ ] **Step 5: Run the spec and verify it passes**
+- [x] **Step 5: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitAvatarComponent` tests green, no regressions in other orbit specs.
@@ -317,7 +319,7 @@ Expected: PASS — all `OrbitAvatarComponent` tests green, no regressions in oth
 - Consumes: `OrbitIconComponent` (`../../icons/icon.component`, selector `orbit-icon`, `name` input of type `OrbitIconName`), `ORBIT_I18N` token (`../../i18n/orbit-i18n`).
 - Produces: `OrbitChipComponent` (selector `orbit-chip`). Inputs: `selected = input(false, { transform: booleanAttribute })`, `removable = input(false, { transform: booleanAttribute })`, `disabled = input(false, { transform: booleanAttribute })`. Outputs: `selectedChange = output<boolean>()`, `removed = output<void>()`.
 
-- [ ] **Step 1: Add the two new i18n labels**
+- [x] **Step 1: Add the two new i18n labels**
 
 In `projects/orbit/src/lib/i18n/orbit-i18n.ts`, add `removeChip` to the `labels` interface, right after `segmentedControl: string;`:
 
@@ -339,7 +341,7 @@ becomes (insert `removeChip` right before it, in the `segmentedControl` line):
 
 (Use the Edit tool against the actual current line content — `segmentedControl: 'Selettore',` — appending `removeChip: 'Rimuovi',` immediately after it, on the same line, matching the file's existing single-line-per-group style.)
 
-- [ ] **Step 2: Write the failing spec**
+- [x] **Step 2: Write the failing spec**
 
 Create `projects/orbit/src/lib/components/chip/chip.component.spec.ts`:
 
@@ -425,12 +427,12 @@ describe('OrbitChipComponent', () => {
 });
 ```
 
-- [ ] **Step 3: Run it to verify it fails**
+- [x] **Step 3: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './chip.component'`.
 
-- [ ] **Step 4: Implement `OrbitChipComponent`**
+- [x] **Step 4: Implement `OrbitChipComponent`**
 
 Create `projects/orbit/src/lib/components/chip/chip.component.ts`:
 
@@ -583,7 +585,7 @@ Create `projects/orbit/src/lib/components/chip/index.ts`:
 export { OrbitChipComponent } from './chip.component';
 ```
 
-- [ ] **Step 5: Register the barrel export**
+- [x] **Step 5: Register the barrel export**
 
 In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/components/badge';`:
 
@@ -591,7 +593,7 @@ In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/com
 export * from './lib/components/chip';
 ```
 
-- [ ] **Step 6: Run the spec and verify it passes**
+- [x] **Step 6: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitChipComponent` tests green, no regressions.
@@ -612,7 +614,7 @@ Expected: PASS — all `OrbitChipComponent` tests green, no regressions.
 - Consumes: `Overlay`, `OverlayRef` (`@angular/cdk/overlay`), `TemplatePortal` (`@angular/cdk/portal`) — same imports as `select.component.ts:19-20`.
 - Produces: `OrbitBreadcrumbComponent` (selector `orbit-breadcrumb`), `export interface OrbitBreadcrumbItem { id: string; label: string; href?: string; }`. Input: `items = input.required<OrbitBreadcrumbItem[]>()`. Output: `itemSelected = output<OrbitBreadcrumbItem>()`.
 
-- [ ] **Step 1: Write the failing spec**
+- [x] **Step 1: Write the failing spec**
 
 Create `projects/orbit/src/lib/components/breadcrumb/breadcrumb.component.spec.ts`:
 
@@ -728,12 +730,12 @@ describe('OrbitBreadcrumbComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './breadcrumb.component'`.
 
-- [ ] **Step 3: Implement `OrbitBreadcrumbComponent`**
+- [x] **Step 3: Implement `OrbitBreadcrumbComponent`**
 
 Create `projects/orbit/src/lib/components/breadcrumb/breadcrumb.component.ts`:
 
@@ -1029,7 +1031,7 @@ export { OrbitBreadcrumbComponent } from './breadcrumb.component';
 export type { OrbitBreadcrumbItem } from './breadcrumb.component';
 ```
 
-- [ ] **Step 4: Register the barrel export**
+- [x] **Step 4: Register the barrel export**
 
 In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/components/navbar';`:
 
@@ -1037,7 +1039,7 @@ In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/com
 export * from './lib/components/breadcrumb';
 ```
 
-- [ ] **Step 5: Run the spec and verify it passes**
+- [x] **Step 5: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitBreadcrumbComponent` tests green, no regressions.
@@ -1059,7 +1061,7 @@ Expected: PASS — all `OrbitBreadcrumbComponent` tests green, no regressions.
 - Consumes: `OrbitIconComponent` (`../../icons/icon.component`), `ORBIT_I18N` token.
 - Produces: `OrbitPaginationComponent` (selector `orbit-pagination`). Inputs: `currentPage = input.required<number>()` (1-based), `totalPages = input.required<number>()`. Output: `pageChange = output<number>()`.
 
-- [ ] **Step 1: Add the two new i18n labels**
+- [x] **Step 1: Add the two new i18n labels**
 
 In `projects/orbit/src/lib/i18n/orbit-i18n.ts`, add to the `labels` interface (after the `removeChip: string;` line added in Task 2 — if Task 2 has not run yet in this session, add both `removeChip: string;` and these two lines together, since they land in the same interface block):
 
@@ -1074,7 +1076,7 @@ And to `DEFAULT_ORBIT_I18N`, append to the same `segmentedControl`/`removeChip` 
 segmentedControl: 'Selettore', removeChip: 'Rimuovi', previousPage: 'Pagina precedente', nextPage: 'Pagina successiva',
 ```
 
-- [ ] **Step 2: Write the failing spec**
+- [x] **Step 2: Write the failing spec**
 
 Create `projects/orbit/src/lib/components/pagination/pagination.component.spec.ts`:
 
@@ -1194,12 +1196,12 @@ describe('OrbitPaginationComponent', () => {
 });
 ```
 
-- [ ] **Step 3: Run it to verify it fails**
+- [x] **Step 3: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './pagination.component'`.
 
-- [ ] **Step 4: Implement `OrbitPaginationComponent`**
+- [x] **Step 4: Implement `OrbitPaginationComponent`**
 
 Create `projects/orbit/src/lib/components/pagination/pagination.component.ts`:
 
@@ -1420,7 +1422,7 @@ Create `projects/orbit/src/lib/components/pagination/index.ts`:
 export { OrbitPaginationComponent } from './pagination.component';
 ```
 
-- [ ] **Step 5: Register the barrel export**
+- [x] **Step 5: Register the barrel export**
 
 In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/components/table-row';`:
 
@@ -1428,7 +1430,7 @@ In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/com
 export * from './lib/components/pagination';
 ```
 
-- [ ] **Step 6: Run the spec and verify it passes**
+- [x] **Step 6: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitPaginationComponent` tests green, no regressions.
@@ -1454,7 +1456,7 @@ Expected: PASS — all `OrbitPaginationComponent` tests green, no regressions.
 - Consumes: `OrbitIconComponent` (`../../icons/icon.component`).
 - Produces: `OrbitAccordionComponent` (selector `orbit-accordion`, input `multi = input(false, { transform: booleanAttribute })`) and `OrbitAccordionItemComponent` (selector `orbit-accordion-item`, inputs `header = input.required<string>()`, `expanded = input(false, { transform: booleanAttribute })`, `disabled = input(false, { transform: booleanAttribute })`, output `expandedChange = output<boolean>()`, public method `collapse(): void`).
 
-- [ ] **Step 1: Create the shared controller token (avoids a circular import — see spec-resolution note 2)**
+- [x] **Step 1: Create the shared controller token (avoids a circular import — see spec-resolution note 2)**
 
 Create `projects/orbit/src/lib/components/accordion/accordion-token.ts`:
 
@@ -1482,7 +1484,7 @@ export const ORBIT_ACCORDION_CONTROLLER = new InjectionToken<OrbitAccordionContr
 );
 ```
 
-- [ ] **Step 2: Write the failing spec for the item component**
+- [x] **Step 2: Write the failing spec for the item component**
 
 Create `projects/orbit/src/lib/components/accordion/accordion-item.component.spec.ts`:
 
@@ -1558,12 +1560,12 @@ describe('OrbitAccordionItemComponent', () => {
 });
 ```
 
-- [ ] **Step 3: Run it to verify it fails**
+- [x] **Step 3: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './accordion-item.component'`.
 
-- [ ] **Step 4: Implement `OrbitAccordionItemComponent`**
+- [x] **Step 4: Implement `OrbitAccordionItemComponent`**
 
 Create `projects/orbit/src/lib/components/accordion/accordion-item.component.ts`:
 
@@ -1714,12 +1716,12 @@ Create `projects/orbit/src/lib/components/accordion/accordion-item.component.css
 }
 ```
 
-- [ ] **Step 5: Run the item spec and verify it passes**
+- [x] **Step 5: Run the item spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitAccordionItemComponent` tests green (the `collapse()`/controller-notify path is exercised indirectly here; full multi/single-open coordination is covered by the container spec next).
 
-- [ ] **Step 6: Write the failing spec for the container component**
+- [x] **Step 6: Write the failing spec for the container component**
 
 Create `projects/orbit/src/lib/components/accordion/accordion.component.spec.ts`:
 
@@ -1811,12 +1813,12 @@ describe('OrbitAccordionComponent', () => {
 });
 ```
 
-- [ ] **Step 7: Run it to verify it fails**
+- [x] **Step 7: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: FAIL — `Cannot find module './accordion.component'`.
 
-- [ ] **Step 8: Implement `OrbitAccordionComponent`**
+- [x] **Step 8: Implement `OrbitAccordionComponent`**
 
 Create `projects/orbit/src/lib/components/accordion/accordion.component.ts`:
 
@@ -1878,7 +1880,7 @@ export { OrbitAccordionComponent } from './accordion.component';
 export { OrbitAccordionItemComponent } from './accordion-item.component';
 ```
 
-- [ ] **Step 9: Register the barrel export**
+- [x] **Step 9: Register the barrel export**
 
 In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/components/tablist';`:
 
@@ -1886,7 +1888,7 @@ In `projects/orbit/src/public-api.ts`, add right after `export * from './lib/com
 export * from './lib/components/accordion';
 ```
 
-- [ ] **Step 10: Run both specs and verify they pass**
+- [x] **Step 10: Run both specs and verify they pass**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all `OrbitAccordionItemComponent` and `OrbitAccordionComponent` tests green, no regressions in the full orbit suite.
@@ -1918,7 +1920,7 @@ Expected: PASS — all `OrbitAccordionItemComponent` and `OrbitAccordionComponen
 - Consumes: `OrbitAvatarComponent`, `OrbitChipComponent`, `OrbitBreadcrumbComponent`/`OrbitBreadcrumbItem`, `OrbitPaginationComponent`, `OrbitAccordionComponent`/`OrbitAccordionItemComponent` from `@galileo/orbit` (Tasks 1–5), `LabExampleComponent` (`projects/orbit-lab/src/app/catalog/example-panel.component.ts`, selector `lab-example`, `code` input).
 - Produces: `AvatarPageComponent`, `ChipPageComponent`, `BreadcrumbPageComponent`, `PaginationPageComponent`, `AccordionPageComponent`; five new `CATALOG_ENTRIES` rows; five new lazy routes in `app.routes.ts`.
 
-- [ ] **Step 1: Write the failing spec for the Avatar page**
+- [x] **Step 1: Write the failing spec for the Avatar page**
 
 Create `projects/orbit-lab/src/app/pages/avatar-page/avatar-page.component.spec.ts`:
 
@@ -1962,12 +1964,12 @@ describe('AvatarPageComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run it to verify it fails**
+- [x] **Step 2: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: FAIL — `Cannot find module './avatar-page.component'`.
 
-- [ ] **Step 3: Implement the Avatar page**
+- [x] **Step 3: Implement the Avatar page**
 
 Create `projects/orbit-lab/src/app/pages/avatar-page/avatar-page.component.ts`:
 
@@ -2041,12 +2043,12 @@ Create `projects/orbit-lab/src/app/pages/avatar-page/avatar-page.component.html`
 </article>
 ```
 
-- [ ] **Step 4: Run the spec and verify it passes**
+- [x] **Step 4: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for `AvatarPageComponent`.
 
-- [ ] **Step 5: Write the failing spec for the Chip page**
+- [x] **Step 5: Write the failing spec for the Chip page**
 
 Create `projects/orbit-lab/src/app/pages/chip-page/chip-page.component.spec.ts`:
 
@@ -2093,12 +2095,12 @@ describe('ChipPageComponent', () => {
 });
 ```
 
-- [ ] **Step 6: Run it to verify it fails**
+- [x] **Step 6: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: FAIL — `Cannot find module './chip-page.component'`.
 
-- [ ] **Step 7: Implement the Chip page**
+- [x] **Step 7: Implement the Chip page**
 
 Create `projects/orbit-lab/src/app/pages/chip-page/chip-page.component.ts`:
 
@@ -2182,12 +2184,12 @@ Create `projects/orbit-lab/src/app/pages/chip-page/chip-page.component.html`:
 </article>
 ```
 
-- [ ] **Step 8: Run the spec and verify it passes**
+- [x] **Step 8: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for `ChipPageComponent`.
 
-- [ ] **Step 9: Write the failing spec for the Breadcrumb page**
+- [x] **Step 9: Write the failing spec for the Breadcrumb page**
 
 Create `projects/orbit-lab/src/app/pages/breadcrumb-page/breadcrumb-page.component.spec.ts`:
 
@@ -2229,12 +2231,12 @@ describe('BreadcrumbPageComponent', () => {
 });
 ```
 
-- [ ] **Step 10: Run it to verify it fails**
+- [x] **Step 10: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: FAIL — `Cannot find module './breadcrumb-page.component'`.
 
-- [ ] **Step 11: Implement the Breadcrumb page**
+- [x] **Step 11: Implement the Breadcrumb page**
 
 Create `projects/orbit-lab/src/app/pages/breadcrumb-page/breadcrumb-page.component.ts`:
 
@@ -2316,12 +2318,12 @@ Create `projects/orbit-lab/src/app/pages/breadcrumb-page/breadcrumb-page.compone
 </article>
 ```
 
-- [ ] **Step 12: Run the spec and verify it passes**
+- [x] **Step 12: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for `BreadcrumbPageComponent`.
 
-- [ ] **Step 13: Write the failing spec for the Pagination page**
+- [x] **Step 13: Write the failing spec for the Pagination page**
 
 Create `projects/orbit-lab/src/app/pages/pagination-page/pagination-page.component.spec.ts`:
 
@@ -2358,12 +2360,12 @@ describe('PaginationPageComponent', () => {
 });
 ```
 
-- [ ] **Step 14: Run it to verify it fails**
+- [x] **Step 14: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: FAIL — `Cannot find module './pagination-page.component'`.
 
-- [ ] **Step 15: Implement the Pagination page**
+- [x] **Step 15: Implement the Pagination page**
 
 Create `projects/orbit-lab/src/app/pages/pagination-page/pagination-page.component.ts`:
 
@@ -2449,12 +2451,12 @@ Create `projects/orbit-lab/src/app/pages/pagination-page/pagination-page.compone
 </article>
 ```
 
-- [ ] **Step 16: Run the spec and verify it passes**
+- [x] **Step 16: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for `PaginationPageComponent`.
 
-- [ ] **Step 17: Write the failing spec for the Accordion page**
+- [x] **Step 17: Write the failing spec for the Accordion page**
 
 Create `projects/orbit-lab/src/app/pages/accordion-page/accordion-page.component.spec.ts`:
 
@@ -2508,12 +2510,12 @@ describe('AccordionPageComponent', () => {
 });
 ```
 
-- [ ] **Step 18: Run it to verify it fails**
+- [x] **Step 18: Run it to verify it fails**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: FAIL — `Cannot find module './accordion-page.component'`.
 
-- [ ] **Step 19: Implement the Accordion page**
+- [x] **Step 19: Implement the Accordion page**
 
 Create `projects/orbit-lab/src/app/pages/accordion-page/accordion-page.component.ts`:
 
@@ -2625,12 +2627,12 @@ Create `projects/orbit-lab/src/app/pages/accordion-page/accordion-page.component
 </article>
 ```
 
-- [ ] **Step 20: Run the spec and verify it passes**
+- [x] **Step 20: Run the spec and verify it passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS for `AccordionPageComponent`.
 
-- [ ] **Step 21: Register the five catalog entries**
+- [x] **Step 21: Register the five catalog entries**
 
 In `projects/orbit-lab/src/app/catalog/catalog.ts`, add five new rows to `CATALOG_ENTRIES`, keeping the existing alphabetical-by-label ordering (insert each in its correct alphabetical slot):
 
@@ -2668,7 +2670,7 @@ export const CATALOG_ENTRIES: CatalogEntry[] = [
 ];
 ```
 
-- [ ] **Step 22: Register the five lazy routes**
+- [x] **Step 22: Register the five lazy routes**
 
 In `projects/orbit-lab/src/app/app.routes.ts`, add five new route entries. Insert right after the `badge` route:
 
@@ -2706,12 +2708,12 @@ In `projects/orbit-lab/src/app/app.routes.ts`, add five new route entries. Inser
   },
 ```
 
-- [ ] **Step 23: Run the full orbit-lab test suite (excluding the unrelated in-progress page) and verify everything passes**
+- [x] **Step 23: Run the full orbit-lab test suite (excluding the unrelated in-progress page) and verify everything passes**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npx ng test orbit-lab --watch=false --exclude="projects/orbit-lab/src/app/pages/examples-page/**"`
 Expected: PASS — every page spec (including the five new ones), `catalog.spec.ts`, and every other pre-existing orbit-lab spec green, with zero changes made under `projects/orbit-lab/src/app/pages/examples-page/`.
 
-- [ ] **Step 24: Run the full orbit library test suite one more time to confirm no cross-task regressions**
+- [x] **Step 24: Run the full orbit library test suite one more time to confirm no cross-task regressions**
 
 Run: `source ~/.nvm/nvm.sh && nvm use v24.16.0 && npm run test:core -- --watch=false`
 Expected: PASS — all specs across all five new Orbit components plus every pre-existing Orbit component spec green.
@@ -2720,9 +2722,9 @@ Expected: PASS — all specs across all five new Orbit components plus every pre
 
 ## Final self-review checklist (perform after all six tasks are complete)
 
-- [ ] Every spec section of `docs/superpowers/specs/2026-07-22-data-display-minor-design.md` maps to at least one task: Avatar → Task 1; Chip → Task 2; Breadcrumb → Task 3; Pagination → Task 4; Accordion → Task 5; Testing/Catalog sections → Tasks 1–6 collectively (component specs) and Task 6 (catalog pages/routes/entries).
-- [ ] No task contains "TBD", "add appropriate tests", or any other placeholder — confirm by re-reading each task's code blocks.
-- [ ] Type/method names are consistent end-to-end: `OrbitBreadcrumbItem` used identically in `breadcrumb.component.ts` and `breadcrumb-page.component.ts`; `OrbitAccordionItemHandle`/`OrbitAccordionController` used identically in `accordion-token.ts`, `accordion.component.ts`, and implicitly satisfied by `OrbitAccordionItemComponent.collapse()`; `OrbitPaginationComponent.pageChange`/`currentPage`/`totalPages` used identically in `pagination.component.ts` and `pagination-page.component.ts`.
-- [ ] Every new component is OnPush, standalone (implicit in Angular 22), and re-exported from `projects/orbit/src/public-api.ts`.
-- [ ] The two spec-vs-instruction conflicts (Breadcrumb popover mechanism, Chip's `<button>`-in-`<button>` impossibility) are documented in "Spec-resolution notes" above and resolved consistently in Tasks 2 and 3.
-- [ ] No task instructs running any git command.
+- [x] Every spec section of `docs/superpowers/specs/2026-07-22-data-display-minor-design.md` maps to at least one task: Avatar → Task 1; Chip → Task 2; Breadcrumb → Task 3; Pagination → Task 4; Accordion → Task 5; Testing/Catalog sections → Tasks 1–6 collectively (component specs) and Task 6 (catalog pages/routes/entries).
+- [x] No task contains "TBD", "add appropriate tests", or any other placeholder — confirm by re-reading each task's code blocks.
+- [x] Type/method names are consistent end-to-end: `OrbitBreadcrumbItem` used identically in `breadcrumb.component.ts` and `breadcrumb-page.component.ts`; `OrbitAccordionItemHandle`/`OrbitAccordionController` used identically in `accordion-token.ts`, `accordion.component.ts`, and implicitly satisfied by `OrbitAccordionItemComponent.collapse()`; `OrbitPaginationComponent.pageChange`/`currentPage`/`totalPages` used identically in `pagination.component.ts` and `pagination-page.component.ts`.
+- [x] Every new component is OnPush, standalone (implicit in Angular 22), and re-exported from `projects/orbit/src/public-api.ts`.
+- [x] The two spec-vs-instruction conflicts (Breadcrumb popover mechanism, Chip's `<button>`-in-`<button>` impossibility) are documented in "Spec-resolution notes" above and resolved consistently in Tasks 2 and 3.
+- [x] No task instructs running any git command.

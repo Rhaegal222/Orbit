@@ -1,6 +1,8 @@
 # Examples-page mobile switcher Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Replace the wrapping `orbit-tablist` on `/examples` with a mobile-only switcher
 (topbar + toggle between an offcanvas drawer and a modal preview-card grid), built entirely
@@ -63,7 +65,7 @@ plain CSS (no JS breakpoint check) shows exactly one of them depending on viewpo
 - Produces: `LabExampleSwitcherModalData` (same shape as above), consumed by `LabExampleSwitcherModalComponent` via `DIALOG_DATA`.
 - Produces: `LabExampleSwitcherSidebarContentComponent`, `LabExampleSwitcherModalComponent` — Task 2's `LabExampleSwitcherComponent` opens these by class reference.
 
-- [ ] **Step 1: Create the shared item type**
+- [x] **Step 1: Create the shared item type**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.types.ts`:
 ```ts
@@ -74,7 +76,7 @@ export interface LabExampleSwitcherItem {
 }
 ```
 
-- [ ] **Step 2: Write the failing offcanvas-content test**
+- [x] **Step 2: Write the failing offcanvas-content test**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher-sidebar-content.component.spec.ts`:
 ```ts
@@ -145,12 +147,12 @@ describe('LabExampleSwitcherSidebarContentComponent', () => {
 });
 ```
 
-- [ ] **Step 3: Run it to confirm it fails**
+- [x] **Step 3: Run it to confirm it fails**
 
 Run: `npm test`
 Expected: FAIL — `Cannot find module './example-switcher-sidebar-content.component'`.
 
-- [ ] **Step 4: Implement the offcanvas content component**
+- [x] **Step 4: Implement the offcanvas content component**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher-sidebar-content.component.ts`:
 ```ts
@@ -216,12 +218,12 @@ export class LabExampleSwitcherSidebarContentComponent {
 }
 ```
 
-- [ ] **Step 5: Run the test to verify it passes**
+- [x] **Step 5: Run the test to verify it passes**
 
 Run: `npm test`
 Expected: PASS (both tests in `example-switcher-sidebar-content.component.spec.ts`).
 
-- [ ] **Step 6: Write the failing modal-content test**
+- [x] **Step 6: Write the failing modal-content test**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher-modal.component.spec.ts`:
 ```ts
@@ -289,12 +291,12 @@ describe('LabExampleSwitcherModalComponent', () => {
 });
 ```
 
-- [ ] **Step 7: Run it to confirm it fails**
+- [x] **Step 7: Run it to confirm it fails**
 
 Run: `npm test`
 Expected: FAIL — `Cannot find module './example-switcher-modal.component'`.
 
-- [ ] **Step 8: Implement the modal content component**
+- [x] **Step 8: Implement the modal content component**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher-modal.component.css`:
 ```css
@@ -369,12 +371,12 @@ export class LabExampleSwitcherModalComponent {
 }
 ```
 
-- [ ] **Step 9: Run the tests to verify they pass**
+- [x] **Step 9: Run the tests to verify they pass**
 
 Run: `npm test`
 Expected: PASS (both tests in `example-switcher-modal.component.spec.ts`).
 
-- [ ] **Step 10: Commit**
+- [x] **Step 10: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.types.ts \
@@ -405,7 +407,7 @@ git commit -m "feat(orbit-lab): add offcanvas and modal content for the example 
   output `selectedChange: string`. No breakpoint-hiding CSS (see Global Constraints) — Task 3
   wraps it in a consumer-owned class to gate visibility.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.component.spec.ts`:
 ```ts
@@ -490,12 +492,12 @@ describe('LabExampleSwitcherComponent', () => {
 });
 ```
 
-- [ ] **Step 2: Run it to confirm it fails**
+- [x] **Step 2: Run it to confirm it fails**
 
 Run: `npm test`
 Expected: FAIL — `Cannot find module './example-switcher.component'`.
 
-- [ ] **Step 3: Implement the template**
+- [x] **Step 3: Implement the template**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.component.html`:
 ```html
@@ -530,7 +532,7 @@ Expected: FAIL — `Cannot find module './example-switcher.component'`.
 </div>
 ```
 
-- [ ] **Step 4: Implement the styles**
+- [x] **Step 4: Implement the styles**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.component.css`:
 ```css
@@ -562,7 +564,7 @@ Expected: FAIL — `Cannot find module './example-switcher.component'`.
 }
 ```
 
-- [ ] **Step 5: Implement the component class**
+- [x] **Step 5: Implement the component class**
 
 `projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.component.ts`:
 ```ts
@@ -634,12 +636,12 @@ export class LabExampleSwitcherComponent {
 }
 ```
 
-- [ ] **Step 6: Run the tests to verify they pass**
+- [x] **Step 6: Run the tests to verify they pass**
 
 Run: `npm test`
 Expected: PASS (all four tests in `example-switcher.component.spec.ts`).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/catalog/example-switcher/example-switcher.component.ts \
@@ -665,7 +667,7 @@ git commit -m "feat(orbit-lab): add lab-example-switcher composition"
 **Interfaces:**
 - Consumes: `LabExampleSwitcherComponent`, `LabExampleSwitcherItem` (Task 2 / Task 1).
 
-- [ ] **Step 1: Add the switcher to examples-page's template**
+- [x] **Step 1: Add the switcher to examples-page's template**
 
 In `projects/orbit-lab/src/app/pages/examples-page/examples-page.component.html`, insert the
 switcher immediately before the existing `<orbit-tablist class="examples__tablist" ...>` (the
@@ -689,7 +691,7 @@ tablist itself is unchanged) and add the `examples__tablist` class stays as-is:
 and `@switch (selectedExample())` stays exactly as it is today — only the new
 `<lab-example-switcher>` element is inserted above it.)
 
-- [ ] **Step 2: Add the switcher's items and import to examples-page's class**
+- [x] **Step 2: Add the switcher's items and import to examples-page's class**
 
 In `projects/orbit-lab/src/app/pages/examples-page/examples-page.component.ts`, add the
 import and the `imports` array entry:
@@ -712,7 +714,7 @@ Add this field to the component class (next to `landingNavItems`):
   ];
 ```
 
-- [ ] **Step 3: Gate visibility in CSS**
+- [x] **Step 3: Gate visibility in CSS**
 
 In `projects/orbit-lab/src/app/pages/examples-page/examples-page.component.css`, add (near
 the top, after the `:host` rule):
@@ -733,7 +735,7 @@ the top, after the `:host` rule):
 }
 ```
 
-- [ ] **Step 4: Write the failing wiring test**
+- [x] **Step 4: Write the failing wiring test**
 
 Append to `projects/orbit-lab/src/app/pages/examples-page/examples-page.component.spec.ts`
 (inside the existing `describe` block, after the last `it`):
@@ -753,18 +755,18 @@ Append to `projects/orbit-lab/src/app/pages/examples-page/examples-page.componen
   });
 ```
 
-- [ ] **Step 5: Run it to confirm it fails**
+- [x] **Step 5: Run it to confirm it fails**
 
 Run: `npm test`
 Expected: FAIL — `lab-example-switcher` is not a known element (not yet imported/rendered).
 
-- [ ] **Step 6: Apply Steps 1-3 above, then run the tests to verify they pass**
+- [x] **Step 6: Apply Steps 1-3 above, then run the tests to verify they pass**
 
 Run: `npm test`
 Expected: PASS — full `orbit-lab` suite, including the new test and the two pre-existing
 `ExamplesPageComponent` tests (landing tab still renders; portfolio still renders).
 
-- [ ] **Step 7: Document the composition in the Lab catalog**
+- [x] **Step 7: Document the composition in the Lab catalog**
 
 In `projects/orbit-lab/src/app/pages/panel-page/panel-page.component.ts`:
 
@@ -825,7 +827,7 @@ closing `</section>` on the line following `</lab-example>` / `184-187`):
   </section>
 ```
 
-- [ ] **Step 8: Write the failing catalog-documentation test**
+- [x] **Step 8: Write the failing catalog-documentation test**
 
 Append to `projects/orbit-lab/src/app/pages/panel-page/panel-page.component.spec.ts` (inside
 the existing `describe` block, after the last `it`):
@@ -843,13 +845,13 @@ the existing `describe` block, after the last `it`):
   });
 ```
 
-- [ ] **Step 9: Run it to confirm it fails, then run all tests after Step 7 to verify they pass**
+- [x] **Step 9: Run it to confirm it fails, then run all tests after Step 7 to verify they pass**
 
 Run: `npm test`
 Expected: first FAIL (`'Selettore esempio'` not found), then PASS after Step 7's changes are
 in place — full `orbit-lab` suite green.
 
-- [ ] **Step 10: Manual browser verification**
+- [x] **Step 10: Manual browser verification**
 
 With `ng serve orbit-lab` running:
 1. Open `/examples` at a 390px-wide viewport. Confirm: the tablist is hidden, the mobile
@@ -862,7 +864,7 @@ With `ng serve orbit-lab` running:
 5. Open `/panel` (panel-page's route) and confirm the new "Selettore esempio" section
    renders and both toggle/open flows work there too, at desktop width.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/pages/examples-page/examples-page.component.ts \

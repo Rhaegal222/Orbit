@@ -1,6 +1,8 @@
 # Orbit Lab Sidebar + Search Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Stato:** Completato
+>
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Replace the Orbit Lab overlay navigation panel with a fixed `orbit-sidebar` in the shell layout, and add a live-filtering search box in the shell header that narrows the sidebar's catalog sections.
 
@@ -39,7 +41,7 @@
 **Interfaces:**
 - Produces: `OrbitIconName` union gains `'search'`; `ORBIT_ICON_PATHS['search']` is a 2-path magnifying-glass glyph (circle + handle), consumed by Task 3's `leadingIconName="search"` on `orbit-text-input`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Add to `projects/orbit/src/lib/icons/icon.component.spec.ts` (inside the existing `describe('OrbitIconComponent', ...)` block, after the `'renders a single path for a single-path icon'` test):
 
@@ -52,13 +54,13 @@ Add to `projects/orbit/src/lib/icons/icon.component.spec.ts` (inside the existin
   });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `cd projects/orbit-lab/.. && npx vitest run projects/orbit/src/lib/icons/icon.component.spec.ts` (or the project's configured `npm test` / `ng test orbit` command — check `package.json` `scripts` if `npx vitest` isn't wired directly)
 
 Expected: FAIL — TypeScript error / runtime error because `'search'` is not assignable to `OrbitIconName`, or `ORBIT_ICON_PATHS['search']` is `undefined`.
 
-- [ ] **Step 3: Add the icon to the registry**
+- [x] **Step 3: Add the icon to the registry**
 
 In `projects/orbit/src/lib/icons/icon-registry.ts`, change:
 
@@ -111,13 +113,13 @@ And add an entry to `ORBIT_ICON_PATHS` (after `retry: [...]`, before the closing
   search: ['M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Z', 'm20.5 20.5-4.8-4.8'],
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `cd projects/orbit-lab/.. && npx vitest run projects/orbit/src/lib/icons/icon.component.spec.ts`
 
 Expected: PASS, all tests in the file green including the new one.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add projects/orbit/src/lib/icons/icon-registry.ts projects/orbit/src/lib/icons/icon.component.spec.ts
@@ -136,7 +138,7 @@ git commit -m "feat(orbit): add search icon to the shared icon registry"
 - Consumes: `CATALOG_ENTRIES: CatalogEntry[]` from `../catalog/catalog` (`{ slug: string; label: string; status: CatalogStatus }`); `OrbitSidebarComponent`, `OrbitSidebarItem { id, label, icon?, badge?, disabled? }`, `OrbitSidebarSection { id, label?, items }` from `@galileo/orbit`; `OrbitTextInputComponent` from `@galileo/orbit`.
 - Produces (for Task 3's template): `protected readonly searchControl: FormControl<string>`, `protected readonly sidebarSections: Signal<readonly OrbitSidebarSection[]>`, `protected readonly activeSidebarId: Signal<string | null>`, `protected readonly sidebarCollapsed: WritableSignal<boolean>`, `protected onSidebarItemSelected(item: OrbitSidebarItem): void`, `protected onSidebarCollapsedChange(collapsed: boolean): void`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Replace the existing test `'opens the catalog navigation in a left offcanvas'` in `projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts` with:
 
@@ -168,13 +170,13 @@ Replace the existing test `'opens the catalog navigation in a left offcanvas'` i
 
 (These reference the CSS class `orbit-sidebar__item` used by `OrbitSidebarComponent`'s template for each item button — confirmed in `projects/orbit/src/lib/components/sidebar/sidebar.component.html`. If that class name differs, use `orbit-sidebar` item buttons' actual selector instead; do not guess further without checking the file.)
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `npx vitest run projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts`
 
 Expected: FAIL — no `orbit-sidebar` element exists yet in the template (still on `LabCatalogNavigationPanelComponent` overlay), so the querySelectorAll calls return 0 elements for all three new tests, and `searchControl` doesn't exist on the component (compile error).
 
-- [ ] **Step 3: Implement the component logic**
+- [x] **Step 3: Implement the component logic**
 
 In `projects/orbit-lab/src/app/shell/lab-shell.component.ts`:
 
@@ -339,13 +341,13 @@ export class LabShellComponent {
 
 Note: this doesn't compile the template yet — Task 3 wires `orbit-sidebar` and `orbit-text-input` into `lab-shell.component.html`. Steps 4 below will only pass once Task 3's template changes land; if executing tasks strictly in order, run Steps 1–2 now, implement this Step 3, then proceed directly into Task 3 before attempting Step 4's test run.
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts`
 
 Expected: PASS (only once Task 3's template is also in place).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/shell/lab-shell.component.ts projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts
@@ -365,7 +367,7 @@ git commit -m "feat(orbit-lab): drive sidebar sections and active route from she
 **Interfaces:**
 - Consumes: everything produced by Task 2 (`searchControl`, `sidebarSections`, `activeSidebarId`, `sidebarCollapsed`, `onSidebarItemSelected`, `onSidebarCollapsedChange`, `openOptions`).
 
-- [ ] **Step 1: Replace the header's "Navigazione" button with the search input**
+- [x] **Step 1: Replace the header's "Navigazione" button with the search input**
 
 In `projects/orbit-lab/src/app/shell/lab-shell.component.html`, replace:
 
@@ -392,7 +394,7 @@ with:
   </div>
 ```
 
-- [ ] **Step 2: Add the fixed sidebar to the body layout**
+- [x] **Step 2: Add the fixed sidebar to the body layout**
 
 Replace:
 
@@ -440,7 +442,7 @@ with:
 </div>
 ```
 
-- [ ] **Step 3: Update the body layout to a flex row**
+- [x] **Step 3: Update the body layout to a flex row**
 
 In `projects/orbit-lab/src/app/shell/lab-shell.component.css`, replace:
 
@@ -478,17 +480,17 @@ And append to `.lab-shell__content` (already present, just confirm/add `min-widt
 }
 ```
 
-- [ ] **Step 4: Remove the now-unused navigation-panel CSS rules**
+- [x] **Step 4: Remove the now-unused navigation-panel CSS rules**
 
 In `projects/orbit-lab/src/app/shell/catalog-panel.component.css`, delete the `.lab-catalog-panel__nav-link--blocked` rule and any other `.lab-catalog-panel__nav*` selectors (they styled the deleted `LabCatalogNavigationPanelComponent`'s `<nav>`/`<a>` elements; the options panel's `.lab-catalog-panel__options`/`.lab-catalog-panel__field` rules stay untouched).
 
-- [ ] **Step 5: Run the full shell spec to verify it passes**
+- [x] **Step 5: Run the full shell spec to verify it passes**
 
 Run: `npx vitest run projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts`
 
 Expected: PASS — all tests including Task 2's three new sidebar tests, and the pre-existing options/theme/density/font tests (still exercising `openOptions()`, unaffected by this change).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/shell/lab-shell.component.html projects/orbit-lab/src/app/shell/lab-shell.component.css projects/orbit-lab/src/app/shell/catalog-panel.component.css
@@ -505,7 +507,7 @@ git commit -m "feat(orbit-lab): render the catalog sidebar as a fixed layout ele
 **Interfaces:**
 - Consumes: `LabShellComponent.onSidebarItemSelected(item: OrbitSidebarItem)` (Task 2); Angular `Router` test harness via `provideRouter([...])`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Add to `projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts`. First update the `TestBed.configureTestingModule` routes so a real route exists to navigate to — change:
 
@@ -552,13 +554,13 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 (replacing the existing `import { provideRouter } from '@angular/router';` and `import { afterEach, beforeEach, describe, expect, it } from 'vitest';` lines).
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts`
 
 Expected: FAIL if `onSidebarItemSelected` isn't calling `router.navigate` with those exact arguments yet, or PASS already if Task 2 was implemented correctly — in which case this step confirms via a deliberate temporary break: comment out the `this.router.navigate(['/', item.id]);` line in `lab-shell.component.ts`, rerun, confirm FAIL, then restore the line before Step 3.
 
-- [ ] **Step 3: Confirm implementation (no new code needed)**
+- [x] **Step 3: Confirm implementation (no new code needed)**
 
 `onSidebarItemSelected` was already implemented in Task 2 Step 3. Restore/verify the line:
 
@@ -568,13 +570,13 @@ Expected: FAIL if `onSidebarItemSelected` isn't calling `router.navigate` with t
   }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts`
 
 Expected: PASS, full file green.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add projects/orbit-lab/src/app/shell/lab-shell.component.spec.ts

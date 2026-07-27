@@ -169,8 +169,40 @@ footer a {
   display: grid;
   gap: calc(var(--orbit-space-6) * 2);
 }
-.install orbit-code-block {
-  max-width: calc(var(--orbit-page-max-width-document) / 1.8);
+.install__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--orbit-layout-gap);
+}
+.install__steps orbit-panel {
+  display: grid;
+  align-content: start;
+  gap: var(--orbit-space-stack);
+}
+.install__step-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--orbit-space-inline);
+}
+.install__showcase {
+  display: grid;
+  gap: var(--orbit-space-stack);
+}
+.install__motion-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--orbit-layout-gap);
+}
+.install__motion-grid orbit-panel {
+  display: grid;
+  gap: var(--orbit-space-stack);
+  align-content: start;
+}
+.install__motion-grid orbit-spinner {
+  margin-block: var(--orbit-space-stack);
+}
+.install__steps orbit-code-block {
+  inline-size: 100%;
 }
 
 footer {
@@ -189,7 +221,9 @@ footer {
   }
   .grid--three,
   .grid--two,
-  .playground__content {
+  .playground__content,
+  .install__steps,
+  .install__motion-grid {
     grid-template-columns: 1fr;
   }
   .playground__controls {

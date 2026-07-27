@@ -1,10 +1,16 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
+  OrbitAlertComponent,
   OrbitBadgeComponent,
+  OrbitBannerComponent,
   OrbitButtonComponent,
   OrbitCodeBlockComponent,
   OrbitNavbarComponent,
   OrbitPanelComponent,
+  OrbitSkeletonComponent,
+  OrbitSpinnerComponent,
+  OrbitTabComponent,
+  OrbitTablistComponent,
   type OrbitNavbarItem,
 } from '@rhaegal222/orbit';
 
@@ -13,11 +19,17 @@ import {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    OrbitAlertComponent,
     OrbitBadgeComponent,
+    OrbitBannerComponent,
     OrbitButtonComponent,
     OrbitCodeBlockComponent,
     OrbitNavbarComponent,
     OrbitPanelComponent,
+    OrbitSkeletonComponent,
+    OrbitSpinnerComponent,
+    OrbitTabComponent,
+    OrbitTablistComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -32,5 +44,6 @@ export class App {
     { id: 'install', label: 'Installazione', href: '#install' },
   ];
   readonly installCode = 'npm install @rhaegal222/orbit';
+  readonly importCode = `import { OrbitButtonComponent } from "@rhaegal222/orbit";`;
   readonly themeCode = `:root {\n  --orbit-action-primary-bg: #0f766e;\n  --orbit-radius-control: 0.5rem;\n}`;
 }

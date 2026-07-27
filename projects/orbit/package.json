@@ -1,6 +1,6 @@
 {
   "name": "@rhaegal222/orbit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Theme-neutral UI foundations and design tokens for Angular applications.",
   "license": "MIT",
   "private": false,

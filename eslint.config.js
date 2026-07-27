@@ -25,6 +25,17 @@ module.exports = tseslint.config(
         "warn",
         { argsIgnorePattern: "^_" },
       ],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-expressions": "warn",
+      "@angular-eslint/no-output-native": "warn",
+      "prefer-const": "warn",
+    },
+  },
+  {
+    files: ["**/*.spec.ts"],
+    rules: {
+      "@angular-eslint/component-selector": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   {
@@ -33,5 +44,10 @@ module.exports = tseslint.config(
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
+    rules: {
+      "@angular-eslint/template/click-events-have-key-events": "warn",
+      "@angular-eslint/template/interactive-supports-focus": "warn",
+      "@angular-eslint/template/role-has-required-aria": "warn",
+    },
   }
 );

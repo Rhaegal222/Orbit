@@ -149,3 +149,4 @@ vite.config.ts.timestamp-*
 docs/DEPLOYMENT.md
 docs/UPDATE-GUIDELINES.md
 docs/ORBIT-ALIGNMENT-PLAN.md
+.angular/

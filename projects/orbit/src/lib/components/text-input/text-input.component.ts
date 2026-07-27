@@ -195,7 +195,7 @@ export class OrbitTextInputComponent implements ControlValueAccessor {
     const cleaned = raw.replace(/[^\d,]/g, '');
     const commaIndex = cleaned.indexOf(',');
     let intPart = commaIndex >= 0 ? cleaned.slice(0, commaIndex) : cleaned;
-    let decPart =
+    const decPart =
       commaIndex >= 0
         ? cleaned
             .slice(commaIndex + 1)

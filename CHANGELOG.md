@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.3] - 2026-07-27
+
 ### Added
 - CONTRIBUTING.md for public contributors
 - CONTRIBUTORS.md for pre-release recognition
@@ -16,10 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CODEOWNERS for review routing
 - ESLint with angular-eslint for code quality
 - Fork syncing instructions in CONTRIBUTING.md
+- CI status badge in README
 
 ### Fixed
 - CI build script (`build:lib`) and output path (`dist/orbit-new`)
 - `.npmrc` registry routing for `@rhaegal222` scope
+- Lockfile regeneration with all transitive dependencies
 
 ## [0.1.2] - 2026-07-27
 

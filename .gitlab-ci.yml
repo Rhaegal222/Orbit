@@ -13,7 +13,9 @@ verify-package:
 publish-package:
   stage: publish
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^v\\d+\\.\\d+\\.\\d+$/'
+    - if: '$CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/'
+  variables:
+    NODE_EXTRA_CA_CERTS: '${GALILEO_CA_CERT}'
   before_script:
     - npm ci
     - npm config set @galileo:registry "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/npm/"

@@ -6,6 +6,23 @@
   </p>
 
   <section>
+    <h2>Topbar applicativa</h2>
+    <p>
+      <code>orbit-topbar</code> è il chrome compatto per le app: allinea i contenuti proiettati
+      negli slot <code>orbitTopbarStart</code>, <code>orbitTopbarCenter</code> e
+      <code>orbitTopbarEnd</code>. Non ospita liste di navigazione e mantiene i controlli
+      verticalmente centrati a ogni larghezza.
+    </p>
+    <lab-example [code]="topbarSnippet" fullWidth>
+      <orbit-topbar ariaLabel="Area operativa">
+        <orbit-icon-button orbitTopbarStart icon="menu" ariaLabel="Apri navigazione" />
+        <strong orbitTopbarCenter>Dashboard</strong>
+        <orbit-icon-button orbitTopbarEnd icon="settings" ariaLabel="Apri impostazioni" />
+      </orbit-topbar>
+    </lab-example>
+  </section>
+
+  <section>
     <h2>Esempio base</h2>
     <p>
       La voce attiva espone <code>aria-current=&quot;page&quot;</code>. Brand a sinistra, voci di

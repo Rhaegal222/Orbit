@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SECURITY.md
 - Fork syncing workflow to GitHub
 - Automated npm version bump workflow
+- `orbit-topbar`, a compact application header with start, centre and end projection slots
+- Semantic application-chrome background tokens and topbar component tokens
 
 ### Fixed
 - `.npmrc` registry routing for `@rhaegal222` scope

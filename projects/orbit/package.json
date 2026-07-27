@@ -1,6 +1,6 @@
 {
   "name": "@wyrmrest/orbit",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Reusable UI foundations and design tokens for Wyrmrest applications.",
   "license": "UNLICENSED",
   "private": false,

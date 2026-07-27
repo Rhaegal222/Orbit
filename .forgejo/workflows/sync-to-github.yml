@@ -1,0 +1,87 @@
+name: Sync public library to GitHub
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - "projects/orbit/src/**"
+      - "projects/orbit/package.json"
+      - "projects/orbit/ng-package.json"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FORGEJO_SYNC_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "forgejo-sync"
+          git config user.email "sync@wyrmrest.it"
+
+      - name: Clone GitHub repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_SYNC_TOKEN }}
+        run: |
+          git clone "https://Rhaegal222:${GH_TOKEN}@github.com/Rhaegal222/Orbit.git" /tmp/orbit-gh
+          cd /tmp/orbit-gh
+          git checkout main
+
+      - name: Extract and sync library source
+        run: |
+          set -euo pipefail
+          SRC="projects/orbit/src"
+          GH_ROOT="/tmp/orbit-gh"
+
+          # Sync library source
+          rsync -av --delete \
+            "$SRC/" \
+            "$GH_ROOT/projects/orbit/src/"
+
+          # Sync library package.json (public version)
+          cp projects/orbit/package.json "$GH_ROOT/projects/orbit/package.json"
+          cp projects/orbit/ng-package.json "$GH_ROOT/projects/orbit/ng-package.json"
+
+          # Sync root package.json if it changed
+          cp package.json "$GH_ROOT/package.json"
+          cp package-lock.json "$GH_ROOT/package-lock.json"
+
+      - name: Create PR on GitHub
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          cd /tmp/orbit-gh
+
+          BRANCH="sync/forgejo-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b "$BRANCH"
+
+          # Check if there are changes
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to sync"
+            exit 0
+          fi
+
+          git add -A
+          COMMIT_MSG="sync: import library source from Forgejo develop
+
+          Auto-synced from Forgejo develop branch.
+          Commit: $(git -C "$GITHUB_WORKSPACE" log --oneline -1 --format='%h %s')"
+
+          git commit -m "$COMMIT_MSG"
+          git push origin "$BRANCH"
+
+          # Create PR
+          curl -s -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/Rhaegal222/Orbit/pulls \
+            -d "{
+              \"title\": \"sync: library source from Forgejo\",
+              \"body\": \"Automated sync from Forgejo develop branch.\\n\\nChanges:\\n\`$(git log --oneline main..HEAD | head -10)\`\\n\\n---\\n*Created by forgejo-sync workflow*\",
+              \"head\": \"$BRANCH\",
+              \"base\": \"main\"
+            }" | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'PR: {d.get(\"html_url\", \"ERROR\")}')"

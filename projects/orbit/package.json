@@ -15,7 +15,7 @@
     "./styles/theme.css": "./styles/theme.css"
   },
   "dependencies": {
-    "@rhaegal222/orbit": "^0.1.1"
+    "@rhaegal222/orbit": "^0.1.2"
   },
   "peerDependencies": {
     "@angular/core": "^22.0.0",

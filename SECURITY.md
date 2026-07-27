@@ -1,5 +1,34 @@
-# Security policy
+# Security Policy
 
-Report vulnerabilities privately to the Wyrmrest engineering team. Do not open a public issue containing exploit details, credentials, personal data or internal URLs.
+## Reporting a Vulnerability
 
-The repository and package registry are private; access should be granted only to Wyrmrest projects and maintainers that require it.
+If you discover a security vulnerability in Orbit, please report it responsibly.
+
+**Do not open a public issue for security vulnerabilities.**
+
+Instead, please email: **security@wyrmrest.it**
+
+Include:
+- Description of the vulnerability
+- Steps to reproduce
+- Potential impact
+- Suggested fix (if any)
+
+## Response Timeline
+
+- **Acknowledgment**: within 48 hours
+- **Initial assessment**: within 1 week
+- **Fix or mitigation**: depends on severity
+
+## Scope
+
+This policy covers the Orbit library source code and the published `@rhaegal222/orbit` npm package.
+
+Out of scope:
+- Vulnerabilities in consuming applications
+- Issues in third-party dependencies (report those upstream)
+- Social engineering attacks
+
+## Disclosure
+
+We follow coordinated disclosure. Please give us reasonable time to address the issue before public disclosure.

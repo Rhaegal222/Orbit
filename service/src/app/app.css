@@ -173,9 +173,17 @@ footer a {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--orbit-layout-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.install__steps > li,
+.install__steps orbit-panel {
+  min-inline-size: 0;
 }
 .install__steps orbit-panel {
   display: grid;
+  block-size: 100%;
   align-content: start;
   gap: var(--orbit-space-stack);
 }

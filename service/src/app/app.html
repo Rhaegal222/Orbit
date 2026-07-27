@@ -146,38 +146,53 @@
       </p>
     </div>
 
-    <orbit-tablist ariaLabel="Passaggi di installazione">
-      <orbit-tab value="install" label="1. Installa" [selected]="true" />
-      <orbit-tab value="import" label="2. Importa" />
-      <orbit-tab value="theme" label="3. Personalizza" />
-    </orbit-tablist>
-
-    <div class="install__steps">
-      <orbit-panel>
-        <div class="install__step-heading">
-          <orbit-badge label="1" tone="primary" />
-          <h3>Installa</h3>
-        </div>
-        <p>Il package pubblico contiene componenti, token e stili di base.</p>
-        <orbit-code-block [code]="installCode" language="bash" [showActions]="true" />
-      </orbit-panel>
-      <orbit-panel>
-        <div class="install__step-heading">
-          <orbit-badge label="2" tone="primary" />
-          <h3>Importa</h3>
-        </div>
-        <p>Usa solo le primitive che servono alla tua schermata.</p>
-        <orbit-code-block [code]="importCode" language="typescript" [showActions]="true" />
-      </orbit-panel>
-      <orbit-panel>
-        <div class="install__step-heading">
-          <orbit-badge label="3" tone="primary" />
-          <h3>Personalizza</h3>
-        </div>
-        <p>Ritema con custom properties, senza fork o provider JavaScript.</p>
-        <orbit-code-block [code]="themeCode" language="css" [showActions]="true" />
-      </orbit-panel>
-    </div>
+    <ol class="install__steps" aria-label="Passaggi di installazione">
+      <li>
+        <orbit-panel>
+          <div class="install__step-heading">
+            <orbit-badge label="1" tone="primary" />
+            <h3>Installa</h3>
+          </div>
+          <p>Il package pubblico contiene componenti, token e stili di base.</p>
+          <orbit-code-block
+            [code]="installCode"
+            language="bash"
+            [collapsible]="false"
+            [showActions]="true"
+          />
+        </orbit-panel>
+      </li>
+      <li>
+        <orbit-panel>
+          <div class="install__step-heading">
+            <orbit-badge label="2" tone="primary" />
+            <h3>Importa</h3>
+          </div>
+          <p>Usa solo le primitive che servono alla tua schermata.</p>
+          <orbit-code-block
+            [code]="importCode"
+            language="typescript"
+            [collapsible]="false"
+            [showActions]="true"
+          />
+        </orbit-panel>
+      </li>
+      <li>
+        <orbit-panel>
+          <div class="install__step-heading">
+            <orbit-badge label="3" tone="primary" />
+            <h3>Personalizza</h3>
+          </div>
+          <p>Ritema con custom properties, senza fork o provider JavaScript.</p>
+          <orbit-code-block
+            [code]="themeCode"
+            language="css"
+            [collapsible]="false"
+            [showActions]="true"
+          />
+        </orbit-panel>
+      </li>
+    </ol>
 
     <div class="install__showcase" data-orbit-motion="on">
       <orbit-alert tone="success"

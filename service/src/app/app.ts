@@ -9,8 +9,6 @@ import {
   OrbitPanelComponent,
   OrbitSkeletonComponent,
   OrbitSpinnerComponent,
-  OrbitTabComponent,
-  OrbitTablistComponent,
   type OrbitNavbarItem,
 } from '@rhaegal222/orbit';
 
@@ -28,8 +26,6 @@ import {
     OrbitPanelComponent,
     OrbitSkeletonComponent,
     OrbitSpinnerComponent,
-    OrbitTabComponent,
-    OrbitTablistComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

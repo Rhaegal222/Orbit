@@ -2,10 +2,10 @@ name: verify-package
 
 on:
   push:
-    branches: [develop, staging, main]
+    branches: [develop, main]
     tags: ["v*"]
   pull_request:
-    branches: [develop, staging, main]
+    branches: [develop, main]
 
 jobs:
   verify:

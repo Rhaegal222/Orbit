@@ -2,7 +2,7 @@ name: Deploy Orbit website
 
 on:
   push:
-    branches: [staging, main]
+    branches: [main]
 
 concurrency:
   group: orbit-${{ github.ref_name }}
@@ -42,7 +42,7 @@ jobs:
       - name: Select target
         run: |
           set -euo pipefail
-          if [ "${{ github.ref_name }}" = "main" ]; then
+          if true; then
             echo "DEPLOY_DIR=/home/rhaegal222/Server/main/rhaegal222/wyrmrest/wyrmrest-orbit" >> "$GITHUB_ENV"
             echo "PROJECT_NAME=wyrmrest-orbit-production" >> "$GITHUB_ENV"
             echo "TRAEFIK_ENABLE=true" >> "$GITHUB_ENV"

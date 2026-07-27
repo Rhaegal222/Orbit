@@ -49,9 +49,8 @@ Vedi `docs/TROUBLESHOOTING.md` per dettagli su tutti i problemi risolti.
 Dopo il push su `develop`, il flusso di promozione è:
 
 ```
-develop → (PR) → staging → (PR) → main
+develop → (PR) → main
 ```
 
 - `develop`: CI verifica il package, nessun deploy automatico
-- `staging`: deploy automatico (Traefik disabilitato, solo interno)
 - `main`: deploy automatico (Traefik abilitato, pubblico)

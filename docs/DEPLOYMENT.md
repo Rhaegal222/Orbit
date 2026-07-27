@@ -116,7 +116,7 @@ Script `update-orbit.sh` (114 righe):
 ## Branch strategy
 
 ```
-develop → (PR) → staging → (PR) → main
+develop → (PR) → main
 ```
 
 - `develop`: CI verifica package (lint + build + test), nessun deploy

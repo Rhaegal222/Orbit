@@ -7,18 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.4] - 2026-07-28
+
 ### Added
-- ESLint with angular-eslint for code quality
-- CHANGELOG.md
-- SECURITY.md
-- Fork syncing workflow to GitHub
-- Automated npm version bump workflow
 - `orbit-topbar`, a compact application header with start, centre and end projection slots
 - Semantic application-chrome background tokens and topbar component tokens
 
+## [0.1.3] - 2026-07-27
+
+### Added
+- ESLint with angular-eslint for code quality
+- CHANGELOG.md, SECURITY.md, CODEOWNERS, CONTRIBUTING.md
+- Fork syncing workflow to GitHub
+- Automated npm version bump workflow
+
 ### Fixed
 - `.npmrc` registry routing for `@rhaegal222` scope
-- Wrapper dependency `@rhaegal222/orbit` bumped to ^0.1.2
+- Wrapper dependency `@rhaegal222/orbit` bumped to ^0.1.3
+- Lockfile regenerated with all transitive deps
 
 ## [0.1.2] - 2026-07-27
 

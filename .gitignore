@@ -145,8 +145,20 @@ vite.config.ts.timestamp-*
 # Angular
 .angular/
 
-# Internal docs — Forgejo only, never push to GitHub
+# Internal docs — private, not shipped with the public package
 docs/DEPLOYMENT.md
 docs/UPDATE-GUIDELINES.md
 docs/ORBIT-ALIGNMENT-PLAN.md
-.angular/
+docs/HOW-UPDATE-ORBIT.md
+docs/TROUBLESHOOTING.md
+
+# Build artifacts
+deploy/
+
+# Private Wyrmrest infrastructure — not part of the public package
+docs/
+services/
+rotation-agent/
+vault/
+tests/
+AGENTS.md

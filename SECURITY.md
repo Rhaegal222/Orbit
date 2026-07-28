@@ -12,7 +12,7 @@ If you discover a security vulnerability in Orbit, please report it responsibly.
 
 **Do not open a public GitHub Issue for security vulnerabilities.**
 
-Instead, please email: **security@wyrmrest.it**
+Instead, please use [GitHub Security Advisories](https://github.com/Rhaegal222/Orbit/security/advisories/new) to report vulnerabilities privately.
 
 Include:
 - Description of the vulnerability
